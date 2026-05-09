@@ -1,4 +1,4 @@
-import mongoose from "mongoose"; //talks to MongoDb
+import mongoose from "mongoose"
 const connectDB = async() =>{
     try{
         const connectInstance =await mongoose.connect
@@ -7,7 +7,7 @@ const connectDB = async() =>{
             ${connectInstance.connection.host}`)
     }catch(error){
         console.log("Connection fail", error)
-        process.exit(1);
+        process.exit(1)
     }
 }
 export default connectDB;

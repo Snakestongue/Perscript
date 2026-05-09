@@ -1,23 +1,47 @@
 [
   {
     "id": 1,
-    "title":"Create a Constant",
-    "description":"Add a constant named MAX_DRIVE_SPEED with a value of 0.8 to the Constants class. Do not declare it with the final keyword.",
-    "starterCode": "public class Constants {\n    //Write code here and remove this comment.\n}",
-    "solutionCode":"public class Constants {\n    public static double MAX_DRIVE_SPEED = 0.8;\n}"
+    "title": "Create a Constant",
+    "description": "Add a constant named MAX_DRIVE_SPEED with a value of 0.8 to the Constants class. Do not declare it with the final keyword.",
+    "starterCode": {
+      "java": "public class Constants {\n    //Write code here and remove this comment.\n}",
+      "python": "class Constants:\n    # Write code here and remove this comment.\n    \n",
+      "cpp": "class Constants {\n    // Write code here and remove this comment.\n};"
+    },
+    "solutionCode": {
+      "java": "public class Constants {\n    public static double MAX_DRIVE_SPEED = 0.8;\n}",
+      "python": "class Constants:\n    MAX_DRIVE_SPEED = 0.8\n",
+      "cpp": "class Constants {\n   public:\n       static constexpr double MAX_DRIVE_SPEED = 0.8;\n};\n"
+    }
   },
   {
     "id": 2,
-    "title":"Create an Object",
-    "description":"Create a TalonFX object named intakeMotor. It should be declared as private and final within the class, and be initialized using device ID 3.",
-    "starterCode":"package frc.robot.subsystems;\nimport com.ctre.phoenix.motorcontrol.can.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class Intake extends SubsystemBase{\n    //Write code here and remove this comment.\n}",
-    "solutionCode": "package frc.robot.subsystems;\nimport com.ctre.phoenix.motorcontrol.can.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class Intake extends SubsystemBase{\n    private final TalonFX intakeMotor = new TalonFX(3);\n}"
+    "title": "Create an Object",
+    "description": "Create a TalonFX object named intakeMotor. It should be declared as private and final within the class, and be initialized using device ID 3.",
+    "starterCode": {
+      "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix.motorcontrol.can.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class Intake extends SubsystemBase{\n    //Write code here and remove this comment.\n}",
+      "python": "from wpilib2.command import SubsystemBase\nfrom phoenix6.hardware import TalonFX\n\nclass Intake(SubsystemBase):\n    #Write code here and remove this comment.\n",
+      "cpp": "#include <frc2/command/SubsystemBase.h>\n#include <ctre/phoenix/motorcontrol/can/TalonFX.h>\n\nclass Intake : public frc2::SubsystemBase {\n    //Write code here and remove this comment.\n};\n"
+    },
+    "solutionCode": {
+      "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix.motorcontrol.can.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class Intake extends SubsystemBase{\n    private final TalonFX intakeMotor = new TalonFX(3);\n}",
+      "python": "from wpilib2.command import SubsystemBase\nfrom phoenix6.hardware import TalonFX\n\nclass Intake(SubsystemBase):\n    __intakeMotor = TalonFX(3)",
+      "cpp": "#include <frc2/command/SubsystemBase.h>\n#include <ctre/phoenix/motorcontrol/can/TalonFX.h>\n\nclass Intake : public frc2::SubsystemBase {\n    private:\n        const TalonFX intakeMotor{3};\n};"
+    }
   },
   {
     "id": 3,
-    "title":"Create a Method",
-    "description":"Create a method called stopIntakeMotor. The method should must stop the motor named intakeMotor using the appropriate motor function (do not set the motor speed to 0).",
-    "starterCode": "package frc.robot.subsystems;\nimport com.ctre.phoenix.motorcontrol.can.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class Intake extends SubsystemBase{\n   //Write code here and remove this comment.\n}",
-    "solutionCode": "package frc.robot.subsystems;\nimport com.ctre.phoenix.motorcontrol.can.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class Intake extends SubsystemBase{\n    public void stopIntakeMotor(){\n        intakeMotor.stopMotor();\n    }\n}"
+    "title": "Create a Method",
+    "description": "Create a method called stopIntakeMotor. The method should must stop the motor named intakeMotor using the appropriate motor function (do not set the motor speed to 0).",
+    "starterCode": {
+      "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix.motorcontrol.can.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class Intake extends SubsystemBase{\n   //Write code here and remove this comment.\n}",
+      "python": "from ctre import TalonFX\nfrom wpilib2.command import SubsystemBase\nclass Intake(SubsystemBase):\n    #Write code here and remove this comment.",
+      "cpp": "#include <ctre/phoenix/motorcontrol/can/TalonFX.h>\n#include <frc2/command/SubsystemBase.h>\nclass Intake : public frc2::SubsystemBase {\n    public:\n      //Write code here and remove this comment.\n};"
+    },
+    "solutionCode": {
+      "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix.motorcontrol.can.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class Intake extends SubsystemBase{\n    public void stopIntakeMotor(){\n        intakeMotor.stopMotor();\n    }\n}",
+      "python": "from ctre import TalonFX\nfrom wpilib2.command import SubsystemBase\nclass Intake(SubsystemBase):\n    def stopIntakeMotor(self):\n        intakeMotor.stopMotor()",
+      "cpp": "#include <ctre/phoenix/motorcontrol/can/TalonFX.h>\n#include <frc2/command/SubsystemBase.h>\nclass Intake : public frc2::SubsystemBase {\n    public:\n       void stopIntakeMotor() { \n           intakeMotor.StopMotor(); \n   } \n};"
+    }
   }
 ]

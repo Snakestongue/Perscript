@@ -1,68 +1,85 @@
-import frcImg from "./IMG/FRC.png";
 import {Link } from "react-router-dom"
-import {useState }from 'react';
+import {useState, useEffect  }from 'react';
 import Editor from '@monaco-editor/react';
 import problems from './JSON/problems.json';
 function App(){
+  const [currentLang, newLang] = useState("java")
+
   const[selectedProblem, setSelectedProblem]=useState(problems[0]);
-  const[userCode, setUserCode]= useState(selectedProblem.starterCode);
+  const[userCode, setUserCode]= useState(selectedProblem.starterCode[currentLang]);
   const [feedback, setFeedback]= useState('');
-  const handleSubmit=()=>{
-    if(userCode.trim().toLowerCase()== selectedProblem.solutionCode.trim().toLowerCase()){
-      setFeedback('Correct!');
+  const [correctAnswer, setCorrectAnswer] = useState('')
+  const generateSubmit=()=>{
+    if(userCode.trim().toLowerCase()== selectedProblem.solutionCode[currentLang].trim().toLowerCase()){
+      return ('Correct!');
     }else if(selectedProblem.id==problems[0].id){
       if ((userCode.match(/public/gi) || []).length < 2){
-        setFeedback("Did you add public?")
+        return ("Did you add public?")
       }else if (!userCode.trim().toLowerCase().includes("static")){
-        setFeedback("Did you add static?")
+        return ("Did you add static?")
       }else if (!userCode.trim().toLowerCase().includes("double")){
-          setFeedback("Did you add double?")
+          return ("Did you add double?")
       }else if (!userCode.trim().toLowerCase().includes("0.8")){
-          setFeedback("Did you add 0.8?")
+          return ("Did you add 0.8?")
       }else{
-        setFeedback("Try again")
+        return ("Try again")
       }
     }else if(selectedProblem.id==problems[1].id){
       if (!userCode.trim().toLowerCase().includes("private")){
-        setFeedback("Did you add private?")
+        return ("Did you add private?")
       }else if (!userCode.trim().toLowerCase().includes("final")){
-        setFeedback("Did you add final?")
+        return ("Did you add final?")
       }else if ((userCode.match(/talonfx/gi) || []).length < 2){
-          setFeedback("Did you add TalonFX twice?")
+          return ("Did you add TalonFX twice?")
       }else if (!userCode.trim().toLowerCase().includes("intakemotor")){
-          setFeedback("Did you name it intakeMotor")
+          return ("Did you name it intakeMotor")
       }else if (!userCode.trim().toLowerCase().includes("(3)")){
-          setFeedback("Did you set the speed to (3)")
+          return ("Did you set the speed to (3)")
       }else{
-        setFeedback("Try again")
+        return ("Try again")
       }
     } else if(selectedProblem.id==problems[2].id){
       if ((userCode.match(/public/gi) || []).length < 2){
-        setFeedback("Did you add public?")
-      }else if (!userCode.trim().toLowerCase().includes("static")){
-        setFeedback("Did you add static?")
+        return ("Did you add public?")
       }else if (!userCode.trim().toLowerCase().includes("void")){
-          setFeedback("Did you add void?")
+          return ("Did you add void?")
       }else if (!userCode.trim().toLowerCase().includes("stopmotor")){
-          setFeedback("Did you use stopmotor?")
+          return ("Did you use stopmotor?")
       }else if (!userCode.trim().toLowerCase().includes("stopintakemotor")){
-          setFeedback("Did you name the method stopintakemotor?")
+          return ("Did you name the method stopintakemotor?")
       }else{
-        setFeedback("Try again")
+        return ("Try again")
       }
     } 
-  
   }
+  useEffect(() => {
+  setUserCode(selectedProblem.starterCode[currentLang]);
+  }, 
+  [currentLang, selectedProblem]);
+
+  useEffect(() => {
+    setFeedback("Click submit to check your answer.");
+  }, 
+  [selectedProblem, currentLang]);
+
+  useEffect(() => {
+    setCorrectAnswer(selectedProblem.solutionCode[currentLang]);
+  }, [selectedProblem, currentLang]);
+
   const handleProblemChange=(e)=>{
     const problem =problems.find(p =>p.id==parseInt(e.target.value));
     setSelectedProblem(problem);
-    setUserCode(problem.starterCode);
+    setUserCode(problem.starterCode[currentLang]);
     setFeedback('');
-  };
+  }
+  const handleSubmit = () => {
+    setFeedback(generateSubmit());
+  }
   return (
-    <div id="mainDiv" >
+    <div id="appJSX" >
       <header>
-            <img src={frcImg} id="imgHead" />
+            {/* <img src={frcImg} id="imgHead" /> */}
+            <p id="headerFPP"><span>FRC</span> Programming Practice</p>
             <ul id="headerList">
                 <li><Link to="/" className="headerLinks">Programming Practice</Link></li>
                 <li><Link to="/debug" className="headerLinks">Debugging Practice</Link></li>
@@ -76,12 +93,12 @@ function App(){
           <li><Link to="/tut" className="headerLinks">Tutorials</Link></li>
         </ul>
       </nav>
-      <div id="mainApp">
+        <div id="contentApp">
         <p id="questionProgram"> {selectedProblem.description} </p>
         <div id="divEditor">
           <Editor
             height="100%"
-            defaultLanguage="java"
+            language={currentLang}
             theme="purpleTheme"
             value={userCode}
             onChange={(value)=>setUserCode(value)} 
@@ -110,19 +127,35 @@ function App(){
             }}
             />
         </div>
+        </div>
         <div id="buttonDiv">
+          <p class="titles">Language</p>
+          <select
+            value={currentLang}
+            onChange={(e) => newLang(e.target.value)}
+            id="selectLang"
+            class="sidebars"
+          >
+            <option value="java">Java</option>
+            <option value="python">Python</option>
+            <option value="cpp">C++</option>
+          </select>
+          <p class="titles">Excercise</p>
             {problems.slice(0, 3).map((p)=>(
-            <button
+            <button class="sidebars"
               key={p.id}onClick={()=>handleProblemChange({target:{value:  p.id}})}>
               {p.title}
             </button> 
             ))}
-          <button id="submit" onClick={handleSubmit}>Submit</button>
+          <button
+            id="AK"
+            class="sidebars"
+            onClick={()=>setUserCode(selectedProblem.solutionCode[currentLang])}>
+            Show Correct Answer
+          </button>
+          <button id="submit" class="sidebars" onClick={handleSubmit}>▶ RUN & SUBMIT</button>
+          <p class="sidebars" id="feedback">{feedback}</p>
         </div>
-        <div id="feedHolder">
-          {feedback && <p id="feedback">{feedback}</p>}
-        </div>
-      </div>
       <footer>
         <div id="newFooterDiv">
           <Link id="PPLINK" to="/PP" className="footerLinks" >Privacy Policy</Link>

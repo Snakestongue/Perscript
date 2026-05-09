@@ -7,6 +7,5 @@ const teamNumSchema = new Schema({
     }
   },{
     timestamps: true 
-  }
-);
+  });
 export const number = mongoose.model("Number:", teamNumSchema);

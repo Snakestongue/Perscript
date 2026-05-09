@@ -5,6 +5,5 @@ const suggestSchema = new Schema({
     }
 },{
     timestamps:true
-}
-)
+});
 export const suggestion = mongoose.model("Suggestion", suggestSchema);

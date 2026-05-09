@@ -1,96 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 html, body {
   overflow-x: hidden;
 }
-
 body {
-  margin: 0;
-  font: 18px/145% system-ui, 'Segoe UI', Roboto, sans-serif;
-  letter-spacing: 0.18px;
-  color: #a0a0a0;
-  background: #0f0f0f;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  margin: 0px;
+  padding: 0px;
+  font-family: 'Rajdhani', sans-serif;
+  background: #0a0b0f;
 }
-
-/* #root {
-   width: 1400px; 
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-   border-inline: 1px solid white; 
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-} */
-
-h1, h2 {
-  font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
-  font-weight: 500;
+#headerFPP{
+  font-family: 'Rajdhani', sans-serif; /*Import above ^*/
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
   color: white;
+  margin-right: 60px;
 }
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
+#headerFPP span{
+  color: #a855f7
 }
-
-p {
-  margin: 0;
-}
-code,.counter {
-  font-family: ui-monospace, Consolas, monospace;
-  display: inline-flex;
-  border-radius: 4px;
-  color: #08060d;
-}
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background-color: #f4f3ec;
-}
-
-
-
-/*MY Styles, not premade*/
 #mainDiv {
   min-height: 100svh;
   display: flex;
   flex-direction: column;
 }
-#mainApp{
-  margin-top: 30px;
-  flex: 1;
+#appJSX{
+  min-height: 100svh;
+  display:grid;
+  width:100%;
+  grid-template-rows: 10% auto 10%;
+  grid-template-columns:23% 77%;
+  grid-template-areas: 
+  "header header"
+  "sidebar content"
+  "footer footer";
+  padding: 0px;
+  margin: 0px;
+}
+#contentApp{
+  grid-area: content;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0px auto;
 }
 #divEditor{
-  max-width: 1200px;
-  margin: 20px auto;
+  margin: 0px; 
   height: 65vh;
-  border-radius: 10px;
   overflow: hidden; 
-  border: 1px solid #673498;
-  background: rgb(15,15,15);
   transition: .5s;
-  padding: 0px;
+  padding: 0px; 
+  background-color: #10121a;
+  border-top: 1px solid #23263a;
+  border-bottom: 1px solid #23263a;
 }
 #divEditor:hover{
   border-color: #a855f7;
 }
-select{
-  background:black;
+/* select{
   color:white;
-  border:1px solid white;
   border-radius:10px; 
   font-size:20px;
   padding:5px;
-  margin-bottom:15px;
-}
+} */
 header{
+  grid-area: header;
   height: 80px;
-  background: #161616;
+  background: #10121a;
   margin: 0;
   padding: 10px;
   width: 100%;
@@ -98,76 +75,147 @@ header{
   top: 0;
   left: 0;
   z-index: 1000;
-  /* box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2), 0 8px 30px rgba(255, 255, 255, 0.1); AI BOX SHADOW*/
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-}
-#headerList, #newHeaderList{
-  list-style: none;
-  display: flex;
-  flex-direction: row;
-}
-#feedHolder{
   display: flex;
   flex-direction: row;
   justify-content: center;
-  margin-bottom: 20px;
+  align-items: center;
+  border-bottom: 1px solid #23263a;
+}
+#headerList, #newHeaderList{
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  flex-direction: row;
+  list-style: none;
 }
 #feedback{
   color:white;
+  border: 1px solid #a855f7;
+  padding:10px;
+  text-align: left;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: #8892a4;
   border-radius: 10px;
-  border: 1px solid white;
-  margin-top: 25px;
-  padding:20px;
+  border: 1px solid #a855f7;
+  padding: 10px;
+  margin-top: 10px;
 }
-#questionProgram, #sugLab{
-  color: white;
-  margin: 20px auto;
-  text-align: center;
-  max-width: 1100px;
-  padding: 20px;
+#questionProgram{/*, #sugLab{*/
+  border: none;
+  border-bottom: 1px solid #23263a;
+  border-radius: 0;
+  margin: 0;
+  padding: 15px;
+  color:white;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  background: #10121a;
+  border-top-left-radius: 10px; 
+  border-top-right-radius: 10px;  
+  transition: all .5s;
+}
+#selectLang{
+  border: 1px solid #673498; 
   border-radius: 10px;
-  background: rgb(15, 15, 15);
-  border: 1px solid #673498;
+  color:white;
+  text-align: center;
+  width:auto;
+  padding: 15px;
+  background-color: #10121a;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
 }
 .headerLinks:hover, .footerLinks:hover, button:hover{
   cursor: pointer;
   background-color: rgba(168,85,247,0.25);
 }
-.headerLinks, .footerLinks, button{
-  color: white;
-  background-color: #161616;
-  border: 1px solid #a855f7;
-  border-radius: 8px;
-  font-size: 15px;
+
+.headerLinks, .footerLinks{
   transition: .3s;
-  min-width:100px;
-  width:auto;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  min-width: unset;
+  padding: 7px 14px;
+  margin: 0 3px;
+  color:white;
+  border-radius: 10px;
   text-decoration: none;
-  text-align: center;
+  border: 1px solid rgba(168,85,247,0.25);
+  min-width: unset !important;
+  padding: 5px 10px !important;
+  margin: 0 10px !important;
+
 }
 #copy{
   margin-left: 20px;
 }
 button, .footerLinks, .headerLinks{
   min-width: 200px;
-  padding: 15px;
-  margin: 25px;
+  padding: 10px;
+  margin: 5px;
 }
 #buttonDiv{
+  margin: 0px !important;
+  grid-area: sidebar;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;  
+  padding: 0 30px; 
+  box-sizing: border-box; 
+  /* background-color: red; */
+}
+button{
+  color: white;
+  background-color: #10121a;
+  border: 1px solid #a855f7;
+  border-radius: 8px;
+  transition: .3s;
+  text-decoration: none;
+  text-align: left;
+  padding: 9px 12px;
+  margin: 0 0 6px;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+button#submit{
+  background: #a855f7;
+  border-color: #a855f7;
+  color: #fff;
+  text-align: center;
+  justify-content: center;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 10px;
+  transition: all .5s ease-out;
+}
+button#submit:hover{
+  background-color: transparent;
+}
+#buttonDiv select, #buttonDiv button, #buttonDiv p{
+  width: 100%;
+  box-sizing: border-box;
 }
 footer{
-  background: #161616;
+  grid-area: footer;
+  background: #10121a;
   margin:0;
   padding:30px 0px;
   width: 100%;     
   margin-top: 0px;
   z-index:1000;  
-  border-top: 1px solid #a855f7;
+  border-top: 1px solid #23263a;
   display:flex;
   flex-direction:row;
   justify-content:space-around;
@@ -185,16 +233,19 @@ footer{
   color: white;
   margin: 30px auto;
   padding: 20px;
-  border: 1px solid #673498;
+  border: 1px solid #23263a;
   border-radius: 10px;
   width: 65%;
   max-width: 600px;
-  min-height: 300px;     
-  background: rgb(20, 20, 20);
+  min-height: 65vh;     
+  background: #10121a;
 }
 body{
-  padding-top: 100px;
+  padding-top: 25px;
   padding-bottom: 0px;
+}
+#TutMain, #PPO, #sugMain{
+  padding-top: 75px !important;
 }
 a:visited, a:active, a:link{
   color:white;
@@ -204,8 +255,8 @@ a:visited, a:active, a:link{
   color:rgb(190, 190, 190);
   margin: 20px 30px;
   padding: 10px;
-  background-color: rgb(15,15,15);
-  border: 1px solid #a855f7;
+  background-color: #10121a;
+  border: 1px solid #23263a;
   border-radius: 10px;
   font-size: 14px;
 }
@@ -224,6 +275,8 @@ nav{
   align-items: center;
   margin: 0 autos;
   margin-top: 30px;
+  min-height: 75vh;
+  
 }
 #choice{
   display: flex;
@@ -243,18 +296,19 @@ nav{
   width:50%;
   height:65vh;
   margin-top: 20px;
-  background-color: black;
+  background-color: #10121a;
   color: white;
   overflow-y: auto;
-  border: 1px solid #673498;
+  border: 1px solid #23263a;
   padding: 10px;
   border-radius: 10px;
-  font-size: 18px;
+  font-size: 18px;;
 }
 #sugSubmit{
-  min-width: 350px;
+  /* min-width: 350px; */
   width: auto;
   margin: 30px 0px;
+  text-align: center !important;
 }
 #sugLab{
   color:white;
@@ -268,10 +322,12 @@ nav{
 }
 .tutCard{
   padding: 20px;
-  border: 1px solid #a855f7;
+  border: 1px solid #23263a;
   border-radius: 10px;
   margin: 20px;
   color:rgb(131, 131, 131);
+  background-color: #10121a;
+  box-shadow: 2px 2px 5px rgba(168,85,247,0.25);
 }
 .codeIndent{
   list-style: none;
@@ -282,12 +338,41 @@ code{
   border: 1px solid rgb(45,45,45);
   border-radius: 10px;
 }
-@media (max-width:1500px){
-  #divEditor{
+.sidebars{
+  margin: 5px 0px;
+  padding: 20px;
+}
+.titles {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #6b7280;
+  margin: 14px 0px;
+  padding: 2px;
+}
+@media (max-width:1100px){  
+  #appJSX{
+    min-height: 100svh;
+    display:flex;
+    width:100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+    margin: 0px;
+  }
+  #contentApp {
+    width: 100%;  
+    margin: 0 auto;
+    margin-bottom: 10px;
+  }
+  #divEditor {
+    width: 85%;
     max-width: 85%;
-    margin: auto !important;
+    margin: 0 auto;
     height: 65vh;
-    overflow: hidden; 
+    overflow: hidden;
   }
   #root{
     min-height: 100svh;
@@ -310,17 +395,18 @@ code{
   header{
     display: flex;
     align-items: center;
-    padding: 0 !important;
     box-shadow: none;
+    justify-content: center;
+    padding: 0 20px !important;  /* was 0 !important */
     /* border-bottom: 1px solid green; */
   }
+
   #imgHead{
     width:75%;
     height:auto;
   }
-
   nav{
-    background-color: #161616;
+    background-color: #10121a;
     display: flex;
     flex-direction: row;
     justify-content: center; 
@@ -331,20 +417,36 @@ code{
     left: 0;
     z-index: 1000;
     padding:5px 0px;
-    border-bottom: 1px solid #a855f7;
+    border-bottom: 1px solid #23263a;  /* was #a855f7, subtler */
+     padding: 10px;
   }
   #navTitle{
     color:white;
     padding: 0px;
     margin-right: 0px; 
   }
-  #buttonDiv{
+  #buttonDiv {
     display: grid;
-    grid-template-columns: 50% 50%;
-    grid-template-rows: auto;
-    justify-content: center;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(3, auto);
+    gap: 5px;
+    width: 85%;
+    margin: 20px auto;
+    padding: 0 10px;
+    box-sizing: border-box;
+    justify-items: center;
     align-items: center;
-    margin: auto;
+  }
+  #buttonDiv #selectLang { /*Claude*/
+    grid-column: 1 / -1;
+  }
+
+  #buttonDiv #feedback { /*Claude*/
+    grid-column: 1 / -1;
+  }
+  #buttonDiv button{
+    margin: 10px;
+    width:85%;
   }
   #questionProgram, #sugLab{
     /* font-size:12px; */
@@ -353,18 +455,18 @@ code{
     margin:20px auto;
     
   }
-  .footerLinks, .headerLinks{
-    flex: 1;
+  .footerLinks, .headerLinks {
+    flex: unset;
     text-align: center;
-    margin: 0px 10px;
-    padding:8px 15px
+    margin: 0px 5px;
+    padding: 10px;
   }
   nav, #newHeaderList, footer{
     padding: 10px 0px;
     margin: 0px;
   }
-  #sugSubmit{
-    margin: 30px 0px;
+  footer{
+    margin-top: 10px;
   }
   footer{
     display: flex ;
@@ -407,7 +509,10 @@ code{
     display: flex;
     flex-direction: column;
   }
-  
+  .titles {
+    grid-column: 1 / -1;
+    margin: 10px 0 2px;
+  }
 }
 
 .spinner {
@@ -421,10 +526,6 @@ code{
   animation:spin 0.8s linear infinite;
 }
 @media (max-width:600px){
-  #divEditor{
-    max-width: 300px !important;
-    margin-bottom: 20px !important  ;
-  }
   #buttonDiv{
     display: flex;
     flex-direction: column;
@@ -453,6 +554,9 @@ code{
   #questionProgram{
     font-size: 10px;
   }
+  #buttonDiv button{
+    width:100%;
+  }
   footer{
     display: flex;
     flex-direction: column;
@@ -469,10 +573,37 @@ code{
   .bQ{
     font-size:10px !important;
   }
-  
+  button {
+    margin: 5px;
+    max-width: 260px;
+    min-width: unset;
+  }
+  .footerLinks {
+    margin: 5px;
+    width: auto;
+    min-width: unset;
+  }
+  .headerLinks {
+    padding: 0px;
+    margin: 0px;
+    font-size: 11px;
+  }
+  #headerFPP{
+    font-size: 25px;
+    text-align: left;
+  }
+  #PP{
+    min-height: 95vh;
+  }
 }
-
-
+@media (max-width:400px){
+  .headerLinks {
+    font-size: 9px;
+  }
+  #headerFPP{
+    font-size: 20px;
+  }
+}
 @keyframes spin {
   to {
     transform: rotate(360deg);

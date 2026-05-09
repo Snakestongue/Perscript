@@ -1,4 +1,3 @@
-import frcImg from ".././IMG/FRC.png"
 import {useState} from 'react'
 import problems from '../JSON/debugProblems.json'
 import {Link } from "react-router-dom"
@@ -8,7 +7,7 @@ function Bug(){
   return(
   <div id="mainDivBug">
       <header>
-        <img src={frcImg} id="imgHead" />
+        <p id="headerFPP"><span>FRC</span> Programming Practice</p>
         <ul id="headerList">
             <li><Link to="/" className="headerLinks">Programming Practice</Link></li>
             <li><Link to="/debug" className="headerLinks">Debugging Practice</Link></li>
@@ -54,7 +53,7 @@ function Bug(){
               {choice}
             </label>
             ))}
-            {userChoice && (<p style={{ color: feedbackColor }}>{feedbackText}</p>)}
+            {userChoice && (<p style={{color: feedbackColor}}>{feedbackText}</p>)}
           </div>
           )
       })}
