@@ -486,8 +486,11 @@ code{
   }
   body{
     overflow-y: auto;
-    padding-top: 150px !important;
+    padding-top: 80px  !important;
     padding-bottom: 0 !important;
+  }
+  #appJSX{
+    padding-top: 45px;
   }
   #copy{
     font-size:10px;
@@ -575,6 +578,9 @@ code{
   }
   .bQ{
     font-size:10px !important;
+  }
+  code{
+    font-size: 8px;
   }
   button {
     margin: 5px;
