@@ -9,6 +9,7 @@
     "preview": "vite preview",
     "lint": "eslint .",
     "predeploy": "npm run build",
+    "postbuild": "copy dist\\index.html dist\\404.html",
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {

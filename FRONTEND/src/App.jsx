@@ -12,7 +12,7 @@ function App(){
   const generateSubmit=()=>{
     if(userCode.trim().toLowerCase()== selectedProblem.solutionCode[currentLang].trim().toLowerCase()){
       return ('Correct!');
-    }else if(selectedProblem.id==problems[0].id){
+    }else if(selectedProblem.id==problems[0].id && currentLang == "java"){
       if ((userCode.match(/public/gi) || []).length < 2){
         return ("Did you add public?")
       }else if (!userCode.trim().toLowerCase().includes("static")){
@@ -22,9 +22,9 @@ function App(){
       }else if (!userCode.trim().toLowerCase().includes("0.8")){
           return ("Did you add 0.8?")
       }else{
-        return ("Try again")
+        return ("Try again. You're close!")
       }
-    }else if(selectedProblem.id==problems[1].id){
+    }else if(selectedProblem.id==problems[1].id && currentLang == "java"){
       if (!userCode.trim().toLowerCase().includes("private")){
         return ("Did you add private?")
       }else if (!userCode.trim().toLowerCase().includes("final")){
@@ -36,9 +36,9 @@ function App(){
       }else if (!userCode.trim().toLowerCase().includes("(3)")){
           return ("Did you set the speed to (3)")
       }else{
-        return ("Try again")
+        return ("Try again. You're close!")
       }
-    } else if(selectedProblem.id==problems[2].id){
+    }else if(selectedProblem.id==problems[2].id  && currentLang == "java"){
       if ((userCode.match(/public/gi) || []).length < 2){
         return ("Did you add public?")
       }else if (!userCode.trim().toLowerCase().includes("void")){
@@ -48,7 +48,73 @@ function App(){
       }else if (!userCode.trim().toLowerCase().includes("stopintakemotor")){
           return ("Did you name the method stopintakemotor?")
       }else{
-        return ("Try again")
+        return ("Try again. You're close!")
+      }
+    } else if(selectedProblem.id==problems[0].id  && currentLang == "python"){
+      if (!userCode.trim().toLowerCase().includes("max_drive_speed")){
+        return ("Did you name your constant MAX_DRIVE_SPEED?")
+      }else if (!userCode.trim().toLowerCase().includes("0.8")){
+          return ("Did you add set the speed to 0.8?")
+      }else{
+        return ("Try again. You're close!")
+      }
+    } else if(selectedProblem.id==problems[1].id  && currentLang == "python"){
+      if (!userCode.trim().toLowerCase().includes("intakemotor")){
+        return ("Did you name your constant intakeMotor?")
+      }else if (!userCode.trim().toLowerCase().includes("__")){
+          return ("Did you add the Python version of private?")
+      }else if (!userCode.trim().toLowerCase().includes("3")){
+          return ("Is your TalonFX id 3??")
+      }else{
+        return ("Try again. You're close!")
+      }
+    } else if(selectedProblem.id==problems[2].id  && currentLang == "python"){
+      if (!userCode.trim().toLowerCase().includes("def")){
+        return ("Did you add use 'def'?")
+      }else if (!userCode.trim().toLowerCase().includes("self")){
+          return ("Did you add self?")
+      }else if (!userCode.trim().toLowerCase().includes("stopmotor")){
+          return ("Did you use stopMotor?")
+      }else if (!userCode.trim().toLowerCase().includes("stopintakemotor")){
+          return ("Did you name the method stopIntakeMotor?")
+      }else{
+        return ("Try again. You're close!")
+      }
+    } else if(selectedProblem.id==problems[0].id  && currentLang == "cpp"){
+      if (!userCode.trim().toLowerCase().includes("public")){
+        return ("Did you add public?")
+      }else if (!userCode.trim().toLowerCase().includes("static")){
+          return ("Did you add static?")
+      }else if (!userCode.trim().toLowerCase().includes("constexpr")){
+          return ("Did you add constexpr?")
+      }else if (!userCode.trim().toLowerCase().includes("double")){
+          return ("Did you use double?")
+      }else if (!userCode.trim().toLowerCase().includes("0.8")){
+          return ("Did you name set the speed 0.8;?")
+      }else{
+        return ("Try again. You're close!")
+      }
+    } else if(selectedProblem.id==problems[1].id  && currentLang == "cpp"){
+      if (!userCode.trim().toLowerCase().includes("private")){
+          return ("Did you add private?")
+      }else if (!userCode.trim().toLowerCase().includes("const")){
+          return ("Did you use const?")
+      }else if (!userCode.trim().toLowerCase().includes("intakeMotor")){
+          return ("Did you name the method intakeMotor?")
+      }else if (!userCode.trim().toLowerCase().includes("3")){
+          return ("Did you name the add {3}?")
+      }else{
+        return ("Try again. You're close!")
+      }
+    } else if(selectedProblem.id==problems[2].id  && currentLang == "cpp"){
+      if (!userCode.trim().toLowerCase().includes("void")){
+          return ("Did you add void?")
+      }else if (!userCode.trim().toLowerCase().includes("stopmotor")){
+          return ("Did you use StopMotor?")
+      }else if (!userCode.trim().toLowerCase().includes("stopintakemotor")){
+          return ("Did you name the method stopintakemotor?")
+      }else{
+        return ("Try again. You're close!")
       }
     } 
   }
