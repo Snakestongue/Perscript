@@ -256,12 +256,13 @@ a:visited, a:active, a:link{
   margin: 20px 30px;
   padding: 10px;
   background-color: #10121a;
-  border: 1px solid #23263a;
+  border: 1px solid #673498;
   border-radius: 10px;
   font-size: 14px;
 }
 pre{
   color:white !important;
+  border: none !important;
 }
 nav{
   display: none;
@@ -322,7 +323,8 @@ nav{
 }
 .tutCard{
   padding: 20px;
-  border: 1px solid #23263a;
+  font-size: 15px;
+  border: 1px solid #673498;
   border-radius: 10px;
   margin: 20px;
   color:rgb(131, 131, 131);
@@ -333,10 +335,8 @@ nav{
   list-style: none;
 }
 code{
-  background-color: black;
+  background-color: #181b28;
   color:rgb(131, 131, 131);
-  border: 1px solid rgb(45,45,45);
-  border-radius: 10px;
 }
 .sidebars{
   margin: 5px 0px;
@@ -350,6 +350,9 @@ code{
   color: #6b7280;
   margin: 14px 0px;
   padding: 2px;
+}
+.tutLang{
+  font-size: 16px;
 }
 @media (max-width:1100px){  
   #appJSX{
