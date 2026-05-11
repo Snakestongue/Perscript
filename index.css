@@ -1,11 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-body{
-  font-family: 'Rajdhani', sans-serif !important;
-}
-/*html, body {
+html, body {
   overflow-x: hidden;
 }
 body {
@@ -15,7 +9,7 @@ body {
   background: #0a0b0f;
 }
 #headerFPP{
-  font-family: 'Rajdhani', sans-serif; 
+  font-family: 'Rajdhani', sans-serif; /*Import above ^*/
   font-size: 28px;
   font-weight: 700;
   letter-spacing: 2px;
@@ -64,6 +58,12 @@ body {
 #divEditor:hover{
   border-color: #a855f7;
 }
+/* select{
+  color:white;
+  border-radius:10px; 
+  font-size:20px;
+  padding:5px;
+} */
 header{
   grid-area: header;
   height: 80px;
@@ -103,7 +103,7 @@ header{
   padding: 10px;
   margin-top: 10px;
 }
-#questionProgram{
+#questionProgram{/*, #sugLab{*/
   border: none;
   border-bottom: 1px solid #23263a;
   border-radius: 0;
@@ -168,6 +168,7 @@ button, .footerLinks, .headerLinks{
   align-items: center;  
   padding: 0 30px; 
   box-sizing: border-box; 
+  /* background-color: red; */
 }
 button{
   color: white;
@@ -305,6 +306,7 @@ nav{
   font-size: 18px;;
 }
 #sugSubmit{
+  /* min-width: 350px; */
   width: auto;
   margin: 30px 0px;
   text-align: center !important;
@@ -388,6 +390,7 @@ code{
   #f3{
     display: flex;
     flex-direction: column;
+    /* margin: auto; */
   }
   header ul li{
     font-size: 13px;
@@ -397,7 +400,8 @@ code{
     align-items: center;
     box-shadow: none;
     justify-content: center;
-    padding: 0 20px !important; 
+    padding: 0 20px !important;  /* was 0 !important */
+    /* border-bottom: 1px solid green; */
   }
 
   #imgHead{
@@ -416,7 +420,7 @@ code{
     left: 0;
     z-index: 1000;
     padding:5px 0px;
-    border-bottom: 1px solid #23263a; 
+    border-bottom: 1px solid #23263a;  /* was #a855f7, subtler */
      padding: 10px;
   }
   #navTitle{
@@ -436,11 +440,11 @@ code{
     justify-items: center;
     align-items: center;
   }
-  #buttonDiv #selectLang {
+  #buttonDiv #selectLang { /*Claude*/
     grid-column: 1 / -1;
   }
 
-  #buttonDiv #feedback {
+  #buttonDiv #feedback { /*Claude*/
     grid-column: 1 / -1;
   }
   #buttonDiv button{
@@ -448,6 +452,7 @@ code{
     width:85%;
   }
   #questionProgram, #sugLab{
+    /* font-size:12px; */
     width:80%;
     margin: auto;
     margin:20px auto;
@@ -612,4 +617,4 @@ code{
   to {
     transform: rotate(360deg);
   }
-} */
+}
