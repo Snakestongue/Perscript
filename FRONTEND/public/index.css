@@ -8,6 +8,10 @@ body {
   font-family: 'Rajdhani', sans-serif;
   background: #0a0b0f;
 }
+body{
+  padding-top: 25px;
+  padding-bottom: 0px;
+}
 #headerFPP{
   font-family: 'Rajdhani', sans-serif; /*Import above ^*/
   font-size: 28px;
@@ -43,7 +47,9 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin: 0px auto;
+  /* margin: 0px auto; */
+  width:90%;
+  margin: 0 auto;
 }
 #divEditor{
   margin: 0px; 
@@ -58,12 +64,6 @@ body {
 #divEditor:hover{
   border-color: #a855f7;
 }
-/* select{
-  color:white;
-  border-radius:10px; 
-  font-size:20px;
-  padding:5px;
-} */
 header{
   grid-area: header;
   height: 80px;
@@ -92,18 +92,17 @@ header{
 }
 #feedback{
   color:white;
-  border: 1px solid #a855f7;
+  border: 1px solid #452465;
   padding:10px;
   text-align: left;
   font-family: 'JetBrains Mono', monospace;
   font-size: 12px;
   color: #8892a4;
   border-radius: 10px;
-  border: 1px solid #a855f7;
   padding: 10px;
   margin-top: 10px;
 }
-#questionProgram{/*, #sugLab{*/
+#questionProgram, #sugLab{/*, #sugLab{*/
   border: none;
   border-bottom: 1px solid #23263a;
   border-radius: 0;
@@ -117,8 +116,15 @@ header{
   border-top-right-radius: 10px;  
   transition: all .5s;
 }
+#sugLab{
+  width: 100%;
+  margin-top: 25px;
+  border: 1px solid #23263a;
+  padding: 15px 5px !important;
+  border-color: #452465;
+}
 #selectLang{
-  border: 1px solid #673498; 
+  border: 1px solid #452465; 
   border-radius: 10px;
   color:white;
   text-align: center;
@@ -135,29 +141,28 @@ header{
 
 .headerLinks, .footerLinks{
   transition: .3s;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 600;
   letter-spacing: 0.5px;
   text-transform: uppercase;
-  min-width: unset;
-  padding: 7px 14px;
-  margin: 0 3px;
+  padding: 5px 2px !important;
+  margin: 0 5px !important;
   color:white;
   border-radius: 10px;
   text-decoration: none;
   border: 1px solid rgba(168,85,247,0.25);
-  min-width: unset !important;
-  padding: 5px 10px !important;
-  margin: 0 10px !important;
-
+  width: 175px;        
+  text-align: center;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+.footerLinks{
+  width:140px;
+  margin: 0px 25px !important;
 }
 #copy{
-  margin-left: 20px;
-}
-button, .footerLinks, .headerLinks{
-  min-width: 200px;
-  padding: 10px;
-  margin: 5px;
+  margin-left: 10px;
 }
 #buttonDiv{
   margin: 0px !important;
@@ -173,7 +178,7 @@ button, .footerLinks, .headerLinks{
 button{
   color: white;
   background-color: #10121a;
-  border: 1px solid #a855f7;
+  border: 1px solid #452465;
   border-radius: 8px;
   transition: .3s;
   text-decoration: none;
@@ -186,10 +191,15 @@ button{
   letter-spacing: 0.5px;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 5px;
+}
+svg{
+  width:15px;
+  height:auto;
+  padding: 0;
 }
 button#submit{
-  background: #a855f7;
+  background: #8241c0;
   border-color: #a855f7;
   color: #fff;
   text-align: center;
@@ -211,7 +221,7 @@ footer{
   grid-area: footer;
   background: #10121a;
   margin:0;
-  padding:30px 0px;
+  padding:5px 0px;
   width: 100%;     
   margin-top: 0px;
   z-index:1000;  
@@ -233,16 +243,15 @@ footer{
   color: white;
   margin: 30px auto;
   padding: 20px;
-  border: 1px solid #23263a;
+  border: 1px solid #452465;
   border-radius: 10px;
   width: 65%;
   max-width: 600px;
-  min-height: 65vh;     
+  min-height: 70vh;     
   background: #10121a;
 }
-body{
-  padding-top: 25px;
-  padding-bottom: 0px;
+#mainDivBug{
+  padding-top: 20px;
 }
 #TutMain, #PPO, #sugMain{
   padding-top: 75px !important;
@@ -253,12 +262,13 @@ a:visited, a:active, a:link{
 }
 .bQ{
   color:rgb(190, 190, 190);
-  margin: 20px 30px;
-  padding: 10px;
+  margin: 10px 20px;
+  padding: 15px;
   background-color: #10121a;
-  border: 1px solid #673498;
+  border: 1px solid #452465;
   border-radius: 10px;
   font-size: 14px;
+  height:27vh;
 }
 pre{
   color:white !important;
@@ -276,7 +286,7 @@ nav{
   align-items: center;
   margin: 0 autos;
   margin-top: 30px;
-  min-height: 75vh;
+  min-height: 80vh;
   
 }
 #choice{
@@ -288,32 +298,41 @@ nav{
   height: auto;
 }
 #sugDiv{
+  width:75%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin: 0 auto;
 }
 #sugInput{
-  width:50%;
+  width: 100%;
   height:65vh;
-  margin-top: 20px;
+  margin-top: 0px;
   background-color: #10121a;
   color: white;
   overflow-y: auto;
   border: 1px solid #23263a;
-  padding: 10px;
-  border-radius: 10px;
-  font-size: 18px;;
+  padding: 5px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  font-size: 15px;
+  transition: .5s;
+}
+#sugInput:hover{
+  border-top: 1px solid #a855f7;
+  border-bottom: 1px solid #a855f7;
 }
 #sugSubmit{
-  /* min-width: 350px; */
-  width: auto;
-  margin: 30px 0px;
-  text-align: center !important;
-}
-#sugLab{
-  color:white;
-  margin-top: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 30px auto;
+  padding: 15px 35px !important;
+  border: 1px solid #452465;
+  padding: 10px 0px !important;
+  font-size: 14px;
 }
 #ATC{
   display:grid;
@@ -324,7 +343,7 @@ nav{
 .tutCard{
   padding: 20px;
   font-size: 15px;
-  border: 1px solid #673498;
+  border: 1px solid #452465;
   border-radius: 10px;
   margin: 20px;
   color:rgb(131, 131, 131);
@@ -386,6 +405,7 @@ code{
     width:85%;
     font-size:14px !important;
     margin: 5px 0px;
+    height:20vh;
   }
   #f3{
     display: flex;
@@ -458,12 +478,6 @@ code{
     margin:20px auto;
     
   }
-  .footerLinks, .headerLinks {
-    flex: unset;
-    text-align: center;
-    margin: 0px 5px;
-    padding: 10px;
-  }
   nav, #newHeaderList, footer{
     padding: 10px 0px;
     margin: 0px;
@@ -483,6 +497,7 @@ code{
   }
   #PP{
     height:75vh;
+    font-size:13px;
   }
   body{
     overflow-y: auto;
@@ -495,10 +510,6 @@ code{
   #copy{
     font-size:10px;
     margin-top: 30px;
-  }
-
-  #PP{
-    font-size: 13px;
   }
   #sugLab{
     font-size: 13px;
@@ -525,7 +536,7 @@ code{
   width:16px;
   height: 16px;
   border: 3px solid black;
-  border-top: 3px solid #673498;
+  border-top: 3px solid #a855f7;
   border-radius: 50%;
   display: inline-block;
   margin-left: 8px;
@@ -540,18 +551,19 @@ code{
     gap: 10px;
     margin: 0 auto !important;
   }
-  button, .footerLinks{
+  button{
     margin: 5px;  
     width: 5%;
     max-width: 260px;
     min-width: none;
   }
-  .headerLinks {
+  .headerLinks, .footerLinks {
     margin: 0px 4px;
     min-width: unset;
     width: auto;
     padding:10px;
     font-size: 12px;
+    padding: 5px !important  ;
   }
   nav, #newHeaderList{
     padding: 7px 0px;
@@ -592,17 +604,12 @@ code{
     width: auto;
     min-width: unset;
   }
-  .headerLinks {
-    padding: 0px;
-    margin: 0px;
-    font-size: 11px;
-  }
   #headerFPP{
     font-size: 25px;
     text-align: left;
   }
   #PP{
-    min-height: 95vh;
+    height: 25vh !important;
   }
 }
 @media (max-width:400px){
