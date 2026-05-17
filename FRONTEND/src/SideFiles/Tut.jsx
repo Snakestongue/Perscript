@@ -3,7 +3,7 @@ function Tut(){
     return (
         <div id="TutMain">
         <header>
-            <p id="headerFPP"><span>FRC</span> Programming Practice</p>
+            <Link to="/"><p id="headerFPP"><span>FRC</span> Programming Practice</p></Link>
             <ul id="headerList">
                 <li><Link to="/" className="headerLinks">Programming Practice</Link></li>
                 <li><Link to="/debug" className="headerLinks">Debugging Practice</Link></li>
@@ -20,8 +20,8 @@ function Tut(){
       </nav>
             <div id="ATC">
                 <div id="javaStart" className="tutCard">
-                    <h2><strong>Basics</strong></h2>
-                    <h4>Variables</h4>
+                    <h2 class="tutHead">Basics</h2>
+                    <h4 class="tutHeader">Variables</h4>
                     <ul>
                         <li><strong>Integer:</strong> A whole number: 1, 2, 3</li>
                         <li><strong>Double:</strong> A decimal Value: 3.1415, 1.2345, 5.4</li>
@@ -29,8 +29,7 @@ function Tut(){
                         <li><strong>String:</strong> A piece of text: "abc"</li>
                         <li><strong>Char:</strong> A single character: 'a'</li>
                     </ul>
-                    <h4>Declare and Initalize a Variable</h4>
-                    {/* <h6 class="tutLang">Java</h6> */}
+                    <h4 class="tutHeader">Declare and Initalize a Variable</h4>
                     <ul>
                         <li class="tutLang"><b>Java</b></li>
                         <ul>
@@ -57,7 +56,7 @@ function Tut(){
                             <li><strong>Char:</strong> b = 'a';</li>
                         </ul>
                     </ul>
-                    <h4>Maths</h4>
+                    <h4 class="tutHeader">Math</h4>
                     <ul>
                         <li><strong>Addition:</strong> Use +</li>
                         <li><strong>Subtraction:</strong> Use -</li>
@@ -71,7 +70,7 @@ function Tut(){
                         <li><strong>Multiplication/Equal:</strong> Use *=</li>
                         <li><strong>Division/Equal:</strong> Use /=</li>
                     </ul>
-                    <h4>Comparison Operators</h4>
+                    <h4 class="tutHeader">Comparison Operators</h4>
                     <ul>
                         <ul>
                             <li><strong>Equal to:</strong> Use ==</li>
@@ -82,7 +81,7 @@ function Tut(){
                             <li><strong>Less than or Equal to:</strong> Use &lt;=</li>
                         </ul>
                     </ul>
-                    <h4>Comparison Operators</h4>
+                    <h4 class="tutHeader">Logical Operators</h4>
                     <ul>
                         <li class="tutLang"><b>Java/C++</b></li>
                         <ul>
@@ -98,9 +97,9 @@ function Tut(){
                         </ul>
                     </ul>
 
-                    <h4>Java and C++ If Statements</h4>
+                    <h4  class="tutLang">Java and C++</h4>
                     <ul>
-                        <li><strong>If</strong></li>
+                        <li class="tutTitle">If</li>
                                 <pre>
                                     <code>
 {`if (x > y) {
@@ -108,7 +107,7 @@ function Tut(){
 }`}
                                     </code>
                                 </pre>
-                        <li><strong>If-Else</strong></li>
+                        <li class="tutTitle">If-Else</li>
                                 <pre>
                                     <code>
 {`if (x > y) {
@@ -118,7 +117,7 @@ function Tut(){
 }`}
                                     </code>
                                 </pre>
-                        <li><strong>If-Else If-Else</strong></li>
+                        <li class="tutTitle">If Else-If Else</li>
                                 <pre>
                                     <code>
 {`if (x > y) {
@@ -134,18 +133,18 @@ function Tut(){
 
 
 
-                    <h4>Python If Statements</h4>
-                    <p><i>Parenthesis are <b>OPTIONAL</b> in Python.</i></p>
-                    <p><i>Tab is (indentation) <b>REQUIRED</b> in Python.</i></p>
+                    <h4 class="tutLang">Python</h4>
+                    <p class="fs"><i>Parenthesis are <b>OPTIONAL</b> in Python.</i></p>
+                    <p class="fs"><i>Tab is (indentation) <b>REQUIRED</b> in Python.</i></p>
                     <ul>
-                        <li><strong>If</strong></li>
+                        <li class="tutTitle">If</li>
                                 <pre>
                                     <code>
 {`if (x > y):
     return 1`}
                                     </code>
                                 </pre>
-                        <li><strong>If-Else</strong></li>
+                        <li class="tutTitle">If-Else</li>
                                 <pre>
                                     <code>
 {`if (x > y):
@@ -155,7 +154,7 @@ else:
 }`}
                                     </code>
                                 </pre>
-                        <li><strong>If-Else If-Else</strong></li>
+                        <li class="tutTitle">If-Else If-Else</li>
                                 <pre>
                                     <code>
 {`if (x > y):
@@ -170,8 +169,8 @@ else:
                     </ul>
                 </div>
                 <div id="javaAdvance" className="tutCard">
-                    <h2><strong>Advanced</strong></h2>
-                    <h4>Classes</h4>
+                    <h2 class="tutHead">Advanced</h2>
+                    <h4 class="tutHeader">Classes</h4>
                     <ul>
                         <li>A class is a blueprint for creating objects.</li>
                         <li>A class's name must match the file name. (Java Only)</li>
@@ -187,51 +186,55 @@ else:
                             <li>Private: Add _ or __ before variable name</li>
                         </ul>
                     </ul>
-                    <h4>Objects</h4>
+                    <hr></hr>
+                    <h4 class="tutHeader">Objects</h4>
                     <ul>
                         <li>An object is an instance of a class</li>
-                        <li>Java Formula</li>
+                        <li class="tutLang">Java</li>
                                 <pre>
                                     <code>
 {`Class objectName = new Class()`}
                                     </code>
                                 </pre>
-                        <li>C++ Formula</li>
+                        <li class="tutLang">C++</li>
                                 <pre>
                                     <code>
 {`Class objectName;`}
                                     </code>
                                 </pre>
-                        <li>Python Formula</li>
+                        <li class="tutLang">Python</li>
                                 <pre>
                                     <code>
 {`objectName = Class()`}
                                     </code>
                                 </pre>
                     </ul>
-                    <h4>Dot Operator</h4>
+                    <hr></hr>
+                    <h4 class="tutHeader">Dot Operator</h4>
                     <ul>
                         <li>Used to access data inside an object.</li>
-                        <li>Java/C++ Formula</li>
+                        <li class="tutLang">Java/C++</li>
                                 <pre>
                                     <code>
 {`objectName.width = 100;`}
                                     </code>
                                 </pre>
-                        <li>Python Formula</li>
+                        <li class="tutLang">Python</li>
                                 <pre>
                                     <code>
 {`objectName.width = 100`}
                                     </code>
                                 </pre>
                     </ul>
-                    <h4>Attributes</h4>
+                    <hr></hr>
+                    <h4 class="tutHeader">Attributes</h4>
                     <ul>
                         <li>Any variables declared within a class, but outside a method or constructor.</li>
                         <li>Also called fields or instance variables.</li>
                         <li>Can be accessed by an object & dot operator</li>
                     </ul>
-                    <h4>Methods</h4>
+                    <hr></hr>
+                    <h4 class="tutHeader">Methods</h4>
                     <ul>
                         <li>Methods are blocks of code performing a specific task.</li>
                         <li>Parts of a method</li>
@@ -243,7 +246,7 @@ else:
                             </ul>
                             <li><strong>Method Name:</strong> Name of Method</li>
                             <li><strong>Parameters:</strong> Input values a method can take in (optional)</li>
-                            <li>Java Formula</li>
+                            <li class="tutLang">Java</li>
                                     <pre>
                                         <code>
 {`public int add (int a, int b) {
@@ -251,7 +254,7 @@ else:
 }`}
                                         </code>
                                     </pre>
-                            <li>C++ Formula</li>
+                            <li class="tutLang">C++</li>
                                     <pre>
                                         <code>
 {`public:
@@ -260,7 +263,7 @@ else:
     }`}
                                         </code>
                                     </pre>
-                            <li>Python Formula</li>
+                            <li class="tutLang">Python</li>
                                     <pre>
                                         <code>
 {`def add(self, a, b):
@@ -268,10 +271,11 @@ else:
                                         </code>
                                     </pre>
                         </ul>
-                        <li>Static Methods</li>
+                        <hr></hr>
+                        <li class="tutHeader">Static Methods</li>
                         <ul>
                             <li>Static methods can be called without an object.</li>
-                            <li>Java Formula</li>
+                            <li class="tutLang">Java</li>
                                     <pre>
                                         <code>
 {`public static void myStaticMethod() {
@@ -279,7 +283,7 @@ else:
 }`}
                                         </code>
                                     </pre>
-                                <li>C++ Formula</li>
+                                <li class="tutLang">C++</li>
                                     <pre>
                                         <code>
 {`public:
@@ -288,7 +292,7 @@ else:
     }`}
                                         </code>
                                     </pre>
-<li>Python Formula</li>
+                                <li class="tutLang">Python</li>
                                     <pre>
                                         <code>
 {`@staticmethod
@@ -299,12 +303,13 @@ else:
                             <li><i>Most FRC methods are <b>NOT</b> static.</i></li>
                         </ul>
                     </ul>
-                    <h4>Constructor</h4>
+                    <hr></hr>
+                    <h4 class="tutHeader">Constructor</h4>
                     <ul>
                         <li>A special method with the same name as the class</li>
                         <li>It is used to initialize objects.</li>
                         <li>They don't have any return type</li>
-                        <li>Java Formula</li>
+                        <li class="tutLang">Java</li>
                                 <pre>
                                     <code>
 {`public class Intake {
@@ -315,7 +320,7 @@ else:
 }`}
                                     </code>
                                 </pre>
-                        <li>C++ Formula</li>
+                        <li class="tutLang">C++</li>
                                 <pre>
                                     <code>
 {`class Intake {
@@ -327,7 +332,7 @@ public:
 };`}
                                     </code>
                                 </pre>
-                        <li>Python Formula</li>
+                        <li class="tutLang">Python</li>
                                 <pre>
                                     <code>
 {`class Intake:
@@ -352,9 +357,9 @@ public:
             </div>
             <footer>
                 <div id="newFooterDiv">
-                    <Link id="PPLINK" to="/PP" className="footerLinks" >Privacy Policy</Link>
-                    <Link id="Sug" to="/Sug" className="footerLinks" >Add a suggestion</Link>
-                    <a id="git" className="footerLinks" href="https://github.com/Snakestongue/FRC-Programming-Practice">Github</a>
+                <Link id="PPLINK" to="/PP" className="footerLinks" >Privacy Policy</Link>
+                <Link id="Sug" to="/Sug" className="footerLinks" >Add a suggestion</Link>
+                <a id="git" className="footerLinks" href="https://github.com/Snakestongue/FRC-Programming-Practice">Github</a>
                 </div>
                 <p style={{color:"white"}} id="copy">© By Snakestongue. All rights reserved.</p>
             </footer>

@@ -7,7 +7,7 @@ function Bug(){
   return(
   <div id="mainDivBug">
       <header>
-        <p id="headerFPP"><span>FRC</span> Programming Practice</p>
+        <Link to="/"><p id="headerFPP"><span>FRC</span> Programming Practice</p></Link>
         <ul id="headerList">
             <li><Link to="/" className="headerLinks">Programming Practice</Link></li>
             <li><Link to="/debug" className="headerLinks">Debugging Practice</Link></li>
@@ -22,7 +22,11 @@ function Bug(){
         <li><Link to="/tut" className="headerLinks">Tutorials</Link></li>
       </ul>
     </nav>
+    <div class="bugLangDiv">
+      <p class="bugLang" id="bugTop">Java</p>
+    </div>
     <div id="f3">
+      
       {problems.map((p)=>{
         const choices = [p.choice1, p.choice2, p.choice3]
         const userChoice = selectedChoices[p.id]
@@ -37,7 +41,9 @@ function Bug(){
             feedbackColor = "red"
           }
         }
+        
         return(
+          
           <div className="bQ" key={p.id}>
             <p>{p.question}</p>
             <pre>{p.sampleCode}</pre>{/** keeps format same (\n)*/}
@@ -48,12 +54,12 @@ function Bug(){
               name={`problem-${p.id}`}
               value={choice}
               checked={selectedChoices[p.id]== choice}
-              onChange={(r)=>setSelectedChoices({...selectedChoices, [p.id]: r.target.value,})}//this line was all AI
+              onChange={(r)=>setSelectedChoices({...selectedChoices, [p.id]: r.target.value,})}//this line was AI
               />
               {choice}
             </label>
             ))}
-            {userChoice && (<p style={{color: feedbackColor}}>{feedbackText}</p>)}
+            {userChoice && (<p className={userChoice == p.CC? "correctFeedback" : "incorrectFeedback"}>{feedbackText}</p>)}
           </div>
           )
       })}
