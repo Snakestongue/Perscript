@@ -144,16 +144,18 @@ function Program(){
   return (
     <div id="appJSX" >
       <header>
+            {/* <img src={frcImg} id="imgHead" /> */}
             <Link to="/"><p id="headerFPP"><span>FRC</span> Programming Practice</p></Link>
             <ul id="headerList">
-                <li><Link to="/" className="headerLinks">Programming Practice</Link></li>
+                {/* <li><Link to="/" className="headerLinks">Home</Link></li> */}
+                <li><Link to="/program" className="headerLinks">Programming Practice</Link></li>
                 <li><Link to="/debug" className="headerLinks">Debugging Practice</Link></li>
                 <li><Link to="/tut" className="headerLinks">Tutorials</Link></li>
             </ul>
       </header>
       <nav>
         <ul id="newHeaderList">
-          <li><Link to="/" className="headerLinks">Programming Practice</Link></li>
+          <li><Link to="/program" className="headerLinks">Programming Practice</Link></li>
           <li><Link to="/debug" className="headerLinks">Debugging Practice</Link></li>
           <li><Link to="/tut" className="headerLinks">Tutorials</Link></li>
         </ul>
