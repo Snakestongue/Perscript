@@ -2,7 +2,7 @@
     {
         "id":"B1",
         "question":"What is the error in the following code?",
-        "sampleCode":"public class Constants {\nprivate static double MAX_DRIVE_SPEED = 0.8;\n}",
+        "sampleCode":"public class Constants {\n\tprivate static double MAX_DRIVE_SPEED = 0.8;\n}",
         "choice1":"Needs public instead of private.",
         "choice2":"Static must be removed.",
         "choice3":"Double must be a different type.",
@@ -12,7 +12,7 @@
     {
         "id":"B2",
         "question":"What is the error in the following code?",
-        "sampleCode":"public Command startIntake() { \nrun(() -> intakeMotor.set(1));\n}",
+        "sampleCode":"public Command startIntake() { \n\t   run(() -> intakeMotor.set(1));\n}",
         "choice1":"Lambda is not required",
         "choice2":"Missing return statement.",
         "choice3":"Motor speed cannot be set to 1.",
@@ -22,7 +22,7 @@
     {
         "id":"B3",
         "question":"What is the error in the following code?",
-        "sampleCode":"public Command stopIntake() { \nreturn run(() -> intakeMotor.stopMotor();\n}",
+        "sampleCode":"public Command stopIntake() {\n\treturn run(() -> intakeMotor.stopMotor());\n}",
         "choice1":"Must use set(0) instead.",
         "choice2":"Must use runOnce.",
         "choice3":"Should not be a Command, must be a method.",
@@ -32,13 +32,91 @@
     {
         "id":"B4",
         "question":"What is the error in the following code?",
-        "sampleCode":"public void stopIntake(){\nreturn runOnce(() -> intakeMotor.stopMotor());\n}",
+        "sampleCode":"public void stopIntake(){\n\t return runOnce(() -> intakeMotor.stopMotor());\n}",
         "choice1":"Must include static",
         "choice2":"Must use run instead",
         "choice3":"There is void.",
         "CC":"There is void.",
         "whyCorrect":"Using void means the method does NOT return anything. In this code we DO return something. This format is also for a Command instead of void."
+    },
+    {
+        "id":"B5",
+        "question":"What is the error in the following code?",
+        "sampleCode":"class Constants:\n\tMAX_DRIVE_SPEED == 0.8",
+        "choice1":"Variable name should not be uppercase.",
+        "choice2":"Uses == instead of =",
+        "choice3":"Classes cannot contain constants",
+        "CC":"Uses == instead of =",
+        "whyCorrect":"By using ==, you are comparing the 2 values, not setting the value of 0.8 to the variable"
+    },
+    {
+        "id":"B6",
+        "question":"What is the error in the following code?",
+        "sampleCode":"def start_intake():\n\tself.intake_motor.set(1)",
+        "choice1":"Needs a return statement",
+        "choice2":"Motor speed should be a boolean",
+        "choice3":"Should have self as a parameter",
+        "CC":"Should have self as a parameter",
+        "whyCorrect":"Since self is used, it must be passed through in the function"
+    },
+    {
+        "id":"B7",
+        "question":"What is the error in the following code?",
+        "sampleCode":"from commands2.button import JoystickButton;\ndef configureBindings(self):\n\tstop_button = XBOXButton(self.controller, 2);\n\tstop_button.onTrue(self.stopIntakeCommand())",
+        "choice1":"2 is not allowed as a port",
+        "choice2":"OnTrue is not allowed.",
+        "choice3":"XBOX button does not match import",
+        "CC":"XBOX button does not match import",
+        "whyCorrect":"If you are using XBOX controller, import CommandXboxController. If you are using a joystick, use JoystickButton. "
+    },
+    {
+        "id":"B8",
+        "question":"What is the error in the following code?",
+        "sampleCode":"def keepRunning(self):\n\ttry:\n\t\tself.motor.setSpeed(0.5)\n\tfinally:\n\t\tself.motor.setSpeed(0.0)\n\t\tprint(\"Motor stopped safely\")",
+        "choice1":"Setspeed is not real",
+        "choice2":"Requires try/except instead",
+        "choice3":"Should use stopMotor() instead",
+        "CC":"Setspeed is not real",
+        "whyCorrect":"No such thing as setspeed. Use documentation if you're unsure."
+    },
+{
+        "id":"B9    ",
+        "question":"What is the error in the following code?",
+        "sampleCode":"class Constants {\n\tpublic:\n\t\tstatic constexpr void MAX_DRIVE_SPEED = 0.8;\n};",
+        "choice1":"Constexpr is not supposed to be used.",
+        "choice2":"Void is used.",
+        "choice3":"Constants shouldn't be static",
+        "CC":"Void is used.",
+        "whyCorrect":"By using void, you aren't able to have a value. Use double instead. "
+    },
+    {
+        "id":"B10",
+        "question":"What is the error in the following code?",
+        "sampleCode":"public:\nstopIntakeMotor() {\n\t\tintakeMotor.stopMotor();\n\t}",
+        "choice1":"Needs void.",
+        "choice2":"Must be private",
+        "choice3":"Should return a value",
+        "CC":"Needs void.",
+        "whyCorrect":"Since we are stopping a motor, nothing should be returned and therefore void is needed."
+    },
+    {
+        "id":"B11",
+        "question":"What is the error in the following code?",
+        "sampleCode":"public class Intake : frc2::SubsystemBase {\nprivate:\n\tconst TalonFX intakeMotor{3};\n};",
+        "choice1":"Class should be private",
+        "choice2":"TalonFX should be declared as public",
+        "choice3":"You do not put public in front of class.",
+        "CC":"You do not put public in front of class.",
+        "whyCorrect":"Public does not go in front of class, it goes in front of :. "
+    },
+    {
+        "id":"B12",
+        "question":"What is the error in the following code?",
+        "sampleCode":"double IntakeSubsystem::stopIntake() {\n\tm_motor.StopMotor();\n}",
+        "choice1":"Should remove double",
+        "choice2":"IntakeSubsystem::stopIntake() is invalid syntax",
+        "choice3":"StopMotor() is invalid",
+        "CC":"Should remove double",
+        "whyCorrect":"Since you are stopping a motor, nothing should be returned, therefore needing void."
     }
-
-
 ]

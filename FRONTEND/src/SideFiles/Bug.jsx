@@ -24,13 +24,13 @@ function Bug(){
         </ul>
       </nav>
     <div class="bugLangDiv">
-      <p class="bugLang" id="bugTop">Java</p>
     </div>
-    <div id="f3">
-      
-      {problems.map((p)=>{
-        const choices = [p.choice1, p.choice2, p.choice3]
-        const userChoice = selectedChoices[p.id]
+    <div id="f3">  
+      {problems.map((p, index)=>{
+        let languages = ["Java", "Python", "C++"];
+        let lang = languages[Math.floor(index / 4) % languages.length];
+        let choices = [p.choice1, p.choice2, p.choice3]
+        let userChoice = selectedChoices[p.id]
         let feedbackText = ""
         let feedbackColor = "";
         if (userChoice){
@@ -42,12 +42,18 @@ function Bug(){
             feedbackColor = "red"
           }
         }
-        
         return(
+          <> {/** <> was AI */}
+          {index %4 ==0 &&(
+            <div className="bugLangDiv">
+              <p className="bugLang">{lang}</p>
+            </div>
+          )}
           
           <div className="bQ" key={p.id}>
+              
             <p>{p.question}</p>
-            <pre>{p.sampleCode}</pre>{/** keeps format same (\n)*/}
+            <pre id="sample">{p.sampleCode}</pre>{/** keeps format same (\n)*/}
             {choices.map((choice, index)=>(
             <label key={index} style={{display: "block"}}>
               <input
@@ -62,9 +68,11 @@ function Bug(){
             ))}
             {userChoice && (<p className={userChoice == p.CC? "correctFeedback" : "incorrectFeedback"}>{feedbackText}</p>)}
           </div>
+          </>
           )
       })}
     </div>
+    
     <footer>
         <div id="newFooterDiv">
           <Link id="PPLINK" to="/PP" className="footerLinks" >Privacy Policy</Link>
