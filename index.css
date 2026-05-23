@@ -40,9 +40,6 @@ body{
   opacity: 1;
   text-decoration: underline dashed rgb(42, 52, 68);
   text-underline-offset: 6px;
-  /* border: 1px dashed #6366F1;
-  padding: 5px;
-  border-radius: 10px; */
 }
 #headerFPP:hover{
   text-decoration: underline dashed rgb(122, 173, 255);
@@ -89,7 +86,6 @@ body{
 }
 #divEditor:hover{
   border-color: rgb(122, 173, 255);
-  /* cursor: pointer; */
 }
 header{
   grid-area: header;
@@ -183,8 +179,6 @@ option{
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  /* border-top-left-radius: 10px;
-  border-bottom-right-radius: 10px; */
   border: 1px solid rgb(42, 52, 68);
   border-radius: 4px;
   padding: 5px;
@@ -380,7 +374,7 @@ nav{
   margin: 0 auto;
 }
 #f3 > .bugLangDiv {
-  grid-column: 1 / -1;  /* span all columns */
+  grid-column: 1 / -1;  /*AI*/
 }
 #choice{
   display: flex;
@@ -511,7 +505,7 @@ hr{
   padding: 5px 15px;
   white-space: nowrap;
 }
-.bugLangDiv::after{ /*AI did ::after*/
+.bugLangDiv::after{ /*AI*/
   content: '';
   flex: 1;
   height: 1px;
@@ -600,9 +594,8 @@ a{
   border: 1px solid rgba(255,255,255,0.08);
   background: rgba(255,255,255,0.03);
   color: #A1A1AA;
-
-  display: inline-block; /* ADD THIS */
-  width: fit-content;    /* ADD THIS */
+  display: inline-block; 
+  width: fit-content;  
   align-self: flex-start;
 }
 #colorTut, #tutsvg{
@@ -686,16 +679,11 @@ a{
     font-size:14px !important;
     margin: 5px 0px;
     height:45vh !important;
-    /* display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center; */
     margin: 0 auto;
   }
   #f3{
     display: flex;
     flex-direction: column;
-    /* margin: auto; */
   }
   header ul li{
     font-size: 13px;
@@ -705,7 +693,7 @@ a{
     align-items: center;
     box-shadow: none;
     justify-content: center;
-    padding: 0 20px !important;  /* was 0 !important */
+    padding: 0 20px !important;
   }
   #imgHead{
     width:75%;
@@ -724,7 +712,7 @@ a{
     z-index: 1000;
     padding:5px 0px;
     border-bottom: 1px solid rgba(255,255,255,0.08);
-     padding: 10px;
+    padding: 10px;
   }
   #navTitle{
     color:#fff;
@@ -743,11 +731,11 @@ a{
     justify-items: center;
     align-items: center;
   }
-  #buttonDiv #selectLang { /*Claude*/
+  #buttonDiv #selectLang { /*AI*/
     grid-column: 1 / -1;
   }
 
-  #buttonDiv #feedback { /*Claude*/
+  #buttonDiv #feedback { /*AI*/
     grid-column: 1 / -1;
   }
   #buttonDiv button{
@@ -755,7 +743,6 @@ a{
     width:85%;
   }
   #questionProgram{
-    /* font-size:12px; */
     width:80%;
     margin: auto;
     margin:20px auto;
@@ -810,16 +797,19 @@ a{
   }
 }
 
+
 .spinner {
   width:16px;
   height: 16px;
   border: 3px solid black;
-  border-top: 3px solid rgb(122, 173, 255)  ;
+  border-top: 3px solid rgb(122, 173, 255);
   border-radius: 50%;
   display: inline-block;
   margin-left: 8px;
   animation:spin 0.8s linear infinite;
 }
+
+
 @media (max-width:600px){
   #buttonDiv{
     display: flex;
@@ -841,7 +831,7 @@ a{
     width: auto;
     padding:10px;
     font-size: 12px;
-    padding: 5px !important  ;
+    padding: 5px !important;
   }
   nav, #newHeaderList{
     padding: 7px 0px;
@@ -872,7 +862,6 @@ a{
   }
   .bQ{
     font-size:12px !important;
-    /* height:33vh !important; */
   }
   code{
     font-size: 12px;
@@ -904,7 +893,6 @@ a{
   }
   .tutCard{
     min-width: 0;
-    /* width:80% */
   }
   #PP{
     font-size: 14px;
@@ -924,6 +912,8 @@ a{
     font-size: 20px;
   }
 }
+
+
 @keyframes spin {
   to {
     transform: rotate(360deg);
