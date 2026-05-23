@@ -166,33 +166,35 @@ function Program(){
           <Editor
             height="100%"
             language={currentLang}
-            theme="purpleTheme"
+            theme="themes"
             value={userCode}
             onChange={(value)=>setUserCode(value)} 
             id="editor"
             onMount={(editor, monaco) => {
-              monaco.editor.defineTheme("purpleTheme", {
+              monaco.editor.defineTheme("themes", {
                 base: "vs-dark",
                 inherit: true,
-               rules:[
-                {token:"keyword", foreground: "#6366F1"   },  
-                {token: "number",foreground: "#22D3EE"},
-                {token: "string", foreground: "#34D399" },    
-                {token: "comment",foreground: "#6B7280"} ,
-              ],
+                rules:[
+                  { token: "keyword", foreground: "#7AADFF" },   
+                  {token:"number",  foreground: "#22D3EE" },
+                  {token: "string",  foreground: "#34D399" }, 
+                  {token: "comment", foreground: "#6B7280" }
+                ],
                 colors: {
-                  "editor.background": "#0B1020",              
-                  "editor.foreground": "#E5E7EB",           
-                  "editorCursor.foreground": "#6366F1",       
-                  "editor.lineHighlightBackground": "#111827",
-                  "editor.selectionBackground": "#6366F140",
-                  "editorLineNumber.foreground": "#4B5563", 
+                  "editor.background": "#13191F",
+                  "editor.foreground": "#E5E7EB",
+                  "editorCursor.foreground": "#7AADFF",
+                  "editor.lineHighlightBackground": "#111A2E",
+                  "editor.selectionBackground": "#7AADFF22",
+                  "editor.selectionHighlightBackground": "#7AADFF14",
+                  "editorLineNumber.foreground": "#4B5563",
                   "editorLineNumber.activeForeground": "#9CA3AF",
-                  "editorBracketHighlight.foreground1": "#22D3EE",
+                  "editorBracketHighlight.foreground1": "#7AADFF",
+                  "editorBracketHighlight.foreground2": "#22D3EE",
+                  "editorBracketHighlight.foreground3": "#34D399",
                 }
               });
-
-              monaco.editor.setTheme("purpleTheme");
+              monaco.editor.setTheme("themes");
             }}
             />
         </div>

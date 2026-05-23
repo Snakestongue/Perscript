@@ -26,7 +26,7 @@ function App(){
           <p class="homeFade" id="FFRT">For FRC Robotics Teams</p>
           <h2 id="LTCR">Learn to code robots.</h2>
           <h2 id="PUIC">Practice until it clicks.</h2>
-          <h5 class="homeFade">Java exercises, debugging challenges, and tutorials built specifically for FIRST Robotics Competition programming.</h5>
+          <h5 class="homeFade">Java, Python and C++ exercises, debugging challenges, and tutorials built specifically for FIRST Robotics Competition programming.</h5>
           <div id="buttonRowHome">
             <Link to="/program"><button class="homeButtons">Start Practicing</button></Link>
             <Link to="/tut"><button class="homeButtons">Browse Tutorials</button></Link>

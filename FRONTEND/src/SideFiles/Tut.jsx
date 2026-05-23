@@ -32,7 +32,7 @@ function Tut(){
                     </ul>
                     <h4 class="tutHeader">Declare and Initalize a Variable</h4>
                     <ul>
-                        <li class="tutLang"><b>Java</b></li>
+                        <li class="tutLang">Java</li>
                         <ul>
                             <li><strong>Integer:</strong> int x = 5;</li>
                             <li><strong>Double:</strong> double y = 5.5;</li>
@@ -40,7 +40,7 @@ function Tut(){
                             <li><strong>String:</strong> String a = "abc";</li>
                             <li><strong>Char:</strong> char b = 'a';</li>
                         </ul>
-                        <li class="tutLang"><b>C++</b></li>
+                        <li class="tutLang">C++</li>
                         <ul>
                             <li><strong>Integer:</strong> int x = 5;</li>
                             <li><strong>Double:</strong> double y = 5.5;</li>
@@ -48,7 +48,7 @@ function Tut(){
                             <li><strong>String:</strong> std::string a = "abc";</li>
                             <li><strong>Char:</strong> char b = 'a';</li>
                         </ul>
-                        <li class="tutLang"><b>Python</b></li>
+                        <li class="tutLang">Python</li>
                         <ul>
                             <li><strong>Integer:</strong> x = 5;</li>
                             <li><strong>Double:</strong> y = 5.5;</li>
@@ -84,13 +84,13 @@ function Tut(){
                     </ul>
                     <h4 class="tutHeader">Logical Operators</h4>
                     <ul>
-                        <li class="tutLang"><b>Java/C++</b></li>
+                        <li class="tutLang">Java/C++</li>
                         <ul>
                             <li><strong>And:</strong> Use &&</li>
                             <li><strong>Or:</strong> Use ||</li>
                             <li><strong>Not:</strong> Use !</li>
                         </ul>
-                        <li class="tutLang"><b>Python</b></li>
+                        <li class="tutLang">Python</li>
                         <ul>
                             <li><strong>And:</strong> Use and</li>
                             <li><strong>Or:</strong> Use or</li>
