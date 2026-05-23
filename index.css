@@ -919,3 +919,94 @@ a{
     transform: rotate(360deg);
   }
 }
+
+
+
+/*
+JSON
+},
+  {
+    "id": 4,
+    "title": "Create an Intake",
+    "description": "Create a method called stopIntakeMotor. The method should must stop the motor named intakeMotor using the appropriate motor function (do not set the motor speed to 0).",
+    "starterCode": {
+      "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix.motorcontrol.can.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class Intake extends SubsystemBase{\n   //Write code here and remove this comment.\n}",
+      "python": "from ctre import TalonFX\nfrom wpilib2.command import SubsystemBase\nclass Intake(SubsystemBase):\n    #Write code here and remove this comment.",
+      "cpp": "#include <ctre/phoenix/motorcontrol/can/TalonFX.h>\n#include <frc2/command/SubsystemBase.h>\nclass Intake : public frc2::SubsystemBase {\n    public:\n      //Write code here and remove this comment.\n};"
+    },
+    "solutionCode": {
+      "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix.motorcontrol.can.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class Intake extends SubsystemBase{\n    public void stopIntakeMotor(){\n        intakeMotor.stopMotor();\n    }\n}",
+      "python": "from ctre import TalonFX\nfrom wpilib2.command import SubsystemBase\nclass Intake(SubsystemBase):\n    def stopIntakeMotor(self):\n        intakeMotor.stopMotor()",
+      "cpp": "#include <ctre/phoenix/motorcontrol/can/TalonFX.h>\n#include <frc2/command/SubsystemBase.h>\nclass Intake : public frc2::SubsystemBase {\n    public:\n       void stopIntakeMotor() { \n           intakeMotor.StopMotor(); \n   } \n};"
+    }
+  },
+  {
+    "id": 5,
+    "title": "Create an Outake",
+    "description": "Create a method called stopIntakeMotor. The method should must stop the motor named intakeMotor using the appropriate motor function (do not set the motor speed to 0).",
+    "starterCode": {
+      "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix.motorcontrol.can.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class Intake extends SubsystemBase{\n   //Write code here and remove this comment.\n}",
+      "python": "from ctre import TalonFX\nfrom wpilib2.command import SubsystemBase\nclass Intake(SubsystemBase):\n    #Write code here and remove this comment.",
+      "cpp": "#include <ctre/phoenix/motorcontrol/can/TalonFX.h>\n#include <frc2/command/SubsystemBase.h>\nclass Intake : public frc2::SubsystemBase {\n    public:\n      //Write code here and remove this comment.\n};"
+    },
+    "solutionCode": {
+      "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix.motorcontrol.can.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class Intake extends SubsystemBase{\n    public void stopIntakeMotor(){\n        intakeMotor.stopMotor();\n    }\n}",
+      "python": "from ctre import TalonFX\nfrom wpilib2.command import SubsystemBase\nclass Intake(SubsystemBase):\n    def stopIntakeMotor(self):\n        intakeMotor.stopMotor()",
+      "cpp": "#include <ctre/phoenix/motorcontrol/can/TalonFX.h>\n#include <frc2/command/SubsystemBase.h>\nclass Intake : public frc2::SubsystemBase {\n    public:\n       void stopIntakeMotor() { \n           intakeMotor.StopMotor(); \n   } \n};"
+    }
+  },
+  {
+    "id": 6,
+    "title": "Create an Arm",
+    "description": "Create a method called stopIntakeMotor. The method should must stop the motor named intakeMotor using the appropriate motor function (do not set the motor speed to 0).",
+    "starterCode": {
+      "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix.motorcontrol.can.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class Intake extends SubsystemBase{\n   //Write code here and remove this comment.\n}",
+      "python": "from ctre import TalonFX\nfrom wpilib2.command import SubsystemBase\nclass Intake(SubsystemBase):\n    #Write code here and remove this comment.",
+      "cpp": "#include <ctre/phoenix/motorcontrol/can/TalonFX.h>\n#include <frc2/command/SubsystemBase.h>\nclass Intake : public frc2::SubsystemBase {\n    public:\n      //Write code here and remove this comment.\n};"
+    },
+    "solutionCode": {
+      "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix.motorcontrol.can.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class Intake extends SubsystemBase{\n    public void stopIntakeMotor(){\n        intakeMotor.stopMotor();\n    }\n}",
+      "python": "from ctre import TalonFX\nfrom wpilib2.command import SubsystemBase\nclass Intake(SubsystemBase):\n    def stopIntakeMotor(self):\n        intakeMotor.stopMotor()",
+      "cpp": "#include <ctre/phoenix/motorcontrol/can/TalonFX.h>\n#include <frc2/command/SubsystemBase.h>\nclass Intake : public frc2::SubsystemBase {\n    public:\n       void stopIntakeMotor() { \n           intakeMotor.StopMotor(); \n   } \n};"
+    }
+  },
+  {
+    "id": 7,
+    "title": "Edit Robotcontainer",
+    "description": "Create a method called stopIntakeMotor. The method should must stop the motor named intakeMotor using the appropriate motor function (do not set the motor speed to 0).",
+    "starterCode": {
+      "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix.motorcontrol.can.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class Intake extends SubsystemBase{\n   //Write code here and remove this comment.\n}",
+      "python": "from ctre import TalonFX\nfrom wpilib2.command import SubsystemBase\nclass Intake(SubsystemBase):\n    #Write code here and remove this comment.",
+      "cpp": "#include <ctre/phoenix/motorcontrol/can/TalonFX.h>\n#include <frc2/command/SubsystemBase.h>\nclass Intake : public frc2::SubsystemBase {\n    public:\n      //Write code here and remove this comment.\n};"
+    },
+    "solutionCode": {
+      "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix.motorcontrol.can.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class Intake extends SubsystemBase{\n    public void stopIntakeMotor(){\n        intakeMotor.stopMotor();\n    }\n}",
+      "python": "from ctre import TalonFX\nfrom wpilib2.command import SubsystemBase\nclass Intake(SubsystemBase):\n    def stopIntakeMotor(self):\n        intakeMotor.stopMotor()",
+      "cpp": "#include <ctre/phoenix/motorcontrol/can/TalonFX.h>\n#include <frc2/command/SubsystemBase.h>\nclass Intake : public frc2::SubsystemBase {\n    public:\n       void stopIntakeMotor() { \n           intakeMotor.StopMotor(); \n   } \n};"
+    }
+
+
+  JSON
+
+      },
+    "checks":{
+      "java":[
+        {
+          "type": "count",
+          "value": "public",
+          "min": 2,
+          "message": "Did you add public?"
+        },
+        {
+          "type": "includes",
+          "value": "static",
+          "message": "Did you add static?"
+        },
+        {
+          "type": "includes",
+          "value": "double",
+          "message": "Did you use double?"
+        }
+      ]
+
+*/
