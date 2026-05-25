@@ -54,12 +54,12 @@ body{
   display: flex;
   flex-direction: column;
 }
-#appJSX{
+#appJSX, #programJSX{
   min-height: 100svh;
   display:grid;
   width:100%;
   grid-template-rows: 10% auto 10%;
-  grid-template-columns:25% 75%;
+  grid-template-columns:23% 77%;
   grid-template-areas: 
   "header header"
   "sidebar content"
@@ -72,14 +72,14 @@ body{
   grid-area: content;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  /* justify-content: center; */
   width:90%;
   margin: 0 auto;
   /* overflow-y: hidden; */
 }
 #divEditor{
   margin: 0px; 
-  height: 65vh;
+  height: 55vh;
   overflow: hidden; 
   transition: .5s;
   padding: 0px; 
@@ -129,6 +129,7 @@ header{
 }
 #checky{
   list-style: none;
+  border-color: rgb(122, 173, 255);
 }
 #AICONTENT{
   margin-bottom: 10px;
@@ -146,6 +147,7 @@ header{
   border-top-left-radius: 10px; 
   border-top-right-radius: 10px;  
   transition: all .5s;
+  margin-top: 20px;
 }
 #sugLab{
   width: 100%;
@@ -201,15 +203,21 @@ option{
   margin-left: 10px;
 }
 #buttonDiv{
-  margin: 0px !important;
+  margin: 0 !important;
   grid-area: sidebar;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;  
-  padding: 0 10px    ; 
-  box-sizing: border-box; 
+  align-items: center;
+  margin-top: 20px !important;
+  width: 100%;
+  padding: 0 20px;
+  box-sizing: border-box;
 }
+#mediaGrid, #lowerSide, #checkDIV{
+  width: 100%;
+  box-sizing: border-box;
+}
+
 button:hover{
   background-color: rgba(122, 173, 255, .5);
   cursor: pointer;
@@ -231,6 +239,9 @@ button{
   display: flex;
   align-items: center;
   gap: 5px;
+  width: 100%;
+  max-width: none;
+  box-sizing: border-box;
 }
 svg{
   width:15px;
@@ -554,8 +565,8 @@ hr{
   display: flex;
   flex-direction: row;
 }
-.homeButtons{
-  margin:0px 10px;
+.homeButtonsLink{
+  margin: 10px;
 }
 #LTCR, #PUIC{
   margin: 0;
@@ -676,14 +687,15 @@ a{
   width:100%;
   display: flex;
   flex-direction: column;
-  overflow-y: auto;     /* add this */
-  max-height: 40vh;
+  justify-content: center;
+  align-items: center;
+  overflow-y: auto;
 }
 #AK{
   margin-top: 20px;
 }
 @media (max-width:1100px){  
-  #appJSX{
+  #appJSX, #programJSX{
     min-height: 100svh;
     display:flex;
     width:100%;
@@ -692,18 +704,19 @@ a{
     align-items: center;
     padding: 0px;
     margin: 0px;
+    margin-top: 20px;
   }
-  #contentApp {
-    width: 100%;  
+  #contentApp{
+    width: 85%;  
     margin: 0 auto;
     margin-bottom: 10px;
   }
-  #divEditor {
-    width: 85%;
-    max-width: 85%;
-    margin: 0 auto;
-    height: 65vh;
-    overflow: hidden;
+  #questionProgram, #divEditor{
+    width: 100%;
+    box-sizing: border-box;
+  }
+  #questionProgram{
+    margin-top: 70px;
   }
   #root{
     min-height: 100svh;
@@ -755,33 +768,57 @@ a{
     padding: 0px;
     margin-right: 0px; 
   }
-  #buttonDiv {
+  #mediaGrid, #lowerSide{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-self: stretch;
+  }
+  #buttonDiv{
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto;
-    gap: 5px;
-    width: 85%;
+    gap: 20px;
+    width: 90%;
     margin: 20px auto;
-    padding: 0 10px;
+    align-items: stretch;
+  }
+  #mediaGrid{
+    height: 100%;
+  }
+  #lowerSide{
+    height: 100%;
+    justify-content: flex-start;
+  }
+  #gridButton{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  #mediaGrid, #lowerSide{
+    background: rgb(19, 25, 31);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    padding: 15px;
     box-sizing: border-box;
-    justify-items: center;
+    overflow: hidden;
+  }
+  #checkDIV{
+    grid-column: 1 / -1; /*AI*/
+    display: flex;
+    justify-content: center;
     align-items: center;
+    width: 100%;
+    margin-top: 10px;
   }
-  #buttonDiv #selectLang { /*AI*/
-    grid-column: 1 / -1;
+  #checky{
+    width: 100%;
   }
-
-  #buttonDiv #feedback { /*AI*/
-    grid-column: 1 / -1;
-  }
-  #buttonDiv button{
-    margin: 10px;
-    width:85%;
-  }
-  #questionProgram{
-    width:80%;
-    margin: auto;
-    margin:20px auto;
+  #AICONTENT{
+    margin: 0 auto;
+    margin-top: 10px;
+    width:100%;
+    box-sizing: border-box;
   }
   nav, #newHeaderList, footer{
     padding: 10px 0px;
@@ -848,18 +885,11 @@ a{
 
 @media (max-width:600px){
   #buttonDiv{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1;    
     gap: 10px;
     margin: 0 auto !important;
-  }
-  button{
-    margin: 5px;  
-    width: 5%;
-    max-width: 260px;
-    min-width: none;
   }
   .headerLinks, .footerLinks {
     margin: 0px 4px;
@@ -873,12 +903,6 @@ a{
     padding: 7px 0px;
     margin: 0px;
   }
-  #questionProgram{
-    font-size: 10px;
-  }
-  #buttonDiv button{
-    width:100%;
-  }
   footer {
     display: flex;
     flex-direction: row;    
@@ -891,6 +915,11 @@ a{
     margin: 4px 15px !important;
     width: auto;
     min-width: unset;
+  }
+  #mediaGrid, #lowerSide, #gridButton{
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
   }
   #copy{
     text-align: center;

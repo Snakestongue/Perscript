@@ -95,7 +95,7 @@ function Program(){
     setHasRun(true);
   };
   return (
-    <div id="appJSX" >
+    <div id="programJSX" >
       <header>
             {/* <img src={frcImg} id="imgHead" /> */}
             <Link to="/"><p id="headerFPP"><span>FRC</span> Programming Practice</p></Link>
@@ -155,26 +155,27 @@ function Program(){
         <p id="AICONTENT">{content}</p>
         </div>
         <div id="buttonDiv">
+          <div id="mediaGrid">
           <p class="titles">Language</p>
           <select
             value={currentLang}
             onChange={(e) => newLang(e.target.value)}
-            id="selectLang"
-            class="sidebars"
-          >
+            id="selectLang">
             <option value="java">Java</option>
             <option value="python">Python</option>
             <option value="cpp">C++</option>
           </select>
-          <p class="titles">Excercise</p>
+          <p class="titles">Exercise</p>
           <div id="gridButton">
             {problems.slice(0, 8).map((p)=>(
-            <button
+            <button class="buttonsss"
               onClick={()=>handleProblemChange({target:{value:  p.id}})}>•  {p.title}
             </button> 
             ))}
             </div>
+            </div>
           <div id="lowerSide">
+          <p class="titles">Controls</p>
           <button
             id="AK"
             class="sidebars"
@@ -190,7 +191,9 @@ function Program(){
           <button id="aiAssist" onClick={submitToAI}>AI Assist 
             {load && <span className="spinner"></span>}
           </button>
-          {hasRun && (
+        </div>
+        <div id="checkDIV">
+        {hasRun && (
           <ul id="checky">
             {checkR.map((check) => (
               <li>{check.passed ? "✔ " : "✖ "}{check.message}</li>
@@ -199,7 +202,6 @@ function Program(){
         )}
         </div>
         </div>
-      {/* </div> */}
       <footer>
         <div id="newFooterDiv">
           <Link id="PPLINK" to="/PP" className="footerLinks" >Privacy Policy</Link>

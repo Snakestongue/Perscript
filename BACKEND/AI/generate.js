@@ -27,6 +27,7 @@ export let createAdvice =async(req, res)=> {
                             - Focus only on helping the student reach the correct answer.
                             - Prefer hints over long explanations.
                             - If code is almost correct, clearly point out ONLY what needs to change.
+                            - If the code is correct completely, say "The code is correct!"
                         ` }
                     ]
                 }

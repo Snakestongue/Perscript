@@ -210,5 +210,105 @@
         }
       ]
     }
+  },
+  {
+    "id": 4,
+    "title": "Create an Intake",
+    "description": "Create an IntakeSubsystem class with a TalonFX motor. Include three methods: setSpeed(double speed), which sets the motor to the given speed; reverseSpeed(double speed), which sets the motor to the negative of the given speed; and stop(), which stops the motor using set(0)",
+    "starterCode": {
+      "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix6.hardware.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class IntakeSubsystem extends SubsystemBase {\n\t//Write code here and remove this comment.\n}",
+      "python": "from phoenix6.hardware import TalonFX\nfrom wpilib2.command import SubsystemBase\nclass IntakeSubsystem(SubsystemBase):\n\t#Write code here and remove this comment.",
+      "cpp": "#include \"frc2/command/SubsystemBase.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\nclass IntakeSubsystem : public frc2::SubsystemBase {\npublic:\n\t//Write code here and remove this comment.\nprivate:\n\t//Write code here and remove this comment too.\n};\n"
+    },
+    "solutionCode": {
+      "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix6.hardware.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class IntakeSubsystem extends SubsystemBase {\n\tprivate final TalonFX intakeMotor = new TalonFX(3);\n\tpublic void setSpeed(double speed) {\n\t\tintakeMotor.set(speed);\n\t}\n\tpublic void reverseSpeed(double speed) {\n\t\tintakeMotor.set(-speed);\n\t}\n\tpublic void stop() {\n\t\tintakeMotor.set(0);\n\t}\n}",
+      "python": "from phoenix6.hardware import TalonFX\nfrom wpilib2.command import SubsystemBase\nclass IntakeSubsystem(SubsystemBase):\n\tintake_motor = TalonFX(3)\n\tdef set_speed(self, speed: float):\n\t\tself.intake_motor.set(speed)\n\tdef reverse_speed(self, speed: float):\n\t\tself.intake_motor.set(-speed)\n\tdef stop(self):\n\t\tself.intake_motor.set(0)\n",
+      "cpp": "#include \"frc2/command/SubsystemBase.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\nclass IntakeSubsystem : public frc2::SubsystemBase {\npublic:\n\tvoid SetSpeed(double speed) {\n\t\tintakeMotor.Set(speed);\n\t}\n\tvoid ReverseSpeed(double speed) {\n\t\tintakeMotor.Set(-speed);\n\t}\n\tvoid Stop() {\n\t\tintakeMotor.StopMotor();\n\t}\nprivate:\n\tctre::phoenix6::hardware::TalonFX intakeMotor{3};\n};\n"
+    },
+    "checks":{
+      "java":[
+        {
+          "type": "count",
+          "value": "public",
+          "min": 4,
+          "message": "Did you add public to all methods?"
+        },
+        {
+          "type": "count",
+          "value": "void",
+          "min": 3,
+          "message": "Did you add void to all methods?"
+        },
+        {
+          "type": "count",
+          "value": "double speed",
+          "min": 2,
+          "message": "Did you add 'double speed' as a parameter to 2 methods?"
+        },
+        {
+          "type": "includes",
+          "value": "private",
+          "message": "Did you use private for the object?"
+        },
+        {
+          "type": "count",
+          "value": "talonfx",
+          "min": 3,
+          "message": "Did you add TalonFX as an object?"
+        },
+        {
+          "type": "count",
+          "value": ";",
+          "min": 4,
+          "message": "Did you add semicolons everywhere...?"
+        }
+      ],
+      "python":[
+        {
+          "type": "count",
+          "value": "self",
+          "min": 6,
+          "message": "Did you add self as a parameter and before setting speed (6 times)?"
+        },
+        {
+          "type": "count",
+          "value": "def",
+          "min": 3,
+          "message": "Did you add def to all methods?"
+        },
+        {
+          "type": "count",
+          "value": "TalonFX",
+          "min": 2,
+          "message": "Did you add TalonFX as an object?"
+        }
+      ],
+      "cpp":[
+        {
+          "type": "count",
+          "value": "void",
+          "min": 3,
+          "message": "Did you add void to all methods?"
+        },
+        {
+          "type": "count",
+          "value": "double speed",
+          "min": 2,
+          "message": "Did you add 'double speed' as a parameter to 2 methods?"
+        },
+        {
+          "type": "count",
+          "value": "talonfx",
+          "min": 2,
+          "message": "Did you add TalonFX as an object?"
+        },
+        {
+          "type": "count",
+          "value": ";",
+          "min": 4,
+          "message": "Did you add semicolons everywhere...?"
+        }
+      ]
+    }
   }
 ]

@@ -28,8 +28,8 @@ function App(){
           <h2 id="PUIC">Practice until it clicks.</h2>
           <h5 class="homeFade">Java, Python and C++ exercises, debugging challenges, and tutorials built specifically for FIRST Robotics Competition programming.</h5>
           <div id="buttonRowHome">
-            <Link to="/program"><button class="homeButtons">Start Practicing</button></Link>
-            <Link to="/tut"><button class="homeButtons">Browse Tutorials</button></Link>
+            <Link className="homeButtonsLink" to="/program"><button className="homeButtons">Start Practicing</button></Link>
+            <Link className="homeButtonsLink" to="/tut"><button className="homeButtons">Browse Tutorials</button></Link>
           </div>
         </div>
         <div id="home2">
@@ -45,7 +45,7 @@ function App(){
                 </div>
                 <h4>Programming Practice</h4>
                 <p>Live coding exercise - write code in the browser and get feedback.</p>
-                <div class="colorBox" id="colorPP">3 Exercise</div>
+                <div class="colorBox" id="colorPP">4 Exercises</div>
               </div>
             </Link>
             
@@ -72,7 +72,7 @@ function App(){
                 </div>
                 <h4>Tutorials</h4>
                 <p>Step by step guide to master your programming skills.</p>
-                {/* <div class="colorBox" id="colorTut">2 Tutorials</div> */}
+                <div class="colorBox" id="colorTut">2 Tutorials</div>
               </div>
             </Link>
           </div>
@@ -88,7 +88,7 @@ function App(){
                   {/* <p id="AIarrow">→</p> */}
                 </div>
                 <h4>AI Assist</h4>
-                <p>Not sure what or why something's wrong? In programming practice, use AI Assist for instant help</p>
+                <p>Not sure what or why something's wrong? In Programming Practice, use AI Assist for instant help.</p>
                 {/* <div class="colorBox" id="colorPP">3 Exercise</div> */}
               </div>
             
