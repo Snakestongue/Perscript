@@ -12,8 +12,67 @@
       "java": "public class Constants {\n    public static double MAX_DRIVE_SPEED = 0.8;\n}",
       "python": "class Constants:\n    MAX_DRIVE_SPEED = 0.8\n",
       "cpp": "class Constants {\n   public:\n       static constexpr double MAX_DRIVE_SPEED = 0.8;\n};\n"
+    },
+    "checks":{
+      "java":[
+        {
+          "type": "count",
+          "value": "public",
+          "min": 2,
+          "message": "Did you add public?"
+        },
+        {
+          "type": "includes",
+          "value": "static",
+          "message": "Did you add static?"
+        },
+        {
+          "type": "includes",
+          "value": "double",
+          "message": "Did you use double?"
+        },
+        {
+          "type": "includes",
+          "value": "0.8;",
+          "message": "Did you add 0.8;?"
+        }
+      ],
+      "python":[
+        {
+          "type": "includes",
+          "value": "0.8",
+          "message": "Did you add 0.8?"
+        }
+      ],
+      "cpp":[
+        {
+          "type": "includes",
+          "value": "public",
+          "message": "Did you add public?"
+        },
+        {
+          "type": "includes",
+          "value": "static",
+          "message": "Did you add static?"
+        },
+        {
+          "type": "includes",
+          "value": "double",
+          "message": "Did you use double?"
+        },
+        {
+          "type": "includes",
+          "value": "constexpr",
+          "message": "Did you use constexpr?"
+        },
+        {
+          "type": "includes",
+          "value": "0.8;",
+          "message": "Did you add 0.8;?"
+        }
+      ]
     }
-  },
+},
   {
     "id": 2,
     "title": "Create an Object",
@@ -27,6 +86,65 @@
       "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix.motorcontrol.can.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class Intake extends SubsystemBase{\n    private final TalonFX intakeMotor = new TalonFX(3);\n}",
       "python": "from wpilib2.command import SubsystemBase\nfrom phoenix6.hardware import TalonFX\n\nclass Intake(SubsystemBase):\n    __intakeMotor = TalonFX(3)",
       "cpp": "#include <frc2/command/SubsystemBase.h>\n#include <ctre/phoenix/motorcontrol/can/TalonFX.h>\n\nclass Intake : public frc2::SubsystemBase {\n    private:\n        const TalonFX intakeMotor{3};\n};"
+    },
+    "checks":{
+      "java":[
+        {
+          "type": "includes",
+          "value": "private",
+          "message": "Did you add private?"
+        },
+        {
+          "type": "includes",
+          "value": "final",
+          "message": "Did you add final?"
+        },
+        {
+          "type": "count",
+          "value": "talonfx",
+          "min": 2,
+          "message": "Did you add TalonFX?"
+        },
+        {
+          "type": "includes",
+          "value": "3",
+          "message": "Is the ID 3?"
+        },
+        {
+          "type": "includes",
+          "value": "new",
+          "message": "Did you add new?"
+        }
+      ],
+      "python":[
+        {
+          "type": "includes",
+          "value": "__intakemotor",
+          "message": "Did you name it intakeMotor and add __?"
+        },
+        {
+          "type": "includes",
+          "value": "3",
+          "message": "Is the ID 3?"
+        }
+      ],
+      "cpp":[
+        {
+          "type": "includes",
+          "value": "private",
+          "message": "Did you add private?"
+        },
+        {
+          "type": "includes",
+          "value": "const",
+          "message": "Did you use const?"
+        },
+        {
+          "type": "includes",
+          "value": "3",
+          "message": "Is the ID 3?"
+        }
+      ]
     }
   },
   {
@@ -42,6 +160,55 @@
       "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix.motorcontrol.can.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class Intake extends SubsystemBase{\n    public void stopIntakeMotor(){\n        intakeMotor.stopMotor();\n    }\n}",
       "python": "from ctre import TalonFX\nfrom wpilib2.command import SubsystemBase\nclass Intake(SubsystemBase):\n    def stopIntakeMotor(self):\n        intakeMotor.stopMotor()",
       "cpp": "#include <ctre/phoenix/motorcontrol/can/TalonFX.h>\n#include <frc2/command/SubsystemBase.h>\nclass Intake : public frc2::SubsystemBase {\n    public:\n       void stopIntakeMotor() { \n           intakeMotor.StopMotor(); \n   } \n};"
+    },
+    "checks":{
+      "java":[
+        {
+          "type": "count",
+          "value": "public",
+          "min": 2,
+          "message": "Did you add public?"
+        },
+        {
+          "type": "includes",
+          "value": "void",
+          "message": "Did you add void?"
+        },
+        {
+          "type": "includes",
+          "value": "stopmotor",
+          "message": "Did you use stopMotor?"
+        }
+      ],
+      "python":[
+        {
+          "type": "includes",
+          "value": "def",
+          "message": "Did you add def?"
+        },
+        {
+          "type": "includes",
+          "value": "self",
+          "message": "Did you add self as a parameter?"
+        },
+        {
+          "type": "includes",
+          "value": "stopmotor",
+          "message": "Did you add stopMotor as a parameter?"
+        }
+      ],
+      "cpp":[
+        {
+          "type": "includes",
+          "value": "void",
+          "message": "Did you add void?"
+        },
+        {
+          "type": "includes",
+          "value": "stopmotor",
+          "message": "Did you use StopMotor?"
+        }
+      ]
     }
   }
 ]

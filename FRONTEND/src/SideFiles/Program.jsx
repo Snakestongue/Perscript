@@ -4,126 +4,76 @@ import Editor from '@monaco-editor/react';
 import problems from "../JSON/problems.json"
 function Program(){
   const [currentLang, newLang] = useState("java")
-
   const[selectedProblem, setSelectedProblem]=useState(problems[0]);
   const[userCode, setUserCode]= useState(selectedProblem.starterCode[currentLang]);
+  const [checks, setChecks] = useState(selectedProblem.checks[currentLang])
+  const[submit, currentSubmit] = useState(false)
   const [feedback, setFeedback]= useState('');
   const [correctAnswer, setCorrectAnswer] = useState('')
-  const generateSubmit=()=>{
-    if(userCode.trim().toLowerCase()== selectedProblem.solutionCode[currentLang].trim().toLowerCase()){
-      return ('Correct!');
-    }else if(selectedProblem.id==problems[0].id && currentLang == "java"){
-      if ((userCode.match(/public/gi) || []).length < 2){
-        return ("Did you add public?")
-      }else if (!userCode.trim().toLowerCase().includes("static")){
-        return ("Did you add static?")
-      }else if (!userCode.trim().toLowerCase().includes("double")){
-          return ("Did you add double?")
-      }else if (!userCode.trim().toLowerCase().includes("0.8")){
-          return ("Did you add 0.8?")
-      }else{
-        return ("Try again. You're close!")
-      }
-    }else if(selectedProblem.id==problems[1].id && currentLang == "java"){
-      if (!userCode.trim().toLowerCase().includes("private")){
-        return ("Did you add private?")
-      }else if (!userCode.trim().toLowerCase().includes("final")){
-        return ("Did you add final?")
-      }else if ((userCode.match(/talonfx/gi) || []).length < 2){
-          return ("Did you add TalonFX twice?")
-      }else if (!userCode.trim().toLowerCase().includes("intakemotor")){
-          return ("Did you name it intakeMotor")
-      }else if (!userCode.trim().toLowerCase().includes("(3)")){
-          return ("Did you set the speed to (3)")
-      }else{
-        return ("Try again. You're close!")
-      }
-    }else if(selectedProblem.id==problems[2].id  && currentLang == "java"){
-      if ((userCode.match(/public/gi) || []).length < 2){
-        return ("Did you add public?")
-      }else if (!userCode.trim().toLowerCase().includes("void")){
-          return ("Did you add void?")
-      }else if (!userCode.trim().toLowerCase().includes("stopmotor")){
-          return ("Did you use stopmotor?")
-      }else if (!userCode.trim().toLowerCase().includes("stopintakemotor")){
-          return ("Did you name the method stopintakemotor?")
-      }else{
-        return ("Try again. You're close!")
-      }
-    } else if(selectedProblem.id==problems[0].id  && currentLang == "python"){
-      if (!userCode.trim().toLowerCase().includes("max_drive_speed")){
-        return ("Did you name your constant MAX_DRIVE_SPEED?")
-      }else if (!userCode.trim().toLowerCase().includes("0.8")){
-          return ("Did you add set the speed to 0.8?")
-      }else{
-        return ("Try again. You're close!")
-      }
-    } else if(selectedProblem.id==problems[1].id  && currentLang == "python"){
-      if (!userCode.trim().toLowerCase().includes("intakemotor")){
-        return ("Did you name your constant intakeMotor?")
-      }else if (!userCode.trim().toLowerCase().includes("__")){
-          return ("Did you add the Python version of private?")
-      }else if (!userCode.trim().toLowerCase().includes("3")){
-          return ("Is your TalonFX id 3??")
-      }else{
-        return ("Try again. You're close!")
-      }
-    } else if(selectedProblem.id==problems[2].id  && currentLang == "python"){
-      if (!userCode.trim().toLowerCase().includes("def")){
-        return ("Did you add use 'def'?")
-      }else if (!userCode.trim().toLowerCase().includes("self")){
-          return ("Did you add self?")
-      }else if (!userCode.trim().toLowerCase().includes("stopmotor")){
-          return ("Did you use stopMotor?")
-      }else if (!userCode.trim().toLowerCase().includes("stopintakemotor")){
-          return ("Did you name the method stopIntakeMotor?")
-      }else{
-        return ("Try again. You're close!")
-      }
-    } else if(selectedProblem.id==problems[0].id  && currentLang == "cpp"){
-      if (!userCode.trim().toLowerCase().includes("public")){
-        return ("Did you add public?")
-      }else if (!userCode.trim().toLowerCase().includes("static")){
-          return ("Did you add static?")
-      }else if (!userCode.trim().toLowerCase().includes("constexpr")){
-          return ("Did you add constexpr?")
-      }else if (!userCode.trim().toLowerCase().includes("double")){
-          return ("Did you use double?")
-      }else if (!userCode.trim().toLowerCase().includes("0.8")){
-          return ("Did you name set the speed 0.8;?")
-      }else{
-        return ("Try again. You're close!")
-      }
-    } else if(selectedProblem.id==problems[1].id  && currentLang == "cpp"){
-      if (!userCode.trim().toLowerCase().includes("private")){
-          return ("Did you add private?")
-      }else if (!userCode.trim().toLowerCase().includes("const")){
-          return ("Did you use const?")
-      }else if (!userCode.trim().toLowerCase().includes("intakeMotor")){
-          return ("Did you name the method intakeMotor?")
-      }else if (!userCode.trim().toLowerCase().includes("3")){
-          return ("Did you name the add {3}?")
-      }else{
-        return ("Try again. You're close!")
-      }
-    } else if(selectedProblem.id==problems[2].id  && currentLang == "cpp"){
-      if (!userCode.trim().toLowerCase().includes("void")){
-          return ("Did you add void?")
-      }else if (!userCode.trim().toLowerCase().includes("stopmotor")){
-          return ("Did you use StopMotor?")
-      }else if (!userCode.trim().toLowerCase().includes("stopintakemotor")){
-          return ("Did you name the method stopintakemotor?")
-      }else{
-        return ("Try again. You're close!")
-      }
-    } 
+  const[content, selectContent] = useState("")
+  const [load, currentLoad ] = useState(false)
+  const [checkR, setCheckR] = useState([]);
+  const [hasRun, setHasRun] = useState(false);
+  async function submitToAI() {
+    if (!userCode){
+      alert("Make sure there is code to be checked!")
+      return;
+    }
+    currentLoad(true);
+    try{
+      let response = await fetch("https://frc-programming-practice.onrender.com/create", {
+        method: "POST",
+        headers:{
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          content: userCode,
+          language: currentLang,
+          problem: selectedProblem.title,
+          correctAnswer: correctAnswer
+        }),
+      })
+        const data = await response.json();
+        if (response.ok){
+          selectContent(data.result);
+          console.log("good")
+        }else{
+          alert("Faileed:" + data.message);
+        }
+    }catch (error){
+      alert("Internal server error.");
+      console.log(error.message)
+    }finally{
+      currentLoad(false);
+    }
   }
-  useEffect(() => {
-  setUserCode(selectedProblem.starterCode[currentLang]);
-  }, 
-  [currentLang, selectedProblem]);
+  const generateSubmit= () =>{
+  let code = userCode.toLowerCase();
+  let checks = selectedProblem.checks[currentLang];
+  let results = [];
+  for (let check of checks) {
+    let passed = true;
+    if (check.type == "includes") {
+      passed = code.includes(check.value.toLowerCase());
+    }
+    if (check.type == "count") {
+      let count = (code.match(new RegExp(check.value, "gi"))||[]).length;
+      passed = count >= check.min;
+    }
+    results.push({ /**AI */
+      message: check.message,
+      passed
+    });
+  }
+  return results;
+};
+  useEffect(()=>{
+    setUserCode(selectedProblem.starterCode[currentLang]);
+    setChecks(selectedProblem.checks[currentLang]);
+      currentSubmit(false);
+  }, [currentLang, selectedProblem]);
 
-  useEffect(() => {
+  useEffect(()=> {
     setFeedback("Click submit to check your answer.");
   }, 
   [selectedProblem, currentLang]);
@@ -137,10 +87,13 @@ function Program(){
     setSelectedProblem(problem);
     setUserCode(problem.starterCode[currentLang]);
     setFeedback('');
+    currentSubmit(false);
   }
   const handleSubmit = () => {
-    setFeedback(generateSubmit());
-  }
+    const results = generateSubmit();
+    setCheckR(results);
+    setHasRun(true);
+  };
   return (
     <div id="appJSX" >
       <header>
@@ -160,6 +113,7 @@ function Program(){
           <li><Link to="/tut" className="headerLinks">Tutorials</Link></li>
         </ul>
       </nav>
+      {/* <div id="overallProgram"> */}
         <div id="contentApp">
         <p id="questionProgram"> {selectedProblem.description} </p>
         <div id="divEditor">
@@ -198,6 +152,7 @@ function Program(){
             }}
             />
         </div>
+        <p id="AICONTENT">{content}</p>
         </div>
         <div id="buttonDiv">
           <p class="titles">Language</p>
@@ -212,11 +167,14 @@ function Program(){
             <option value="cpp">C++</option>
           </select>
           <p class="titles">Excercise</p>
-            {problems.slice(0, 3).map((p)=>(
-            <button class="sidebars"
-              key={p.id}onClick={()=>handleProblemChange({target:{value:  p.id}})}>•  {p.title}
+          <div id="gridButton">
+            {problems.slice(0, 8).map((p)=>(
+            <button
+              onClick={()=>handleProblemChange({target:{value:  p.id}})}>•  {p.title}
             </button> 
             ))}
+            </div>
+          <div id="lowerSide">
           <button
             id="AK"
             class="sidebars"
@@ -224,13 +182,24 @@ function Program(){
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 1 0-7.517 0c.85.493 1.509 1.333 1.509 2.316V18" />
             </svg>
-
-            
              Show Correct Answer
           </button>
-          <button id="submit" class="sidebars" onClick={handleSubmit}>▶ RUN & SUBMIT</button>
-          <p class="sidebars" id="feedback">{feedback}</p>
+          <button id="submit" onClick={
+            handleSubmit
+            }>▶ RUN & SUBMIT</button>
+          <button id="aiAssist" onClick={submitToAI}>AI Assist 
+            {load && <span className="spinner"></span>}
+          </button>
+          {hasRun && (
+          <ul id="checky">
+            {checkR.map((check) => (
+              <li>{check.passed ? "✔ " : "✖ "}{check.message}</li>
+            ))}
+          </ul>
+        )}
         </div>
+        </div>
+      {/* </div> */}
       <footer>
         <div id="newFooterDiv">
           <Link id="PPLINK" to="/PP" className="footerLinks" >Privacy Policy</Link>

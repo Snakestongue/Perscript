@@ -72,16 +72,51 @@ function App(){
                 </div>
                 <h4>Tutorials</h4>
                 <p>Step by step guide to master your programming skills.</p>
-                <div class="colorBox" id="colorTut">2 Tutorials</div>
+                {/* <div class="colorBox" id="colorTut">2 Tutorials</div> */}
               </div>
             </Link>
           </div>
         </div>
-        {/* <div id="home3">
-          <div id="part1">hi</div>
-          <div id="part2">hi</div>
-          <div id="part3">hi</div>
-        </div> */}
+        <div id="home2">
+          <p className="titles" id="WH">Features</p>
+          <div id="home2Cover">
+              <div class="h3FDIV" id="sect4">
+                <div class="upperHome">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="svgHome" id="aisvg">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 3v1.5M4.5 8.25H3m18 0h-1.5M4.5 12H3m18 0h-1.5m-15 3.75H3m18 0h-1.5M8.25 19.5V21M12 3v1.5m0 15V21m3.75-18v1.5m0 15V21m-9-1.5h10.5a2.25 2.25 0 0 0 2.25-2.25V6.75a2.25 2.25 0 0 0-2.25-2.25H6.75A2.25 2.25 0 0 0 4.5 6.75v10.5a2.25 2.25 0 0 0 2.25 2.25Zm.75-12h9v9h-9v-9Z" />
+                  </svg>
+                  {/* <p id="AIarrow">→</p> */}
+                </div>
+                <h4>AI Assist</h4>
+                <p>Not sure what or why something's wrong? In programming practice, use AI Assist for instant help</p>
+                {/* <div class="colorBox" id="colorPP">3 Exercise</div> */}
+              </div>
+            
+              <div  class="h3FDIV" id="sect5">
+                <div class="upperHome">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="svgHome" id="langsvg">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M14.25 9.75 16.5 12l-2.25 2.25m-4.5 0L7.5 12l2.25-2.25M6 20.25h12A2.25 2.25 0 0 0 20.25 18V6A2.25 2.25 0 0 0 18 3.75H6A2.25 2.25 0 0 0 3.75 6v12A2.25 2.25 0 0 0 6 20.25Z" />
+                </svg>
+                {/* <p id="Larrow">→</p> */}
+                </div>
+                <h4>3 Different Languages</h4>
+                <p>Code, Debug or use Tutorials in Java, C++ or Python.</p>
+                {/* <div class="colorBox" id="colorDe">4 Challenges</div> */}
+              </div>
+              <div class="h3FDIV" id="sect6">
+                <div class="upperHome">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="svgHome" id="ossvg">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 9.776c.112-.017.227-.026.344-.026h15.812c.117 0 .232.009.344.026m-16.5 0a2.25 2.25 0 0 0-1.883 2.542l.857 6a2.25 2.25 0 0 0 2.227 1.932H19.05a2.25 2.25 0 0 0 2.227-1.932l.857-6a2.25 2.25 0 0 0-1.883-2.542m-16.5 0V6A2.25 2.25 0 0 1 6 3.75h3.879a1.5 1.5 0 0 1 1.06.44l2.122 2.12a1.5 1.5 0 0 0 1.06.44H18A2.25 2.25 0 0 1 20.25 9v.776" />
+                </svg>
+
+                {/* <p id="osarrow">→</p> */}
+                </div>
+                <h4>Open Source Code</h4>
+                <p>All code is open source on Github and contibutions are always welcome!</p>
+                {/* <div class="colorBox" id="colorTut">2 Tutorials</div> */}
+              </div>
+          </div>
+        </div>
       </div>
       <footer>
         <div id="newFooterDiv">

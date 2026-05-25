@@ -5,9 +5,12 @@ import PP from "./SideFiles/PP.jsx"
 import Sug from "./SideFiles/Sug.jsx"
 import Tut from "./SideFiles/Tut.jsx"
 import Program from "./SideFiles/Program.jsx"
+import GA from "./GA.jsx";
+
 function RoutesPage(){
   return(
     <BrowserRouter basename="/FRC-Programming-Practice">
+      <GA />
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/debug" element={<Bug />} />

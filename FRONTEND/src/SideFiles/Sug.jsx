@@ -20,7 +20,7 @@ function Sug() {
       const data = await res.json();
       alert("Suggestion submitted!");
       setSug(""); 
-    } catch (error) {
+    }catch (error){
       alert("Error!" +error);
       console.log(error)
     }
@@ -29,7 +29,6 @@ function Sug() {
   return (
     <div id="sugMain">
       <header>
-            {/* <img src={frcImg} id="imgHead" /> */}
             <Link to="/"><p id="headerFPP"><span>FRC</span> Programming Practice</p></Link>
             <ul id="headerList">
                 {/* <li><Link to="/" className="headerLinks">Home</Link></li> */}
@@ -57,7 +56,6 @@ function Sug() {
           onChange={(e) => setSug(e.target.value)}
           placeholder="Start typing here..."
         />
-
         <button id="sugSubmit" onClick={handleSubmit} disabled={loading}>
         {loading ? (
           <>
