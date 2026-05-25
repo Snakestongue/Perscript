@@ -1,4 +1,5 @@
-/*FAVICON BYTESIZED*/
+/**FAVICON BYTESIZED*/
+/*214 JSON*/
 @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 html, body {
   overflow-x: hidden;
@@ -58,13 +59,14 @@ body{
   display:grid;
   width:100%;
   grid-template-rows: 10% auto 10%;
-  grid-template-columns:23% 77%;
+  grid-template-columns:25% 75%;
   grid-template-areas: 
   "header header"
   "sidebar content"
   "footer footer";
   padding: 0px;
   margin: 0px;
+  overflow-y: hidden;
 }
 #contentApp{
   grid-area: content;
@@ -73,6 +75,7 @@ body{
   justify-content: center;
   width:90%;
   margin: 0 auto;
+  /* overflow-y: hidden; */
 }
 #divEditor{
   margin: 0px; 
@@ -113,7 +116,7 @@ header{
   flex-direction: row;
   list-style: none;
 }
-#feedback{
+#feedback, #checky, #AICONTENT{
   border: 1px solid rgba(255,255,255,.1);
   padding:10px;
   text-align: left;
@@ -123,6 +126,12 @@ header{
   border-radius: 10px;
   padding: 10px;
   margin-top: 10px;
+}
+#checky{
+  list-style: none;
+}
+#AICONTENT{
+  margin-bottom: 10px;
 }
 #questionProgram, #sugLab{
   border: none;
@@ -198,7 +207,7 @@ option{
   flex-direction: column;
   justify-content: center;
   align-items: center;  
-  padding: 0 30px; 
+  padding: 0 10px    ; 
   box-sizing: border-box; 
 }
 button:hover{
@@ -227,6 +236,9 @@ svg{
   width:15px;
   height:auto;
   padding: 0;
+}
+#aiAssist{
+  margin-top: 10px;
 }
 button#submit{
   background: rgba  (122, 173, 255, .2);
@@ -457,9 +469,11 @@ code{
   font-size: 13px;
   color: #E5E7EB;
 }
-.sidebars{
-  margin: 5px 0px;
-  padding: 20px;
+#gridButton{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap:20px;
+  padding: 0px;
 }
 .titles{
   font-size: 12px;
@@ -561,7 +575,7 @@ hr{
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
 }
-.h2cDIV{
+.h2cDIV, .h3FDIV{
   margin: 10px;
   border:1px solid rgba(255,255,255,0.08);
   padding:20px 30px;
@@ -619,6 +633,18 @@ a{
 #darrow{
   color: rgb(14, 121, 228);
 }
+#aisvg{
+  background-color: rgba(228, 32, 14, 0.25);
+  color: rgb(228, 32, 14);
+}
+#langsvg{
+  background-color: rgba(228, 14, 207, 0.25);
+  color: rgb(228, 14, 207);
+}
+#ossvg{
+  background-color: rgba(228, 224, 14, 0.25);
+  color: rgb(228, 224, 14);
+}
 #WH{
   margin-left: 30px;
   font-size: 14px;
@@ -645,6 +671,16 @@ a{
 #sample:hover{
    transform: scale(1.05);
    cursor: pointer;
+}
+#lowerSide{
+  width:100%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;     /* add this */
+  max-height: 40vh;
+}
+#AK{
+  margin-top: 20px;
 }
 @media (max-width:1100px){  
   #appJSX{
@@ -722,7 +758,7 @@ a{
   #buttonDiv {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: repeat(3, auto);
+    grid-template-rows: auto;
     gap: 5px;
     width: 85%;
     margin: 20px auto;
@@ -919,94 +955,3 @@ a{
     transform: rotate(360deg);
   }
 }
-
-
-
-/*
-JSON
-},
-  {
-    "id": 4,
-    "title": "Create an Intake",
-    "description": "Create a method called stopIntakeMotor. The method should must stop the motor named intakeMotor using the appropriate motor function (do not set the motor speed to 0).",
-    "starterCode": {
-      "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix.motorcontrol.can.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class Intake extends SubsystemBase{\n   //Write code here and remove this comment.\n}",
-      "python": "from ctre import TalonFX\nfrom wpilib2.command import SubsystemBase\nclass Intake(SubsystemBase):\n    #Write code here and remove this comment.",
-      "cpp": "#include <ctre/phoenix/motorcontrol/can/TalonFX.h>\n#include <frc2/command/SubsystemBase.h>\nclass Intake : public frc2::SubsystemBase {\n    public:\n      //Write code here and remove this comment.\n};"
-    },
-    "solutionCode": {
-      "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix.motorcontrol.can.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class Intake extends SubsystemBase{\n    public void stopIntakeMotor(){\n        intakeMotor.stopMotor();\n    }\n}",
-      "python": "from ctre import TalonFX\nfrom wpilib2.command import SubsystemBase\nclass Intake(SubsystemBase):\n    def stopIntakeMotor(self):\n        intakeMotor.stopMotor()",
-      "cpp": "#include <ctre/phoenix/motorcontrol/can/TalonFX.h>\n#include <frc2/command/SubsystemBase.h>\nclass Intake : public frc2::SubsystemBase {\n    public:\n       void stopIntakeMotor() { \n           intakeMotor.StopMotor(); \n   } \n};"
-    }
-  },
-  {
-    "id": 5,
-    "title": "Create an Outake",
-    "description": "Create a method called stopIntakeMotor. The method should must stop the motor named intakeMotor using the appropriate motor function (do not set the motor speed to 0).",
-    "starterCode": {
-      "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix.motorcontrol.can.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class Intake extends SubsystemBase{\n   //Write code here and remove this comment.\n}",
-      "python": "from ctre import TalonFX\nfrom wpilib2.command import SubsystemBase\nclass Intake(SubsystemBase):\n    #Write code here and remove this comment.",
-      "cpp": "#include <ctre/phoenix/motorcontrol/can/TalonFX.h>\n#include <frc2/command/SubsystemBase.h>\nclass Intake : public frc2::SubsystemBase {\n    public:\n      //Write code here and remove this comment.\n};"
-    },
-    "solutionCode": {
-      "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix.motorcontrol.can.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class Intake extends SubsystemBase{\n    public void stopIntakeMotor(){\n        intakeMotor.stopMotor();\n    }\n}",
-      "python": "from ctre import TalonFX\nfrom wpilib2.command import SubsystemBase\nclass Intake(SubsystemBase):\n    def stopIntakeMotor(self):\n        intakeMotor.stopMotor()",
-      "cpp": "#include <ctre/phoenix/motorcontrol/can/TalonFX.h>\n#include <frc2/command/SubsystemBase.h>\nclass Intake : public frc2::SubsystemBase {\n    public:\n       void stopIntakeMotor() { \n           intakeMotor.StopMotor(); \n   } \n};"
-    }
-  },
-  {
-    "id": 6,
-    "title": "Create an Arm",
-    "description": "Create a method called stopIntakeMotor. The method should must stop the motor named intakeMotor using the appropriate motor function (do not set the motor speed to 0).",
-    "starterCode": {
-      "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix.motorcontrol.can.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class Intake extends SubsystemBase{\n   //Write code here and remove this comment.\n}",
-      "python": "from ctre import TalonFX\nfrom wpilib2.command import SubsystemBase\nclass Intake(SubsystemBase):\n    #Write code here and remove this comment.",
-      "cpp": "#include <ctre/phoenix/motorcontrol/can/TalonFX.h>\n#include <frc2/command/SubsystemBase.h>\nclass Intake : public frc2::SubsystemBase {\n    public:\n      //Write code here and remove this comment.\n};"
-    },
-    "solutionCode": {
-      "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix.motorcontrol.can.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class Intake extends SubsystemBase{\n    public void stopIntakeMotor(){\n        intakeMotor.stopMotor();\n    }\n}",
-      "python": "from ctre import TalonFX\nfrom wpilib2.command import SubsystemBase\nclass Intake(SubsystemBase):\n    def stopIntakeMotor(self):\n        intakeMotor.stopMotor()",
-      "cpp": "#include <ctre/phoenix/motorcontrol/can/TalonFX.h>\n#include <frc2/command/SubsystemBase.h>\nclass Intake : public frc2::SubsystemBase {\n    public:\n       void stopIntakeMotor() { \n           intakeMotor.StopMotor(); \n   } \n};"
-    }
-  },
-  {
-    "id": 7,
-    "title": "Edit Robotcontainer",
-    "description": "Create a method called stopIntakeMotor. The method should must stop the motor named intakeMotor using the appropriate motor function (do not set the motor speed to 0).",
-    "starterCode": {
-      "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix.motorcontrol.can.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class Intake extends SubsystemBase{\n   //Write code here and remove this comment.\n}",
-      "python": "from ctre import TalonFX\nfrom wpilib2.command import SubsystemBase\nclass Intake(SubsystemBase):\n    #Write code here and remove this comment.",
-      "cpp": "#include <ctre/phoenix/motorcontrol/can/TalonFX.h>\n#include <frc2/command/SubsystemBase.h>\nclass Intake : public frc2::SubsystemBase {\n    public:\n      //Write code here and remove this comment.\n};"
-    },
-    "solutionCode": {
-      "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix.motorcontrol.can.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class Intake extends SubsystemBase{\n    public void stopIntakeMotor(){\n        intakeMotor.stopMotor();\n    }\n}",
-      "python": "from ctre import TalonFX\nfrom wpilib2.command import SubsystemBase\nclass Intake(SubsystemBase):\n    def stopIntakeMotor(self):\n        intakeMotor.stopMotor()",
-      "cpp": "#include <ctre/phoenix/motorcontrol/can/TalonFX.h>\n#include <frc2/command/SubsystemBase.h>\nclass Intake : public frc2::SubsystemBase {\n    public:\n       void stopIntakeMotor() { \n           intakeMotor.StopMotor(); \n   } \n};"
-    }
-
-
-  JSON
-
-      },
-    "checks":{
-      "java":[
-        {
-          "type": "count",
-          "value": "public",
-          "min": 2,
-          "message": "Did you add public?"
-        },
-        {
-          "type": "includes",
-          "value": "static",
-          "message": "Did you add static?"
-        },
-        {
-          "type": "includes",
-          "value": "double",
-          "message": "Did you use double?"
-        }
-      ]
-
-*/
