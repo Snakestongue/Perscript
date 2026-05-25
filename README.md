@@ -10,7 +10,7 @@ Students can write and test code directly in the browser using a Monaco editor.
 
 ## Features
 
-Interactive Java coding environment (Monaco Editor)
+Interactive coding environment for Java, Python & C++ (Monaco Editor)
 
 FRC-style programming practice problems
 
@@ -20,31 +20,29 @@ Instant feedback environment (where applicable)
 
 UI built with React
 
-Tutorials for Java
+Tutorials for Java, Python & C++
 
-Debugging problems for Java
+Debugging problems for Java, Python & C++
+
+AI Assist for Programming Problems
 
 ## Who This Is For
 
-FRC students learning Java
+FRC students learning FRC Programming
 
 Beginner programmers interested in robotics
 
 Teams looking to improve programming fundamentals
 
-Mentors teaching Java for robotics
+Mentors teaching Command Based Programming for robotics
 
 ## Planned Updates
 
-Expanded Java tutorials (including: SparkMax, TalonFX, OOP concepts)
-
-AI-powered coding assistant
-
-Support for additional languages (C++ and Python)
+Expanded tutorials (including: SparkMax, TalonFX, OOP concepts)
 
 More structured programming challenges and problem sets
 
-Improved problem difficulty progression system
+Move advanced problems for more subsystems
 
 ## Feedback / Suggestions
 
