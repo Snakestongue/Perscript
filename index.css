@@ -894,11 +894,11 @@ a{
   #questionProgram{
     margin-top: 45px !important;
   }
-  #buttonDiv{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1;    
-    margin: 0 !important;
+ #buttonDiv {
+    display: flex !important;          
+    flex-direction: column !important; 
+    gap: 15px !important;             
+    margin: 20px auto !important;
     padding: 0 !important;
     width: 85%;
   }
