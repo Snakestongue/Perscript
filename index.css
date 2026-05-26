@@ -1,6 +1,11 @@
 /**FAVICON BYTESIZED*/
 /*214 JSON*/
 @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* * {
+  outline: 1px solid red;
+} */
+
 html, body {
   overflow-x: hidden;
 }
@@ -888,8 +893,9 @@ a{
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1;    
-    gap: 10px;
-    margin: 0 auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 85%;
   }
   .headerLinks, .footerLinks {
     margin: 0px 4px;
@@ -904,17 +910,17 @@ a{
     margin: 0px;
   }
   footer {
+    overflow: hidden; /* or overflow-x: hidden */
+  }
+  #newFooterDiv {
     display: flex;
-    flex-direction: row;    
-    flex-wrap: wrap;         
+    flex-wrap: wrap;
     justify-content: center;
-    align-items: center;
-    padding: 5px 10px;
+    width: 100%;
   }
   .footerLinks {
-    margin: 4px 15px !important;
+    margin: 7px !important;
     width: auto;
-    min-width: unset;
   }
   #mediaGrid, #lowerSide, #gridButton{
     display: flex;
