@@ -12,7 +12,7 @@ function Bug(){
             <ul id="headerList">
                 {/* <li><Link to="/" className="headerLinks">Home</Link></li> */}
                 <li><Link to="/program" className="headerLinks">Programming Practice</Link></li>
-                <li><Link to="/debug" className="headerLinks">Debugging Practice</Link></li>
+                <li><Link to="/debug" className="headerLinks active">Debugging Practice</Link></li>
                 <li><Link to="/tut" className="headerLinks">Tutorials</Link></li>
             </ul>
       </header>

@@ -59,7 +59,7 @@ function PP(){
     </div>
        <footer>
         <div id="newFooterDiv">
-          <Link id="PPLINK" to="/PP" className="footerLinks" >Privacy Policy</Link>
+          <Link id="PPLINK" to="/PP" className="footerLinks active" >Privacy Policy</Link>
           <Link id="Sug" to="/Sug" className="footerLinks" >Add a suggestion</Link>
           <a id="git" className="footerLinks" href="https://github.com/Snakestongue/FRC-Programming-Practice">Github</a>
         </div>

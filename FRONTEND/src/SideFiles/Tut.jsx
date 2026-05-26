@@ -9,7 +9,7 @@ function Tut(){
                 {/* <li><Link to="/" className="headerLinks">Home</Link></li> */}
                 <li><Link to="/program" className="headerLinks">Programming Practice</Link></li>
                 <li><Link to="/debug" className="headerLinks">Debugging Practice</Link></li>
-                <li><Link to="/tut" className="headerLinks">Tutorials</Link></li>
+                <li><Link to="/tut" className="headerLinks active">Tutorials</Link></li>
             </ul>
       </header>
       <nav>

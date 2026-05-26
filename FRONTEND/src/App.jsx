@@ -5,7 +5,6 @@ function App(){
   return (
     <div id="homePage" >
       <header>
-            {/* <img src={frcImg} id="imgHead" /> */}
             <Link to="/"><p id="headerFPP"><span>FRC</span> Programming Practice</p></Link>
             <ul id="headerList">
                 {/* <li><Link to="/" className="headerLinks">Home</Link></li> */}
