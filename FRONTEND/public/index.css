@@ -891,11 +891,14 @@ a{
     max-height: 35vh;
     flex-shrink: 0;
   }
-  #buttonDiv{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1;    
-    margin: 0 !important;
+  #questionProgram{
+    margin-top: 45px !important;
+  }
+ #buttonDiv {
+    display: flex !important;          
+    flex-direction: column !important; 
+    gap: 15px !important;             
+    margin: 20px auto !important;
     padding: 0 !important;
     width: 85%;
   }
@@ -910,6 +913,9 @@ a{
   nav, #newHeaderList{
     padding: 7px 0px;
     margin: 0px;
+  }
+  footer{
+    border-top: 1px solid rgb(122, 173, 255);
   }
   /* #newFooterDiv {
     display: flex;
