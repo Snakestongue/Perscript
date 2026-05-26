@@ -16,15 +16,16 @@ body{
   color:#fff;
   padding-top: 25px;
   padding-bottom: 0px;
+  overflow-y: auto;
 }
 #homePage{
   padding-top: 100px;
-  background:
+  /* background:
   radial-gradient(
     circle at 50% 25%,
     rgba(122, 173, 255, .2),
     transparent 70%
-  )
+  ) */
 } 
 #homePageContent{
   min-height: 80vh;
@@ -62,8 +63,8 @@ body{
   min-height: 100svh;
   display:grid;
   width:100%;
-  grid-template-rows: 10% auto 10%;
-  grid-template-columns:23% 77%;
+  grid-template-rows: auto 1fr auto;
+  grid-template-columns:20% 80%;
   grid-template-areas: 
   "header header"
   "sidebar content"
@@ -76,8 +77,9 @@ body{
   grid-area: content;
   display: flex;
   flex-direction: column;
-  width:90%;
+  width:100%;
   margin: 0 auto;
+  margin-top: 80px;
 }
 #divEditor{
   margin: 0px; 
@@ -94,7 +96,7 @@ body{
 }
 header{
   grid-area: header;
-  height: 80px;
+  height: 85px;
   background-color: rgb(19, 25, 31);
   margin: 0;
   padding: 10px;
@@ -108,6 +110,7 @@ header{
   justify-content: center;
   align-items: center;
   border-bottom: 1px solid rgba(255,255,255,0.1);
+  margin-bottom: 0 !important;
 }
 #headerList, #newHeaderList{
   display: flex;
@@ -131,10 +134,25 @@ header{
 }
 #checky{
   list-style: none;
-  border-color: rgb(122, 173, 255);
 }
-#AICONTENT{
-  margin-bottom: 10px;
+.pt, .comboSVG{
+  margin: 1px 0px !important;
+  margin-left: 10px !important;
+}
+.combo{
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 0px;
+}
+#AICONTENT, #checky{
+  margin-bottom: 0px;
+  min-height: 120px;
+  border-radius: 0px;
+  border: none;
+  background-color: rgb(28, 34, 43);
+}
+#AIDIV, #checkDIV{
+  background-color: rgb(19, 25, 31);
 }
 #questionProgram, #sugLab{
   border: none;
@@ -150,6 +168,10 @@ header{
   border-top-right-radius: 10px;  
   transition: all .5s;
   margin-top: 20px;
+}
+#questionProgram{
+  margin-top: 0px;
+  border-radius: 0px;
 }
 #sugLab{
   width: 100%;
@@ -205,19 +227,23 @@ option{
   margin-left: 10px;
 }
 #buttonDiv{
-  margin: 0 !important;
   grid-area: sidebar;
-  display: flex;
-  flex-direction: column;
   align-items: center;
-  margin-top: 20px !important;
   width: 100%;
   padding: 0 20px;
   box-sizing: border-box;
+  background-color: rgb(19, 25, 31);
+  margin-top: 80px;
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  border-right:1px solid rgba(255,255,255,0.1);;
+
 }
 #mediaGrid, #lowerSide, #checkDIV{
   width: 100%;
   box-sizing: border-box;
+  margin-top: 0 !important;
 }
 
 button:hover{
@@ -251,22 +277,27 @@ svg{
   padding: 0;
 }
 #aiAssist{
-  margin-top: 10px;
+  margin-bottom:20px;
+  color:rgb(217, 0, 255);
+  background-color: rgba(217, 0, 255, .1);
+}
+#aiAssist:hover{
+  background-color: rgba(217, 0, 255, .3);
 }
 button#submit{
-  background: rgba  (122, 173, 255, .2);
+  background-color: rgba(122, 173, 255, .8);
   border-color: rgb(122, 173, 255);
   color: #fff;
   text-align: center;
   justify-content: center;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 1px;
   text-transform: uppercase;
   margin-top: 10px;
   transition: .3s;
 }
 button#submit:hover{
-  background-color: transparent;
+  background-color: rgba(122, 173, 255, .2);
 }
 #buttonDiv select, #buttonDiv button, #buttonDiv p{
   width: 100%;
@@ -626,11 +657,11 @@ a{
   align-self: flex-start;
 }
 #colorTut, #tutsvg{
-  background-color: rgba(228, 171, 14, 0.25);
-  color: rgb(228, 171, 14);
+  background-color: rgba(228, 82, 14, 0.25);
+  color: rgb(228, 82, 14);
 }
 #tarrow{
-  color: rgb(228, 171, 14);
+  color: rgb(228, 82, 14);
 }
 #colorPP, #prsvg{
   background-color: rgba(14, 228, 128, 0.25);
@@ -651,8 +682,8 @@ a{
   color: rgb(228, 32, 14);
 }
 #langsvg{
-  background-color: rgba(228, 14, 207, 0.25);
-  color: rgb(228, 14, 207);
+  background-color: rgba(217, 0, 255, 0.25);
+  color: rgb(217, 0, 255);
 }
 #ossvg{
   background-color: rgba(228, 224, 14, 0.25);
@@ -692,9 +723,26 @@ a{
   justify-content: center;
   align-items: center;
   overflow-y: auto;
+  margin-top: auto !important;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 #AK{
-  margin-top: 20px;
+  margin-top: auto;
+  color:rgb(228, 224, 14);
+  background-color:rgba(228, 224, 14, .1);
+}
+#AK:hover{
+  background-color:rgba(228, 224, 14, .3);
+}
+#subEditor{
+  display: grid;
+  grid-template-columns: 30% 70%;
+}
+.active{
+  background-color: rgba(122, 173, 255, .2);
 }
 @media (max-width:1100px){  
   #appJSX, #programJSX{
@@ -813,9 +861,6 @@ a{
     width: 100%;
     margin-top: 10px;
   }
-  #checky{
-    width: 100%;
-  }
   #AICONTENT{
     margin: 0 auto;
     margin-top: 10px;
@@ -862,13 +907,40 @@ a{
     display: flex;
     flex-direction: column;
   }
-  .titles {
+  .titles{
     grid-column: 1 / -1;
     margin: 10px 0 2px;
   }
   #sample{
     height:75px;
     overflow-y: auto;
+  }
+  #subEditor{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  #checkDIV, #AIDIV{
+    width: 100%;
+  }
+  #checky, #AICONTENT{
+    min-height: 60px;
+    max-height: 150px;
+    overflow-y: auto;
+  }
+  #mediaGrid, #lowerSide, #checkDIV{
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 0 !important;
+  }
+  #checkDIV, #AIDIV{
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    margin-top: 10px !important;
+    border-radius: 4px;
+    padding: 5px;
   }
 }
 
@@ -882,6 +954,9 @@ a{
   display: inline-block;
   margin-left: 8px;
   animation:spin 0.8s linear infinite;
+}
+#aiSpin{
+  border-top: 3px solid rgb(217, 0, 255);
 }
 
 
