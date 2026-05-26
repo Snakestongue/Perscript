@@ -1,5 +1,4 @@
 /**FAVICON BYTESIZED*/
-/*214 JSON*/
 @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
 /* * {
@@ -77,10 +76,8 @@ body{
   grid-area: content;
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
   width:90%;
   margin: 0 auto;
-  /* overflow-y: hidden; */
 }
 #divEditor{
   margin: 0px; 
@@ -716,7 +713,7 @@ a{
     margin: 0 auto;
     margin-bottom: 10px;
   }
-  #questionProgram, #divEditor{
+  #questionProgram{
     width: 100%;
     box-sizing: border-box;
   }
@@ -889,6 +886,11 @@ a{
 
 
 @media (max-width:600px){
+  #divEditor {
+    height: 35vh;   
+    max-height: 35vh;
+    flex-shrink: 0;
+  }
   #buttonDiv{
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -910,7 +912,7 @@ a{
     margin: 0px;
   }
   footer {
-    overflow: hidden; /* or overflow-x: hidden */
+    overflow-x: hidden;
   }
   #newFooterDiv {
     display: flex;
@@ -940,7 +942,6 @@ a{
   }
   button {
     margin: 5px 0px;
-    /* max-width: 240px; */
     min-width: unset;
   }
   #headerFPP{
