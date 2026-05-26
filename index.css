@@ -891,6 +891,9 @@ a{
     max-height: 35vh;
     flex-shrink: 0;
   }
+  #questionProgram{
+    margin-top: 45px !important;
+  }
   #buttonDiv{
     display: grid;
     grid-template-columns: 1fr 1fr;
