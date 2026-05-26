@@ -920,6 +920,7 @@ a{
     display: flex;
     flex-direction: column;
     overflow-y: auto;
+    min-height: 200px !important;
   }
   #copy{
     text-align: center;
@@ -932,8 +933,8 @@ a{
     font-size: 12px;
   }
   button {
-    margin: 5px;
-    max-width: 260px;
+    margin: 5px 0px;
+    /* max-width: 240px; */
     min-width: unset;
   }
   #headerFPP{
