@@ -911,19 +911,17 @@ a{
     padding: 7px 0px;
     margin: 0px;
   }
-  footer {
-    overflow-x: hidden;
-  }
-  #newFooterDiv {
+  /* #newFooterDiv {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     width: 100%;
+    margin-top: auto;
   }
   .footerLinks {
     margin: 7px !important;
     width: auto;
-  }
+  } */
   #mediaGrid, #lowerSide, #gridButton{
     display: flex;
     flex-direction: column;
@@ -976,6 +974,7 @@ a{
   #sugDiv{
     width:85%;
   }
+  
 }
 @media (max-width:400px){
   .headerLinks {
