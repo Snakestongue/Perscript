@@ -914,6 +914,9 @@ a{
     padding: 7px 0px;
     margin: 0px;
   }
+  footer{
+    border-top: 1px solid rgb(122, 173, 255);
+  }
   /* #newFooterDiv {
     display: flex;
     flex-wrap: wrap;
