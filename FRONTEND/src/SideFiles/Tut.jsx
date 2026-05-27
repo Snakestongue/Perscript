@@ -347,9 +347,121 @@ public:
                     </ul>
                     
                 </div>
+                <div id="canSpark" className="tutCard">
+                    <h2 class="tutHead">General FRC terms</h2>
+                    <h4 class="tutHeader">PID</h4>
+                    <ul>
+                        <li>A control loop used to get to a certain state.</li>
+                        <li>Used for elevator heights, arm angles</li>
+                        <ul>
+                            <li>P:Proportional</li>
+                            <li>I:Integral</li>
+                            <li>D:Derivative</li>
+                        </ul>
+                    </ul>
+                    <h4 class="tutHeader">Feedforward</h4>
+                    <ul>
+                        <li>Predicts how much power needed before error</li>
+                        <li>Used for wheels, arms</li>
+                        <ul>
+                            <li>Static Friction Compensation: Minimum voltage needed to overcome friction to start mechanism.</li>
+                            <li>Velocity Gain: Minimum voltage to maintain a certain speed.</li>
+                            <li>Gravity Compensation: Minimum voltage needed to overcome gravity to prevent holding position.</li>
+                            <li>Acceleration Gain: How much voltage is needed to accelerate.</li>
+                        </ul>
+                    </ul>
+                    <h4 class="tutHeader">Encoders</h4>
+                    <ul>
+                        <li>Measures positions, rotations or speed.</li>
+                        <li>Relative encoders</li>
+                        <ul>
+                            <li>Usually counts ticks and is like a stopwatch</li>
+                        </ul>
+                         <li>Absolute encoders</li>
+                        <ul>
+                            <li>Measures exact angles or speeds</li>
+                        </ul>
+                    </ul>
+                    <h4 class="tutHeader">Limit Switches</h4>
+                    <ul>
+                        <li>A physical switch detecting endpoints</li>
+                        <li>Used if elevator is on the bottom or arm at end point.</li>
+                        <li><b><i>Very important!</i></b></li>
+                    </ul>
+                    <h4 class="tutHeader">Drive Trains</h4>
+                    <ul>
+                        <li>Swerve</li>
+                        <ul>
+                            <li>Every tire can rotate and drive at any point allowing for diagonal driving.</li>
+                            <li>TalonFX has an automatic Swerve Generator.</li>
+                        </ul>
+                        <li>Tank</li>
+                        <ul>
+                            <li>Left and Rights wheels move together making maneuverablity difficult.</li>
+                            <li>Cheaper but less used in FRC today.</li>
+                        </ul>
+                    </ul>
+                </div>
                 {/* <div id="canSpark" className="tutCard">
-                    <h3><strong>Using SparkMax</strong></h3>
-                    <ul></ul>
+                    <h2 class="tutHead">SparkMax</h2>
+                    <h4 class="tutHeader">Important Methods</h4>
+                    <ul>
+                        <li class="tutTitle">Set throttle</li>
+                        <ul>
+                        <li class="tutLang">Java</li>
+                                <pre>
+                                    <code>
+{`motor.setThrottle(0.5);`}
+                                    </code>
+                                </pre>
+                        </ul>
+                        <li class="tutTitle">Set voltage</li>
+                        <ul>
+                        <li class="tutLang">Java</li>
+                                <pre>
+                                    <code>
+{`motor.setVoltage(5);`}
+                                    </code>
+                                </pre>
+                        </ul>
+                        <li class="tutTitle">Stop motor</li>
+                        <ul>
+                        <li class="tutLang">Java</li>
+                                <pre>
+                                    <code>
+{`motor.stopMotor();`}
+                                    </code>
+                                </pre>
+                        </ul>
+                        <li class="tutTitle">Stop motor</li>
+                        <ul>
+                        <li class="tutLang">Java</li>
+                                <pre>
+                                    <code>
+{`motor.stopMotor();`}
+                                    </code>
+                                </pre>
+                        </ul>
+                        <li class="tutTitle">Encoder</li>
+                        <ul>
+                        <li class="tutLang">Java</li>
+                                <pre>
+                                    <code>
+{`RelativeEncoder encoder = motor.getEncoder();`}
+                                    </code>
+                                </pre>
+                        </ul>
+                        <li class="tutTitle">Configuration</li>
+                        <li>Configuration is used to set up PID, encoder, inversion, break/coast, etc</li>
+                        <ul>
+                        <li class="tutLang">Java</li>
+                                <pre>
+                                    <code>
+{`motor.configure(...)`}
+                                    </code>
+                                </pre>
+                        </ul>
+                    </ul>
                 </div>
                 <div id="talonFX" className="tutCard">
                     <h3><strong>Using TalonFX</strong></h3>
