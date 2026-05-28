@@ -107,7 +107,7 @@ function Program(){
       </header>
       <nav>
         <ul id="newHeaderList">
-          <li><Link to="/program" className="headerLinks ">Programming Practice</Link></li>
+          <li><Link to="/program" className="headerLinks active">Programming Practice</Link></li>
           <li><Link to="/debug" className="headerLinks">Debugging Practice</Link></li>
           <li><Link to="/tut" className="headerLinks">Tutorials</Link></li>
         </ul>

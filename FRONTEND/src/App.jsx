@@ -5,7 +5,7 @@ function App(){
   return (
     <div id="homePage" >
       <header>
-            <Link to="/"><p id="headerFPP"><span>FRC</span> Programming Practice</p></Link>
+            <Link to="/"><p id="headerFPPa"><span>FRC</span> Programming Practice</p></Link>
             <ul id="headerList">
                 {/* <li><Link to="/" className="headerLinks">Home</Link></li> */}
                 <li><Link to="/program" className="headerLinks">Programming Practice</Link></li>
