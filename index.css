@@ -34,7 +34,7 @@ body{
 #FFRT{
   margin-top: 20px;
 }
-#headerFPP{
+#headerFPP, #headerFPPa{
   font-family: 'Rajdhani', sans-serif; /*Import above ^*/
   font-size: 28px;
   font-weight: 700;
@@ -47,12 +47,15 @@ body{
   text-decoration: underline dashed rgb(42, 52, 68);
   text-underline-offset: 6px;
 }
-#headerFPP:hover{
+#headerFPP:hover, #headerFPPa:hover{
   text-decoration: underline dashed rgb(122, 173, 255);
   transform: translateY(-3px);
 }
-#headerFPP span{
+#headerFPP span, #headerFPPa span{
   color:rgb(122, 173, 255);
+}
+#headerFPPa{
+  text-decoration: underline dashed rgba(122, 173, 255, .5);
 }
 #mainDiv {
   min-height: 100svh;
@@ -663,11 +666,11 @@ a{
   align-self: flex-start;
 }
 #colorTut, #tutsvg{
-  background-color: rgba(228, 82, 14, 0.25);
-  color: rgb(228, 82, 14);
+  background-color: rgba(228, 125, 14, 0.25);
+  color: rgb(228, 125, 14);
 }
 #tarrow{
-  color: rgb(228, 82, 14);
+  color: rgb(228, 125, 14);
 }
 #colorPP, #prsvg{
   background-color: rgba(14, 228, 128, 0.25);
@@ -793,12 +796,16 @@ a{
   header ul li{
     font-size: 13px;
   }
+  #headerFPP, #headerFPPa{
+    text-align: center;
+    margin:0px;
+  }
   header{
     display: flex;
     align-items: center;
     box-shadow: none;
     justify-content: center;
-    padding: 0 20px !important;
+    padding: 0 0px !important;
   }
   #imgHead{
     width:75%;
@@ -1030,9 +1037,11 @@ a{
     margin: 5px 0px;
     min-width: unset;
   }
-  #headerFPP{
+  #headerFPP, #headerFPPa{
     font-size: 25px;
-    text-align: left;
+    margin:0px;
+    padding: 0px;
+    text-align: center;
   }
   #home2Cover{
     display: flex;
@@ -1068,7 +1077,7 @@ a{
   .headerLinks {
     font-size: 9px;
   }
-  #headerFPP{
+  #headerFPP, #headerFPPa{
     font-size: 20px;
   }
 }
