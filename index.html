@@ -14,47 +14,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>FRC Programming Practice</title>
     <link rel="icon" href="/FRC-Programming-Practice/assets/image-D0NnjTdA.png" />
-    <script type="module" crossorigin src="/FRC-Programming-Practice/assets/index-BneM9Kh-.js"></script>
-    <link rel="stylesheet" crossorigin href="/FRC-Programming-Practice/assets/index-hpNDx-7e.css">
+    <script type="module" crossorigin src="/FRC-Programming-Practice/assets/index-DCEVViYi.js"></script>
+    <link rel="stylesheet" crossorigin href="/FRC-Programming-Practice/assets/index-6wMRd738.css">
   </head>
   <body>
-    <!-- <p>hi</p> -->
     <div id="root"></div>
-    <script>
-      async function saveNumber(){
-        let savedNumber = localStorage.getItem("teamNumber")
-        if (savedNumber){
-          return;
-        }
-        let number;
-        while (!number){
-          number = Number(prompt("Please enter your robotics team number!"));
-          if(!number){
-              alert("Please enter a team number!");
-          }
-        }
-        try {
-          const response = await fetch("https://frc-programming-practice.onrender.com/alert",{
-              method: "POST",
-              headers: {"Content-Type": "application/json" },
-              body:JSON.stringify({
-                  numReq: number
-              })
-          });
-          const wait =await response.json()
-          if (response.ok){
-              alert("Thank you!");
-              localStorage.setItem("teamNumber", number);
-
-          }else{
-              alert("Failed: " + wait.message);
-          }
-        } catch (error){
-          console.log(error)
-          alert("Error. Enjoy the site!")
-        }
-      }
-      saveNumber()
-    </script>
   </body>
 </html>
