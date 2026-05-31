@@ -15,7 +15,7 @@ function RoutesPage(){
   useEffect(()=>{
     const saved = localStorage.getItem("teamNumber");
     if (!saved) setTeam(true);
-  });
+  }, []);
   const handleSubmit =async(num)=>{
     setTeam(false);
     try {
