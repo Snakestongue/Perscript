@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
+import type { ChangeEvent } from "react";
 import { useState } from "react";
 function Sug() {
-  const [currentSug, setSug] = useState("")
-  const [loading, setLoading] = useState(false);
-  const handleSubmit = async()=>{
+  const [currentSug, setSug] = useState<string>("")
+  const [loading, setLoading] = useState<boolean>(false);
+  const handleSubmit = async():Promise<void> =>{
     if (!currentSug.trim()){
       alert("Please fill out textbox!")
       return;
@@ -18,13 +19,19 @@ function Sug() {
         body: JSON.stringify({suggestReq: currentSug}),
       });
       const data = await res.json();
-      alert("Suggestion submitted!");
-      setSug(""); 
-    }catch (error){
-      alert("Error!" +error);
+      if (res.ok){
+        alert("Suggestion submitted!");
+        setSug(""); 
+      }else{
+        console.log("Error " +data.message)
+        alert("Error:")
+      }
+    }catch (error:unknown){
+      alert("Error!" +String(error));
       console.log(error)
+    }finally{
+      setLoading(false);
     }
-    setLoading(false);
   };
   return (
     <div id="sugMain">
@@ -53,7 +60,7 @@ function Sug() {
         <textarea 
           id="sugInput"
           value={currentSug}
-          onChange={(e) => setSug(e.target.value)}
+          onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setSug(e.target.value)}
           placeholder="Start typing here..."
         />
         <button id="sugSubmit" onClick={handleSubmit} disabled={loading}>
@@ -72,7 +79,7 @@ function Sug() {
         <div id="newFooterDiv">
           <Link id="PPLINK" to="/PP" className="footerLinks" >Privacy Policy</Link>
           <Link id="Sug" to="/Sug" className="footerLinks active" >Add a suggestion</Link>
-          <a id="git" className="footerLinks" href="https://github.com/Snakestongue/FRC-Programming-Practice">Github</a>
+          <a id="git" className="footerLinks" target="_blank" rel="noopener noreferrer"href="https://github.com/Snakestongue/FRC-Programming-Practice">Github</a>
         </div>
         <p style={{color:"white"}} id="copy">© By Snakestongue. All rights reserved.</p>
       </footer>
