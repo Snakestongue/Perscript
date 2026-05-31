@@ -17,7 +17,7 @@ function RoutesPage(){
     if (!saved) setTeam(true);
   });
   const handleSubmit =async(num)=>{
-    
+    setTeam(false);
     try {
       const resp = await fetch("https://frc-programming-practice.onrender.com/alert",
         {
@@ -26,7 +26,6 @@ function RoutesPage(){
           body:  JSON.stringify({numReq: num }),
         }
       )
-      setTeam(false);
       const data = await resp.json();
       if(resp.ok){
         localStorage.setItem("teamNumber", num);
