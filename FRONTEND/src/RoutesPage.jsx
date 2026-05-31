@@ -1,25 +1,59 @@
-import {BrowserRouter,Routes, Route} from "react-router-dom"
-import App from "./App.jsx"
-import Bug from "./SideFiles/Bug.jsx"
-import PP from "./SideFiles/PP.jsx"
-import Sug from "./SideFiles/Sug.jsx"
-import Tut from "./SideFiles/Tut.jsx"
-import Program from "./SideFiles/Program.jsx"
-import GA from "./GA.jsx";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useState } from "react";
+import { useEffect } from "react"
 
+import App from "./App.jsx";
+import Bug from "./SideFiles/Bug.jsx";
+import PP from "./SideFiles/PP.jsx";
+import Sug from "./SideFiles/Sug.jsx";
+import Tut from "./SideFiles/Tut.jsx";
+import Program from "./SideFiles/Program.jsx";
+import GA from "./GA.jsx";
+import TeamModal from "./Team.jsx";
 function RoutesPage(){
-  return(
+  const [team, setTeam] = useState(false);
+  useEffect(()=>{
+    const saved = localStorage.getItem("teamNumber");
+    if (!saved) setTeam(true);
+  });
+  const handleSubmit =async(num)=>{
+    
+    try {
+      const resp = await fetch("https://frc-programming-practice.onrender.com/alert",
+        {
+          method:"POST",
+          headers:{"Content-Type": "application/json"},
+          body:  JSON.stringify({numReq: num }),
+        }
+      )
+      setTeam(false);
+      const data = await resp.json();
+      if(resp.ok){
+        localStorage.setItem("teamNumber", num);
+        console.log("Number logged")
+      }else{
+        alert(data.message);
+        console.log(data.message)
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Error submitting team number");
+    }
+  };
+  return (
     <BrowserRouter basename="/FRC-Programming-Practice">
       <GA />
+      {team && <TeamModal onSubmit={handleSubmit} />}
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/debug" element={<Bug />} />
-        <Route path="/PP" element={<PP />}/>
-        <Route path="/Sug" element={<Sug />}/>
-        <Route path="/tut" element={<Tut />}/>
-        <Route path="/program" element={<Program />}/>
+        <Route path="/PP" element={<PP />} />
+        <Route path="/Sug" element={<Sug />} />
+        <Route path="/tut" element={<Tut />} />
+        <Route path="/program" element={<Program />} />
       </Routes>
     </BrowserRouter>
   );
 }
-export default RoutesPage
+
+export default RoutesPage;

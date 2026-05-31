@@ -7,10 +7,8 @@ function Bug(){
   return(
   <div id="mainDivBug">
       <header>
-            {/* <img src={frcImg} id="imgHead" /> */}
             <Link to="/"><p id="headerFPP"><span>FRC</span> Programming Practice</p></Link>
             <ul id="headerList">
-                {/* <li><Link to="/" className="headerLinks">Home</Link></li> */}
                 <li><Link to="/program" className="headerLinks">Programming Practice</Link></li>
                 <li><Link to="/debug" className="headerLinks active">Debugging Practice</Link></li>
                 <li><Link to="/tut" className="headerLinks">Tutorials</Link></li>
@@ -23,7 +21,7 @@ function Bug(){
           <li><Link to="/tut" className="headerLinks">Tutorials</Link></li>
         </ul>
       </nav>
-    <div class="bugLangDiv">
+    <div className="bugLangDiv">
     </div>
     <div id="f3">  
       {problems.map((p, index)=>{
