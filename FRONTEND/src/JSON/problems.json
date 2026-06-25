@@ -310,5 +310,216 @@
         }
       ]
     }
+  },
+  {
+  "id": 5,
+  "title": "Motion Magic & PID",
+  "description": "Create a TalonFXConfiguration object named config. Configure Slot0 with kP = 10, kI = 0, and kD = 0. Then configure Motion Magic with a cruise velocity of 80 and an acceleration of 160.",
+  "starterCode": {
+    "java": "import com.ctre.phoenix6.configs.TalonFXConfiguration;\n\npublic class ElevatorSubsystem {\n    public ElevatorSubsystem() {\n        // Write code here and remove this comment.\n    }\n}",
+    "python": "from phoenix6.configs import TalonFXConfiguration\n\nclass ElevatorSubsystem:\n    def __init__(self):\n        # Write code here and remove this comment.\n",
+    "cpp": "#include <ctre/phoenix6/configs/TalonFXConfigs.hpp>\n\nclass ElevatorSubsystem {\npublic:\n    ElevatorSubsystem() {\n        // Write code here and remove this comment.\n    }\n};"
+  },
+  "solutionCode": {
+    "java": "import com.ctre.phoenix6.configs.TalonFXConfiguration;\n\npublic class ElevatorSubsystem {\n    public ElevatorSubsystem() {\n        TalonFXConfiguration config = new TalonFXConfiguration();\n        config.Slot0.kP = 10;\n        config.Slot0.kI = 0;\n        config.Slot0.kD = 0;\n        config.MotionMagic.MotionMagicCruiseVelocity = 80;\n        config.MotionMagic.MotionMagicAcceleration = 160;\n    }\n}",
+    "python": "from phoenix6.configs import TalonFXConfiguration\n\nclass ElevatorSubsystem:\n    def __init__(self):\n        config = TalonFXConfiguration()\n        config.slot0.k_p = 10\n        config.slot0.k_i = 0\n        config.slot0.k_d = 0\n        config.motion_magic.motion_magic_cruise_velocity = 80\n        config.motion_magic.motion_magic_acceleration = 160\n",
+    "cpp": "#include <ctre/phoenix6/configs/TalonFXConfigs.hpp>\n\nclass ElevatorSubsystem {\npublic:\n    ElevatorSubsystem() {\n        ctre::phoenix6::configs::TalonFXConfiguration config{};\n        config.Slot0.kP = 10;\n        config.Slot0.kI = 0;\n        config.Slot0.kD = 0;\n        config.MotionMagic.MotionMagicCruiseVelocity = 80;\n        config.MotionMagic.MotionMagicAcceleration = 160;\n    }\n};"
+  },
+  "checks": {
+    "java": [
+      {
+          "type": "count",
+          "value": "TalonFXConfiguration",
+          "min": 2,
+          "message": "Did you add an object"
+        },
+      {
+        "type": "includes",
+        "value": "kP",
+        "message": "Did you add kP?"
+      },
+      {
+        "type": "includes",
+        "value": "kI",
+        "message": "Did you add kI?"
+      },
+      {
+        "type": "includes",
+        "value": "kD",
+        "message": "Did you add kD?"
+      },
+      {
+        "type": "includes",
+        "value": "MotionMagicCruiseVelocity",
+        "message": "Did you add the cruise velocity?"
+      },
+      {
+        "type": "includes",
+        "value": "MotionMagicAcceleration",
+        "message": "Did you add the acceleration?"
+      }
+    ],
+    "python": [
+      {
+          "type": "count",
+          "value": "TalonFXConfiguration",
+          "min": 2,
+          "message": "Did you add an object"
+      },
+      {
+        "type": "includes",
+        "value": "k_p",
+        "message": "Did you add k_p?"
+      },
+      {
+        "type": "includes",
+        "value": "k_i",
+        "message": "Did you add k_i?"
+      },
+      {
+        "type": "includes",
+        "value": "k_d",
+        "message": "Did you add k_d?"
+      },
+      {
+        "type": "includes",
+        "value": "motion_magic_cruise_velocity",
+        "message": "Did you add the cruise velocity?"
+      },
+      {
+        "type": "includes",
+        "value": "motion_magic_acceleration",
+        "message": "Did you add the acceleration?"
+      }
+    ],
+    "cpp": [
+      {
+        "type": "includes",
+        "value": "TalonFXConfiguration",
+        "message": "Did you add an object"
+      },
+      {
+        "type": "includes",
+        "value": "kP",
+        "message": "Did you add kP?"
+      },
+       {
+        "type": "includes",
+        "value": "kI",
+        "message": "Did you add kI?"
+      },
+       {
+        "type": "includes",
+        "value": "kD",
+        "message": "Did you add kD?"
+      },
+      {
+        "type": "includes",
+        "value": "MotionMagicCruiseVelocity",
+        "message": "Did you configure the cruise velocity?"
+      },
+      {
+        "type": "includes",
+        "value": "MotionMagicAcceleration",
+        "message": "Did you configure the acceleration?"
+      }
+    ]
   }
+},
+{
+  "id": 6,
+  "title": "Hardware in Constructors",
+  "description": "Create a TalonFX motor named elevatorMotor with device ID 5. In the constructor, create a TalonFXConfiguration object, set Slot0.kP to 10, and apply the configuration to the motor using the motor's configurator.",
+  "starterCode": {
+    "java": "import com.ctre.phoenix6.hardware.TalonFX;\nimport com.ctre.phoenix6.configs.TalonFXConfiguration;\n\npublic class ElevatorSubsystem {\n    // Write code here.\n\n    public ElevatorSubsystem() {\n        // Write code here.\n    }\n}",
+    "python": "from phoenix6.hardware import TalonFX\nfrom phoenix6.configs import TalonFXConfiguration\n\nclass ElevatorSubsystem:\n    # Write code here.\n\n    def __init__(self):\n        # Write code here.\n",
+    "cpp": "#include <ctre/phoenix6/hardware/TalonFX.hpp>\n#include <ctre/phoenix6/configs/TalonFXConfigs.hpp>\n\nclass ElevatorSubsystem {\npublic:\n    ElevatorSubsystem() {\n        // Write code here.\n    }\n\nprivate:\n    // Write code here.\n};"
+  },
+  "solutionCode": {
+    "java": "import com.ctre.phoenix6.hardware.TalonFX;\nimport com.ctre.phoenix6.configs.TalonFXConfiguration;\n\npublic class ElevatorSubsystem {\n    private final TalonFX elevatorMotor = new TalonFX(5);\n\n    public ElevatorSubsystem() {\n        TalonFXConfiguration config = new TalonFXConfiguration();\n        config.Slot0.kP = 10;\n        elevatorMotor.getConfigurator().apply(config);\n    }\n}",
+    "python": "from phoenix6.hardware import TalonFX\nfrom phoenix6.configs import TalonFXConfiguration\n\nclass ElevatorSubsystem:\n    elevator_motor = TalonFX(5)\n\n    def __init__(self):\n        config = TalonFXConfiguration()\n        config.slot0.k_p = 10\n        self.elevator_motor.configurator.apply(config)\n",
+    "cpp": "#include <ctre/phoenix6/hardware/TalonFX.hpp>\n#include <ctre/phoenix6/configs/TalonFXConfigs.hpp>\n\nclass ElevatorSubsystem {\npublic:\n    ElevatorSubsystem() {\n        ctre::phoenix6::configs::TalonFXConfiguration config{};\n        config.Slot0.kP = 10;\n        elevatorMotor.GetConfigurator().Apply(config);\n    }\n\nprivate:\n    ctre::phoenix6::hardware::TalonFX elevatorMotor{5};\n};"
+  },
+  "checks": {
+    "java": [
+      {
+        "type": "includes",
+        "value": "new TalonFX(5)",
+        "message": "Did you create the TalonFX with accurate ID?"
+      },
+      {
+          "type": "count",
+          "value": "TalonFXConfiguration",
+          "min": 2,
+          "message": "Did you add an object in constructor?"
+      },
+      {
+        "type": "includes",
+        "value": "kP",
+        "message": "Did you configure kP?"
+      },
+      {
+        "type": "includes",
+        "value": "getConfigurator",
+        "message": "Did you access the motor's configurator?"
+      },
+      {
+        "type": "includes",
+        "value": "apply",
+        "message": "Did you apply the config?"
+      }
+    ],
+    "python": [
+      {
+        "type": "includes",
+        "value": "TalonFX(5)",
+        "message": "Did you create the TalonFX with device ID 5?"
+      },
+      {
+          "type": "count",
+          "value": "TalonFXConfiguration",
+          "min": 2,
+          "message": "Did you add an object in constructor?"
+      },
+      {
+        "type": "includes",
+        "value": "k_p",
+        "message": "Did you configure k_p?"
+      },
+      {
+        "type": "includes",
+        "value": "apply",
+        "message": "Did you apply the config?"
+      }
+    ],
+    "cpp": [
+      {
+        "type": "count",
+        "value": "TalonFX",
+        "min":3,
+        "message": "Did you create the TalonFX?"
+      },
+      {
+        "type": "includes",
+        "value": "TalonFXConfiguration",
+        "message": "Did you create a TalonFXConfiguration object?"
+      },
+      {
+        "type": "includes",
+        "value": "kP",
+        "message": "Did you configure kP?"
+      },
+      {
+        "type": "includes",
+        "value": "GetConfigurator",
+        "message": "Did you access the motor's configurator?"
+      },
+      {
+        "type": "includes",
+        "value": "Apply",
+        "message": "Did you apply the config?"
+      }
+    ]
+  }
+}
 ]
