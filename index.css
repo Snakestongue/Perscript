@@ -790,6 +790,16 @@ a{
 #modalSubmit:hover{
   opacity: .8;
 }
+#vim-status{
+  color: #9CA3AF;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  padding: 4px 10px;
+  background: rgb(19, 25, 31);
+  border-top: 1px solid rgba(255,255,255,0.06);
+  min-height: 22px;
+  letter-spacing: 0.5px;
+}
 @media (max-width:1100px){  
   #appJSX, #programJSX{
     min-height: 100svh;
