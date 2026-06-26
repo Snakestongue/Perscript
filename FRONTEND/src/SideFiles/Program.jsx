@@ -1,7 +1,9 @@
+import {initVimMode } from "monaco-vim";
 import {Link } from "react-router-dom"
 import {useState, useEffect  }from 'react';
 import Editor from '@monaco-editor/react';
 import problems from "../JSON/problems.json"
+import { useRef } from "react";
 function Program(){
   const [currentLang, newLang] = useState("java")
   const[selectedProblem, setSelectedProblem]=useState(problems[0]);
@@ -12,8 +14,11 @@ function Program(){
   const [correctAnswer, setCorrectAnswer] = useState('')
   const[content, selectContent] = useState("")
   const [load, currentLoad ] = useState(false)
-  const [checkR, setCheckR] = useState([]);
-  const [hasRun, setHasRun] = useState(false);
+  const [checkR, setCheckR] =useState([]);
+  const [hasRun, setHasRun] =useState(false);
+  const[vimOn, setVimOn] = useState(false)
+  const vimRef = useRef (null)
+  const editorRef =useRef(null )
   async function submitToAI() {
     if (!userCode){
       alert("Make sure there is code to be checked!")
@@ -94,6 +99,22 @@ function Program(){
     setCheckR(results);
     setHasRun(true);
   };
+  const toggleVim =() => {
+    if(!editorRef.current){
+      return
+    }
+    if(vimOn){
+      vimRef.current?.dispose();
+      vimRef.current = null;
+    }else{
+      const statusNode = document.getElementById("vim-status");
+      if (statusNode){
+        statusNode.innerHTML = ""
+      }
+      vimRef.current = initVimMode(editorRef.current, statusNode);
+    }
+    setVimOn(v =>!v);
+  };
   return (
     <div id="programJSX" >
       <header>
@@ -123,6 +144,7 @@ function Program(){
             onChange={(value)=>setUserCode(value)} 
             id="editor"
             onMount={(editor, monaco) => {
+              editorRef.current = editor;
               monaco.editor.defineTheme("themes", {
                 base: "vs-dark",
                 inherit: true,
@@ -146,10 +168,11 @@ function Program(){
                   "editorBracketHighlight.foreground3": "#34D399",
                 }
               });
-              monaco.editor.setTheme("themes");
+              monaco.editor.setTheme("themes")
             }}
             />
         </div>
+        {/* <div id="vim-status" /> */}
         <div id="subEditor">
         <div id="checkDIV">
           <div className="combo">
@@ -211,6 +234,14 @@ function Program(){
             </div>
             </div>
           <div id="lowerSide">
+            <button 
+              onClick={toggleVim} 
+              id="vimToggle" style={{
+                color: vimOn ? "rgb(122,173,255)" : "#6B7280",
+                borderColor: vimOn ? "rgba(122,173,255,0.4)" : "rgba(255,255,255,0.1)"
+              }}>
+              {vimOn ? "⌨ VIM ON" : "⌨ VIM OFF"}
+            </button>
           <button
             id="AK"
             className="sidebars"
