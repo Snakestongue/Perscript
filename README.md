@@ -95,8 +95,3 @@ Have ideas, feature requests, or improvements?
 
 You can submit feedback directly through the Suggestions page located in the website footer.
 
-All feedback helps improve the platform and make it more useful for FRC students and teams.
-
-## License
-
-This project is currently under development.
