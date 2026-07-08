@@ -1,51 +1,102 @@
 # FRC Programming Practice
 
-A website built with React and Monaco Editor to help students practice FRC (FIRST Robotics Competition) programming!
+A web-based programming practice site built with React and Monaco Editor to help students learn and improve FRC (FIRST Robotics Competition) programming skills.
 
 ## About
 
-This platform provides beginner Java/C++/Python practice problems for FRC students. The goal is to help users strengthen their programming fundamentals and become more confident with real robot code concepts.
+FRC Programming Practice is designed to help beginner and intermediate robotics programmers strengthen their programming fundamentals.
 
-Students can write and test code directly in the browser using a Monaco editor.
+The platform provides FRC-style (Command Based) Java, C++, and Python programming challenges. Students can write, test, and debug code directly in the browser using the Monaco Editor.
+
+The goal of this project is to make learning FRC programming more accessible by providing guided practice, debugging support, tutorials, and AI-powered assistance.
 
 ## Features
 
-Interactive coding environment for Java, Python & C++ (Monaco Editor)
+### Interactive Coding Environment
+- Browser-based coding workspace powered by Monaco Editor
+- Support for:
+  - Java
+  - C++
+  - Python
+- Real-time code editing experience.
 
-FRC-style programming practice problems
+### Learning Resources
+- Java tutorials
+- Python tutorials
+- C++ tutorials
+- Debugging exercises for Java, Python, and C++
+- Planned robotics-specific tutorials for the future include:
+  - SparkMax motor controllers
+  - TalonFX motor controllers
+  - Object-Oriented Programming (OOP)
+  - Advanced subsystem concepts
 
-Beginner-friendly learning progression
+### AI Programming Assistant
+- AI-powered assistance for programming questions and debugging
+- Backend built in JavaScript
+- Uses OpenAI-compatible AI services through a GitHub-hosted model routing system
+- Helps students understand errors, improve code, and learn programming concepts
 
-Instant feedback environment (where applicable)
+### Team Features
+- Team number collection through a modal system
+- Suggestions and feedback collection
+- Data stored securely using MongoDB
 
-UI built with React
+## Technology Stack
 
-Tutorials for Java, Python & C++
+### Frontend
+- React
+- JSX and TSX components
+- Vite development environment
+- Monaco Editor
+- Responsive web interface
 
-Debugging problems for Java, Python & C++
+### Backend
+- JavaScript backend services
+- MongoDB database integration
+- Handles:
+  - Team number submissions
+  - Suggestions/feedback
+  - AI assistant requests
 
-AI Assist for Programming Problems
+### AI Integration
+- OpenAI-compatible API integration
+- Requests routed through GitHub-hosted AI models for AI assistance functionality
+
+### Deployment
+Planned deployment using:
+- Render for backend hosting
+- GitHub Pages for frontend hosting
 
 ## Who This Is For
 
-FRC students learning FRC Programming
-
-Beginner programmers interested in robotics
-
-Teams looking to improve programming fundamentals
-
-Mentors teaching Command Based Programming for robotics
+- FRC students learning programming
+- Beginner programmers interested in robotics
+- FIRST Robotics Competition teams improving programming skills
+- Mentors teaching Command-Based Programming
+- Students preparing to work with real robot code
 
 ## Planned Updates
 
-Expanded tutorials (including: SparkMax, TalonFX, OOP concepts)
-
-More structured programming challenges and problem sets
-
-Move advanced problems for more subsystems
+- Expanded robotics tutorials
+  - SparkMax
+  - TalonFX
+  - Sensors
+  - Command-Based Programming
+  - Subsystems
+- More structured programming challenges
+- Advanced subsystem programming problems
+- Additional AI learning tools
+- More FRC-specific examples and simulations
 
 ## Feedback / Suggestions
 
-Have ideas or suggestions?
+Have ideas, feature requests, or improvements?
 
-You can submit feedback directly through the Suggestions page in the website footer.
+You can submit feedback directly through the Suggestions page located in the website footer.
+
+All feedback helps improve the platform and make it more useful for FRC students and teams.
+
+## License
+
+This project is currently under development.
