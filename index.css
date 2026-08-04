@@ -5,6 +5,7 @@
 } */
 html, body {
   overflow-x: hidden;
+  scroll-behavior: smooth;
 }
 body{
   margin: 0px;
@@ -99,7 +100,7 @@ header{
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 1000;
+  z-index: 100;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -485,19 +486,18 @@ nav{
 #ATC{
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 24px;
-  align-items: stretch;
-  padding-bottom: 40px;
+  grid-template-rows: auto;
+  gap: 20px;
 }
-.tutCard{
-  /* box-sizing: border-box; */
+.tutCard {
+  box-sizing: border-box;
   background: rgb(19, 25, 31);
-  border: 1px solid rgba(255,255,255,0.06);
+  border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 14px;
-  padding: 24px;
-  height: fit-content;
-  height: 98%;
-  margin: 5px 10px;
+  height: 100%;
+  padding: 15px;
+  margin: 5px 10px; 
+  scroll-margin-top: 130px;
 }
 .tutHead{
   font-size: 13px;
@@ -797,6 +797,45 @@ a{
   border-top: 1px solid rgba(255,255,255,0.06);
   min-height: 22px;
   letter-spacing: 0.5px;
+}
+#internalNav{
+  background: rgb(24, 32, 41);
+  padding: 10px 20px;
+  border-radius: 8px;
+  margin: 20px 0;
+  position: fixed; 
+  top: 70px;
+  width: calc(100% - 40px);
+  overflow: hidden;
+  z-index: 1000;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+#internalNavList{
+  display: flex;
+  list-style: none;
+  gap: 15px;
+  padding: 0;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.internalNavLink{
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 2px 6px;
+  border: 1px solid rgb(42, 52, 68);
+  border-radius: 5px;
+  display: inline-block;
+}
+
+.internalNavLink:hover {
+  border-color: rgb(122, 173, 255);
+  transform: translateY(-2px);
+  cursor: pointer;
 }
 @media (max-width:1100px){  
   #appJSX, #programJSX{
