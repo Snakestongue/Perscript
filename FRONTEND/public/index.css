@@ -1039,6 +1039,23 @@ a{
     border-radius: 4px;
     padding: 5px;
   }
+  #internalNav {
+    justify-content: flex-start;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+  #internalNavList {
+    flex-wrap: nowrap;
+  }
+  #internalNavList li {
+    flex: 0 0 auto;
+  }
+  /* #internalNav::-webkit-scrollbar {
+    display: none;
+  } */
+  #internalNav {
+    scrollbar-width: none;
+  }
 }
 
 
