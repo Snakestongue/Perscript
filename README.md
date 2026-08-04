@@ -34,7 +34,7 @@ The goal of this project is to make learning FRC programming more accessible by 
 ### AI Programming Assistant
 - AI-powered assistance for programming questions and debugging
 - Backend built in JavaScript
-- Uses OpenAI-compatible AI services through a GitHub-hosted model routing system
+- Uses OpenAI-compatible AI services through a Groq-hosted model routing system
 - Helps students understand errors, improve code, and learn programming concepts
 
 ### Team Features
@@ -61,7 +61,7 @@ The goal of this project is to make learning FRC programming more accessible by 
 
 ### AI Integration
 - OpenAI-compatible API integration
-- Requests routed through GitHub-hosted AI models for AI assistance functionality
+- Requests routed through Groq AI models for AI assistance functionality
 
 ### Deployment
 Planned deployment using:
