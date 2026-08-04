@@ -25,11 +25,6 @@ The goal of this project is to make learning FRC programming more accessible by 
 - Python tutorials
 - C++ tutorials
 - Debugging exercises for Java, Python, and C++
-- Planned robotics-specific tutorials for the future include:
-  - SparkMax motor controllers
-  - TalonFX motor controllers
-  - Object-Oriented Programming (OOP)
-  - Advanced subsystem concepts
 
 ### AI Programming Assistant
 - AI-powered assistance for programming questions and debugging
@@ -37,7 +32,7 @@ The goal of this project is to make learning FRC programming more accessible by 
 - Uses OpenAI-compatible AI services through a Groq-hosted model routing system
 - Helps students understand errors, improve code, and learn programming concepts
 
-### Team Features
+### Team Numbers
 - Team number collection through a modal system
 - Suggestions and feedback collection
 - Data stored securely using MongoDB
@@ -78,15 +73,8 @@ Planned deployment using:
 
 ## Planned Updates
 
-- Expanded robotics tutorials
-  - SparkMax
-  - TalonFX
-  - Sensors
-  - Command-Based Programming
-  - Subsystems
 - More structured programming challenges
 - Advanced subsystem programming problems
-- Additional AI learning tools
 - More FRC-specific examples and simulations
 
 ## Feedback / Suggestions
