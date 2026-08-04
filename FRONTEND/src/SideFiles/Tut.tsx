@@ -18,6 +18,20 @@ function Tut(){
           <li><Link to="/tut" className="headerLinks active">Tutorials</Link></li>
         </ul>
       </nav>
+      <div id="internalNav">
+        <ul id="internalNavList">
+            <li><a href="#javaStart" className="internalNavLink">Basics</a></li>
+            <li><a href="#javaAdvance" className="internalNavLink">Advanced</a></li>
+            <li><a href="#generalFRC" className="internalNavLink">General FRC Terms</a></li>
+            <li><a href="#canSpark" className="internalNavLink">SparkMax</a></li>
+            <li><a href="#talonFX" className="internalNavLink">TalonFX</a></li>
+            <li><a href="#robotContainerCard" className="internalNavLink">Robot Container</a></li>
+            <li><a href="#commandBasedCard" className="internalNavLink">Commands</a></li>
+            <li><a href="#constantsCard" className="internalNavLink">Constants</a></li>
+            <li><a href="#dashboardCard" className="internalNavLink">Dashboard</a></li>
+            <li><a href="#sensorsCard" className="internalNavLink">Sensors</a></li>
+        </ul>
+    </div>
             <div id="ATC">
                 <div id="javaStart" className="tutCard">
                     <h2 className="tutHead">Basics</h2>
@@ -25,7 +39,7 @@ function Tut(){
                     <ul>
                         <li><strong>Integer:</strong> A whole number: 1, 2, 3</li>
                         <li><strong>Double:</strong> A decimal Value: 3.1415, 1.2345, 5.4</li>
-                        <li><strong>Boolean:</strong> True of False: true, false</li>
+                        <li><strong>Boolean:</strong> True or False: true, false</li>
                         <li><strong>String:</strong> A piece of text: "abc"</li>
                         <li><strong>Char:</strong> A single character: 'a'</li>
                     </ul>
@@ -49,11 +63,11 @@ function Tut(){
                         </ul>
                         <li className="tutLang">Python</li>
                         <ul>
-                            <li><strong>Integer:</strong> x = 5;</li>
-                            <li><strong>Double:</strong> y = 5.5;</li>
-                            <li><strong>Boolean:</strong> z = true;</li>
-                            <li><strong>String:</strong> a = "abc";</li>
-                            <li><strong>Char:</strong> b = 'a';</li>
+                            <li><strong>Integer:</strong> x = 5</li>
+                            <li><strong>Double:</strong> y = 5.5</li>
+                            <li><strong>Boolean:</strong> z = true</li>
+                            <li><strong>String:</strong> a = "abc"</li>
+                            <li><strong>Char:</strong> b = 'a'</li>
                         </ul>
                     </ul>
                     <h4 className="tutHeader">Math</h4>
@@ -151,7 +165,7 @@ function Tut(){
     return 1
 else:
     return 2
-}`}
+`}
                                     </code>
                                 </pre>
                         <li className="tutTitle">If-Else If-Else</li>
@@ -346,7 +360,7 @@ public:
                     </ul>
                     
                 </div>
-                <div id="canSpark" className="tutCard">
+                <div id="generalFRC" className="tutCard">
                     <h2 className="tutHead">General FRC terms</h2>
                     <h4 className="tutHeader">PID</h4>
                     <ul>
@@ -466,6 +480,545 @@ public:
                     <h3><strong>Using TalonFX</strong></h3>
                     <ul></ul>
                 </div> */}
+                <div id="canSpark" className="tutCard">
+                    <h2 className="tutHead">SparkMax</h2>
+                    <h4 className="tutHeader">Important Methods</h4>
+                    <ul>
+                        <li className="tutTitle">Initialize Motor</li>
+                        <ul>
+                            <li className="tutLang">Java</li>
+                            <pre>
+                                <code>
+{`SparkMax motor = new SparkMax(1, SparkMax.MotorType.kBrushless);`}
+                                </code>
+                            </pre>
+                            <li className="tutLang">C++</li>
+                            <pre>
+                                <code>
+{`rev::spark::SparkMax motor(1, rev::spark::SparkMax::MotorType::kBrushless);`}
+                                </code>
+                            </pre>
+                            <li className="tutLang">Python</li>
+                            <pre>
+                                <code>
+{`motor = SparkMax(1, SparkMax.MotorType.kBrushless)`}
+                                </code>
+                            </pre>
+                        </ul>
+                        <li className="tutTitle">Set Speed / Throttle</li>
+                        <ul>
+                            <li className="tutLang">Java</li>
+                            <pre>
+                                <code>
+{`motor.set(0.5);`}
+                                </code>
+                            </pre>
+                            <li className="tutLang">C++</li>
+                            <pre>
+                                <code>
+{`motor.Set(0.5);`}
+                                </code>
+                            </pre>
+                            <li className="tutLang">Python</li>
+                            <pre>
+                                <code>
+{`motor.set(0.5)`}
+                                </code>
+                            </pre>
+                        </ul>
+                        <li className="tutTitle">Set Voltage</li>
+                        <ul>
+                            <li className="tutLang">Java</li>
+                            <pre>
+                                <code>
+{`motor.setVoltage(5.0);`}
+                                </code>
+                            </pre>
+                            <li className="tutLang">C++</li>
+                            <pre>
+                                <code>
+{`motor.SetVoltage(units::volt_t(5.0));`}
+                                </code>
+                            </pre>
+                            <li className="tutLang">Python</li>
+                            <pre>
+                                <code>
+{`motor.setVoltage(5.0)`}
+                                </code>
+                            </pre>
+                        </ul>
+                        <li className="tutTitle">Stop Motor</li>
+                        <ul>
+                            <li className="tutLang">Java</li>
+                            <pre>
+                                <code>
+{`motor.stopMotor();`}
+                                </code>
+                            </pre>
+                            <li className="tutLang">C++</li>
+                            <pre>
+                                <code>
+{`motor.StopMotor();`}
+                                </code>
+                            </pre>
+                            <li className="tutLang">Python</li>
+                            <pre>
+                                <code>
+{`motor.stopMotor()`}
+                                </code>
+                            </pre>
+                        </ul>
+                        <li className="tutTitle">Encoder</li>
+                        <ul>
+                            <li>The built-in encoder retrieves current position and velocity values.</li>
+                            <li className="tutLang">Java</li>
+                            <pre>
+                                <code>
+{`RelativeEncoder encoder = motor.getEncoder();
+double position = encoder.getPosition();`}
+                                </code>
+                            </pre>
+                            <li className="tutLang">C++</li>
+                            <pre>
+                                <code>
+{`rev::spark::SparkRelativeEncoder encoder = motor.GetEncoder();
+double position = encoder.GetPosition();`}
+                                </code>
+                            </pre>
+                            <li className="tutLang">Python</li>
+                            <pre>
+                                <code>
+{`encoder = motor.getEncoder()
+position = encoder.getPosition()`}
+                                </code>
+                            </pre>
+                        </ul>
+                    </ul>
+                </div>
+
+                <div id="talonFX" className="tutCard">
+                    <h2 className="tutHead">TALONFX</h2>
+                    <h4 className="tutHeader">Important Methods</h4>
+                    <ul>
+                        <li className="tutTitle">Initialize Motor</li>
+                        <ul>
+                            <li className="tutLang">Java</li>
+                            <pre>
+                                <code>
+{`TalonFX talonMotor = new TalonFX(1);`}
+                                </code>
+                            </pre>
+                            <li className="tutLang">C++</li>
+                            <pre>
+                                <code>
+{`ctre::phoenix6::hardware::TalonFX talonMotor{1};`}
+                                </code>
+                            </pre>
+                            <li className="tutLang">Python</li>
+                            <pre>
+                                <code>
+{`talonMotor = TalonFX(1)`}
+                                </code>
+                            </pre>
+                        </ul>
+                        <li className="tutTitle">Control via Output or Control Requests</li>
+                        <ul>
+                            <li>Phoenix 6 uses control request objects for advanced outputs, while direct percentage setting works like standard controllers.</li>
+                            <li className="tutLang">Java</li>
+                            <pre>
+                                <code>
+{`talonMotor.set(0.5);
+talonMotor.setControl(new VoltageOut(6.0));`}
+                                </code>
+                            </pre>
+                            <li className="tutLang">C++</li>
+                            <pre>
+                                <code>
+{`talonMotor.Set(0.5);
+talonMotor.SetControl(ctre::phoenix6::controls::VoltageOut{6.0});`}
+                                </code>
+                            </pre>
+                            <li className="tutLang">Python</li>
+                            <pre>
+                                <code>
+{`talonMotor.set(0.5)
+talonMotor.setControl(VoltageOut(6.0))`}
+                                </code>
+                            </pre>
+                        </ul>
+                        <li className="tutTitle">Stop Motor</li>
+                        <ul>
+                            <li className="tutLang">Java</li>
+                            <pre>
+                                <code>
+{`talonMotor.stopMotor();`}
+                                </code>
+                            </pre>
+                            <li className="tutLang">C++</li>
+                            <pre>
+                                <code>
+{`talonMotor.StopMotor();`}
+                                </code>
+                            </pre>
+                            <li className="tutLang">Python</li>
+                            <pre>
+                                <code>
+{`talonMotor.stopMotor()`}
+                                </code>
+                            </pre>
+                        </ul>
+                        <li className="tutTitle">Encoder & Position</li>
+                        <ul>
+                            <li>Phoenix 6 properties use status signals, requiring a call to getValueAsDouble() to parse raw measurements.</li>
+                            <li className="tutLang">Java</li>
+                            <pre>
+                                <code>
+{`double rot = talonMotor.getPosition().getValueAsDouble();`}
+                                </code>
+                            </pre>
+                            <li className="tutLang">C++</li>
+                            <pre>
+                                <code>
+{`double rot = talonMotor.GetPosition().GetValue().value();`}
+                                </code>
+                            </pre>
+                            <li className="tutLang">Python</li>
+                            <pre>
+                                <code>
+{`rot = talonMotor.getPosition().value_as_double()`}
+                                </code>
+                            </pre>
+                        </ul>
+                    </ul>
+                </div>
+                <div id="robotContainerCard" className="tutCard">
+                    <h2 className="tutHead">Robot Container & Button Binding</h2>
+                    <h4 className="tutHeader">Command Based Bindings</h4>
+                    <ul>
+                        <li>The RobotContainer class coordinates joysticks, subsystems, and command bindings.</li>
+                        <li className="tutTitle">Controllers and Joysticks</li>
+                        <ul>
+                            <li>Xbox controllers or joysticks trigger specific commands when buttons are pressed.</li>
+                            <li className="tutLang">Java</li>
+                            <pre>
+                                <code>
+{`CommandXboxController driverController = new CommandXboxController(0);`}
+                                </code>
+                            </pre>
+                            <li className="tutLang">C++</li>
+                            <pre>
+                                <code>
+{`frc2::CommandXboxController driverController{0};`}
+                                </code>
+                            </pre>
+                            <li className="tutLang">Python</li>
+                            <pre>
+                                <code>
+{`driverController = commands2.button.CommandXboxController(0)`}
+                                </code>
+                            </pre>
+                        </ul>
+                        <li className="tutTitle">Button Bindings</li>
+                        <ul>
+                            <li className="tutLang">Java</li>
+                            <pre>
+                                <code>
+{`driverController.a().whileTrue(new RunCommand(() -> intake.spin(), intake));`}
+                                </code>
+                            </pre>
+                            <li className="tutLang">C++</li>
+                            <pre>
+                                <code>
+{`driverController.A().WhileTrue(IntakeSpinCommand(&intake).ToPtr());`}
+                                </code>
+                            </pre>
+                            <li className="tutLang">Python</li>
+                            <pre>
+                                <code>
+{`driverController.a().whileTrue(IntakeSpinCommand(intake))`}
+                                </code>
+                            </pre>
+                        </ul>
+                    </ul>
+                </div>
+
+                <div id="commandBasedCard" className="tutCard">
+                    <h2 className="tutHead">Command-Based Programming</h2>
+                    <h4 className="tutHeader">Writing Custom Commands</h4>
+                    <ul>
+                        <li>Commands dictate actions using periodic execution, initialize, and end lifecycle methods.</li>
+                        <li className="tutLang">Java</li>
+                        <pre>
+                            <code>
+{`public class ExampleCommand extends Command {
+    private final Subsystem s;
+    public ExampleCommand(Subsystem s) {
+        this.s = s;
+        addRequirements(s);
+    }
+    @Override
+    public void execute() {
+        s.run();
+    }
+    @Override
+    public void end(boolean interrupted) {
+        s.stop();
+    }
+}`}
+                            </code>
+                        </pre>
+                        <li className="tutLang">C++</li>
+                        <pre>
+                            <code>
+{`class ExampleCommand : public frc2::CommandHelper<frc2::CommandBase> {
+    Subsystem* s;
+public:
+    ExampleCommand(Subsystem* subsystem) : s(subsystem) {
+        AddRequirements({s});
+    }
+    void Execute() override {
+        s->Run();
+    }
+    void End(bool interrupted) override {
+        s->Stop();
+    }
+};`}
+                            </code>
+                        </pre>
+                    </ul>
+                </div>
+
+                <div id="constantsCard" className="tutCard">
+                    <h2 className="tutHead">Constants</h2>
+                    <h4 className="tutHeader">Declaring and Using Global Constants</h4>
+                    <ul>
+                        <li>Constants store permanent values like port numbers, gear ratios, and PID gains to keep code organized.</li>
+                        <li className="tutLang">Java</li>
+                        <pre>
+                            <code>
+{`public final class Constants {
+    public static final int kIntakeMotorCanId = 3;
+    public static final double kWheelDiameterMeters = 0.15;
+}`}
+                            </code>
+                        </pre>
+                        <li className="tutLang">C++</li>
+                        <pre>
+                            <code>
+{`namespace Constants {
+    inline constexpr int kIntakeMotorCanId = 3;
+    inline constexpr double kWheelDiameterMeters = 0.15;
+}`}
+                            </code>
+                        </pre>
+                        <li className="tutLang">Python</li>
+                        <pre>
+                            <code>
+{`class Constants:
+    k_intake_motor_can_id = 3
+    k_wheel_diameter_meters = 0.15`}
+                            </code>
+                        </pre>
+                    </ul>
+                </div>
+
+                <div id="dashboardCard" className="tutCard">
+                    <h2 className="tutHead">SmartDashboard & Shuffleboard</h2>
+                    <h4 className="tutHeader">Telemetry and Driver Interaction</h4>
+                    <ul>
+                        <li>Dashboard systems allow you to send sensor data to the driver station and retrieve tuning variables or auto modes.</li>
+                        <li className="tutTitle">How to View Data</li>
+                        <ul>
+                            <li>Open the Shuffleboard or SmartDashboard application installed via WPILib on your driver station laptop.</li>
+                            <li>Connect your laptop to the robot via USB tether, radio, or practice field network.</li>
+                            <li>Widgets will automatically populate when you call `putNumber`, `putBoolean`, or `putString` in your code. You can drag and drop them to customize your layout.</li>
+                        </ul>
+                        <li className="tutTitle">Putting Data</li>
+                        <ul>
+                            <li className="tutLang">Java</li>
+                            <pre>
+                                <code>
+{`SmartDashboard.putNumber("Elevator Height", 45.2);
+SmartDashboard.putBoolean("Is Aligned", true);`}
+                                </code>
+                            </pre>
+                            <li className="tutLang">C++</li>
+                            <pre>
+                                <code>
+{`frc::SmartDashboard::PutNumber("Elevator Height", 45.2);
+frc::SmartDashboard::PutBoolean("Is Aligned", true);`}
+                                </code>
+                            </pre>
+                            <li className="tutLang">Python</li>
+                            <pre>
+                                <code>
+{`wpi.SmartDashboard.putNumber("Elevator Height", 45.2)
+wpi.SmartDashboard.putBoolean("Is Aligned", True)`}
+                                </code>
+                            </pre>
+                        </ul>
+                        <li className="tutTitle">Getting Data</li>
+                        <ul>
+                            <li className="tutLang">Java</li>
+                            <pre>
+                                <code>
+{`double speed = SmartDashboard.getNumber("Target Speed", 0.0);`}
+                                </code>
+                            </pre>
+                            <li className="tutLang">C++</li>
+                            <pre>
+                                <code>
+{`double speed = frc::SmartDashboard::GetNumber("Target Speed", 0.0);`}
+                                </code>
+                            </pre>
+                            <li className="tutLang">Python</li>
+                            <pre>
+                                <code>
+{`speed = wpi.SmartDashboard.getNumber("Target Speed", 0.0)`}
+                                </code>
+                            </pre>
+                        </ul>
+                        <li className="tutTitle">Shuffleboard Specifics</li>
+                        <ul>
+                            <li>Shuffleboard allows more advanced tab layouts and custom widgets compared to SmartDashboard.</li>
+                            <li className="tutLang">Java</li>
+                            <pre>
+                                <code>
+{`Shuffleboard.getTab("Autonomous")
+    .add("My Auto Selector", chooser);`}
+                                </code>
+                            </pre>
+                            <li className="tutLang">C++</li>
+                            <pre>
+                                <code>
+{`frc::Shuffleboard::GetTab("Autonomous")
+    .Add("My Auto Selector", chooser);`}
+                                </code>
+                            </pre>
+                        </ul>
+                    </ul>
+                </div>
+
+                <div id="sensorsCard" className="tutCard">
+                    <h2 className="tutHead">Sensors & Physical Input Devices</h2>
+                    <h4 className="tutHeader">Gyroscopes, Encoders, Switches, and More</h4>
+                    <ul>
+                        <li>Sensors give your robot spatial awareness, allowing it to measure position, orientation, and surroundings.</li>
+                        
+                        <li className="tutTitle">Gyroscopes</li>
+                        <ul>
+                            <li>Measures rotational velocity and heading angles, vital for field-oriented drive and autonomous navigation.</li>
+                            <li className="tutLang">Java</li>
+                            <pre>
+                                <code>
+{`double yawAngle = gyro.getYaw().getValueAsDouble();`}
+                                </code>
+                            </pre>
+                            <li className="tutLang">C++</li>
+                            <pre>
+                                <code>
+{`double yawAngle = gyro.GetYaw().GetValue().value();`}
+                                </code>
+                            </pre>
+                            <li className="tutLang">Python</li>
+                            <pre>
+                                <code>
+{`yaw_angle = gyro.getYaw().value_as_double()`}
+                                </code>
+                            </pre>
+                        </ul>
+
+                        <li className="tutTitle">Relative Encoders</li>
+                        <ul>
+                            <li>Counts ticks relative to where the motor started spinning (like a stopwatch). Resets on robot boot.</li>
+                            <li className="tutLang">Java</li>
+                            <pre>
+                                <code>
+{`double position = motor.getEncoder().getPosition();`}
+                                </code>
+                            </pre>
+                            <li className="tutLang">C++</li>
+                            <pre>
+                                <code>
+{`double position = motor.GetEncoder().GetPosition();`}
+                                </code>
+                            </pre>
+                            <li className="tutLang">Python</li>
+                            <pre>
+                                <code>
+{`position = motor.getEncoder().getPosition()`}
+                                </code>
+                            </pre>
+                        </ul>
+
+                        <li className="tutTitle">Absolute Encoders</li>
+                        <ul>
+                            <li>Measures the exact physical angle of a mechanism regardless of power cycles (commonly used on swerve steering modules).</li>
+                            <li className="tutLang">Java</li>
+                            <pre>
+                                <code>
+{`double angle = absoluteEncoder.getPosition();`}
+                                </code>
+                            </pre>
+                            <li className="tutLang">C++</li>
+                            <pre>
+                                <code>
+{`double angle = absoluteEncoder.GetPosition();`}
+                                </code>
+                            </pre>
+                        </ul>
+
+                        <li className="tutTitle">Limit Switches</li>
+                        <ul>
+                            <li>A physical mechanical switch that triggers when a mechanism reaches its safe physical boundary (like the top of an elevator).</li>
+                            <li className="tutLang">Java</li>
+                            <pre>
+                                <code>
+{`boolean isAtBottom = limitSwitch.get();`}
+                                </code>
+                            </pre>
+                            <li className="tutLang">C++</li>
+                            <pre>
+                                <code>
+{`bool isAtBottom = limitSwitch.Get();`}
+                                </code>
+                            </pre>
+                        </ul>
+
+                        <li className="tutTitle">Beam Breakers (Photoelectric Sensors)</li>
+                        <ul>
+                            <li>Uses an infrared light beam to detect if an object (like a game piece) has broken the path between the emitter and receiver.</li>
+                            <li className="tutLang">Java</li>
+                            <pre>
+                                <code>
+{`boolean hasNote = !beamBreak.get();`}
+                                </code>
+                            </pre>
+                        </ul>
+
+                        <li className="tutTitle">Accelerometers</li>
+                        <ul>
+                            <li>Measures linear acceleration and G-forces along the X, Y, and Z axes. Often built into the RoboRIO or external IMUs.</li>
+                            <li className="tutLang">Java</li>
+                            <pre>
+                                <code>
+{`double accelX = BuiltInAccelerometer.getX();`}
+                                </code>
+                            </pre>
+                        </ul>
+
+                        <li className="tutTitle">Ultrasonic / Distance Sensors</li>
+                        <ul>
+                            <li>Emits sound waves to measure distance from walls or game elements.</li>
+                            <li className="tutLang">Java</li>
+                            <pre>
+                                <code>
+{`double distance = ultrasonic.getRangeInches();`}
+                                </code>
+                            </pre>
+                        </ul>
+                    </ul>
+                </div>
             </div>
             <footer>
                 <div id="newFooterDiv">
