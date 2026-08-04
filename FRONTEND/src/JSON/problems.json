@@ -15,61 +15,20 @@
     },
     "checks":{
       "java":[
-        {
-          "type": "count",
-          "value": "public",
-          "min": 2,
-          "message": "Did you add public?"
-        },
-        {
-          "type": "includes",
-          "value": "static",
-          "message": "Did you add static?"
-        },
-        {
-          "type": "includes",
-          "value": "double",
-          "message": "Did you use double?"
-        },
-        {
-          "type": "includes",
-          "value": "0.8;",
-          "message": "Did you add 0.8;?"
-        }
+        { "type": "count", "value": "public", "min": 2, "message": "Did you add public?" },
+        { "type": "includes", "value": "static", "message": "Did you add static?" },
+        { "type": "includes", "value": "double", "message": "Did you use double?" },
+        { "type": "includes", "value": "0.8;", "message": "Did you add 0.8;?" }
       ],
       "python":[
-        {
-          "type": "includes",
-          "value": "0.8",
-          "message": "Did you add 0.8?"
-        }
+        { "type": "includes", "value": "0.8", "message": "Did you add 0.8?" }
       ],
       "cpp":[
-        {
-          "type": "includes",
-          "value": "public",
-          "message": "Did you add public?"
-        },
-        {
-          "type": "includes",
-          "value": "static",
-          "message": "Did you add static?"
-        },
-        {
-          "type": "includes",
-          "value": "double",
-          "message": "Did you use double?"
-        },
-        {
-          "type": "includes",
-          "value": "constexpr",
-          "message": "Did you use constexpr?"
-        },
-        {
-          "type": "includes",
-          "value": "0.8;",
-          "message": "Did you add 0.8;?"
-        }
+        { "type": "includes", "value": "public", "message": "Did you add public?" },
+        { "type": "includes", "value": "static", "message": "Did you add static?" },
+        { "type": "includes", "value": "double", "message": "Did you use double?" },
+        { "type": "includes", "value": "constexpr", "message": "Did you use constexpr?" },
+        { "type": "includes", "value": "0.8;", "message": "Did you add 0.8;?" }
       ]
     }
 },
@@ -89,61 +48,20 @@
     },
     "checks":{
       "java":[
-        {
-          "type": "includes",
-          "value": "private",
-          "message": "Did you add private?"
-        },
-        {
-          "type": "includes",
-          "value": "final",
-          "message": "Did you add final?"
-        },
-        {
-          "type": "count",
-          "value": "talonfx",
-          "min": 2,
-          "message": "Did you add TalonFX?"
-        },
-        {
-          "type": "includes",
-          "value": "3",
-          "message": "Is the ID 3?"
-        },
-        {
-          "type": "includes",
-          "value": "new",
-          "message": "Did you add new?"
-        }
+        { "type": "includes", "value": "private", "message": "Did you add private?" },
+        { "type": "includes", "value": "final", "message": "Did you add final?" },
+        { "type": "count", "value": "talonfx", "min": 2, "message": "Did you add TalonFX?" },
+        { "type": "includes", "value": "3", "message": "Is the ID 3?" },
+        { "type": "includes", "value": "new", "message": "Did you add new?" }
       ],
       "python":[
-        {
-          "type": "includes",
-          "value": "__intakemotor",
-          "message": "Did you name it intakeMotor and add __?"
-        },
-        {
-          "type": "includes",
-          "value": "3",
-          "message": "Is the ID 3?"
-        }
+        { "type": "includes", "value": "__intakemotor", "message": "Did you name it intakeMotor and add __?" },
+        { "type": "includes", "value": "3", "message": "Is the ID 3?" }
       ],
       "cpp":[
-        {
-          "type": "includes",
-          "value": "private",
-          "message": "Did you add private?"
-        },
-        {
-          "type": "includes",
-          "value": "const",
-          "message": "Did you use const?"
-        },
-        {
-          "type": "includes",
-          "value": "3",
-          "message": "Is the ID 3?"
-        }
+        { "type": "includes", "value": "private", "message": "Did you add private?" },
+        { "type": "includes", "value": "const", "message": "Did you use const?" },
+        { "type": "includes", "value": "3", "message": "Is the ID 3?" }
       ]
     }
   },
@@ -163,156 +81,23 @@
     },
     "checks":{
       "java":[
-        {
-          "type": "count",
-          "value": "public",
-          "min": 2,
-          "message": "Did you add public?"
-        },
-        {
-          "type": "includes",
-          "value": "void",
-          "message": "Did you add void?"
-        },
-        {
-          "type": "includes",
-          "value": "stopmotor",
-          "message": "Did you use stopMotor?"
-        }
+        { "type": "count", "value": "public", "min": 2, "message": "Did you add public?" },
+        { "type": "includes", "value": "void", "message": "Did you add void?" },
+        { "type": "includes", "value": "stopmotor", "message": "Did you use stopMotor?" }
       ],
       "python":[
-        {
-          "type": "includes",
-          "value": "def",
-          "message": "Did you add def?"
-        },
-        {
-          "type": "includes",
-          "value": "self",
-          "message": "Did you add self as a parameter?"
-        },
-        {
-          "type": "includes",
-          "value": "stopmotor",
-          "message": "Did you add stopMotor as a parameter?"
-        }
+        { "type": "includes", "value": "def", "message": "Did you add def?" },
+        { "type": "includes", "value": "self", "message": "Did you add self as a parameter?" },
+        { "type": "includes", "value": "stopmotor", "message": "Did you add stopMotor as a parameter?" }
       ],
       "cpp":[
-        {
-          "type": "includes",
-          "value": "void",
-          "message": "Did you add void?"
-        },
-        {
-          "type": "includes",
-          "value": "stopmotor",
-          "message": "Did you use StopMotor?"
-        }
+        { "type": "includes", "value": "void", "message": "Did you add void?" },
+        { "type": "includes", "value": "stopmotor", "message": "Did you use StopMotor?" }
       ]
     }
   },
   {
-    "id": 4,
-    "title": "Create an Intake",
-    "description": "Create an IntakeSubsystem class with a TalonFX motor. Include three methods: setSpeed(double speed), which sets the motor to the given speed; reverseSpeed(double speed), which sets the motor to the negative of the given speed; and stop(), which stops the motor using set(0)",
-    "starterCode": {
-      "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix6.hardware.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class IntakeSubsystem extends SubsystemBase {\n\t//Write code here and remove this comment.\n}",
-      "python": "from phoenix6.hardware import TalonFX\nfrom wpilib2.command import SubsystemBase\nclass IntakeSubsystem(SubsystemBase):\n\t#Write code here and remove this comment.",
-      "cpp": "#include \"frc2/command/SubsystemBase.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\nclass IntakeSubsystem : public frc2::SubsystemBase {\npublic:\n\t//Write code here and remove this comment.\nprivate:\n\t//Write code here and remove this comment too.\n};\n"
-    },
-    "solutionCode": {
-      "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix6.hardware.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class IntakeSubsystem extends SubsystemBase {\n\tprivate final TalonFX intakeMotor = new TalonFX(3);\n\tpublic void setSpeed(double speed) {\n\t\tintakeMotor.set(speed);\n\t}\n\tpublic void reverseSpeed(double speed) {\n\t\tintakeMotor.set(-speed);\n\t}\n\tpublic void stop() {\n\t\tintakeMotor.set(0);\n\t}\n}",
-      "python": "from phoenix6.hardware import TalonFX\nfrom wpilib2.command import SubsystemBase\nclass IntakeSubsystem(SubsystemBase):\n\tintake_motor = TalonFX(3)\n\tdef set_speed(self, speed: float):\n\t\tself.intake_motor.set(speed)\n\tdef reverse_speed(self, speed: float):\n\t\tself.intake_motor.set(-speed)\n\tdef stop(self):\n\t\tself.intake_motor.set(0)\n",
-      "cpp": "#include \"frc2/command/SubsystemBase.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\nclass IntakeSubsystem : public frc2::SubsystemBase {\npublic:\n\tvoid SetSpeed(double speed) {\n\t\tintakeMotor.Set(speed);\n\t}\n\tvoid ReverseSpeed(double speed) {\n\t\tintakeMotor.Set(-speed);\n\t}\n\tvoid Stop() {\n\t\tintakeMotor.StopMotor();\n\t}\nprivate:\n\tctre::phoenix6::hardware::TalonFX intakeMotor{3};\n};\n"
-    },
-    "checks":{
-      "java":[
-        {
-          "type": "count",
-          "value": "public",
-          "min": 4,
-          "message": "Did you add public to all methods?"
-        },
-        {
-          "type": "count",
-          "value": "void",
-          "min": 3,
-          "message": "Did you add void to all methods?"
-        },
-        {
-          "type": "count",
-          "value": "double speed",
-          "min": 2,
-          "message": "Did you add 'double speed' as a parameter to 2 methods?"
-        },
-        {
-          "type": "includes",
-          "value": "private",
-          "message": "Did you use private for the object?"
-        },
-        {
-          "type": "count",
-          "value": "talonfx",
-          "min": 3,
-          "message": "Did you add TalonFX as an object?"
-        },
-        {
-          "type": "count",
-          "value": ";",
-          "min": 4,
-          "message": "Did you add semicolons everywhere...?"
-        }
-      ],
-      "python":[
-        {
-          "type": "count",
-          "value": "self",
-          "min": 6,
-          "message": "Did you add self as a parameter and before setting speed (6 times)?"
-        },
-        {
-          "type": "count",
-          "value": "def",
-          "min": 3,
-          "message": "Did you add def to all methods?"
-        },
-        {
-          "type": "count",
-          "value": "TalonFX",
-          "min": 2,
-          "message": "Did you add TalonFX as an object?"
-        }
-      ],
-      "cpp":[
-        {
-          "type": "count",
-          "value": "void",
-          "min": 3,
-          "message": "Did you add void to all methods?"
-        },
-        {
-          "type": "count",
-          "value": "double speed",
-          "min": 2,
-          "message": "Did you add 'double speed' as a parameter to 2 methods?"
-        },
-        {
-          "type": "count",
-          "value": "talonfx",
-          "min": 2,
-          "message": "Did you add TalonFX as an object?"
-        },
-        {
-          "type": "count",
-          "value": ";",
-          "min": 4,
-          "message": "Did you add semicolons everywhere...?"
-        }
-      ]
-    }
-  },
-  {
-  "id": 5,
+  "id": 4,
   "title": "Motion Magic & PID",
   "description": "Create a TalonFXConfiguration object named config. Configure Slot0 with kP = 10, kI = 0, and kD = 0. Then configure Motion Magic with a cruise velocity of 80 and an acceleration of 160.",
   "starterCode": {
@@ -327,107 +112,33 @@
   },
   "checks": {
     "java": [
-      {
-          "type": "count",
-          "value": "TalonFXConfiguration",
-          "min": 2,
-          "message": "Did you add an object"
-        },
-      {
-        "type": "includes",
-        "value": "kP",
-        "message": "Did you add kP?"
-      },
-      {
-        "type": "includes",
-        "value": "kI",
-        "message": "Did you add kI?"
-      },
-      {
-        "type": "includes",
-        "value": "kD",
-        "message": "Did you add kD?"
-      },
-      {
-        "type": "includes",
-        "value": "MotionMagicCruiseVelocity",
-        "message": "Did you add the cruise velocity?"
-      },
-      {
-        "type": "includes",
-        "value": "MotionMagicAcceleration",
-        "message": "Did you add the acceleration?"
-      }
+      { "type": "count", "value": "TalonFXConfiguration", "min": 2, "message": "Did you add an object" },
+      { "type": "includes", "value": "kP", "message": "Did you add kP?" },
+      { "type": "includes", "value": "kI", "message": "Did you add kI?" },
+      { "type": "includes", "value": "kD", "message": "Did you add kD?" },
+      { "type": "includes", "value": "MotionMagicCruiseVelocity", "message": "Did you add the cruise velocity?" },
+      { "type": "includes", "value": "MotionMagicAcceleration", "message": "Did you add the acceleration?" }
     ],
     "python": [
-      {
-          "type": "count",
-          "value": "TalonFXConfiguration",
-          "min": 2,
-          "message": "Did you add an object"
-      },
-      {
-        "type": "includes",
-        "value": "k_p",
-        "message": "Did you add k_p?"
-      },
-      {
-        "type": "includes",
-        "value": "k_i",
-        "message": "Did you add k_i?"
-      },
-      {
-        "type": "includes",
-        "value": "k_d",
-        "message": "Did you add k_d?"
-      },
-      {
-        "type": "includes",
-        "value": "motion_magic_cruise_velocity",
-        "message": "Did you add the cruise velocity?"
-      },
-      {
-        "type": "includes",
-        "value": "motion_magic_acceleration",
-        "message": "Did you add the acceleration?"
-      }
+      { "type": "count", "value": "TalonFXConfiguration", "min": 2, "message": "Did you add an object" },
+      { "type": "includes", "value": "k_p", "message": "Did you add k_p?" },
+      { "type": "includes", "value": "k_i", "message": "Did you add k_i?" },
+      { "type": "includes", "value": "k_d", "message": "Did you add k_d?" },
+      { "type": "includes", "value": "motion_magic_cruise_velocity", "message": "Did you add the cruise velocity?" },
+      { "type": "includes", "value": "motion_magic_acceleration", "message": "Did you add the acceleration?" }
     ],
     "cpp": [
-      {
-        "type": "includes",
-        "value": "TalonFXConfiguration",
-        "message": "Did you add an object"
-      },
-      {
-        "type": "includes",
-        "value": "kP",
-        "message": "Did you add kP?"
-      },
-       {
-        "type": "includes",
-        "value": "kI",
-        "message": "Did you add kI?"
-      },
-       {
-        "type": "includes",
-        "value": "kD",
-        "message": "Did you add kD?"
-      },
-      {
-        "type": "includes",
-        "value": "MotionMagicCruiseVelocity",
-        "message": "Did you configure the cruise velocity?"
-      },
-      {
-        "type": "includes",
-        "value": "MotionMagicAcceleration",
-        "message": "Did you configure the acceleration?"
-      }
+      { "type": "includes", "value": "TalonFXConfiguration", "message": "Did you add an object" },
+      { "type": "includes", "value": "kP", "message": "Did you add kP?" },
+      { "type": "includes", "value": "kI", "message": "Did you add kI?" },
+      { "type": "includes", "value": "kD", "message": "Did you add kD?" },
+      { "type": "includes", "value": "MotionMagicCruiseVelocity", "message": "Did you configure the cruise velocity?" },
+      { "type": "includes", "value": "MotionMagicAcceleration", "message": "Did you configure the acceleration?" }
     ]
   }
 },
 {
-  "id": 6,
+  "id": 5,
   "title": "Hardware in Constructors",
   "description": "Create a TalonFX motor named elevatorMotor with device ID 5. In the constructor, create a TalonFXConfiguration object, set Slot0.kP to 10, and apply the configuration to the motor using the motor's configurator.",
   "starterCode": {
@@ -442,83 +153,218 @@
   },
   "checks": {
     "java": [
-      {
-        "type": "includes",
-        "value": "new TalonFX(5)",
-        "message": "Did you create the TalonFX with accurate ID?"
-      },
-      {
-          "type": "count",
-          "value": "TalonFXConfiguration",
-          "min": 2,
-          "message": "Did you add an object in constructor?"
-      },
-      {
-        "type": "includes",
-        "value": "kP",
-        "message": "Did you configure kP?"
-      },
-      {
-        "type": "includes",
-        "value": "getConfigurator",
-        "message": "Did you access the motor's configurator?"
-      },
-      {
-        "type": "includes",
-        "value": "apply",
-        "message": "Did you apply the config?"
-      }
+      { "type": "includes", "value": "new TalonFX(5)", "message": "Did you create the TalonFX with accurate ID?" },
+      { "type": "count", "value": "TalonFXConfiguration", "min": 2, "message": "Did you add an object in constructor?" },
+      { "type": "includes", "value": "kP", "message": "Did you configure kP?" },
+      { "type": "includes", "value": "getConfigurator", "message": "Did you access the motor's configurator?" },
+      { "type": "includes", "value": "apply", "message": "Did you apply the config?" }
     ],
     "python": [
-      {
-        "type": "includes",
-        "value": "TalonFX(5)",
-        "message": "Did you create the TalonFX with device ID 5?"
-      },
-      {
-          "type": "count",
-          "value": "TalonFXConfiguration",
-          "min": 2,
-          "message": "Did you add an object in constructor?"
-      },
-      {
-        "type": "includes",
-        "value": "k_p",
-        "message": "Did you configure k_p?"
-      },
-      {
-        "type": "includes",
-        "value": "apply",
-        "message": "Did you apply the config?"
-      }
+      { "type": "includes", "value": "TalonFX(5)", "message": "Did you create the TalonFX with device ID 5?" },
+      { "type": "count", "value": "TalonFXConfiguration", "min": 2, "message": "Did you add an object in constructor?" },
+      { "type": "includes", "value": "k_p", "message": "Did you configure k_p?" },
+      { "type": "includes", "value": "apply", "message": "Did you apply the config?" }
     ],
     "cpp": [
-      {
-        "type": "count",
-        "value": "TalonFX",
-        "min":3,
-        "message": "Did you create the TalonFX?"
-      },
-      {
-        "type": "includes",
-        "value": "TalonFXConfiguration",
-        "message": "Did you create a TalonFXConfiguration object?"
-      },
-      {
-        "type": "includes",
-        "value": "kP",
-        "message": "Did you configure kP?"
-      },
-      {
-        "type": "includes",
-        "value": "GetConfigurator",
-        "message": "Did you access the motor's configurator?"
-      },
-      {
-        "type": "includes",
-        "value": "Apply",
-        "message": "Did you apply the config?"
-      }
+      { "type": "count", "value": "TalonFX", "min":3, "message": "Did you create the TalonFX?" },
+      { "type": "includes", "value": "TalonFXConfiguration", "message": "Did you create a TalonFXConfiguration object?" },
+      { "type": "includes", "value": "kP", "message": "Did you configure kP?" },
+      { "type": "includes", "value": "GetConfigurator", "message": "Did you access the motor's configurator?" },
+      { "type": "includes", "value": "Apply", "message": "Did you apply the config?" }
+    ]
+  }
+},
+{
+  "id": 6,
+  "title": "Button Bindings",
+  "description": "In the RobotContainer, bind the B button on the driver controller so that when it is pressed (onTrue), it runs the runMotor method.",
+  "starterCode": {
+    "java": "package frc.robot;\nimport edu.wpi.first.wpilibj2.command.button.CommandXboxController;\nimport edu.wpi.first.wpilibj2.command.Commands;\n\npublic class RobotContainer {\n    private final CommandXboxController controller = new CommandXboxController(0);\n\n    public RobotContainer() {\n        // Write code here and remove this comment.\n    }\n}",
+    "python": "from commands2.button import CommandXboxController\nfrom commands2 import cmd\n\nclass RobotContainer:\n    def __init__(self):\n        self.controller = CommandXboxController(0)\n        # Write code here and remove this comment.\n",
+    "cpp": "#include <frc2/command/button/CommandXboxController.h>\n#include <frc2/command/Commands.h>\n\nclass RobotContainer {\npublic:\n    RobotContainer() {\n        // Write code here and remove this comment.\n    }\n\nprivate:\n    frc2::CommandXboxController controller{0};\n};"
+  },
+  "solutionCode": {
+    "java": "package frc.robot;\nimport edu.wpi.first.wpilibj2.command.button.CommandXboxController;\nimport edu.wpi.first.wpilibj2.command.Commands;\n\npublic class RobotContainer {\n    private final CommandXboxController controller = new CommandXboxController(0);\n\n    public RobotContainer() {\n        controller.b().onTrue(Commands.runOnce(this::runMotor));\n    }\n}",
+    "python": "from commands2.button import CommandXboxController\nfrom commands2 import cmd\n\nclass RobotContainer:\n    def __init__(self):\n        self.controller = CommandXboxController(0)\n        self.controller.b().onTrue(cmd.runOnce(self.run_motor))\n",
+    "cpp": "#include <frc2/command/button/CommandXboxController.h>\n#include <frc2/command/Commands.h>\n\nclass RobotContainer {\npublic:\n    RobotContainer() {\n        controller.B().OnTrue(frc2::cmd::RunOnce([this] { RunMotor(); }));\n}\n\nprivate:\n    frc2::CommandXboxController controller{0};\n};"
+  },
+  "checks": {
+    "java": [
+      { "type": "includes", "value": "controller.b()", "message": "Did you get the B button from the controller?" },
+      { "type": "includes", "value": "onTrue", "message": "Did you use onTrue?" },
+      { "type": "includes", "value": "runmotor", "message": "Did you call runMotor?" },
+      { "type": "includes", "value": "commands.runonce", "message": "Did you wrap runMotor in Commands.runOnce?" }
+    ],
+    "python": [
+      { "type": "includes", "value": "controller.b()", "message": "Did you get the B button from the controller?" },
+      { "type": "includes", "value": "ontrue", "message": "Did you use onTrue?" },
+      { "type": "includes", "value": "run_motor", "message": "Did you call run_motor?" },
+      { "type": "includes", "value": "cmd.runonce", "message": "Did you wrap run_motor in cmd.runOnce?" }
+    ],
+    "cpp": [
+      { "type": "includes", "value": "controller.B()", "message": "Did you get the B button from the controller?" },
+      { "type": "includes", "value": "OnTrue", "message": "Did you use OnTrue?" },
+      { "type": "includes", "value": "RunMotor", "message": "Did you call RunMotor?" },
+      { "type": "includes", "value": "cmd::RunOnce", "message": "Did you wrap RunMotor in frc2::cmd::RunOnce?" }
+    ]
+  }
+},
+{
+  "id": 7,
+  "title": "Create an Intake",
+  "description": "Create an IntakeSubsystem class with a TalonFX motor. Include three methods: setSpeed(double speed), which sets the motor to the given speed; reverseSpeed(double speed), which sets the motor to the negative of the given speed; and stop(), which stops the motor using set(0)",
+  "starterCode": {
+    "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix6.hardware.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class IntakeSubsystem extends SubsystemBase {\n\t//Write code here and remove this comment.\n}",
+    "python": "from phoenix6.hardware import TalonFX\nfrom wpilib2.command import SubsystemBase\nclass IntakeSubsystem(SubsystemBase):\n\t#Write code here and remove this comment.",
+    "cpp": "#include \"frc2/command/SubsystemBase.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\nclass IntakeSubsystem : public frc2::SubsystemBase {\npublic:\n\t//Write code here and remove this comment.\nprivate:\n\t//Write code here and remove this comment too.\n};\n"
+  },
+  "solutionCode": {
+    "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix6.hardware.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class IntakeSubsystem extends SubsystemBase {\n\tprivate final TalonFX intakeMotor = new TalonFX(3);\n\tpublic void setSpeed(double speed) {\n\t\tintakeMotor.set(speed);\n\t}\n\tpublic void reverseSpeed(double speed) {\n\t\tintakeMotor.set(-speed);\n\t}\n\tpublic void stop() {\n\t\tintakeMotor.set(0);\n\t}\n}",
+    "python": "from phoenix6.hardware import TalonFX\nfrom wpilib2.command import SubsystemBase\nclass IntakeSubsystem(SubsystemBase):\n\tintake_motor = TalonFX(3)\n\tdef set_speed(self, speed: float):\n\t\tself.intake_motor.set(speed)\n\tdef reverse_speed(self, speed: float):\n\t\tself.intake_motor.set(-speed)\n\tdef stop(self):\n\t\tself.intake_motor.set(0)\n",
+    "cpp": "#include \"frc2/command/SubsystemBase.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\nclass IntakeSubsystem : public frc2::SubsystemBase {\npublic:\n\tvoid SetSpeed(double speed) {\n\t\tintakeMotor.Set(speed);\n\t}\n\tvoid ReverseSpeed(double speed) {\n\t\tintakeMotor.Set(-speed);\n\t}\n\tvoid Stop() {\n\t\tintakeMotor.StopMotor();\n\t}\nprivate:\n\tctre::phoenix6::hardware::TalonFX intakeMotor{3};\n};\n"
+  },
+  "checks":{
+    "java":[
+      { "type": "count", "value": "public", "min": 4, "message": "Did you add public to all methods?" },
+      { "type": "count", "value": "void", "min": 3, "message": "Did you add void to all methods?" },
+      { "type": "count", "value": "double speed", "min": 2, "message": "Did you add 'double speed' as a parameter to 2 methods?" },
+      { "type": "includes", "value": "private", "message": "Did you use private for the object?" },
+      { "type": "count", "value": "talonfx", "min": 3, "message": "Did you add TalonFX as an object?" },
+      { "type": "count", "value": ";", "min": 4, "message": "Did you add semicolons everywhere...?" }
+    ],
+    "python":[
+      { "type": "count", "value": "self", "min": 6, "message": "Did you add self as a parameter and before setting speed (6 times)?" },
+      { "type": "count", "value": "def", "min": 3, "message": "Did you add def to all methods?" },
+      { "type": "count", "value": "TalonFX", "min": 2, "message": "Did you add TalonFX as an object?" }
+    ],
+    "cpp":[
+      { "type": "count", "value": "void", "min": 3, "message": "Did you add void to all methods?" },
+      { "type": "count", "value": "double speed", "min": 2, "message": "Did you add 'double speed' as a parameter to 2 methods?" },
+      { "type": "count", "value": "talonfx", "min": 2, "message": "Did you add TalonFX as an object?" },
+      { "type": "count", "value": ";", "min": 4, "message": "Did you add semicolons everywhere...?" }
+    ]
+  }
+},
+{
+  "id": 8,
+  "title": "Create an Arm",
+  "description": "Create an ArmSubsystem class with a TalonFX motor named armMotor using device ID 7. Include three methods: raiseArm(), which sets the motor to a speed of 0.5; lowerArm(), which sets the motor to a speed of -0.5; and stopArm(), which stops the motor using stopMotor().",
+  "starterCode": {
+    "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix6.hardware.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class ArmSubsystem extends SubsystemBase {\n\t//Write code here and remove this comment.\n}",
+    "python": "from phoenix6.hardware import TalonFX\nfrom wpilib2.command import SubsystemBase\nclass ArmSubsystem(SubsystemBase):\n\t#Write code here and remove this comment.",
+    "cpp": "#include \"frc2/command/SubsystemBase.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\nclass ArmSubsystem : public frc2::SubsystemBase {\npublic:\n\t//Write code here and remove this comment.\nprivate:\n\t//Write code here and remove this comment too.\n};\n"
+  },
+  "solutionCode": {
+    "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix6.hardware.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class ArmSubsystem extends SubsystemBase {\n\tprivate final TalonFX armMotor = new TalonFX(7);\n\tpublic void raiseArm() {\n\t\tarmMotor.set(0.5);\n\t}\n\tpublic void lowerArm() {\n\t\tarmMotor.set(-0.5);\n\t}\n\tpublic void stopArm() {\n\t\tarmMotor.stopMotor();\n\t}\n}",
+    "python": "from phoenix6.hardware import TalonFX\nfrom wpilib2.command import SubsystemBase\nclass ArmSubsystem(SubsystemBase):\n\tarm_motor = TalonFX(7)\n\tdef raise_arm(self):\n\t\tself.arm_motor.set(0.5)\n\tdef lower_arm(self):\n\t\tself.arm_motor.set(-0.5)\n\tdef stop_arm(self):\n\t\tself.arm_motor.stop_motor()\n",
+    "cpp": "#include \"frc2/command/SubsystemBase.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\nclass ArmSubsystem : public frc2::SubsystemBase {\npublic:\n\tvoid RaiseArm() {\n\t\tarmMotor.Set(0.5);\n\t}\n\tvoid LowerArm() {\n\t\tarmMotor.Set(-0.5);\n\t}\n\tvoid StopArm() {\n\t\tarmMotor.StopMotor();\n\t}\nprivate:\n\tctre::phoenix6::hardware::TalonFX armMotor{7};\n};\n"
+  },
+  "checks": {
+    "java": [
+      { "type": "count", "value": "public", "min": 4, "message": "Did you add public to all methods?" },
+      { "type": "count", "value": "void", "min": 3, "message": "Did you add void to all methods?" },
+      { "type": "includes", "value": "private", "message": "Did you use private for the object?" },
+      { "type": "count", "value": "talonfx", "min": 3, "message": "Did you add TalonFX as an object?" },
+      { "type": "includes", "value": "7", "message": "Is the device ID 7?" },
+      { "type": "includes", "value": "0.5", "message": "Did you use a speed of 0.5?" },
+      { "type": "includes", "value": "stopmotor", "message": "Did you use stopMotor for stopArm?" }
+    ],
+    "python": [
+      { "type": "count", "value": "self", "min": 4, "message": "Did you add self as a parameter and before setting speed?" },
+      { "type": "count", "value": "def", "min": 3, "message": "Did you add def to all methods?" },
+      { "type": "count", "value": "TalonFX", "min": 2, "message": "Did you add TalonFX as an object?" },
+      { "type": "includes", "value": "7", "message": "Is the device ID 7?" },
+      { "type": "includes", "value": "0.5", "message": "Did you use a speed of 0.5?" }
+    ],
+    "cpp": [
+      { "type": "count", "value": "void", "min": 3, "message": "Did you add void to all methods?" },
+      { "type": "count", "value": "talonfx", "min": 2, "message": "Did you add TalonFX as an object?" },
+      { "type": "includes", "value": "7", "message": "Is the device ID 7?" },
+      { "type": "includes", "value": "0.5", "message": "Did you use a speed of 0.5?" },
+      { "type": "includes", "value": "stopmotor", "message": "Did you use StopMotor for StopArm?" },
+      { "type": "count", "value": ";", "min": 4, "message": "Did you add semicolons everywhere...?" }
+    ]
+  }
+},
+{
+  "id": 9,
+  "title": "Create a Climber",
+  "description": "Create a ClimberSubsystem class with a TalonFX motor named climberMotor using device ID 9. Include three methods: climbUp(), which sets the motor to a speed of 1.0; climbDown(), which sets the motor to a speed of -1.0; and stopClimber(), which stops the motor using stopMotor().",
+  "starterCode": {
+    "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix6.hardware.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class ClimberSubsystem extends SubsystemBase {\n\t//Write code here and remove this comment.\n}",
+    "python": "from phoenix6.hardware import TalonFX\nfrom wpilib2.command import SubsystemBase\nclass ClimberSubsystem(SubsystemBase):\n\t#Write code here and remove this comment.",
+    "cpp": "#include \"frc2/command/SubsystemBase.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\nclass ClimberSubsystem : public frc2::SubsystemBase {\npublic:\n\t//Write code here and remove this comment.\nprivate:\n\t//Write code here and remove this comment too.\n};\n"
+  },
+  "solutionCode": {
+    "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix6.hardware.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class ClimberSubsystem extends SubsystemBase {\n\tprivate final TalonFX climberMotor = new TalonFX(9);\n\tpublic void climbUp() {\n\t\tclimberMotor.set(1.0);\n\t}\n\tpublic void climbDown() {\n\t\tclimberMotor.set(-1.0);\n\t}\n\tpublic void stopClimber() {\n\t\tclimberMotor.stopMotor();\n\t}\n}",
+    "python": "from phoenix6.hardware import TalonFX\nfrom wpilib2.command import SubsystemBase\nclass ClimberSubsystem(SubsystemBase):\n\tclimber_motor = TalonFX(9)\n\tdef climb_up(self):\n\t\tself.climber_motor.set(1.0)\n\tdef climb_down(self):\n\t\tself.climber_motor.set(-1.0)\n\tdef stop_climber(self):\n\t\tself.climber_motor.stop_motor()\n",
+    "cpp": "#include \"frc2/command/SubsystemBase.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\nclass ClimberSubsystem : public frc2::SubsystemBase {\npublic:\n\tvoid ClimbUp() {\n\t\tclimberMotor.Set(1.0);\n\t}\n\tvoid ClimbDown() {\n\t\tclimberMotor.Set(-1.0);\n\t}\n\tvoid StopClimber() {\n\t\tclimberMotor.StopMotor();\n\t}\nprivate:\n\tctre::phoenix6::hardware::TalonFX climberMotor{9};\n};\n"
+  },
+  "checks": {
+    "java": [
+      { "type": "count", "value": "public", "min": 4, "message": "Did you add public to all methods?" },
+      { "type": "count", "value": "void", "min": 3, "message": "Did you add void to all methods?" },
+      { "type": "includes", "value": "private", "message": "Did you use private for the object?" },
+      { "type": "count", "value": "talonfx", "min": 3, "message": "Did you add TalonFX as an object?" },
+      { "type": "includes", "value": "9", "message": "Is the device ID 9?" },
+      { "type": "includes", "value": "1.0", "message": "Did you use a speed of 1.0?" },
+      { "type": "includes", "value": "stopmotor", "message": "Did you use stopMotor for stopClimber?" }
+    ],
+    "python": [
+      { "type": "count", "value": "self", "min": 4, "message": "Did you add self as a parameter and before setting speed?" },
+      { "type": "count", "value": "def", "min": 3, "message": "Did you add def to all methods?" },
+      { "type": "count", "value": "TalonFX", "min": 2, "message": "Did you add TalonFX as an object?" },
+      { "type": "includes", "value": "9", "message": "Is the device ID 9?" },
+      { "type": "includes", "value": "1.0", "message": "Did you use a speed of 1.0?" }
+    ],
+    "cpp": [
+      { "type": "count", "value": "void", "min": 3, "message": "Did you add void to all methods?" },
+      { "type": "count", "value": "talonfx", "min": 2, "message": "Did you add TalonFX as an object?" },
+      { "type": "includes", "value": "9", "message": "Is the device ID 9?" },
+      { "type": "includes", "value": "1.0", "message": "Did you use a speed of 1.0?" },
+      { "type": "includes", "value": "stopmotor", "message": "Did you use StopMotor for StopClimber?" },
+      { "type": "count", "value": ";", "min": 4, "message": "Did you add semicolons everywhere...?" }
+    ]
+  }
+},
+{
+  "id": 10,
+  "title": "Create an Outtake",
+  "description": "Create an OuttakeSubsystem class with a TalonFX motor named outtakeMotor using device ID 4. Include three methods: outtake(double speed), which sets the motor to the given speed; reverseOuttake(double speed), which sets the motor to the negative of the given speed (to pull a game piece back in); and stop(), which stops the motor using stopMotor().",
+  "starterCode": {
+    "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix6.hardware.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class OuttakeSubsystem extends SubsystemBase {\n\t//Write code here and remove this comment.\n}",
+    "python": "from phoenix6.hardware import TalonFX\nfrom wpilib2.command import SubsystemBase\nclass OuttakeSubsystem(SubsystemBase):\n\t#Write code here and remove this comment.",
+    "cpp": "#include \"frc2/command/SubsystemBase.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\nclass OuttakeSubsystem : public frc2::SubsystemBase {\npublic:\n\t//Write code here and remove this comment.\nprivate:\n\t//Write code here and remove this comment too.\n};\n"
+  },
+  "solutionCode": {
+    "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix6.hardware.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class OuttakeSubsystem extends SubsystemBase {\n\tprivate final TalonFX outtakeMotor = new TalonFX(4);\n\tpublic void outtake(double speed) {\n\t\touttakeMotor.set(speed);\n\t}\n\tpublic void reverseOuttake(double speed) {\n\t\touttakeMotor.set(-speed);\n\t}\n\tpublic void stop() {\n\t\touttakeMotor.stopMotor();\n\t}\n}",
+    "python": "from phoenix6.hardware import TalonFX\nfrom wpilib2.command import SubsystemBase\nclass OuttakeSubsystem(SubsystemBase):\n\touttake_motor = TalonFX(4)\n\tdef outtake(self, speed: float):\n\t\tself.outtake_motor.set(speed)\n\tdef reverse_outtake(self, speed: float):\n\t\tself.outtake_motor.set(-speed)\n\tdef stop(self):\n\t\tself.outtake_motor.stop_motor()\n",
+    "cpp": "#include \"frc2/command/SubsystemBase.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\nclass OuttakeSubsystem : public frc2::SubsystemBase {\npublic:\n\tvoid Outtake(double speed) {\n\t\touttakeMotor.Set(speed);\n\t}\n\tvoid ReverseOuttake(double speed) {\n\t\touttakeMotor.Set(-speed);\n\t}\n\tvoid Stop() {\n\t\touttakeMotor.StopMotor();\n\t}\nprivate:\n\tctre::phoenix6::hardware::TalonFX outtakeMotor{4};\n};\n"
+  },
+  "checks": {
+    "java": [
+      { "type": "count", "value": "public", "min": 4, "message": "Did you add public to all methods?" },
+      { "type": "count", "value": "void", "min": 3, "message": "Did you add void to all methods?" },
+      { "type": "count", "value": "double speed", "min": 2, "message": "Did you add 'double speed' as a parameter to 2 methods?" },
+      { "type": "includes", "value": "private", "message": "Did you use private for the object?" },
+      { "type": "count", "value": "talonfx", "min": 2, "message": "Did you add TalonFX as an object?" },
+      { "type": "includes", "value": "4", "message": "Is the device ID 4?" },
+      { "type": "includes", "value": "stopmotor", "message": "Did you use stopMotor for stop()?" }
+    ],
+    "python": [
+      { "type": "count", "value": "self", "min": 6, "message": "Did you add self as a parameter and before setting speed (6 times)?" },
+      { "type": "count", "value": "def", "min": 3, "message": "Did you add def to all methods?" },
+      { "type": "count", "value": "TalonFX", "min": 2, "message": "Did you add TalonFX as an object?" },
+      { "type": "includes", "value": "4", "message": "Is the device ID 4?" },
+      { "type": "includes", "value": "stop_motor", "message": "Did you use stop_motor for stop()?" }
+    ],
+    "cpp": [
+      { "type": "count", "value": "void", "min": 3, "message": "Did you add void to all methods?" },
+      { "type": "count", "value": "double speed", "min": 2, "message": "Did you add 'double speed' as a parameter to 2 methods?" },
+      { "type": "count", "value": "talonfx", "min": 2, "message": "Did you add TalonFX as an object?" },
+      { "type": "includes", "value": "4", "message": "Is the device ID 4?" },
+      { "type": "includes", "value": "stopmotor", "message": "Did you use StopMotor for Stop()?" },
+      { "type": "count", "value": ";", "min": 4, "message": "Did you add semicolons everywhere...?" }
     ]
   }
 }

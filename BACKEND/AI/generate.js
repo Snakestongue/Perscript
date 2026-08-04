@@ -2,13 +2,13 @@ import OpenAI from "openai";
 export let createAdvice =async(req, res)=> {
     const {content, language, problem, correctAnswer} = req.body;
     const githubAI = new OpenAI({
-        apiKey: process.env.GITHUB_TOKEN, 
-        baseURL: "https://models.inference.ai.azure.com" 
+        apiKey: process.env.GROQ_TOKEN, 
+        baseURL: "https://api.groq.com/openai/v1" 
     });
-    const models=[
-        "Llama-3.3-70B-Instruct",
-        "gpt-4o",
-        "Mistral-large-2411"
+    const models = [
+        "openai/gpt-oss-120b",
+        "openai/gpt-oss-20b",
+        "llama-3.3-70b-versatile"
     ];
     for (let modelId of models){
         try{
