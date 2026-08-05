@@ -11,9 +11,15 @@ function App(){
       <div id="homePageContent">
         <div id="home1">
           <p className="homeFade" id="FFRT">For FRC Robotics Teams</p>
-          <h2 id="LTCR">Learn to code robots.</h2>
+          <h1 id="LTCR">
+            Learn FRC Programming with Java, C++ and Python
+          </h1>
           <h2 id="PUIC">Practice until it clicks.</h2>
-          <h5 className="homeFade">Java, Python and C++ exercises, debugging challenges, and tutorials built specifically for FIRST Robotics Competition programming.</h5>
+          <h5 className="homeFade">
+            Practice FRC robot programming with live coding exercises,
+            debugging challenges, and step-by-step tutorials.
+            Designed for FIRST Robotics Competition students and mentors learning or teaching Java,
+            C++, and Python.</h5>
           <div id="buttonRowHome">
             <Link className="homeButtonsLink" to="/program"><button className="homeButtons">Start Practicing</button></Link>
             <Link className="homeButtonsLink" to="/tut"><button className="homeButtons">Browse Tutorials</button></Link>

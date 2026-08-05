@@ -604,15 +604,16 @@ hr{
 .homeButtonsLink{
   margin: 10px;
 }
-#LTCR, #PUIC{
-  margin: 0;
-  font-size: 50px;
-}
+
 #LTCR{
+  margin: 0;
   color:#fff;
+  font-size: 35px;
 }
 #PUIC{
   color:rgb(122, 173, 255);
+  font-size: 45px;
+  margin: 0;
 }
 .homeFade{
   color:#71717A;
