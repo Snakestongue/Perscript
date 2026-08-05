@@ -1043,6 +1043,8 @@ a{
     justify-content: flex-start;
     overflow-x: auto;
     overflow-y: hidden;
+    top: 128px; /* sits below header (85px) + nav bar */
+    z-index: 900
   }
   #internalNavList {
     flex-wrap: nowrap;
@@ -1106,17 +1108,13 @@ a{
   footer{
     border-top: 1px solid rgb(122, 173, 255);
   }
-  /* #newFooterDiv {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    width: 100%;
-    margin-top: auto;
+  #internalNav {
+    justify-content: flex-start;
+    overflow-x: auto;
+    overflow-y: hidden;
+    top: 110px;
+    z-index: 900
   }
-  .footerLinks {
-    margin: 7px !important;
-    width: auto;
-  } */
   #mediaGrid, #lowerSide, #gridButton{
     display: flex;
     flex-direction: column;

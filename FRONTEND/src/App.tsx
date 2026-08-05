@@ -1,22 +1,13 @@
 import {Link } from "react-router-dom"
+import Header from "./components/Header.js";
+import Nav from "./components/Nav.js";
+import Footer from "./components/Footer.js";
+
 function App(){
   return (
     <div id="homePage">
-      <header>
-            <Link to="/"><p id="headerFPPa"><span>FRC</span> Programming Practice</p></Link>
-            <ul id="headerList">
-                <li><Link to="/program" className="headerLinks">Programming Practice</Link></li>
-                <li><Link to="/debug" className="headerLinks">Debugging Practice</Link></li>
-                <li><Link to="/tut" className="headerLinks">Tutorials</Link></li>
-            </ul>
-      </header>
-      <nav>
-        <ul id="newHeaderList">
-          <li><Link to="/program" className="headerLinks">Programming Practice</Link></li>
-          <li><Link to="/debug" className="headerLinks">Debugging Practice</Link></li>
-          <li><Link to="/tut" className="headerLinks">Tutorials</Link></li>
-        </ul>
-      </nav>
+    <Header />
+    <Nav />
       <div id="homePageContent">
         <div id="home1">
           <p className="homeFade" id="FFRT">For FRC Robotics Teams</p>
@@ -41,7 +32,7 @@ function App(){
                 </div>
                 <h4>Programming Practice</h4>
                 <p>Live coding exercise - write code in the browser and get feedback.</p>
-                <div className="colorBox" id="colorPP">4 Exercises</div>
+                <div className="colorBox" id="colorPP">8 Exercises</div>
               </div>
             </Link>
             
@@ -68,7 +59,7 @@ function App(){
                 </div>
                 <h4>Tutorials</h4>
                 <p>Step by step guide to master your programming skills.</p>
-                <div className="colorBox" id="colorTut">2 Tutorials</div>
+                <div className="colorBox" id="colorTut">10 Tutorials</div>
               </div>
             </Link>
           </div>
@@ -83,7 +74,7 @@ function App(){
                   </svg>
                 </div>
                 <h4>AI Assist</h4>
-                <p>Not sure what or why something's wrong? In Programming Practice, use AI Assist for instant help.</p>
+                <p>Get hints, explanations, and debugging help while learning — without giving away the answer.</p>
               </div>
             
               <div  className="h3FDIV" id="sect5">
@@ -108,14 +99,7 @@ function App(){
           </div>
         </div>
       </div>
-      <footer>
-        <div id="newFooterDiv">
-          <Link id="PPLINK" to="/PP" className="footerLinks" >Privacy Policy</Link>
-          <Link id="Sug" to="/Sug" className="footerLinks" >Add a suggestion</Link>
-          <a id="git" className="footerLinks" target="_blank" rel="noopener noreferrer"href="https://github.com/Snakestongue/FRC-Programming-Practice">Github</a>
-        </div>
-        <p style={{color:"white"}} id="copy">© By Snakestongue. All rights reserved.</p>
-      </footer>
+      <Footer />
     </div>
     
   );

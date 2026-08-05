@@ -1,26 +1,16 @@
 import {useState} from 'react'
 import problems from '../JSON/debugProblems.json'
 import {Link } from "react-router-dom"
+import Header from "../components/Header.js";
+import Nav from "../components/Nav.js";
+import Footer from "../components/Footer.js";
 
 function Bug(){
   const [selectedChoices, setSelectedChoices] = useState({})
   return(
   <div id="mainDivBug">
-      <header>
-            <Link to="/"><p id="headerFPP"><span>FRC</span> Programming Practice</p></Link>
-            <ul id="headerList">
-                <li><Link to="/program" className="headerLinks">Programming Practice</Link></li>
-                <li><Link to="/debug" className="headerLinks active">Debugging Practice</Link></li>
-                <li><Link to="/tut" className="headerLinks">Tutorials</Link></li>
-            </ul>
-      </header>
-      <nav>
-        <ul id="newHeaderList">
-          <li><Link to="/program" className="headerLinks">Programming Practice</Link></li>
-          <li><Link to="/debug" className="headerLinks active">Debugging Practice</Link></li>
-          <li><Link to="/tut" className="headerLinks">Tutorials</Link></li>
-        </ul>
-      </nav>
+      <Header />
+      <Nav />
     <div className="bugLangDiv">
     </div>
     <div id="f3">  
