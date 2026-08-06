@@ -4,9 +4,7 @@
 /* * {
   outline: 1px solid red;
 } */
-*{
-  /* font-family: 'Rajdhani', sans-serif !important; */
-}
+
 html, body {
   overflow-x: hidden;
   scroll-behavior: smooth;
@@ -49,6 +47,12 @@ body{
 .nav-links{
   color:white !important;
   font-weight: 500 !important;
+  transition: all .4s ease-in;
+  border: 1px solid #7aadff11;
+}
+.nav-links:hover{
+  /* border:1px solid black; */
+  border-color: #7AADFF;
 }
 svg{
   width:20px;
@@ -98,7 +102,6 @@ svg{
   padding: 2px;
   margin-left: 5px;
 }
-
 .action-buttons, .program-buttons, .program-select{
   color: #fff;
   background-color: rgba(122, 173, 255, .1);;
@@ -119,6 +122,11 @@ svg{
   width: 100%;
   max-width: none;
   box-sizing: border-box;
+  cursor: pointer;
+}
+.program-buttons:hover{
+  transform: translateY(-4px);
+  box-shadow: 4px 4px 0px #7AADFF;
 }
 .home-card{
   font-family: 'Rajdhani', sans-serif;
@@ -147,7 +155,6 @@ svg{
 }
 .card-titles{
   font-weight: 600;
-  /* letter-spacing: 1.5px; */
   font-size: 19px;
 }
 .card-extras{
@@ -163,12 +170,8 @@ svg{
   font-weight: 1000;
 }
 
-
-
-
-
-
-#programJSX{
+/*Program.jsx*/
+#overall-program{
   min-height: 100svh;
   display:grid;
   width:100%;
@@ -182,30 +185,7 @@ svg{
   margin: 0px;
   overflow-y: hidden;
 }
-#contentApp{
-  grid-area: content;
-  display: flex;
-  flex-direction: column;
-  width:100%;
-  margin: 0 auto;
-  margin-top: 40px;
-}
-#divEditor{
-  font-family: "JetBrains Mono", monospace;
-  margin: 0px; 
-  height: 55vh;
-  overflow: hidden; 
-  transition: .5s;
-  padding: 0px; 
-  background-color: rgb(19, 25, 31);
-  border-top: 1px solid rgba(255,255,255,0.1);
-  border-bottom: 1px solid rgba(255,255,255,0.1);
-}
-#divEditor:hover{
-  border-color: rgb(122, 173, 255);
-}
-
-#feedback, #checky, #AICONTENT{
+.words-content{
   border: 1px solid rgba(255,255,255,.1);
   padding:10px;
   text-align: left;
@@ -215,24 +195,6 @@ svg{
   border-radius: 10px;
   padding: 10px;
   margin-top: 10px;
-}
-
-.pt, .comboSVG{
-  margin: 1px 0px !important;
-  margin-left: 10px !important;
-}
-.combo{
-  display: flex;
-  flex-direction: row;
-  margin-bottom: 0px;
-}
-#AIDIV, #checkDIV{
-  background-color: rgb(19, 25, 31);
-  display: flex;
-  flex-direction: column;
-}
-
-#AICONTENT, #checky{
   margin-bottom: 0px;
   min-height: 120px;
   flex: 1;         
@@ -240,30 +202,12 @@ svg{
   border: none;
   background-color: rgb(28, 34, 43);
 }
-#questionProgram, #sugLab{
- border: none;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
-  border-radius: 0;
-  margin: 0;
-  padding: 15px;
-  color:#fff;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 13px;
-  background-color: rgb(19, 25, 31);;
-  border-top-left-radius: 10px; 
-  border-top-right-radius: 10px;  
-  transition: all .5s;
-  margin-top: 20px;
-}
-#questionProgram{
-  margin-top: 0px;
-  border-radius: 0px;
-}
-#sugLab{
-  width: 100%;
-  margin-top: 25px;
-  border: 1px solid rgba(255,255,255,0.1);
-  padding: 15px 5px !important;
+.editor-words{
+  background-color: rgb(19, 25, 31);
+  display: flex;
+  flex-direction: column;
+  width:100%;
+  flex: 1;
 }
 .program-select{
   border: 1px solid rgba(255,255,255,0.1);
@@ -275,45 +219,17 @@ svg{
   font-size: 12px;
   background-color: rgba(122, 173, 255, .1);
 }
-#selectLang:hover, option:hover{
-  cursor: pointer;
+#show-answer{
+  color:rgb(228, 224, 14);
+  background-color:rgba(228, 224, 14, .1);
 }
-option{
-  background-color: rgb(25, 35, 60);
+#show-answer:hover{
+  background-color:rgba(228, 224, 14, .3);
 }
-
-.footerLinks{
-  width:140px;
-  margin: 0px 25px !important;
+#vim-toggle:hover{
+  background-color: #7aadff49;
 }
-
-#buttonDiv{
-  grid-area: sidebar;
-  align-items: center;
-  width: 100%;
-  padding: 0 20px;
-  box-sizing: border-box;
-  background-color: rgb(19, 25, 31);
-  margin-top: 40px;
-  padding-top: 20px;
-  display: flex;
-  flex-direction: column;
-  border-right:1px solid rgba(255,255,255,0.1);;
-
-}
-#mediaGrid, #lowerSide, #checkDIV{
-  width: 100%;
-  box-sizing: border-box;
-  margin-top: 0 !important;
-}
-#aiAssist{
-  color:rgb(217, 0, 255);
-  background-color: rgba(217, 0, 255, .1);
-}
-#aiAssist:hover{
-  background-color: rgba(217, 0, 255, .3);
-}
-button#submit{
+#run-submit{
   background-color: rgba(122, 173, 255, .8);
   border-color: rgb(122, 173, 255);
   color: #fff;
@@ -324,13 +240,35 @@ button#submit{
   text-transform: uppercase;
   transition: .3s;
 }
-button#submit:hover{
+#run-submit:hover{
   background-color: rgba(122, 173, 255, .2);
 }
-
-.footerLinks{
-  margin: 0px 20px;
+#ai-button{
+  color:rgb(217, 0, 255);
+  background-color: rgba(217, 0, 255, .1);
 }
+#ai-button:hover{
+  background-color: rgba(217, 0, 255, .3);
+}
+option:hover{
+  cursor: pointer;
+}
+option{
+  background-color: rgb(25, 35, 60);
+}
+
+
+/*Bug.jsx */
+.bug-labels{
+  transition: all .1s ease-in ;
+  border-radius: 10px;
+}
+.bug-labels:hover{
+  transform: translateY(-6px);
+  cursor: pointer;
+  box-shadow: 2px 2px 0px #7AADFF;
+}
+
 #bugLangDiv{
   padding-top: 0px;
 }
@@ -426,48 +364,8 @@ input[type="radio"]{ /*AI*/
   width: 850px;
   height: auto;
 }
-#sugDiv{
-  width:75%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin: 0 auto;
-}
-#sugInput{
-  width: 100%;
-  height:65vh;
-  margin-top: 0px;
-  background-color: rgb(19, 25, 31);
-  color: #fff;
-  overflow-y: auto;
-  border: 1px solid rgba(255,255,255,0.08);
-  padding: 5px;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-  font-size: 15px;
-  transition: .5s;
-}
-#sugInput:hover{
-  border-top: 1px solid rgb(122, 173, 255);
-  border-bottom: 1px solid rgb(122, 173, 255);
-  cursor: pointer;
-}
-#sugSubmit:hover{
-  border-color: rgb(122, 173, 255);
-}
-#sugSubmit{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  margin: 30px auto;
-  padding: 15px 35px !important;
-  border: 1px solid rgba(255,255,255,0.08) ;
-  padding: 10px 0px !important;
-  font-size: 14px;
-  background-color: rgb(19, 25, 31);;
-}
+
+
 #ATC{
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -657,23 +555,7 @@ a{
    transform: scale(1.05);
    cursor: pointer;
 }
-#lowerSide {
-  grid-column: 1 / -1;  
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between; 
-  align-items: center;
-  gap: 10px;
-  padding: 10px 4px;
-}
-#AK{
-  color:rgb(228, 224, 14);
-  background-color:rgba(228, 224, 14, .1);
-}
-#AK:hover{
-  background-color:rgba(228, 224, 14, .3);
-}
+
 #subEditor{
   display: grid;
   grid-template-columns: 30% 70%;
@@ -737,7 +619,8 @@ a{
   letter-spacing: 0.5px;
 }
 #internalNav{
-  background: rgb(24, 32, 41);
+  background: transparent;
+  backdrop-filter: blur(10px);
   padding: 10px 20px;
   border-radius: 8px;
   margin: 20px 0;
@@ -775,33 +658,22 @@ a{
   transform: translateY(-2px);
   cursor: pointer;
 }
-@media (max-width:1100px){  
-  .header-ul{
+@media (max-width:1280px){  
+    .header-ul{
     display: none;
   }
-   #programJSX{
+   #overall-program{
     min-height: 100svh;
     display:flex;
-    width:100%;
+    width:100% !important;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 0px;
     margin: 0px;
-    margin-top: 20px;
+    margin-top: 0px !important;
   }
-  #contentApp{
-    width: 85%;  
-    margin: 0 auto;
-    margin-bottom: 10px;
-  }
-  #questionProgram{
-    width: 100%;
-    box-sizing: border-box;
-  }
-  #questionProgram{
-    margin-top: 70px;
-  }
+
   #root{
     min-height: 100svh;
     display: flex;
@@ -836,53 +708,12 @@ a{
     width:75%;
     height:auto;
   }
-  /* nav{
-    background-color: rgb(19, 25, 31);;
-    display: flex;
-    flex-direction: row;
-    justify-content: center; 
-    align-items: center;
-    width: 100%;
-    position: fixed;
-    top: 80px;
-    left: 0;
-    z-index: 1000;
-    padding:5px 0px;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-    padding: 10px;
-  } */
-  #navTitle{
-    color:#fff;
-    padding: 0px;
-    margin-right: 0px; 
+  .program-buttons{
+    width:auto;
+    white-space:nowrap;
+    flex:0 0 auto;
   }
-  #mediaGrid, #lowerSide{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-self: stretch;
-    }
-  #mediaGrid{
-    height: 100%;
-  }
-  #lowerSide{
-    height: 100%;
-    justify-content: flex-start;
-  }
-  #gridButton{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-  }
-  #mediaGrid, #lowerSide{
-    background: rgb(19, 25, 31);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 10px;
-    padding: 15px;
-    box-sizing: border-box;
-    overflow: hidden;
-  }
+
   #checkDIV{
     grid-column: 1 / -1; /*AI*/
     display: flex;
@@ -891,26 +722,7 @@ a{
     width: 100%;
     margin-top: 10px;
   }
-  #AICONTENT{
-    margin: 0 auto;
-    margin-top: 10px;
-    width:100%;
-    box-sizing: border-box;
-  }
-  nav, #newHeaderList, footer{
-    padding: 10px 0px;
-    margin: 0px;
-  }
-  footer{
-    margin-top: 10px;
-  }
-  footer{
-    display: flex ;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding-top: 20px;
-  }
+
   #git{
     margin: 10px 10px;
   }
@@ -946,12 +758,8 @@ a{
   #checkDIV, #AIDIV{
     width: 100%;
   }
-  #checky, #AICONTENT{
-    min-height: 60px;
-    max-height: 150px;
-    overflow-y: auto;
-  }
-  #mediaGrid, #lowerSide, #checkDIV{
+
+   #checkDIV{
     width: 100%;
     box-sizing: border-box;
     margin-top: 0 !important;
@@ -969,7 +777,7 @@ a{
     justify-content: flex-start;
     overflow-x: auto;
     overflow-y: hidden;
-    top: 90px; 
+    top: 75px !important; 
     z-index: 900;
     width:100%;
     border-radius: 0px;
@@ -1023,30 +831,7 @@ a{
     padding: 0px ;
     margin: 0px;
   }
-  #divEditor {
-    height: 35vh;   
-    max-height: 35vh;
-    flex-shrink: 0;
-  }
-  #questionProgram{
-    margin-top: 45px !important;
-  }
 
-  .headerLinks, .footerLinks {
-    margin: 0px 4px;
-    min-width: unset;
-    width: auto;
-    padding:10px;
-    font-size: 12px;
-    padding: 5px !important;
-  }
-  nav, #newHeaderList{
-    padding: 7px 0px;
-    margin: 0px;
-  }
-  footer{
-    border-top: 1px solid rgb(122, 173, 255);
-  }
   #internalNav {
     justify-content: flex-start;
     overflow-x: auto;
@@ -1054,12 +839,6 @@ a{
     top: 65px;
     z-index: 900;
     background: linear-gradient(to right, rgb(24, 32, 41), rgb(75, 100, 128));
-  }
-  #mediaGrid, #lowerSide, #gridButton{
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-    min-height: 200px !important;
   }
   .bQ{
     font-size:12px !important;
@@ -1086,9 +865,7 @@ a{
   .tutCard{
     min-width: 0;
   }
-  #sugDiv{
-    width:85%;
-  }
+
   
 }
 @media (max-width:400px){

@@ -7,7 +7,7 @@ function Nav(){
           hidden
           max-lg:flex
           max-lg:flex-row
-          max-lg:justify-center
+          max-lg:justify-around
           max-lg:items-center
           max-lg:w-full
           max-lg:fixed
@@ -21,7 +21,7 @@ function Nav(){
           bg-red-500
         ">
         <ul className="
-            flex flex-row items-center gap-[4px] m-0 p-0 list-none max-md:justify-around w-full
+            flex flex-row items-center gap-[4px] m-0 p-0 list-none max-lg:justify-around w-full
             ">
                 <li><Link to="/program" className={clsx(
               "nav-links",

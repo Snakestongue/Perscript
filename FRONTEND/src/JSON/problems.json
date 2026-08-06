@@ -139,7 +139,7 @@
 },
 {
   "id": 5,
-  "title": "Hardware in Constructors",
+  "title": "Constructors",
   "description": "Create a TalonFX motor named elevatorMotor with device ID 5. In the constructor, create a TalonFXConfiguration object, set Slot0.kP to 10, and apply the configuration to the motor using the motor's configurator.",
   "starterCode": {
     "java": "import com.ctre.phoenix6.hardware.TalonFX;\nimport com.ctre.phoenix6.configs.TalonFXConfiguration;\n\npublic class ElevatorSubsystem {\n    // Write code here.\n\n    public ElevatorSubsystem() {\n        // Write code here.\n    }\n}",

@@ -39,11 +39,10 @@ function Bug(){
           )}
           
           <div className="bQ" key={p.id}>
-              
             <p>{p.question}</p>
             <pre id="sample">{p.sampleCode}</pre>{/** keeps format same (\n)*/}
             {choices.map((choice, index)=>(
-            <label key={index} style={{display: "block"}}>
+            <label className="bug-labels" key={index} style={{display: "block"}}>
               <input
               type="radio"
               name={`problem-${p.id}`}

@@ -149,20 +149,29 @@ public class DriveSubsystem {
                 <p>Help shape FRC Programming Practice. Suggest new tutorials, challenges, or features.</p>
                 <div className="flex flex-row justify-center mt-auto">
                   <Link to="/Sug">
-                    <div className="
-                      mt-auto mb-[2px]
-                      text-s px-2 py-2
-                      rounded-[5px] border border-[#7AADFF] 
-                      bg-white/[0.03] 
-                      text-zinc-400 inline-block 
-                      w-64 self-start
-                      text-center
-                      duration-400 ease-in-out 
-                      max-md:!mt-6
-                      hover:-translate-y-1.5 
-                      hover:border-[rgba(122,173,255,0.3)] 
-                      hover:shadow-[0_10px_30px_rgba(31,41,55,0.5)]
-                      ">Add a suggestion.</div>
+                    <div
+  className="
+    mt-auto mb-[2px]
+    w-64 self-start
+    px-4 py-2.5
+    rounded-lg
+    border border-[#7AADFF]/40
+    bg-gradient-to-b from-white/[0.08] to-white/[0.02]
+    text-sm font-medium
+    text-zinc-300
+    text-center
+    cursor-pointer
+    transition-all duration-300 ease-out
+    hover:-translate-y-1
+    hover:border-[#7AADFF]/70
+    hover:text-white
+    hover:bg-white/[0.08]
+    hover:shadow-[0_8px_30px_rgba(122,173,255,0.18)]
+    active:translate-y-0
+    max-md:!mt-6
+  ">
+  Add a suggestion →
+</div>
                       {/* <p className="arrow">➡</p> */}
                     </Link>
                   </div>
