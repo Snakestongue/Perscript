@@ -22,6 +22,9 @@ function Program(){
   const[vimOn, setVimOn] = useState(false)
   const vimRef = useRef (null)
   const editorRef =useRef(null )
+  useEffect(() => {
+    document.title = "FRC Programming Practice | Live Challenges";
+  }, []);
   async function submitToAI() {
     if (!userCode){
       alert("Make sure there is code to be checked!")

@@ -1,10 +1,13 @@
 import { Link } from "react-router-dom";
 import { ChangeEvent } from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "../components/Header.js";
 import Nav from "../components/Nav.js";
 import Footer from "../components/Footer.js";
 function Sug() {
+  useEffect(() => {
+    document.title = "FRC Programming Practice | Add a Suggestion";
+  }, []);
   const [currentSug, setSug] = useState("")
   const [category, setCategory] = useState("Feature");
   const [rating, setRating] = useState(0);

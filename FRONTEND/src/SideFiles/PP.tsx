@@ -1,8 +1,11 @@
 import Header from "../components/Header.js";
 import Nav from "../components/Nav.js";
 import Footer from "../components/Footer.js";
-
+import { useEffect } from "react";
 function PP() {
+  useEffect(() => {
+    document.title = "FRC Programming Practice | Privacy Policy";
+  }, []);
   return (
     <div className="min-h-screen mt-10">
       <Header />

@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import problems from '../JSON/debugProblems.json'
 import {Link } from "react-router-dom"
 import Header from "../components/Header.js";
@@ -7,6 +7,9 @@ import Footer from "../components/Footer.js";
 
 function Bug(){
   const [selectedChoices, setSelectedChoices] = useState({})
+  useEffect(() => {
+      document.title = "FRC Programming Practice | Debugging Practice";
+    }, []);
   return(
   <div id="mainDivBug">
       <Header />

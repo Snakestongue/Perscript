@@ -2,7 +2,11 @@ import {Link} from "react-router-dom"
 import Header from "../components/Header.js";
 import Nav from "../components/Nav.js";
 import Footer from "../components/Footer.js";
+import { useEffect } from "react";
 function Tut(){
+    useEffect(() => {
+        document.title = "FRC Programming Practice | Tutorials";
+      }, []);
     return (
         <div id="TutMain">
         <Header />
