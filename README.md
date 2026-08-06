@@ -1,5 +1,7 @@
 # FRC Programming Practice
 
+*Note: On 08/06/2026 the website is currently down due to Github having an outage.*
+
 A web-based programming practice site built with React and Monaco Editor to help students learn and improve FRC (FIRST Robotics Competition) programming skills.
 
 ## About
