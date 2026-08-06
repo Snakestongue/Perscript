@@ -1,16 +1,14 @@
 # FRC Programming Practice
 
-*Note: On 08/06/2026 the website is currently down due to Github having an outage.*
-
 A web-based programming practice site built with React and Monaco Editor to help students learn and improve FRC (FIRST Robotics Competition) programming skills.
 
 ## About
 
 FRC Programming Practice is designed to help beginner and intermediate robotics programmers strengthen their programming fundamentals.
 
-The platform provides FRC-style (Command Based) Java, C++, and Python programming challenges. Students can write, test, and debug code directly in the browser using the Monaco Editor.
+The platform provides FRC-style (Command Based) Java, C++, and Python programming challenges. Students can write and test code directly in the browser using the Monaco Editor.
 
-The goal of this project is to make learning FRC programming more accessible by providing guided practice, debugging support, tutorials, and AI-powered assistance.
+The goal of this project is to make learning FRC programming more accessible by providing guided practice, debugging support, tutorials, and AI-powered assistance to help mentors and students.
 
 ## Features
 
@@ -45,6 +43,7 @@ The goal of this project is to make learning FRC programming more accessible by 
 - React
 - JSX and TSX components
 - Vite development environment
+- Tailwind and CSS combination
 - Monaco Editor
 - Responsive web interface
 
@@ -85,3 +84,4 @@ Have ideas, feature requests, or improvements?
 
 You can submit feedback directly through the Suggestions page located in the website footer.
 
+Please leave a suggestion so we can continue to improve the website!
