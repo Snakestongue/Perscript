@@ -1,8 +1,12 @@
 /**FAVICON BYTESIZED*/
 @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
 /* * {
   outline: 1px solid red;
 } */
+*{
+  /* font-family: 'Rajdhani', sans-serif !important; */
+}
 html, body {
   overflow-x: hidden;
   scroll-behavior: smooth;
@@ -10,52 +14,161 @@ html, body {
 body{
   margin: 0px;
   padding: 0px;
-  font-family: 'Rajdhani', sans-serif;
+  font-family: 'Rajdhani', sans-serif !important;
   background: rgb(13, 17, 23);
   color:#fff;
   padding-top: 25px;
   padding-bottom: 0px;
-  overflow-y: auto;
+  overflow-y: hidden;
 }
-#homePage{
-  padding-top: 100px;
-} 
-#homePageContent{
-  min-height: 80vh;
-  height: auto;
+
+/**HEADER & NAV*/
+.header-links-svg{
+  margin: 0px 3px !important;
 }
-#FFRT{
-  margin-top: 20px;
+.links:hover{
+  transform: translateY(-2px);
+  cursor: pointer;
+  color:white !important;
 }
-#headerFPP, #headerFPPa{
-  font-family: 'Rajdhani', sans-serif; /*Import above ^*/
-  font-size: 28px;
+.links, .nav-links{
+  font-size: 14px;
   font-weight: 700;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
   text-transform: uppercase;
+  margin: 0 15px;
+  color:#8c8c8c4b;
+  text-decoration: none;
+  text-align: center;
+  padding: 10px;
+  color:rgb(120,120,120) !important;
+  display: flex;
+  flex-direction: row;
+  border-radius: 10px;
+}
+.nav-links{
+  color:white !important;
+  font-weight: 500 !important;
+}
+svg{
+  width:20px;
+  height:auto;
+  padding: 0;
+}
+
+/**App.tsx*/
+#home-code{
+  background-color: transparent;
+  border: none;
+  border-radius: 0px;
+  padding: 0px;
+  color:#E5E7EB;
+  font-size: 12px;
+  padding: 0px ;
+  margin: 0px;
+}
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+.home-button:hover{
+  cursor: pointer;
+}
+.home-button{
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 5px;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  padding: 10px 0px;
+  font-size: 15px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  min-width: 200px;
+  justify-content: center;
+}
+.titles{
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #6b7280;
+  margin: 14px 0px;
+  padding: 2px;
+  margin-left: 5px;
+}
+
+.action-buttons, .program-buttons, .program-select{
   color: #fff;
-  margin-right: 60px;
-  transition: .2s;
-  opacity: 1;
-  text-decoration: underline dashed rgb(42, 52, 68);
-  text-underline-offset: 6px;
+  background-color: rgba(122, 173, 255, .1);;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  transition: all 0.25s ease;
+  text-decoration: none;
+  text-align: left;
+  padding: 9px 12px;
+  margin: 0 0 6px;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  width: 100%;
+  max-width: none;
+  box-sizing: border-box;
 }
-#headerFPP:hover, #headerFPPa:hover{
-  text-decoration: underline dashed rgb(122, 173, 255);
-  transform: translateY(-3px);
-}
-#headerFPP span, #headerFPPa span{
-  color:rgb(122, 173, 255);
-}
-#headerFPPa{
-  text-decoration: underline dashed rgba(122, 173, 255, .5);
-}
-#mainDiv {
-  min-height: 100svh;
+.home-card{
+  font-family: 'Rajdhani', sans-serif;
+  border:1px solid #7aadff31;
+  background-color: #7aadff11;
+  height:auto;
+  min-height: 20vh;
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
+  margin: 10px;
+  padding: 10px;
+  transition: all .4s ease;
+  width:95%;
 }
-#appJSX, #programJSX{
+.home-card:hover{
+  transform: translateY(-6px);
+  border-color: rgba(122, 173, 255, .3);
+  box-shadow:0 10px 30px rgba(31, 41, 55, .5);
+}
+.upper-card{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.card-titles{
+  font-weight: 600;
+  /* letter-spacing: 1.5px; */
+  font-size: 19px;
+}
+.card-extras{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+}
+.arrow{
+  color:#7AADFF;
+  font-size: 20px;
+  font-weight: 1000;
+}
+
+
+
+
+
+
+#programJSX{
   min-height: 100svh;
   display:grid;
   width:100%;
@@ -75,9 +188,10 @@ body{
   flex-direction: column;
   width:100%;
   margin: 0 auto;
-  margin-top: 80px;
+  margin-top: 40px;
 }
 #divEditor{
+  font-family: "JetBrains Mono", monospace;
   margin: 0px; 
   height: 55vh;
   overflow: hidden; 
@@ -90,33 +204,7 @@ body{
 #divEditor:hover{
   border-color: rgb(122, 173, 255);
 }
-header{
-  grid-area: header;
-  height: 85px;
-  background-color: rgb(19, 25, 31);
-  margin: 0;
-  padding: 10px;
-  width: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 100;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
-  margin-bottom: 0 !important;
-}
-#headerList, #newHeaderList{
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  margin: 0;
-  padding: 0;
-  flex-direction: row;
-  list-style: none;
-}
+
 #feedback, #checky, #AICONTENT{
   border: 1px solid rgba(255,255,255,.1);
   padding:10px;
@@ -128,9 +216,7 @@ header{
   padding: 10px;
   margin-top: 10px;
 }
-#checky{
-  list-style: none;
-}
+
 .pt, .comboSVG{
   margin: 1px 0px !important;
   margin-left: 10px !important;
@@ -155,7 +241,7 @@ header{
   background-color: rgb(28, 34, 43);
 }
 #questionProgram, #sugLab{
-  border: none;
+ border: none;
   border-bottom: 1px solid rgba(255,255,255,0.1);
   border-radius: 0;
   margin: 0;
@@ -179,12 +265,11 @@ header{
   border: 1px solid rgba(255,255,255,0.1);
   padding: 15px 5px !important;
 }
-#selectLang{
+.program-select{
   border: 1px solid rgba(255,255,255,0.1);
   border-radius: 10px;
   color:#fff;
   text-align: center;
-  width:auto;
   padding: 15px;
   font-family: 'JetBrains Mono', monospace;
   font-size: 12px;
@@ -196,36 +281,12 @@ header{
 option{
   background-color: rgb(25, 35, 60);
 }
-.headerLinks:hover, .footerLinks:hover{
-  border-color: rgb(122, 173, 255);
-  transform: translateY(-2px);
-  cursor: pointer;
-}
-.headerLinks, .footerLinks{
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  margin: 0 5px !important;
-  color:#8c8c8c;
-  text-decoration: none;
-  width: 175px;        
-  text-align: center;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid rgb(42, 52, 68);
-  border-radius: 4px;
-  padding: 5px;
-  transition: border-color 0.2s, transform 0.2s;
-}
+
 .footerLinks{
   width:140px;
   margin: 0px 25px !important;
 }
-#copy{
-  margin-left: 10px;
-}
+
 #buttonDiv{
   grid-area: sidebar;
   align-items: center;
@@ -233,7 +294,7 @@ option{
   padding: 0 20px;
   box-sizing: border-box;
   background-color: rgb(19, 25, 31);
-  margin-top: 80px;
+  margin-top: 40px;
   padding-top: 20px;
   display: flex;
   flex-direction: column;
@@ -244,37 +305,6 @@ option{
   width: 100%;
   box-sizing: border-box;
   margin-top: 0 !important;
-}
-
-button:hover{
-  background-color: rgba(122, 173, 255, .5);
-  cursor: pointer;
-}
-button{
-  color: #fff;
-  background-color: rgba(122, 173, 255, .1);;
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 8px;
-  transition: all 0.25s ease;
-  text-decoration: none;
-  text-align: left;
-  padding: 9px 12px;
-  margin: 0 0 6px;
-  font-family: 'Rajdhani', sans-serif;
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  width: 100%;
-  max-width: none;
-  box-sizing: border-box;
-}
-svg{
-  width:15px;
-  height:auto;
-  padding: 0;
 }
 #aiAssist{
   color:rgb(217, 0, 255);
@@ -297,47 +327,14 @@ button#submit{
 button#submit:hover{
   background-color: rgba(122, 173, 255, .2);
 }
-#buttonDiv select, #buttonDiv button, #buttonDiv p{
-  width: 100%;
-  box-sizing: border-box;
-}
-footer{
-  grid-area: footer;
-  background: rgb(19, 25, 31);
-  margin:0;
-  padding:15px 0px;
-  width: 100%;     
-  margin-top: 0px;
-  z-index:1000;  
-  border-top: 1px solid rgba(255,255,255,0.08);
-  display:flex;
-  flex-direction:row;
-  justify-content:space-around;
-  align-items:center;
-}
+
 .footerLinks{
   margin: 0px 20px;
 }
-#PP{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  color: #fff;
-  margin: 30px auto;
-  padding: 20px;
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 10px;
-  width: 65%;
-  max-width: 600px;
-  min-height: 70vh;     
-  background: rgb(19, 25, 31);
-  font-size: 19px;
+#bugLangDiv{
+  padding-top: 0px;
 }
-#mainDivBug{
-  padding-top: 50px;
-}
-#TutMain, #PPO, #sugMain{
+#TutMain{
   padding-top: 75px !important;
 }
 #TutMain{
@@ -404,24 +401,12 @@ pre{
   color:#fff;
   line-height: 1.5;
 }
-label{
-  display:flex !important;
-  align-items:center;
-  padding: 10px;
-  border-radius: 10px;
-  transition: all .2s ease;
-  cursor:pointer;
-}
-label:hover{
-  background: rgba(99,102,241,0.08);
-}
+
 input[type="radio"]{ /*AI*/
   accent-color: rgb(122, 173, 255);
   transform: scale(.8);
 }
-nav{
-  display: none;
-}
+
 #f3{
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -508,9 +493,7 @@ nav{
   border-left: 3px solid rgb(122, 173, 255);
   padding-left: 10px;
 }
-.codeIndent{
-  list-style: none;
-}
+
 code{
   font-family: "JetBrains Mono", monospace;
   font-size: 13px;
@@ -521,15 +504,6 @@ code{
   grid-template-columns: 1fr 1fr;
   gap:20px;
   padding: 0px;
-}
-.titles{
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: #6b7280;
-  margin: 14px 0px;
-  padding: 2px;
 }
 hr{
   border-color: rgba(255,255,255,0.06);
@@ -542,7 +516,7 @@ hr{
   background: rgba(14, 121, 228, 0.25);
   color: rgb(14, 121, 228);
   margin: 2px;
-  margin-top: 10px;
+  /* margin-top: 10px; */
 }
 .tutLang{
   font-weight: 800;
@@ -597,49 +571,11 @@ hr{
   align-items: center;
   gap:0 !important;
 }
-#buttonRowHome{
-  display: flex;
-  flex-direction: row;
-}
-.homeButtonsLink{
-  margin: 10px;
-}
 
-#LTCR{
-  margin: 0;
-  color:#fff;
-  font-size: 35px;
-}
 #PUIC{
   color:rgb(122, 173, 255);
   font-size: 45px;
   margin: 0;
-}
-.homeFade{
-  color:#71717A;
-  font-weight: 600;
-}
-#home2Cover{
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-}
-.h2cDIV, .h3FDIV{
-  margin: 10px;
-  border:1px solid rgba(255,255,255,0.08);
-  padding:20px 30px;
-  height:auto;
-  min-height: 20vh;
-  border-radius: 10px;
-  transition: .5s;
-  display: flex;
-  flex-direction: column;
-  transition: all 0.4s ease;
-  background-color: rgb(22, 27, 34);
-}
-.h2cDIV:hover{
-  transform: translateY(-6px);
-  border-color: rgba(122, 173, 255, .3);
-  box-shadow:0 10px 30px rgba(31, 41, 55, .5);
 }
 p, h4{
   padding: 0px;
@@ -648,12 +584,14 @@ p, h4{
 a{
   text-decoration: none;
 }
-.colorBox{
+.color-box{
   margin-top: auto;
+  margin-bottom: 2px;
+  margin-right: 10px;
   font-size: 12px;
   padding: 4px 8px;
   border-radius: 999px;
-  border: 1px solid rgba(255,255,255,0.08);
+  border: 1px solid #7AADFF;
   background: rgba(255,255,255,0.03);
   color: #A1A1AA;
   display: inline-block; 
@@ -667,10 +605,10 @@ a{
 #tarrow{
   color: rgb(228, 125, 14);
 }
-#colorPP, #prsvg{
+/* #colorPP, #prsvg{
   background-color: rgba(14, 228, 128, 0.25);
   color: rgb(14, 228, 128);
-}
+} */
 #parrow{
   color: rgb(14, 228, 128);
 }
@@ -697,22 +635,21 @@ a{
   margin-left: 30px;
   font-size: 14px;
 }
-.svgHome{
-  width: 20px;
-  height: 20px;
+.home-svg{
   border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 12px;
   font-size: 18px;
-  padding:10px
+  width: 40px;
+  height: 40px;
+  padding: 8px;
+  background-color: #7aadff31;
+  color: #7AADFF;
+  /* border: 1px solid #7AADFF; */
 }
-.upperHome{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
+
 #sample{
   transition: .2s;
 }
@@ -805,8 +742,8 @@ a{
   border-radius: 8px;
   margin: 20px 0;
   position: fixed; 
-  top: 70px;
-  width: calc(100% - 40px);
+  top: 30px;
+  width: 100%;
   overflow: hidden;
   z-index: 1000;
   display: flex;
@@ -839,7 +776,10 @@ a{
   cursor: pointer;
 }
 @media (max-width:1100px){  
-  #appJSX, #programJSX{
+  .header-ul{
+    display: none;
+  }
+   #programJSX{
     min-height: 100svh;
     display:flex;
     width:100%;
@@ -896,7 +836,7 @@ a{
     width:75%;
     height:auto;
   }
-  nav{
+  /* nav{
     background-color: rgb(19, 25, 31);;
     display: flex;
     flex-direction: row;
@@ -910,7 +850,7 @@ a{
     padding:5px 0px;
     border-bottom: 1px solid rgba(255,255,255,0.08);
     padding: 10px;
-  }
+  } */
   #navTitle{
     color:#fff;
     padding: 0px;
@@ -922,14 +862,7 @@ a{
     flex-direction: column;
     justify-content: flex-start;
     align-self: stretch;
-  }
-  #buttonDiv{
-    display: flex;
-    flex-direction: column;
-    width: 90%;
-    margin: 20px auto;
-    gap: 20px;
-  }
+    }
   #mediaGrid{
     height: 100%;
   }
@@ -978,25 +911,18 @@ a{
     align-items: center;
     padding-top: 20px;
   }
-  #PPLINK, #git{
+  #git{
     margin: 10px 10px;
   }
-  #PP{
-    height: 65vh;
-    font-size:16px;
-  }
   body{
-    overflow-y: auto;
+    overflow-y: hidden;
     padding-top: 80px  !important;
     padding-bottom: 0 !important;
   }
   #appJSX{
     padding-top: 45px;
   }
-  #copy{
-    font-size:10px;
-    margin-top: 30px;
-  }
+
   #headerList{
     display: none;
   }
@@ -1006,8 +932,7 @@ a{
     width:95%
   }
   .titles{
-    grid-column: 1 / -1;
-    margin: 10px 0 2px;
+    margin: 3px 10px;
   }
   #sample{
     height:75px;
@@ -1044,8 +969,10 @@ a{
     justify-content: flex-start;
     overflow-x: auto;
     overflow-y: hidden;
-    top: 128px; /* sits below header (85px) + nav bar */
-    z-index: 900
+    top: 90px; 
+    z-index: 900;
+    width:100%;
+    border-radius: 0px;
   }
   #internalNavList {
     flex-wrap: nowrap;
@@ -1053,9 +980,7 @@ a{
   #internalNavList li {
     flex: 0 0 auto;
   }
-  /* #internalNav::-webkit-scrollbar {
-    display: none;
-  } */
+
   #internalNav {
     scrollbar-width: none;
   }
@@ -1077,7 +1002,27 @@ a{
 }
 
 
-@media (max-width:600px){
+@media (max-width:740px){
+  .header-links-svg{
+    display: none;
+  }
+  .links, .nav-links{
+    font-size: 10px;
+    margin: 0px;
+    border: 1px solid #7aadff11;
+    border-radius: 10px;
+    padding:5px;
+  }
+  #home-code{
+    background-color: transparent;
+    border: none;
+    border-radius: 0px;
+    padding: 0px;
+    color:#E5E7EB;
+    font-size: 9px;
+    padding: 0px ;
+    margin: 0px;
+  }
   #divEditor {
     height: 35vh;   
     max-height: 35vh;
@@ -1086,14 +1031,7 @@ a{
   #questionProgram{
     margin-top: 45px !important;
   }
- #buttonDiv {
-    display: flex !important;          
-    flex-direction: column !important; 
-    gap: 15px !important;             
-    margin: 20px auto !important;
-    padding: 0 !important;
-    width: 85%;
-  }
+
   .headerLinks, .footerLinks {
     margin: 0px 4px;
     min-width: unset;
@@ -1113,8 +1051,9 @@ a{
     justify-content: flex-start;
     overflow-x: auto;
     overflow-y: hidden;
-    top: 110px;
-    z-index: 900
+    top: 65px;
+    z-index: 900;
+    background: linear-gradient(to right, rgb(24, 32, 41), rgb(75, 100, 128));
   }
   #mediaGrid, #lowerSide, #gridButton{
     display: flex;
@@ -1122,29 +1061,18 @@ a{
     overflow-y: auto;
     min-height: 200px !important;
   }
-  #copy{
-    text-align: center;
-    font-size: 10px;
-  }
   .bQ{
     font-size:12px !important;
   }
   code{
     font-size: 12px;
   }
-  button {
-    margin: 5px 0px;
-    min-width: unset;
-  }
+
   #headerFPP, #headerFPPa{
     font-size: 25px;
     margin:0px;
     padding: 0px;
     text-align: center;
-  }
-  #home2Cover{
-    display: flex;
-    flex-direction: column;
   }
   #home1{
     text-align: center;
@@ -1155,17 +1083,8 @@ a{
     justify-content: center;
     align-items: center;
   }
-  .homeButtons{
-    width:auto;
-  }
   .tutCard{
     min-width: 0;
-  }
-  #PP{
-    font-size: 14px;
-    margin: 0 auto;
-    height:77vh;
-    width:80%;
   }
   #sugDiv{
     width:85%;

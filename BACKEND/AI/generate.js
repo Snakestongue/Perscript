@@ -28,6 +28,7 @@ export let createAdvice =async(req, res)=> {
                             - Prefer hints over long explanations.
                             - If code is almost correct, clearly point out ONLY what needs to change.
                             - If the code is correct completely, say "The code is correct!"
+                            - Do NOT give the correct answer if the current answer is incorrect
                         ` }
                     ]
                 }

@@ -1,15 +1,17 @@
 import {suggestion as SuggestModel} from "./suggestSchema.js";
 let createSuggest =async(req, res)=>{
   try{
-    const {suggestReq} = req.body
-    if(!suggestReq){
+    const {suggestReq, rating, category} = req.body
+    if(!suggestReq || !rating || !category){
       return res.status(400).json({message: "All fields must be filled out!"});
     }
     const newSuggest =await SuggestModel.create({
-      suggest: suggestReq
+      suggest: suggestReq,
+      category: category,
+      rating: rating
     });
     res.status(201).json({
-      message: "Thanks so much for the Suggestion!",
+      message: "Thanks you so much!",
       IDSuggest: {id: newSuggest._id}
     })
   }catch (error){

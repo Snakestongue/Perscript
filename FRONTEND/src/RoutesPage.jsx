@@ -5,7 +5,7 @@ import { useEffect } from "react"
 import App from "./App.tsx";
 import Bug from "./SideFiles/Bug.jsx";
 import PP from "./SideFiles/PP.tsx";
-import Sug from "./SideFiles/Sug.tsx";
+import Sug from "./SideFiles/Sug.jsx";
 import Tut from "./SideFiles/Tut.tsx";
 import Program from "./SideFiles/Program.jsx";
 import GA from "./GA.jsx";
