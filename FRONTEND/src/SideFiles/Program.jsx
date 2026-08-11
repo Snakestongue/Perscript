@@ -22,6 +22,7 @@ function Program(){
   const[vimOn, setVimOn] = useState(false)
   const vimRef = useRef (null)
   const editorRef =useRef(null )
+
   useEffect(() => {
     document.title = "FRC Programming Practice | Live Challenges";
   }, []);
@@ -49,26 +50,28 @@ function Program(){
       selectContent(data.result);
       console.log("good")
     }else{
-      alert("Faileed:" + data.message);
+      console.log("Failed:" + data.message);
+      alert("Sorry there was an error. Please leave a suggestion to fix this.")
     }
     }catch (error){
-      alert("Internal server error.");
+      alert("Sorry there was an error. Please leave a suggestion to fix this.")
       console.log(error.message)
     }finally{
       currentLoad(false);
     }
   }
+
   const generateSubmit= () =>{
     let code = userCode.toLowerCase();
     let checks = selectedProblem.checks[currentLang];
     let results = [];
     for (let check of checks) {
       let passed = true;
-      if (check.type == "includes") {
+      if (check.type == "includes"){
         passed = code.includes(check.value.toLowerCase());
       }
-      if (check.type == "count") {
-        let count = (code.match(new RegExp(check.value, "gi"))||[]).length;
+      if (check.type == "count"){
+        let count = (code.match(new RegExp(check.value, "gi"))||[]).length; /**AI */
         passed = count >= check.min
       }
       results.push({ /**AI */
@@ -99,12 +102,12 @@ function Program(){
     setFeedback('')
     currentSubmit(false)
   }
-  const handleSubmit = () => {
+  const handleSubmit =()=>{
     const results = generateSubmit();
     setCheckR(results);
     setHasRun(true);
   };
-  const toggleVim =() => {
+  const toggleVim =()=>{
     if(!editorRef.current){
       return
     }
@@ -120,6 +123,7 @@ function Program(){
     }
     setVimOn(v =>!v);
   }
+  
   return (
     <div id="overall-program" >
       <div className="[grid-area:header]">
@@ -290,7 +294,7 @@ function Program(){
         max-lg:overflow-hidden
         border-r border-[#7aadff31]
         ">
-          <p className="text-sm font-extrabold tracking-[1.5px] uppercase text-gray-500 !py-2">Language</p>
+          <p className="text-sm font-extrabold tracking-[1.5px] uppercase text-gray-400 !py-2">Language</p>
           <select
             value={currentLang}
             onChange={(e) => newLang(e.target.value)}
@@ -300,19 +304,41 @@ function Program(){
             <option value="python">Python</option>
             <option value="cpp">C++</option>
           </select>
-          <p className="text-sm font-extrabold tracking-[1.5px] uppercase text-gray-500 !py-4">Exercise</p>
+          {/* <p className="text-sm font-extrabold tracking-[1.5px] uppercase text-gray-500 !py-4">Exercise</p> */}
           <div className="
             grid grid-cols-2 gap-2.5
             max-lg:flex max-lg:flex-row
             max-lg:overflow-x-auto max-lg:pb-1
             max-lg:[&::-webkit-scrollbar]:hidden
             max-lg:[scrollbar-width:none]"
-            >{problems.slice(0, 10).map((p) => (
+            >
+              <p className="text-sm font-extrabold tracking-[1.5px] uppercase text-gray-400">Basics</p>
+              <p></p>
+              {problems.slice(0, 4).map((p) => (
               <button
                 className="program-buttons !w-auto whitespace-nowrap flex-none"
                 key={p.id}
                 onClick={() => handleProblemChange({ target:{value: p.id } })}
               >{p.title}</button>
+            ))}
+            <p className="text-sm font-extrabold tracking-[1.5px] uppercase text-gray-400">Easy</p>
+            <p></p>
+            {problems.slice(4, 10).map((p) => (
+              <button
+                className="program-buttons !w-auto whitespace-nowrap flex-none"
+                key={p.id}
+                onClick={() => handleProblemChange({ target:{value: p.id } })}
+              >{p.title}</button>  
+            ))}
+            <p className="text-sm font-extrabold tracking-[1.5px] uppercase text-gray-400">Command Based</p>
+            <p></p>
+            {problems.slice(10, 16).map((p) => (
+              <button
+                className="program-buttons !w-auto whitespace-nowrap flex-none"
+                key={p.id}
+                onClick={() => handleProblemChange({ target:{value: p.id } })}
+              >{p.title}</button>
+              
             ))}
           </div>
         </div>

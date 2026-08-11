@@ -11,8 +11,14 @@ function Tut(){
         <div id="TutMain">
         <Header />
       <Nav />
-      <div id="internalNav">
-        <ul id="internalNavList">
+      <div className="
+        fixed top-[30px] z-[1000] 
+        flex w-full flex-row justify-center 
+        overflow-hidden rounded-[8px] 
+        px-[20px] py-[10px] 
+        my-[20px]
+        bg-transparent backdrop-blur-md">
+        <ul className="flex list-none gap-4 p-0 m-0 whitespace-nowrap">
             <li><a href="#javaStart" className="internalNavLink">Basics</a></li>
             <li><a href="#javaAdvance" className="internalNavLink">Advanced</a></li>
             <li><a href="#generalFRC" className="internalNavLink">General FRC Terms</a></li>

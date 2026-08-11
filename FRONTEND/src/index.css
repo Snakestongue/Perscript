@@ -176,7 +176,7 @@ svg{
   display:grid;
   width:100%;
   grid-template-rows: auto 1fr auto;
-  grid-template-columns:20% 80%;
+  grid-template-columns:20% auto;
   grid-template-areas: 
   "header header"
   "sidebar content"
@@ -618,39 +618,16 @@ a{
   min-height: 22px;
   letter-spacing: 0.5px;
 }
-#internalNav{
-  background: transparent;
-  backdrop-filter: blur(10px);
-  padding: 10px 20px;
-  border-radius: 8px;
-  margin: 20px 0;
-  position: fixed; 
-  top: 30px;
-  width: 100%;
-  overflow: hidden;
-  z-index: 1000;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-}
-
-#internalNavList{
-  display: flex;
-  list-style: none;
-  gap: 15px;
-  padding: 0;
-  margin: 0;
-  white-space: nowrap;
-}
 
 .internalNavLink{
   text-decoration: none;
   font-size: 14px;
   font-weight: 500;
-  padding: 2px 6px;
+  padding: 2px 20px;
   border: 1px solid rgb(42, 52, 68);
   border-radius: 5px;
   display: inline-block;
+  box-sizing: border-box;
 }
 
 .internalNavLink:hover {
