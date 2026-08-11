@@ -8,6 +8,9 @@ import PP from "./SideFiles/PP.tsx";
 import Sug from "./SideFiles/Sug.jsx";
 import Tut from "./SideFiles/Tut.tsx";
 import Program from "./SideFiles/Program.jsx";
+// import Login  from "./SideFiles/Login.jsx";
+import Signup  from "./SideFiles/Signup.jsx";
+
 import GA from "./GA.jsx";
 import TeamModal from "./Team.jsx";
 function RoutesPage(){
@@ -49,6 +52,8 @@ function RoutesPage(){
         <Route path="/PP" element={<PP />} />
         <Route path="/Sug" element={<Sug />} />
         <Route path="/tut" element={<Tut />} />
+        {/* <Route path="/Login" element={<Login />} /> */}
+        <Route path="/register" element={<Signup />} />
         <Route path="/program" element={<Program />} />
       </Routes>
     </BrowserRouter>

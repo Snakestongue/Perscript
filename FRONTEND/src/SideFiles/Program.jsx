@@ -315,6 +315,7 @@ function Program(){
               >{p.title}</button>
             ))}
           </div>
+          <button className="program-buttons flex flex-row justify-center !w-full !mt-4 whitespace-nowrap flex-none">Daily Challenge</button>
         </div>
       <div className="m-0 p-0 w-full [grid-area:footer]">
         <Footer />

@@ -1,11 +1,13 @@
 {
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "cors": "^2.8.6",
     "dotenv": "^17.4.1",
     "express": "^5.2.1",
     "mongoose": "^9.4.1",
     "nodemon": "^3.1.14",
-    "openai": "^6.39.0"
+    "openai": "^6.39.0",
+    "validator": "^13.15.35"
   },
   "name": "backend",
   "version": "1.0.0",
