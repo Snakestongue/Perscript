@@ -13,12 +13,8 @@ function Sug() {
   const [rating, setRating] = useState(0);
   const [loading, setLoading] = useState(false);
   const handleSubmit = async() =>{ 
-    if (!currentSug.trim()){
-      alert("Please fill out textbox!")
-      return;
-    }
     if (rating == 0) {
-      alert("Please rate the website!");
+      alert("Please rate the website.");
       return;
     }
     setLoading(true)
@@ -39,14 +35,14 @@ function Sug() {
 
       const data = await res.json();
       if (res.ok){
-        alert("Suggestion submitted!");
+        alert("Thank you for your suggestion!");
         setSug(""); 
       }else{
-        // console.log("Error " +data.message)
-        alert("Error! Try again later!")
+        console.log("Error " + data.message)
+        alert("Sorry there was an error. Please leave a suggestion to fix this.")
       }
     }catch (error){
-      alert("Error! Try again later.");
+      alert("Sorry there was an error. Please leave a suggestion to fix this.")
       console.log(error)
     }finally{
       setLoading(false);
