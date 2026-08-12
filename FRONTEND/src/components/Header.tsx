@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation  } from "react-router-dom";
+ 
 
 const primaryLinks = [
   { to: "/program", label: "Practice" },
@@ -11,10 +12,10 @@ const primaryLinks = [
 const menuContent = [
   {
     eyebrow: "Practice workspace",
-    title: "Write, run, and refine robot code",
+    title: "Write, run, and fix robot code",
     items: [
       { title: "Basics", description: "Start with constants, objects, methods, and constructors.", to: "/program#lesson-basics" },
-      { title: "Core patterns", description: "Practice PID, bindings, and complete robot subsystems.", to: "/program#lesson-core-patterns" },
+      { title: "Core patterns", description: "Practice PID, bindings, and basic robot subsystems.", to: "/program#lesson-core-patterns" },
       { title: "Command based", description: "Build commands, triggers, and command-based robot flows.", to: "/program#lesson-command-based" },
     ],
   },
@@ -76,11 +77,21 @@ function Header() {
 
   return (
     <header className="site-header">
-      <a className="skip-link" href="#main-content">Skip to content</a>
+      {/* <a className="skip-link" href="#main-content">Skip to content</a> */}
       <div className="header-inner">
         <Link to="/" className="brand" aria-label="FRC Programming Practice home">
-          <span className="brand-mark" aria-hidden="true">FRC</span>
-          <span className="brand-name">Programming Practice</span>
+          {/* <span className="brand-mark" aria-hidden="true">FRC</span> */}
+          <span className="brand-name text-[25px] 
+            font-bold 
+            !text-lg
+            tracking-[3px]  
+            uppercase text-white
+            transition duration-200 
+            underline decoration-dashed decoration-[#2a3444] 
+            underline-offset-[6px] 
+            hover:decoration-[#fff] 
+            hover:-translate-y-[3px] 
+            max-md:text-[20px]"><span className="text-[#7AADFF]">FRC</span> Programming Practice</span>
         </Link>
 
         <div
@@ -101,7 +112,8 @@ function Header() {
               transition={{ duration: 0.14, ease: "easeOut" }}
             />
             {primaryLinks.map((item, index) => (
-              <button
+              <Link
+                to={item.to}
                 key={item.to}
                 type="button"
                 className={activeIndex === index ? "site-nav-link active" : "site-nav-link"}
@@ -112,7 +124,7 @@ function Header() {
                 onClick={() => showMenu(index)}
               >
                 <span className="site-nav-label">{item.label}</span>
-              </button>
+              </Link>
             ))}
           </nav>
 
@@ -140,11 +152,11 @@ function Header() {
                     >
                       <div className="nav-mega-panel-link">
                         <div className="nav-mega-heading">
-                          <span>{menuContent[menuIndex].eyebrow}</span>
-                          <strong>{menuContent[menuIndex].title}</strong>
+                          <span className="!tracking-tighter">{menuContent[menuIndex]!.eyebrow}</span>
+                          <strong>{menuContent[menuIndex]!.title}</strong>
                         </div>
                         <div className="nav-mega-items">
-                          {menuContent[menuIndex].items.map((item) => (
+                          {menuContent[menuIndex]!.items.map((item) => (
                             <Link
                               key={item.title}
                               to={item.to}
@@ -156,9 +168,9 @@ function Header() {
                         </div>
                         <Link
                           className="nav-mega-cta"
-                          to={primaryLinks[menuIndex].to}
+                          to={primaryLinks[menuIndex]!.to}
                         >
-                          Open {primaryLinks[menuIndex].label.toLowerCase()} <span aria-hidden="true">→</span>
+                          Open {primaryLinks[menuIndex]!.label.toLowerCase()} <span aria-hidden="true">→</span>
                         </Link>
                       </div>
                     </motion.div>

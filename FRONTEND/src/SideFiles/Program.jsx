@@ -5,6 +5,7 @@ import { useLocation } from "react-router-dom";
 import problems from "../JSON/problems.json";
 import Footer from "../components/Footer.js";
 
+
 const exerciseGroups = [
   { id: "lesson-basics", label: "Basics", problems: problems.slice(0, 4) },
   { id: "lesson-core-patterns", label: "Core patterns", problems: problems.slice(4, 10) },
@@ -23,35 +24,36 @@ function defineEditorTheme(monaco) {
     base: "vs-dark",
     inherit: true,
     rules: [
-      { token: "comment", foreground: "919196", fontStyle: "italic" },
-      { token: "keyword", foreground: "F5F5F5" },
-      { token: "keyword.control", foreground: "F5F5F5" },
-      { token: "type", foreground: "D4D4D7" },
-      { token: "type.identifier", foreground: "D4D4D7" },
+      { token: "comment", foreground: "77777F", fontStyle: "italic" },
+      { token: "keyword", foreground: "A8CFAF" },
+      { token: "keyword.control", foreground: "A8CFAF" },
+      { token: "type", foreground: "C5B9D9" },
+      { token: "type.identifier", foreground: "C5B9D9" },
       { token: "identifier", foreground: "E4E4E7" },
-      { token: "function", foreground: "EDEDEF" },
-      { token: "string", foreground: "BDBDC2" },
-      { token: "string.escape", foreground: "D4D4D7" },
-      { token: "number", foreground: "C8C8CC" },
-      { token: "operator", foreground: "D4D4D7" },
-      { token: "annotation", foreground: "E4E4E7" },
-      { token: "delimiter", foreground: "BDBDC2" },
+      { token: "function", foreground: "B8CADB" },
+      { token: "string", foreground: "D6BFC7" },
+      { token: "string.escape", foreground: "E0C99A" },
+      { token: "number", foreground: "F0B35A" },
+      { token: "operator", foreground: "C8C8CD" },
+      { token: "annotation", foreground: "AFC9B3" },
+      { token: "delimiter", foreground: "AFAFB6" },
     ],
     colors: {
       "editor.background": "#0B0B0D",
       "editor.foreground": "#EDEDEF",
-      "editorCursor.foreground": "#F4F4F5",
-      "editor.lineHighlightBackground": "#161618",
+      "editorCursor.foreground": "#D8E8DA",
+      "editor.lineHighlightBackground": "#141416",
       "editor.selectionBackground": "#FFFFFF24",
       "editor.selectionHighlightBackground": "#FFFFFF12",
-      "editorLineNumber.foreground": "#85858A",
-      "editorLineNumber.activeForeground": "#C8C8CC",
-      "editorBracketHighlight.foreground1": "#FAFAFA",
-      "editorBracketHighlight.foreground2": "#D4D4D7",
-      "editorBracketHighlight.foreground3": "#BDBDC2",
-      "editorBracketHighlight.foreground4": "#A8A8AD",
-      "editorBracketHighlight.foreground5": "#96969C",
-      "editorBracketHighlight.foreground6": "#85858A",
+      "editorLineNumber.foreground": "#707077",
+      //AI did this part of colors
+      "editorLineNumber.activeForeground": "#B8B8BE",
+      "editorBracketHighlight.foreground1": "#D0B5F2",
+      "editorBracketHighlight.foreground2": "#C3A5E8",
+      "editorBracketHighlight.foreground3": "#B595D8",
+      "editorBracketHighlight.foreground4": "#A584C8",
+      "editorBracketHighlight.foreground5": "#9675B8",
+      "editorBracketHighlight.foreground6": "#8768A8",
     },
   });
 }
@@ -91,7 +93,6 @@ function Program() {
     setCheckResults([]);
     setAiContent("");
   }, [currentLang, selectedProblem]);
-
   useEffect(() => () => vimRef.current?.dispose(), []);
 
   function runChecks() {
@@ -288,7 +289,7 @@ function Program() {
               Show answer
             </button>
             <button className="action-buttons secondary-action" type="button" onClick={submitToAI} disabled={aiLoading}>
-              {aiLoading ? "Thinking…" : "Ask AI Assist"}
+              {aiLoading ? "Thinking…" : "Ask AI"}
             </button>
             <button className="action-buttons primary-action" id="run-submit" type="button" onClick={runChecks}>
               Run checks

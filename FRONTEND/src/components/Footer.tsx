@@ -4,7 +4,7 @@ function Footer() {
   return (
     <footer className="site-footer">
       <div className="footer-inner">
-        <p>FRC Programming Practice</p>
+        <p className="text-[#fff]">FRC Programming Practice</p>
         <nav aria-label="Footer navigation">
           <Link to="/PP">Privacy</Link>
           <a
@@ -15,7 +15,7 @@ function Footer() {
             GitHub
           </a>
         </nav>
-        <p className="footer-credit">Built by Snakestongue.</p>
+        <p className="footer-credit">Built by Snakestongue. UI by Zw96042.</p>
       </div>
     </footer>
   );

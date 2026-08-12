@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from "motion/react";
-import { FormEvent, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import type { SubmitEvent } from "react";
 import Spinner from "./Spinner.js";
 
 type FormState = "idle" | "loading" | "success" | "error";
@@ -77,7 +78,7 @@ function FeedbackPopover() {
     if (closeTimerRef.current) window.clearTimeout(closeTimerRef.current);
   }, []);
 
-  async function submitFeedback(event: FormEvent<HTMLFormElement>) {
+  async function submitFeedback(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!feedback.trim() || rating === 0 || formState === "loading") return;
 
@@ -190,7 +191,7 @@ function FeedbackPopover() {
                     value={feedback}
                     onChange={(event) => {
                       setFeedback(event.target.value);
-                      if (formState === "error") setFormState("idle");
+                      // if (formState == "error") setFormState("idle");
                     }}
                     aria-label="Feedback"
                     placeholder="Tell us what should be better…"

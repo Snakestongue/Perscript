@@ -5,8 +5,8 @@ import { MotionConfig } from "motion/react";
 import App from "./App.tsx";
 import GA from "./GA.jsx";
 import TeamModal from "./Team.jsx";
-import Header from "./components/Header.js";
-import Nav from "./components/Nav.js";
+import Header from "./components/Header.tsx";
+import Nav from "./components/Nav.jsx";
 
 const Bug = lazy(() => import("./SideFiles/Bug.jsx"));
 const PP = lazy(() => import("./SideFiles/PP.tsx"));

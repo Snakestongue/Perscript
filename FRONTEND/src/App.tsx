@@ -2,13 +2,14 @@ import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import Footer from "./components/Footer.js";
 import FeedbackPopover from "./components/FeedbackPopover.js";
+import Header from "./components/Header.js";
 import SyntaxCode from "./components/SyntaxCode.js";
 
 const tracks = [
   {
     to: "/program",
     title: "Programming practice",
-    description: "Write robot code in the browser and run focused checks as you work.",
+    description: "Write robot code in the browser and run checks as you work.",
     action: "Start practicing",
   },
   {
@@ -20,7 +21,7 @@ const tracks = [
   {
     to: "/tut",
     title: "Reference library",
-    description: "Review programming fundamentals, WPILib patterns, motors, sensors, and commands.",
+    description: "Review programming fundamentals, motors, sensors, and commands.",
     action: "Browse reference",
   },
 ];
@@ -35,28 +36,34 @@ function App() {
       <main id="main-content" className="home-main">
         <section className="hero" aria-labelledby="hero-title">
           <div className="hero-copy">
-            <h1 id="hero-title">
-              Learn robot code.
+            <h1 id="hero-title">Learn robot code.
               <span>Practice until it clicks.</span>
             </h1>
             <p className="hero-summary">
-              Work through Java, C++, and Python exercises made for the code you
-              will use on a robot.
+              Work on Java, C++, or Python exercises made for the code you will use on a robot.
             </p>
             <div className="hero-actions">
-              <Link className="button button-primary" to="/program">
-                Start practicing
-              </Link>
-              <Link className="text-link" to="/tut">
-                Browse the reference <span aria-hidden="true">↗</span>
-              </Link>
+              <Link className="
+              button button-primary 
+              !transition-opacity 
+              !duration-140 ease-in-out 
+              hover:opacity-80" to="/program">Start practicing</Link>
+              <Link className="text-link" to="/tut">Browse the reference<span aria-hidden="true">↗</span></Link>
             </div>
           </div>
 
           <div className="code-window" aria-label="Example FRC Java code">
+            
             <div className="code-window-bar">
-              <span className="code-file">Intake.java</span>
-              <span className="code-language">Java</span>
+              <div className="code-window-mac">
+                <div className="dot bg-[#e0605a]"></div>
+                <div className="dot bg-[#e0ab5a]"></div>
+                <div className="dot bg-[#5ac491]"></div>
+              </div>
+              <div className="code-window-right">
+                <span className="code-file">Intake.java</span>
+                <span className="code-language">Java</span>
+              </div>
             </div>
             <div className="code-window-body">
               <div className="code-lines" aria-hidden="true">
@@ -87,7 +94,7 @@ public class DriveSubsystem {
         <section className="tracks-section" aria-labelledby="tracks-title">
           <div className="section-heading">
             <h2 id="tracks-title">Choose where to start</h2>
-            <p>Each path is short enough to use during build season.</p>
+            <p>Each path is short enough to teach before build season.</p>
           </div>
 
           <div className="track-list">
