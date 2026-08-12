@@ -2825,31 +2825,36 @@ pre code {
     grid-template-columns: 1fr;
   }
 
+
+
   .exercise-rail {
-    padding: 1rem 0;
+  min-width: 0;
+  padding: 1rem 0;
+  border-inline-end: 0;
+  border-block-end: 1px solid var(--line);
+}
+
+.rail-language {
+  width: min(17rem, 100%);
+  margin-inline: 1.25rem;
+  border: 0;
+  justify-self: center;
+}
+
+.exercise-nav {
     overflow-x: auto;
-    border-inline-end: 0;
-    border-block-end: 1px solid var(--line);
     scrollbar-width: none;
-  }
-
-  .exercise-rail::-webkit-scrollbar {
-    display: none;
-  }
-
-  .rail-language {
-    width: min(17rem, 100%);
-    border: 0;
-  }
-
-  .exercise-nav {
-    width: max-content;
     display: flex;
     gap: 1.5rem;
     margin-block-start: 1rem;
   }
 
+  .exercise-nav::-webkit-scrollbar {
+    display: none;
+  }
+
   .exercise-nav section {
+    flex: 0 0 auto;
     min-width: max-content;
     padding: 0;
     border: 0;
@@ -2876,7 +2881,7 @@ pre code {
     grid-template-columns: minmax(0, 1fr);
     column-gap: 0;
   }
-
+  
   #internalNav {
     inset-block-start: calc(var(--header-height) + 3.5rem);
     max-height: none;
@@ -3017,7 +3022,7 @@ pre code {
   }
 
   .footer-credit {
-    border: 1px solid red;
+    /* border: 1px solid red; */
     justify-self: start;
     width: 100% !important;
     grid-column: 1 / -1;

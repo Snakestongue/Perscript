@@ -36,8 +36,8 @@ function App() {
       <main id="main-content" className="home-main">
         <section className="hero" aria-labelledby="hero-title">
           <div className="hero-copy">
-            <h1 id="hero-title">Learn robot code.
-              <span>Practice until it clicks.</span>
+            <h1 id="hero-title">Learn FRC coding.
+              <span className="mt-6">Practice until it clicks.</span>
             </h1>
             <p className="hero-summary">
               Work on Java, C++, or Python exercises made for the code you will use on a robot.

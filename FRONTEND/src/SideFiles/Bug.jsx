@@ -23,14 +23,14 @@ function Bug() {
 
     return () => cancelAnimationFrame(frame);
   }, [location.hash, location.key]);
-
+  console.log(problems.length, problems.map(p => ({ id: p.id, hasCode: !!p.sampleCode })));
   return (
     <div className="site-page">
       <main id="main-content" className="debug-page">
         <header className="page-intro debug-intro">
           <p className="eyebrow">Debugging practice</p>
           <h1>Find the bug before the robot does.</h1>
-          <p>Read each snippet, choose the root cause, and use the explanation to sharpen your review habits.</p>
+          <p>Read each snippet, choose the root cause, and use the explanation to sharpen your skills.</p>
         </header>
 
         <div id="f3">
@@ -44,7 +44,8 @@ function Bug() {
                 <h2 className="bugLang">{language}</h2>
               </div>
               <div className="debug-question-grid">
-                {problems.slice(languageIndex * 4, languageIndex * 4 + 4).map((problem) => {
+                
+                {problems.slice(languageIndex * 8, languageIndex * 8 + 8).map((problem) => {
                   const choices = [problem.choice1, problem.choice2, problem.choice3];
                   const userChoice = selectedChoices[problem.id];
                   const isCorrect = userChoice === problem.CC;

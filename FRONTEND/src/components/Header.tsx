@@ -1,61 +1,27 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
-import { Link, useLocation  } from "react-router-dom";
- 
-
-const primaryLinks = [
-  { to: "/program", label: "Practice" },
-  { to: "/debug", label: "Debug" },
-  { to: "/tut", label: "Reference" },
-];
-
-const menuContent = [
-  {
-    eyebrow: "Practice workspace",
-    title: "Write, run, and fix robot code",
-    items: [
-      { title: "Basics", description: "Start with constants, objects, methods, and constructors.", to: "/program#lesson-basics" },
-      { title: "Core patterns", description: "Practice PID, bindings, and basic robot subsystems.", to: "/program#lesson-core-patterns" },
-      { title: "Command based", description: "Build commands, triggers, and command-based robot flows.", to: "/program#lesson-command-based" },
-    ],
-  },
-  {
-    eyebrow: "Debugging drills",
-    title: "Learn to spot failures before match day",
-    items: [
-      { title: "Java debugging", description: "Review command-based and object-oriented Java mistakes.", to: "/debug#debug-java" },
-      { title: "Python debugging", description: "Find syntax and control-flow problems in Python snippets.", to: "/debug#debug-python" },
-      { title: "C++ debugging", description: "Practice diagnosing common robot-code failures in C++.", to: "/debug#debug-cpp" },
-    ],
-  },
-  {
-    eyebrow: "Reference library",
-    title: "Keep the patterns you need within reach",
-    items: [
-      { title: "Foundations", description: "Language basics, classes, and common FRC terminology.", to: "/tut" },
-      { title: "Hardware", description: "Motor controllers, sensors, and physical inputs.", to: "/tut/hardware" },
-      { title: "Robot structure", description: "RobotContainer, commands, constants, and dashboards.", to: "/tut/robot-structure" },
-    ],
-  },
-];
+import { Link, useLocation } from "react-router-dom";
 
 const menuVariants = {
   initial: (direction: number) => ({ x: `${110 * direction}%`, opacity: 0 }),
   active: { x: "0%", opacity: 1 },
   exit: (direction: number) => ({ x: `${-110 * direction}%`, opacity: 0 }),
 };
-
 function Header() {
   const location = useLocation();
-  const activeIndex = primaryLinks.findIndex((item) =>
-    item.to === "/tut" ? location.pathname.startsWith("/tut") : item.to === location.pathname
-  );
+
+  // 0=Practice,1 =Debug, 2 =Reference, -1=none active
+  const activeIndex =
+    location.pathname === "/program" ? 0 :
+    location.pathname === "/debug" ? 1 :
+    location.pathname.startsWith("/tut") ? 2 :
+    -1;
+
   const [menuIndex, setMenuIndex] = useState<number | null>(null);
   const [direction, setDirection] = useState(1);
   const lastMenuIndex = useRef(activeIndex >= 0 ? activeIndex : 0);
   const pillIndex = menuIndex ?? (activeIndex >= 0 ? activeIndex : lastMenuIndex.current);
   const pillVisible = menuIndex !== null || activeIndex >= 0;
-
   function showMenu(index: number) {
     setDirection(index >= lastMenuIndex.current ? 1 : -1);
     lastMenuIndex.current = index;
@@ -66,7 +32,6 @@ function Header() {
     function closeMenu(event: KeyboardEvent) {
       if (event.key === "Escape") setMenuIndex(null);
     }
-
     window.addEventListener("keydown", closeMenu);
     return () => window.removeEventListener("keydown", closeMenu);
   }, []);
@@ -75,23 +40,34 @@ function Header() {
     setMenuIndex(null);
   }, [location.key]);
 
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+  function navTriggerProps(index: number) {
+    return {
+      className: activeIndex === index ? "site-nav-link active" : "site-nav-link",
+      "aria-expanded": menuIndex === index,
+      "aria-controls": "primary-nav-panel",
+      onPointerEnter: () => showMenu(index),
+      onFocus: () => showMenu(index),
+      onClick: () => showMenu(index),
+    };
+  }
+
   return (
     <header className="site-header">
-      {/* <a className="skip-link" href="#main-content">Skip to content</a> */}
       <div className="header-inner">
-        <Link to="/" className="brand" aria-label="FRC Programming Practice home">
-          {/* <span className="brand-mark" aria-hidden="true">FRC</span> */}
-          <span className="brand-name text-[25px] 
-            font-bold 
-            !text-lg
-            tracking-[3px]  
-            uppercase text-white
-            transition duration-200 
-            underline decoration-dashed decoration-[#2a3444] 
-            underline-offset-[6px] 
-            hover:decoration-[#fff] 
-            hover:-translate-y-[3px] 
-            max-md:text-[20px]"><span className="text-[#7AADFF]">FRC</span> Programming Practice</span>
+        <Link
+          to="/"
+          className="justify-self-start inline-flex items-center gap-[0.5rem] min-h-11 font-bold leading-none tracking-[-0.03em] transition-all duration-200 ease-in max-lg:justify-self-center"
+          aria-label="FRC Programming Practice home"
+        >
+          <span className="brand-name text-[25px] font-bold !text-lg tracking-[3px] uppercase text-white transition duration-200 underline decoration-dashed decoration-[#2a3444] underline-offset-[6px] hover:decoration-[#fff] hover:-translate-y-[3px] max-md:text-[20px]">
+            <span className="text-[#7AADFF]">FRC</span> Programming Practice
+          </span>
         </Link>
 
         <div
@@ -111,21 +87,36 @@ function Header() {
               }}
               transition={{ duration: 0.14, ease: "easeOut" }}
             />
-            {primaryLinks.map((item, index) => (
-              <Link
-                to={item.to}
-                key={item.to}
-                type="button"
-                className={activeIndex === index ? "site-nav-link active" : "site-nav-link"}
-                aria-expanded={menuIndex === index}
-                aria-controls="primary-nav-panel"
-                onPointerEnter={() => showMenu(index)}
-                onFocus={() => showMenu(index)}
-                onClick={() => showMenu(index)}
-              >
-                <span className="site-nav-label">{item.label}</span>
+
+            {isMobile ? (
+              <button type="button" {...navTriggerProps(0)}>
+                <span className="site-nav-label">Practice</span>
+              </button>
+            ) : (
+              <Link to="/program" {...navTriggerProps(0)}>
+                <span className="site-nav-label">Practice</span>
               </Link>
-            ))}
+            )}
+
+            {isMobile ? (
+              <button type="button" {...navTriggerProps(1)}>
+                <span className="site-nav-label">Debug</span>
+              </button>
+            ) : (
+              <Link to="/debug" {...navTriggerProps(1)}>
+                <span className="site-nav-label">Debug</span>
+              </Link>
+            )}
+
+            {isMobile ? (
+              <button type="button" {...navTriggerProps(2)}>
+                <span className="site-nav-label">Reference</span>
+              </button>
+            ) : (
+              <Link to="/tut" {...navTriggerProps(2)}>
+                <span className="site-nav-label">Reference</span>
+              </Link>
+            )}
           </nav>
 
           <AnimatePresence>
@@ -140,55 +131,122 @@ function Header() {
               >
                 <div className="nav-mega-panel">
                   <AnimatePresence initial={false} mode="popLayout" custom={direction}>
-                    <motion.div
-                      className="nav-mega-content"
-                      key={menuIndex}
-                      custom={direction}
-                      variants={menuVariants}
-                      initial="initial"
-                      animate="active"
-                      exit="exit"
-                      transition={{ type: "spring", duration: 0.3, bounce: 0 }}
-                    >
-                      <div className="nav-mega-panel-link">
-                        <div className="nav-mega-heading">
-                          <span className="!tracking-tighter">{menuContent[menuIndex]!.eyebrow}</span>
-                          <strong>{menuContent[menuIndex]!.title}</strong>
-                        </div>
-                        <div className="nav-mega-items">
-                          {menuContent[menuIndex]!.items.map((item) => (
-                            <Link
-                              key={item.title}
-                              to={item.to}
-                            >
-                              <strong>{item.title}</strong>
-                              <span>{item.description}</span>
+                    {menuIndex === 0 ? (
+                      <motion.div
+                        className="nav-mega-content"
+                        key={0}
+                        custom={direction}
+                        variants={menuVariants}
+                        initial="initial"
+                        animate="active"
+                        exit="exit"
+                        transition={{ type: "spring", duration: 0.3, bounce: 0 }}
+                      >
+                        <div className="nav-mega-panel-link">
+                          <div className="nav-mega-heading">
+                            <span className="!tracking-tighter">Practice workspace</span>
+                            <strong>Write, run, and fix robot code</strong>
+                          </div>
+                          <div className="nav-mega-items">
+                            <Link to="/program#lesson-basics">
+                              <strong>Basics</strong>
+                              <span>Start with constants, objects, methods, and constructors.</span>
                             </Link>
-                          ))}
+                            <Link to="/program#lesson-core-patterns">
+                              <strong>Core patterns</strong>
+                              <span>Practice PID, bindings, and basic robot subsystems.</span>
+                            </Link>
+                            <Link to="/program#lesson-command-based">
+                              <strong>Command based</strong>
+                              <span>Build commands, triggers, and command-based robot flows.</span>
+                            </Link>
+                          </div>
+                          <Link className="nav-mega-cta" to="/program">
+                            Open practice <span aria-hidden="true">→</span>
+                          </Link>
                         </div>
-                        <Link
-                          className="nav-mega-cta"
-                          to={primaryLinks[menuIndex]!.to}
-                        >
-                          Open {primaryLinks[menuIndex]!.label.toLowerCase()} <span aria-hidden="true">→</span>
-                        </Link>
-                      </div>
-                    </motion.div>
+                      </motion.div>
+                    ) : null}
+
+                    {menuIndex === 1 ? (
+                      <motion.div
+                        className="nav-mega-content"
+                        key={1}
+                        custom={direction}
+                        variants={menuVariants}
+                        initial="initial"
+                        animate="active"
+                        exit="exit"
+                        transition={{ type: "spring", duration: 0.3, bounce: 0 }}
+                      >
+                        <div className="nav-mega-panel-link">
+                          <div className="nav-mega-heading">
+                            <span className="!tracking-tighter">Debugging drills</span>
+                            <strong>Learn to spot failures before match day</strong>
+                          </div>
+                          <div className="nav-mega-items">
+                            <Link to="/debug#debug-java">
+                              <strong>Java debugging</strong>
+                              <span>Review command-based and object-oriented Java mistakes.</span>
+                            </Link>
+                            <Link to="/debug#debug-python">
+                              <strong>Python debugging</strong>
+                              <span>Find syntax and control-flow problems in Python snippets.</span>
+                            </Link>
+                            <Link to="/debug#debug-cpp">
+                              <strong>C++ debugging</strong>
+                              <span>Practice diagnosing common robot-code failures in C++.</span>
+                            </Link>
+                          </div>
+                          <Link className="nav-mega-cta" to="/debug">
+                            Open debug <span aria-hidden="true">→</span>
+                          </Link>
+                        </div>
+                      </motion.div>
+                    ) : null}
+
+                    {menuIndex === 2 ? (
+                      <motion.div
+                        className="nav-mega-content"
+                        key={2}
+                        custom={direction}
+                        variants={menuVariants}
+                        initial="initial"
+                        animate="active"
+                        exit="exit"
+                        transition={{ type: "spring", duration: 0.3, bounce: 0 }}
+                      >
+                        <div className="nav-mega-panel-link">
+                          <div className="nav-mega-heading">
+                            <span className="!tracking-tighter">Reference library</span>
+                            <strong>Keep the patterns you need within reach</strong>
+                          </div>
+                          <div className="nav-mega-items">
+                            <Link to="/tut">
+                              <strong>Foundations</strong>
+                              <span>Language basics, classes, and common FRC terminology.</span>
+                            </Link>
+                            <Link to="/tut/hardware">
+                              <strong>Hardware</strong>
+                              <span>Motor controllers, sensors, and physical inputs.</span>
+                            </Link>
+                            <Link to="/tut/robot-structure">
+                              <strong>Robot structure</strong>
+                              <span>RobotContainer, commands, constants, and dashboards.</span>
+                            </Link>
+                          </div>
+                          <Link className="nav-mega-cta" to="/tut">
+                            Open reference <span aria-hidden="true">→</span>
+                          </Link>
+                        </div>
+                      </motion.div>
+                    ) : null}
                   </AnimatePresence>
                 </div>
               </motion.div>
             ) : null}
           </AnimatePresence>
         </div>
-
-        <a
-          className="header-github"
-          href="https://github.com/Snakestongue/FRC-Programming-Practice"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          GitHub <span aria-hidden="true">↗</span>
-        </a>
       </div>
     </header>
   );

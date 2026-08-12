@@ -15,7 +15,7 @@ function Footer() {
             GitHub
           </a>
         </nav>
-        <p className="footer-credit">Built by Snakestongue. UI by Zw96042.</p>
+        <p className="footer-credit">Built by Snakestongue · UI by Zw96042 & Snakestongue</p>
       </div>
     </footer>
   );

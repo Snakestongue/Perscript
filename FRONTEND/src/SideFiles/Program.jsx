@@ -170,13 +170,13 @@ function Program() {
       <main id="main-content" className="practice-shell">
         <aside className="exercise-rail" aria-label="Exercise selection">
           <fieldset className="rail-language">
-            <legend>Language</legend>
+            <legend className="max-lg:!text-center">Language</legend>
             <div className="language-switch">
               <span
                 aria-hidden="true"
                 className="language-indicator"
                 style={{
-                  borderRadius: 999,
+                  borderRadius: 1000,
                   left: languagePositions[languages.findIndex(({ value }) => value === currentLang)],
                 }}
               />
@@ -202,7 +202,7 @@ function Program() {
           </fieldset>
 
           <nav
-            className="exercise-nav"
+            className="exercise-nav media-moveable"
             aria-label="Exercises"
           >
             {exerciseGroups.map((group) => (
@@ -215,7 +215,7 @@ function Program() {
                   )),
                 }}
               >
-                <h2>{group.label}</h2>
+                <h2 className="max-lg:hidden">{group.label}</h2>
                 <div>
                   {group.problems.map((problem) => (
                     <button
@@ -288,7 +288,7 @@ function Program() {
             >
               Show answer
             </button>
-            <button className="action-buttons secondary-action" type="button" onClick={submitToAI} disabled={aiLoading}>
+            <button className="action-buttons xl:justify-self-end" type="button" onClick={submitToAI} disabled={aiLoading}>
               {aiLoading ? "Thinking…" : "Ask AI"}
             </button>
             <button className="action-buttons primary-action" id="run-submit" type="button" onClick={runChecks}>
