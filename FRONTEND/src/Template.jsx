@@ -32,4 +32,4 @@ function Template(){
     
   );
 }
-export default App;
+export default Template;
