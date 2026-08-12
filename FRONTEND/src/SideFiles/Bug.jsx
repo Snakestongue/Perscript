@@ -1,71 +1,97 @@
-import {useState, useEffect} from 'react'
-import problems from '../JSON/debugProblems.json'
-import {Link } from "react-router-dom"
-import Header from "../components/Header.js";
-import Nav from "../components/Nav.js";
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import problems from "../JSON/debugProblems.json";
 import Footer from "../components/Footer.js";
+import SyntaxCode from "../components/SyntaxCode.js";
 
-function Bug(){
-  const [selectedChoices, setSelectedChoices] = useState({})
+const languages = ["Java", "Python", "C++"];
+
+function Bug() {
+  const location = useLocation();
+  const [selectedChoices, setSelectedChoices] = useState({});
+
   useEffect(() => {
-      document.title = "FRC Programming Practice | Debugging Practice";
-    }, []);
-  return(
-  <div id="mainDivBug">
-      <Header />
-      <Nav />
-    <div className="bugLangDiv">
+    document.title = "FRC Programming Practice | Debugging Practice";
+  }, []);
+
+  useEffect(() => {
+    if (!location.hash) return;
+
+    const frame = requestAnimationFrame(() => {
+      document.getElementById(location.hash.slice(1))?.scrollIntoView({ block: "start" });
+    });
+
+    return () => cancelAnimationFrame(frame);
+  }, [location.hash, location.key]);
+
+  return (
+    <div className="site-page">
+      <main id="main-content" className="debug-page">
+        <header className="page-intro debug-intro">
+          <p className="eyebrow">Debugging practice</p>
+          <h1>Find the bug before the robot does.</h1>
+          <p>Read each snippet, choose the root cause, and use the explanation to sharpen your review habits.</p>
+        </header>
+
+        <div id="f3">
+          {languages.map((language, languageIndex) => (
+            <section
+              id={`debug-${language === "C++" ? "cpp" : language.toLowerCase()}`}
+              className="debug-language-group"
+              key={language}
+            >
+              <div className="bugLangDiv">
+                <h2 className="bugLang">{language}</h2>
+              </div>
+              <div className="debug-question-grid">
+                {problems.slice(languageIndex * 4, languageIndex * 4 + 4).map((problem) => {
+                  const choices = [problem.choice1, problem.choice2, problem.choice3];
+                  const userChoice = selectedChoices[problem.id];
+                  const isCorrect = userChoice === problem.CC;
+
+                  return <article className="bQ" key={problem.id}>
+                  <div className="bug-prompt">
+                    <h2>{problem.question}</h2>
+                    <pre id={`sample-${problem.id}`}><SyntaxCode code={problem.sampleCode} /></pre>
+                  </div>
+                  <fieldset>
+                    <legend className="sr-only">Choose the cause of the bug</legend>
+                    {choices.map((choice, choiceIndex) => (
+                      <label className="bug-labels" key={choiceIndex}>
+                        <input
+                          type="radio"
+                          name={`problem-${problem.id}`}
+                          value={choice}
+                          checked={userChoice === choice}
+                          onChange={(event) => setSelectedChoices({
+                            ...selectedChoices,
+                            [problem.id]: event.target.value,
+                          })}
+                        />
+                        <span>{choice}</span>
+                      </label>
+                    ))}
+                  </fieldset>
+                  <div className="bug-feedback-slot" aria-live="polite" aria-atomic="true">
+                    <p
+                      className={`bug-feedback ${userChoice ? (isCorrect ? "correctFeedback" : "incorrectFeedback") : "is-empty"}`}
+                      aria-hidden={!userChoice}
+                    >
+                      <strong>{isCorrect ? "Correct." : "Not quite."}</strong>{" "}
+                      {!isCorrect && problem.whyCorrect}
+                    </p>
+                  </div>
+                  </article>;
+                })}
+              </div>
+            </section>
+          ))}
+        </div>
+      </main>
+
+      <Footer />
     </div>
-    <div id="f3">  
-      {problems.map((p, index)=>{
-        let languages = ["Java", "Python", "C++"];
-        let lang = languages[Math.floor(index / 4) % languages.length];
-        let choices = [p.choice1, p.choice2, p.choice3]
-        let userChoice = selectedChoices[p.id]
-        let feedbackText = ""
-        let feedbackColor = "";
-        if (userChoice){
-          if (userChoice === p.CC){
-            feedbackText = "Correct!"
-            feedbackColor = "green"
-          }else{
-            feedbackText = `Incorrect! ${p.whyCorrect}`
-            feedbackColor = "red"
-          }
-        }
-        return(
-          <> 
-          {index %4 ==0 &&(
-            <div className="bugLangDiv">
-              <p className="bugLang">{lang}</p>
-            </div>
-          )}
-          
-          <div className="bQ" key={p.id}>
-            <p>{p.question}</p>
-            <pre id="sample">{p.sampleCode}</pre>{/** keeps format same (\n)*/}
-            {choices.map((choice, index)=>(
-            <label className="bug-labels" key={index} style={{display: "block"}}>
-              <input
-              type="radio"
-              name={`problem-${p.id}`}
-              value={choice}
-              checked={selectedChoices[p.id]== choice}
-              onChange={(r)=>setSelectedChoices({...selectedChoices, [p.id]: r.target.value,})}//this line was AI
-              />
-              {choice}
-            </label>
-            ))}
-            {userChoice && (<p className={userChoice == p.CC? "correctFeedback" : "incorrectFeedback"}>{feedbackText}</p>)}
-          </div>
-          </>
-          )
-      })}
-    </div>
-    
-    <Footer />
-  </div>
-);
+  );
 }
 
 export default Bug;
