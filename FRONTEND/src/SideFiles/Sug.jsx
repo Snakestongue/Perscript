@@ -1,119 +1,170 @@
-import { Link } from "react-router-dom";
-import { ChangeEvent } from "react";
-import { useState, useEffect } from "react";
-import Header from "../components/Header.js";
-import Nav from "../components/Nav.js";
+import { useEffect, useState } from "react";
 import Footer from "../components/Footer.js";
+
 function Sug() {
-  useEffect(() => {
-    document.title = "FRC Programming Practice | Add a Suggestion";
-  }, []);
-  const [currentSug, setSug] = useState("")
+  const [currentSug, setSug] = useState("");
   const [category, setCategory] = useState("Feature");
   const [rating, setRating] = useState(0);
   const [loading, setLoading] = useState(false);
-  const handleSubmit = async() =>{ 
-    if (rating == 0) {
-      alert("Please rate the website.");
+  const [error, setError] = useState("");
+  const [errorField, setErrorField] = useState("");
+  const [status, setStatus] = useState("");
+
+  useEffect(() => {
+    document.title = "FRC Programming Practice | Add a Suggestion";
+  }, []);
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+    setStatus("");
+
+    if (!currentSug.trim()) {
+      setError("Write a suggestion before submitting.");
+      setErrorField("suggestion");
       return;
     }
-    setLoading(true)
+
+    if (rating === 0) {
+      setError("Choose a rating from 1 to 5.");
+      setErrorField("rating");
+      return;
+    }
+
+    setError("");
+    setErrorField("");
+    setLoading(true);
+
     try {
-      const res = await fetch(import.meta.env.VITE_LINK + "/suggest", {
+      const response = await fetch(import.meta.env.VITE_LINK + "/suggest", {
         method: "POST",
-        headers:{
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           suggestReq: currentSug,
           rating,
-          category
+          category,
         }),
       });
-      // console.log(res.status);
-      // console.log(res.ok);
+      const data = await response.json();
 
-      const data = await res.json();
-      if (res.ok){
-        alert("Thank you for your suggestion!");
-        setSug(""); 
-      }else{
-        console.log("Error " + data.message)
-        alert("Sorry there was an error. Please leave a suggestion to fix this.")
+      if (!response.ok) {
+        throw new Error(data.message || "Submission failed");
       }
-    }catch (error){
-      alert("Sorry there was an error. Please leave a suggestion to fix this.")
-      console.log(error)
-    }finally{
+
+      setSug("");
+      setRating(0);
+      setStatus("Suggestion submitted. Thank you for helping improve the site.");
+    } catch (submissionError) {
+      console.error(submissionError);
+      setError("The suggestion could not be sent. Check your connection and try again.");
+      setErrorField("form");
+    } finally {
       setLoading(false);
     }
-  };
+  }
+
+  function handleTextareaKeyDown(event) {
+    if ((event.metaKey || event.ctrlKey) && event.key === "Enter") {
+      event.preventDefault();
+      event.currentTarget.form?.requestSubmit();
+    }
+  }
+
   return (
-    <div >
-      <Header />
-      <Nav />
-      <div className="flex justify-center px-4 py-8 mt-6">
-      <div className="w-full max-w-2xl rounded-xl p-6 shadow-lg bg-[#10141d] border border-[#7aadff31]">
+    <div className="site-page">
+      <main id="main-content" className="form-page">
+        <header className="page-intro">
+          <p className="eyebrow">Feedback</p>
+          <h1>Make the practice site better.</h1>
+          <p>Report a bug, request an exercise, or tell us what slowed you down.</p>
+        </header>
 
-        <h2 className="mb-2 text-3xl font-bold flex flex-row">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="mr-4">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 9.75a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375m-13.5 3.01c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.184-4.183a1.14 1.14 0 0 1 .778-.332 48.294 48.294 0 0 0 5.83-.498c1.585-.233 2.708-1.626 2.708-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
-          </svg>Suggestions</h2>
+        <form className="suggestion-form" onSubmit={handleSubmit} noValidate>
+          <fieldset className="category-fieldset">
+            <legend>Category</legend>
+            <div className="category-control">
+              {["Feature", "Bug", "UI/UX", "Performance", "Other"].map((option) => (
+                <label className="category-option" data-active={category === option} key={option}>
+                  <input
+                    className="sr-only"
+                    type="radio"
+                    name="category"
+                    value={option}
+                    checked={category === option}
+                    onChange={() => setCategory(option)}
+                  />
+                  <span>{option}</span>
+                </label>
+              ))}
+            </div>
+          </fieldset>
 
-        <p className="mb-6 text-gray-500">
-          Found a bug or have an idea? I'd love to hear it!
-        </p>
+          <div className="form-field">
+            <div className="field-label-row">
+              <label htmlFor="suggestion-copy">Your suggestion</label>
+              <span className="character-count">{currentSug.length}/500</span>
+            </div>
+            <textarea
+              id="suggestion-copy"
+              name="suggestion"
+              value={currentSug}
+              onChange={(event) => {
+                setSug(event.target.value);
+                if (errorField === "suggestion") {
+                  setError("");
+                  setErrorField("");
+                }
+              }}
+              onKeyDown={handleTextareaKeyDown}
+              placeholder="Example: Add an exercise for command groups…"
+              maxLength={500}
+              aria-invalid={errorField === "suggestion"}
+              aria-describedby={`suggestion-shortcut${errorField === "suggestion" ? " suggestion-error" : ""}`}
+            />
+            <p id="suggestion-shortcut" className="field-hint">
+              Press Cmd+Enter or Ctrl+Enter to submit.
+            </p>
+            {errorField === "suggestion" && <p id="suggestion-error" className="field-error" role="alert">{error}</p>}
+          </div>
 
-        <label className="mb-2 block font-semibold py-3">Category</label>
+          <fieldset className="rating-fieldset" aria-describedby={errorField === "rating" ? "rating-error" : undefined}>
+            <legend>How useful is the site today?</legend>
+            <div className="rating-control">
+              {[1, 2, 3, 4, 5].map((score) => (
+                <label key={score} className="rating-option" data-filled={score <= rating}>
+                  <input
+                    className="sr-only"
+                    type="radio"
+                    name="rating"
+                    value={score}
+                    aria-label={`${score} out of 5`}
+                    checked={rating === score}
+                    onChange={() => {
+                      setRating(score);
+                      if (errorField === "rating") {
+                        setError("");
+                        setErrorField("");
+                      }
+                    }}
+                  />
+                  <span aria-hidden="true">★</span>
+                  <span className="sr-only">{score} out of 5</span>
+                </label>
+              ))}
+            </div>
+            {errorField === "rating" && <p id="rating-error" className="field-error" role="alert">{error}</p>}
+          </fieldset>
 
-        <select
-          className="mb-6 w-full rounded-lg border p-3"
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-        >
-          <option>Feature</option>
-          <option>Bug</option>
-          <option>UI/UX</option>
-          <option>Performance</option>
-          <option>Other</option>
-        </select>
-        <label className="mb-2 block font-semibold">Your suggestion</label>
+          <div id="suggestion-feedback" className="form-feedback" aria-live="polite">
+            {errorField === "form" && <p className="field-error">{error}</p>}
+            {status && <p className="field-success">{status}</p>}
+          </div>
 
-        <textarea
-          className="mb-2 h-40 w-full rounded-lg border p-3 resize-none"
-          value={currentSug}
-          onChange={(e) => setSug(e.target.value)}
-          placeholder="Tell me what you'd like to improve..."
-          maxLength={500}
-        />
-        <p className="mb-6 text-right text-sm text-gray-500">{currentSug.length}/500</p>
-        <label className="mb-2 block font-semibold">Rate the website</label>
+          <button className="button button-primary submit-button" type="submit" disabled={loading}>
+            {loading ? "Sending…" : "Send suggestion"}
+          </button>
+        </form>
+      </main>
 
-        <div className="mb-6 flex justify-center gap-2">
-          {[1, 2, 3, 4, 5].map((s) => (
-            <button
-              key={s}
-              type="button"
-              onClick={() => setRating(s)}
-              className="text-4xl transition hover:scale-125"
-            >
-              <span className={s <= rating ? "text-yellow-400" : "text-gray-300"}>★</span>
-            </button>
-          ))}
-        </div>
-        <button
-          onClick={handleSubmit}
-          disabled={loading || !currentSug.trim()}
-          className="
-          w-full rounded-lg bg-[#7AADFF] 
-          py-3 font-semibold text-white 
-          transition hover:bg-[#5194ff] hover:cursor-pointer
-          disabled:cursor-not-allowed 
-          disabled:bg-gray-400">
-          {loading ? "Submitting..." : "Submit Suggestion"}
-        </button>
-        </div>
-      </div>
       <Footer />
     </div>
   );
