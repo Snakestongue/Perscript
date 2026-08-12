@@ -83,18 +83,8 @@ function FeedbackPopover() {
 
     setFormState("loading");
     try {
-      if (import.meta.env.DEV) {
-        await new Promise((resolve) => window.setTimeout(resolve, 900));
-        setFormState("success");
-        closeTimerRef.current = window.setTimeout(() => {
-          restoreFocusRef.current = true;
-          setOpen(false);
-        }, 1800);
-        return;
-      }
-
       const [response] = await Promise.all([
-        fetch(import.meta.env.VITE_LINK, {
+        fetch(import.meta.env.VITE_LINK + "/suggest", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ suggestReq: feedback, rating, category }),
