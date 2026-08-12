@@ -1,21 +1,21 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useState } from "react";
-import { useEffect } from "react"
+import { lazy, Suspense, useState } from "react";
+import { MotionConfig } from "motion/react";
 
 import App from "./App.tsx";
-import Bug from "./SideFiles/Bug.jsx";
-import PP from "./SideFiles/PP.tsx";
-import Sug from "./SideFiles/Sug.jsx";
-import Tut from "./SideFiles/Tut.tsx";
-import Program from "./SideFiles/Program.jsx";
 import GA from "./GA.jsx";
 import TeamModal from "./Team.jsx";
+import Header from "./components/Header.js";
+import Nav from "./components/Nav.js";
+
+const Bug = lazy(() => import("./SideFiles/Bug.jsx"));
+const PP = lazy(() => import("./SideFiles/PP.tsx"));
+const Sug = lazy(() => import("./SideFiles/Sug.jsx"));
+const Tut = lazy(() => import("./SideFiles/Tut.tsx"));
+const Program = lazy(() => import("./SideFiles/Program.jsx"));
+
 function RoutesPage(){
-  const [team, setTeam] = useState(false);
-  useEffect(()=>{
-    const saved = localStorage.getItem("teamNumber");
-    if (!saved) setTeam(true);
-  }, []);
+  const [team, setTeam] = useState(() => !localStorage.getItem("teamNumber"));
   const handleSubmit =async(num)=>{
     setTeam(false);
     try {
@@ -43,14 +43,24 @@ function RoutesPage(){
     <BrowserRouter basename="/FRC-Programming-Practice">
       <GA />
       {team && <TeamModal onSubmit={handleSubmit} />}
-      <Routes>
-        <Route path="/" element={<App />} />
-        <Route path="/debug" element={<Bug />} />
-        <Route path="/PP" element={<PP />} />
-        <Route path="/Sug" element={<Sug />} />
-        <Route path="/tut" element={<Tut />} />
-        <Route path="/program" element={<Program />} />
-      </Routes>
+      <MotionConfig reducedMotion="user">
+        <div className="app-content" inert={team ? true : undefined} aria-hidden={team ? "true" : undefined}>
+          <Header />
+          <Nav />
+          <Suspense fallback={<main className="route-loading" aria-live="polite">Loading practice tools…</main>}>
+            <Routes>
+              <Route path="/" element={<App />} />
+              <Route path="/debug" element={<Bug />} />
+              <Route path="/PP" element={<PP />} />
+              <Route path="/Sug" element={<Sug />} />
+              <Route path="/tut" element={<Tut />} />
+              <Route path="/tut/hardware" element={<Tut section="hardware" />} />
+              <Route path="/tut/robot-structure" element={<Tut section="structure" />} />
+              <Route path="/program" element={<Program />} />
+            </Routes>
+          </Suspense>
+        </div>
+      </MotionConfig>
     </BrowserRouter>
   );
 }
