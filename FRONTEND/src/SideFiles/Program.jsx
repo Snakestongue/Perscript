@@ -33,7 +33,7 @@ function Program(){
     }
     currentLoad(true);
     try{
-      let response = await fetch("https://frc-programming-practice.onrender.com/create", {
+      let response = await fetch(import.meta.env.VITE_LINK + "/create", {
       method: "POST",
       headers:{
         "Content-Type": "application/json",

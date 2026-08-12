@@ -19,7 +19,7 @@ function Sug() {
     }
     setLoading(true)
     try {
-      const res = await fetch(import.meta.env.VITE_LINK, {
+      const res = await fetch(import.meta.env.VITE_LINK + "/suggest", {
         method: "POST",
         headers:{
           "Content-Type": "application/json",
