@@ -41,7 +41,7 @@ function Bug() {
   // const [selectedProblem, setSelectedProblem] = useState(0);
   const shareProblem =async (problem) =>{
     const base = import.meta.env.BASE_URL.replace(/\/$/, "")
-    const url = `${window.location.origin}${base}/program/${problem.id}`
+    const url = `${window.location.origin}${base}/debug/${problem.id}`
     if(navigator.share){
       try {
         await navigator.share({
