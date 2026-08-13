@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { initVimMode } from "monaco-vim";
 import Editor from "@monaco-editor/react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import problems from "../JSON/problems.json";
 import Footer from "../components/Footer.js";
 
@@ -25,8 +25,8 @@ function defineEditorTheme(monaco) {
     inherit: true,
     rules: [
       { token: "comment", foreground: "77777F", fontStyle: "italic" },
-      { token: "keyword", foreground: "A8CFAF" },
-      { token: "keyword.control", foreground: "A8CFAF" },
+      { token: "keyword", foreground: "7AADFF" },
+      { token: "keyword.control", foreground: "7AADFF" },
       { token: "type", foreground: "C5B9D9" },
       { token: "type.identifier", foreground: "C5B9D9" },
       { token: "identifier", foreground: "E4E4E7" },
@@ -59,21 +59,84 @@ function defineEditorTheme(monaco) {
 }
 
 function Program() {
-  const location = useLocation();
-  const [currentLang, setCurrentLang] = useState("java");
-  const [selectedProblem, setSelectedProblem] = useState(problems[0]);
+  const { problemId } = useParams()
+  const [selectedProblem, setSelectedProblem] = useState(() => {
+    const fromUrl = problems.find((p) => String(p.id) === problemId);
+      return fromUrl || problems[0];
+  });
   const [userCode, setUserCode] = useState(selectedProblem.starterCode.java);
-  const [aiContent, setAiContent] = useState("");
-  const [aiLoading, setAiLoading] = useState(false);
-  const [checkResults, setCheckResults] = useState([]);
+  const [aiContent, setAiContent] = useState("")
+  const [aiLoading, setAiLoading] = useState(false)
+  const [checkResults, setCheckResults] = useState([])
   const [vimOn, setVimOn] = useState(false);
-  const vimRef = useRef(null);
-  const editorRef = useRef(null);
-  const selectedProblemIndex = problems.findIndex((problem) => problem.id === selectedProblem.id);
+  const vimRef = useRef(null)
+  const editorRef = useRef(null)
+  const selectedProblemIndex = problems.findIndex((problem) => problem.id === selectedProblem.id)
+  const location = useLocation();
+  const navigate = useNavigate()
+  const [currentLang, setCurrentLang] = useState("java")
+  const [copiedLink, setCopiedLink] = useState(false);
+  const [copiedCode, setCopiedCode] = useState(false);
 
+  async function shareLink() {
+    const url= `${window.location.origin}/program/${selectedProblem.id}`
+    if(navigator.share){
+      try {
+        await navigator.share({
+          title: `FRC Practice — ${selectedProblem.title}`,
+          text: selectedProblem.description,
+          url,
+        });
+        return;
+      } catch {
+        return //meaning like user said nuhuh
+      }
+    }
+    try {
+      await navigator.clipboard.writeText(url);
+      setCopiedLink(true);
+      setTimeout(() =>setCopiedLink(false),1500);
+    }catch (error){ //dont want alerts anymore!
+      console.error("Copy failed", error);
+    }
+  }
+  async function shareCode() {
+    const code = userCode || "";
+    if (!code.trim()) return;
+    if(navigator.share){
+      try {
+        await navigator.share({
+          title: `${selectedProblem.title} — my ${currentLang} solution`,
+          text: code,
+        });
+        return;
+      } catch {
+        return //user said nope
+      }
+    }
+    try {
+      await navigator.clipboard.writeText(code);
+      setCopiedCode(true);
+      setTimeout(() => setCopiedCode(false), 1500);
+    } catch (err) {
+      console.error("Copy failed", err);
+    }
+  }
   useEffect(() => {
+    if(!problemId){
+      return
+    }
+    const match = problems.find((p) =>String(p.id) == problemId);
+    if (match&& match.id !== selectedProblem.id){
+      setSelectedProblem(match);
+    }
+  }, [problemId])
+
+  useEffect(()=>{
     document.title = "FRC Programming Practice | Live Challenges";
   }, []);
+
+
   useEffect(() => {
     if (!location.hash) return;
 
@@ -89,11 +152,25 @@ function Program() {
   }, [location.hash, location.key]);
 
   useEffect(() => {
+  if (!problemId) return;
+  const frame = requestAnimationFrame(() => {
+    document.getElementById("browser-editor")?.scrollIntoView({ block: "start" });
+  });
+  return () => cancelAnimationFrame(frame);
+}, [problemId]);
+
+
+  useEffect(() => {
     setUserCode(selectedProblem.starterCode[currentLang]);
     setCheckResults([]);
     setAiContent("");
   }, [currentLang, selectedProblem]);
   useEffect(() => () => vimRef.current?.dispose(), []);
+
+  function selectProblem(problem) {
+    setSelectedProblem(problem);
+    navigate(`/program/${problem.id}`, { replace: false });
+  }
 
   function runChecks() {
     const code = (userCode || "").toLowerCase();
@@ -225,7 +302,7 @@ function Program() {
                       data-complete={problem.id < selectedProblem.id}
                       aria-current={problem.id === selectedProblem.id ? "true" : undefined}
                       aria-label={`Exercise ${problem.id}: ${problem.title}`}
-                      onClick={() => setSelectedProblem(problem)}
+                      onClick={() => selectProblem(problem)}
                     >
                       <span className="exercise-step-dot" aria-hidden="true" />
                       {problem.title}
@@ -288,7 +365,16 @@ function Program() {
             >
               Show answer
             </button>
-            <button className="action-buttons xl:justify-self-end" type="button" onClick={submitToAI} disabled={aiLoading}>
+
+            <button type="button" className="action-buttons quiet-action" onClick={shareLink}>
+                {copiedLink ? "Link copied!" : "Share link"}
+            </button>
+
+            <button type="button" className="action-buttons quiet-action" onClick={shareCode}>
+                {copiedCode ? "Code copied!" : "Share code"}
+            </button>
+            
+            <button className="action-buttons" type="button" onClick={submitToAI} disabled={aiLoading}>
               {aiLoading ? "Thinking…" : "Ask AI"}
             </button>
             <button className="action-buttons primary-action" id="run-submit" type="button" onClick={runChecks}>
@@ -310,7 +396,7 @@ function Program() {
                 )}
               </ul>
             </section>
-
+            
             <section id="ai-assist" className="feedback-panel" aria-labelledby="ai-heading">
               <h2 id="ai-heading">AI Assist</h2>
               <div className="words-content ai-content" aria-live="polite">

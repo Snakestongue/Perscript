@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import problems from "../JSON/debugProblems.json";
 import Footer from "../components/Footer.js";
 import SyntaxCode from "../components/SyntaxCode.js";
-
+import { Link } from "react-router-dom";
 const languages = ["Java", "Python", "C++"];
 
 function Bug() {
-  const location = useLocation();
+  const { problemId } = useParams();
   const [selectedChoices, setSelectedChoices] = useState({});
 
   useEffect(() => {
@@ -15,22 +15,59 @@ function Bug() {
   }, []);
 
   useEffect(() => {
-    if (!location.hash) return;
+    if (!problemId){
+      return;
+    }
+    const target =problemId.toUpperCase();
+    const frame= requestAnimationFrame(()=>{
+      document.getElementById(target)?.scrollIntoView({block: "start", behavior:"smooth"});
+    }); return () => cancelAnimationFrame(frame);
+  },[problemId])
 
+  useEffect(() => {
+    document.title = "FRC Programming Practice | Debugging Practice";
+  }, []);
+  useEffect(() => {
+    if (!location.hash) return;
     const frame = requestAnimationFrame(() => {
       document.getElementById(location.hash.slice(1))?.scrollIntoView({ block: "start" });
     });
-
     return () => cancelAnimationFrame(frame);
   }, [location.hash, location.key]);
-  console.log(problems.length, problems.map(p => ({ id: p.id, hasCode: !!p.sampleCode })));
+
+
+  // share
+  const [copiedId, setCopiedId] = useState(null);
+  const shareProblem =async (problem) =>{
+    const url = `${window.location.origin}/debug/${problem.id}`;
+    if(navigator.share){
+      try {
+        await navigator.share({
+          title: `FRC Debugging Practice — ${problem.id}`,
+          text: problem.question,
+          url,
+        });
+      } catch (err) {
+        //nothing - user said nope donnt wanna.
+      }
+    }else{
+      try {
+        await navigator.clipboard.writeText(url);
+        setCopiedId(problem.id);
+        setTimeout(()=>setCopiedId(null), 1500);
+      } catch (err) {
+        console.error("Copy failed", err);
+      }
+    }
+  };
+
   return (
     <div className="site-page">
       <main id="main-content" className="debug-page">
         <header className="page-intro debug-intro">
           <p className="eyebrow">Debugging practice</p>
           <h1>Find the bug before the robot does.</h1>
-          <p>Read each snippet, choose the root cause, and use the explanation to sharpen your skills.</p>
+          <p>Read each snippet, select the issue, and use the explanation to sharpen your skills.</p>
         </header>
 
         <div id="f3">
@@ -50,10 +87,32 @@ function Bug() {
                   const userChoice = selectedChoices[problem.id];
                   const isCorrect = userChoice === problem.CC;
 
-                  return <article className="bQ" key={problem.id}>
+                  return <article className="bQ" id={problem.id} key={problem.id}>
                   <div className="bug-prompt">
-                    <h2>{problem.question}</h2>
-                    <pre id={`sample-${problem.id}`}><SyntaxCode code={problem.sampleCode} /></pre>
+                      <div className="
+                      flex flex-row 
+                      items-center justify-between
+                       gap-4">
+                        <Link to={`/debug/${problem.id}`} className="bug-permalink" aria-label={`Link to problem ${problem.id}`}>
+                          #{problem.id}
+                        </Link>
+                        <h2>{problem.question}</h2>
+                        <button
+                          type="button"
+                          className="
+                          text-sm px-2 py-1 
+                          rounded-md border border-[#7AADFF] 
+                          bg-transparent cursor-pointer 
+                          whitespace-nowrap transition duration-200 
+                          hover:bg-[#7AADFF] 
+                          hover:!text-black"
+                          onClick={() => shareProblem(problem)}
+                          aria-label={`Share problem ${problem.id}`}
+                        >
+                          {copiedId === problem.id ? "Copied!" : "Share"}
+                        </button>
+                      </div>
+                      <pre id={`sample-${problem.id}`}><SyntaxCode code={problem.sampleCode} /></pre>
                   </div>
                   <fieldset>
                     <legend className="sr-only">Choose the cause of the bug</legend>

@@ -1,6 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&display=swap");
 @import "tailwindcss";
 
+/* This is the root. From my (Snakestongue) understanding it's basically a variable system so if you wanna 
+change a color its easier then going to every single mention of that color! 
+*/
 :root {
   color-scheme: dark;
   font-family: "Manrope", "Avenir Next", Avenir, system-ui, sans-serif;
@@ -33,19 +36,15 @@
   --z-modal: 200;
   --ease-out: cubic-bezier(0.32, 0.72, 0, 1);
 }
-
-* {
+*{
   box-sizing: border-box;
 }
-
-html {
+html{
   min-width: 20rem;
-  /* overflow-x: hidden; */
   scroll-behavior: smooth;
   background: var(--canvas);
 }
-
-body {
+body{
   min-width: 20rem;
   min-height: 100dvh;
   margin: 0;
@@ -53,10 +52,11 @@ body {
   background: var(--canvas);
   color: var(--text);
   font-size: 1rem;
-  line-height: 1.55;
+  line-height: 1.5;
 }
 
-body::before {
+/* Like a placeholder before content loads (a light skeleton) */
+body::before{
   position: fixed;
   inset: 0;
   z-index: -1;
@@ -66,74 +66,54 @@ body::before {
   content: "";
 }
 
-::selection {
+
+::selection{
   background: oklch(0.92 0.003 260 / 0.28);
   color: var(--text);
 }
 
-
-
-button,
-a,
-input,
-textarea,
-select {
+/* dont zoom on touch on phones */
+button, a, input,textarea,select {
   touch-action: manipulation;
 }
 
-button,
-input,
-textarea,
-select {
+/* Same thing as parent */
+button,input,textarea, select {
   font: inherit;
 }
-
-button {
+button{
   color: inherit;
 }
-
-a {
+a{
   color: inherit;
   text-decoration: none;
 }
-
-img,
-svg {
+img, svg{
   display: block;
 }
 
-h1,
-h2,
-h3,
-h4,
-p {
+/* 0 m on text */
+h1, h2, h3,h4,p{
   margin: 0;
 }
 
-h1,
-h2,
-h3 {
+/* if text on multiple lines, make lines roughly same length */
+h1,h2,h3 {
   text-wrap: balance;
 }
 
-p,
-li {
+/* avoid ugly breaks */
+p,li{
   text-wrap: pretty;
 }
-
-.eyebrow {
+.eyebrow{
   color: var(--text-muted);
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.025em;
 }
 
-code,
-pre,
-.character-count,
-.track-action,
-.code-window,
-.exercise-heading > div > p {
+code,pre,.character-count,.track-action,.code-window, .exercise-heading > div > p {
   font-family: "JetBrains Mono", ui-monospace, monospace;
   font-variant-numeric: tabular-nums;
 }
@@ -384,8 +364,13 @@ pre,
   color: var(--text-soft);
   font-size: 0.75rem;
   font-weight: 600;
+  transition: all .2s ease-in;
 }
 
+.nav-mega-cta:hover{
+  opacity: .8 !important;
+  color:red !important;
+}
 .site-nav-link,
 .header-github,
 .mobile-nav-link {
@@ -475,7 +460,11 @@ pre,
 .home-main {
   flex: 1;
 }
-
+.share-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
 .hero {
   min-height: min(43rem, calc(100dvh - var(--header-height)));
   display: grid;
@@ -538,7 +527,7 @@ pre,
 }
 
 .button-primary {
-  background: #7AADFF;
+  background: var(--accent);
   color: var(--canvas-deep);
 }
 
@@ -1837,6 +1826,7 @@ textarea[aria-invalid="true"] {
   gap: 1.25rem;
   padding-block: 1.75rem 2.25rem;
   border-block-end: 1px solid var(--line);
+  scroll-margin-top: 100px;
 }
 
 .bug-prompt {
@@ -2149,6 +2139,7 @@ pre code {
   border-radius: 0.65rem;
   background: var(--canvas-deep);
   box-shadow: var(--shadow-raised);
+  border: 1px solid var(--accent);
 }
 
 #vim-status {
@@ -2163,7 +2154,7 @@ pre code {
 
 .editor-actions {
   display: grid;
-  grid-template-columns: auto auto 1fr auto;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
   gap: 0.6rem;
   align-items: center;
   padding-block: 0.85rem;
@@ -2215,6 +2206,8 @@ pre code {
 .feedback-panel {
   min-width: 0;
   padding-block: 1.6rem 2.2rem;
+  /* border: 1px solid var(--accent); */
+  border-radius: 10px;
 }
 
 .feedback-panel + .feedback-panel {
@@ -2679,7 +2672,7 @@ pre code {
   .track-row:hover {
     /* color: var(--text); */
     transform: translateY(-5px);
-    box-shadow: 4px 4px 0px #7AADFF;
+    box-shadow: 4px 4px 0px var(--accent);
   }
 
   .track-row:hover .track-action {

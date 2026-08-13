@@ -9,45 +9,41 @@ const menuVariants = {
 };
 function Header() {
   const location = useLocation();
-
-  // 0=Practice,1 =Debug, 2 =Reference, -1=none active
+  //0=Practice,1 =Debug, 2 =Reference, -1=none active
   const activeIndex =
     location.pathname === "/program" ? 0 :
     location.pathname === "/debug" ? 1 :
     location.pathname.startsWith("/tut") ? 2 :
     -1;
 
-  const [menuIndex, setMenuIndex] = useState<number | null>(null);
-  const [direction, setDirection] = useState(1);
-  const lastMenuIndex = useRef(activeIndex >= 0 ? activeIndex : 0);
-  const pillIndex = menuIndex ?? (activeIndex >= 0 ? activeIndex : lastMenuIndex.current);
-  const pillVisible = menuIndex !== null || activeIndex >= 0;
-  function showMenu(index: number) {
-    setDirection(index >= lastMenuIndex.current ? 1 : -1);
+
+  const [menuIndex, setMenuIndex] = useState<number | null>(null)
+  const [direction, setDirection] = useState(1)
+  const lastMenuIndex = useRef(activeIndex >= 0 ? activeIndex : 0)
+  const pillIndex = menuIndex ?? (activeIndex >= 0 ? activeIndex : lastMenuIndex.current)
+  const pillVisible = menuIndex !== null || activeIndex >= 0
+  function showMenu(index: number){
+    setDirection(index >= lastMenuIndex.current ? 1 : -1)
     lastMenuIndex.current = index;
     setMenuIndex(index);
   }
 
-  useEffect(() => {
-    function closeMenu(event: KeyboardEvent) {
-      if (event.key === "Escape") setMenuIndex(null);
+  useEffect(()=>{
+    function closeMenu(event: KeyboardEvent){
+      if (event.key == "Escape"){
+        setMenuIndex(null);
+      }
     }
-    window.addEventListener("keydown", closeMenu);
-    return () => window.removeEventListener("keydown", closeMenu);
+    window.addEventListener("keydown", closeMenu)
+    return () => window.removeEventListener("keydown", closeMenu)
   }, []);
 
-  useEffect(() => {
+  useEffect(() =>{
     setMenuIndex(null);
   }, [location.key]);
 
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-  useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth <= 768);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-  function navTriggerProps(index: number) {
-    return {
+  function navTriggerProps(index: number){
+    return{
       className: activeIndex === index ? "site-nav-link active" : "site-nav-link",
       "aria-expanded": menuIndex === index,
       "aria-controls": "primary-nav-panel",
@@ -75,8 +71,7 @@ function Header() {
           onPointerLeave={() => setMenuIndex(null)}
           onBlur={(event) => {
             if (!event.currentTarget.contains(event.relatedTarget)) setMenuIndex(null);
-          }}
-        >
+          }}>
           <nav className="desktop-nav" aria-label="Primary navigation">
             <motion.span
               className="site-nav-pill"
@@ -85,38 +80,20 @@ function Header() {
                 x: Math.max(pillIndex, 0) * 110.4,
                 opacity: pillVisible ? 1 : 0,
               }}
-              transition={{ duration: 0.14, ease: "easeOut" }}
+              transition={{duration: 0.14, ease: "easeOut"}}
             />
 
-            {isMobile ? (
-              <button type="button" {...navTriggerProps(0)}>
-                <span className="site-nav-label">Practice</span>
-              </button>
-            ) : (
-              <Link to="/program" {...navTriggerProps(0)}>
-                <span className="site-nav-label">Practice</span>
-              </Link>
-            )}
+            <button type="button" {...navTriggerProps(0)}>
+              <span className="site-nav-label">Practice</span>
+            </button>
 
-            {isMobile ? (
-              <button type="button" {...navTriggerProps(1)}>
-                <span className="site-nav-label">Debug</span>
-              </button>
-            ) : (
-              <Link to="/debug" {...navTriggerProps(1)}>
-                <span className="site-nav-label">Debug</span>
-              </Link>
-            )}
+            <button type="button" {...navTriggerProps(1)}>
+              <span className="site-nav-label">Debug</span>
+            </button>
 
-            {isMobile ? (
-              <button type="button" {...navTriggerProps(2)}>
-                <span className="site-nav-label">Reference</span>
-              </button>
-            ) : (
-              <Link to="/tut" {...navTriggerProps(2)}>
-                <span className="site-nav-label">Reference</span>
-              </Link>
-            )}
+            <button type="button" {...navTriggerProps(2)}>
+              <span className="site-nav-label">Reference</span>
+            </button>
           </nav>
 
           <AnimatePresence>
@@ -127,8 +104,7 @@ function Header() {
                 initial={{ opacity: 0, y: -8 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -8 }}
-                transition={{ duration: 0.16, ease: "easeOut" }}
-              >
+                transition={{ duration: 0.16, ease: "easeOut" }}>
                 <div className="nav-mega-panel">
                   <AnimatePresence initial={false} mode="popLayout" custom={direction}>
                     {menuIndex === 0 ? (
@@ -140,8 +116,8 @@ function Header() {
                         initial="initial"
                         animate="active"
                         exit="exit"
-                        transition={{ type: "spring", duration: 0.3, bounce: 0 }}
-                      >
+                        transition={{ type: "spring", duration: 0.3, bounce: 0 }}>
+
                         <div className="nav-mega-panel-link">
                           <div className="nav-mega-heading">
                             <span className="!tracking-tighter">Practice workspace</span>
@@ -166,9 +142,9 @@ function Header() {
                           </Link>
                         </div>
                       </motion.div>
-                    ) : null}
+                    ):null}
 
-                    {menuIndex === 1 ? (
+                    {menuIndex == 1 ?(
                       <motion.div
                         className="nav-mega-content"
                         key={1}
@@ -177,8 +153,8 @@ function Header() {
                         initial="initial"
                         animate="active"
                         exit="exit"
-                        transition={{ type: "spring", duration: 0.3, bounce: 0 }}
-                      >
+                        transition={{ type: "spring", duration: 0.3, bounce: 0 }}>
+
                         <div className="nav-mega-panel-link">
                           <div className="nav-mega-heading">
                             <span className="!tracking-tighter">Debugging drills</span>
@@ -198,14 +174,12 @@ function Header() {
                               <span>Practice diagnosing common robot-code failures in C++.</span>
                             </Link>
                           </div>
-                          <Link className="nav-mega-cta" to="/debug">
-                            Open debug <span aria-hidden="true">→</span>
-                          </Link>
+                          <Link className="nav-mega-cta" to="/debug"> Open debug <span aria-hidden="true">→</span></Link>
                         </div>
                       </motion.div>
-                    ) : null}
+                    ):null}
 
-                    {menuIndex === 2 ? (
+                    {menuIndex === 2?(
                       <motion.div
                         className="nav-mega-content"
                         key={2}
@@ -214,8 +188,8 @@ function Header() {
                         initial="initial"
                         animate="active"
                         exit="exit"
-                        transition={{ type: "spring", duration: 0.3, bounce: 0 }}
-                      >
+                        transition={{ type: "spring", duration: 0.3, bounce: 0 }}>
+
                         <div className="nav-mega-panel-link">
                           <div className="nav-mega-heading">
                             <span className="!tracking-tighter">Reference library</span>
@@ -240,11 +214,11 @@ function Header() {
                           </Link>
                         </div>
                       </motion.div>
-                    ) : null}
+                    ):null}
                   </AnimatePresence>
                 </div>
               </motion.div>
-            ) : null}
+            ) :null}
           </AnimatePresence>
         </div>
       </div>
