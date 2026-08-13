@@ -79,7 +79,8 @@ function Program() {
   const [copiedCode, setCopiedCode] = useState(false);
 
   async function shareLink() {
-    const url= `${window.location.origin}/program/${selectedProblem.id}`
+    const base = import.meta.env.BASE_URL.replace(/\/$/, "")
+    const url = `${window.location.origin}${base}/program/${selectedProblem.id}`
     if(navigator.share){
       try {
         await navigator.share({

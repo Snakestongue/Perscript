@@ -369,7 +369,7 @@ code,pre,.character-count,.track-action,.code-window, .exercise-heading > div > 
 
 .nav-mega-cta:hover{
   opacity: .8 !important;
-  color:red !important;
+  color:var(--accent) !important;
 }
 .site-nav-link,
 .header-github,

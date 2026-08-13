@@ -39,7 +39,8 @@ function Bug() {
   // share
   const [copiedId, setCopiedId] = useState(null);
   const shareProblem =async (problem) =>{
-    const url = `${window.location.origin}/debug/${problem.id}`;
+    const base = import.meta.env.BASE_URL.replace(/\/$/, "")
+    const url = `${window.location.origin}${base}/program/${selectedProblem.id}`
     if(navigator.share){
       try {
         await navigator.share({
