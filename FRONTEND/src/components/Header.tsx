@@ -1,7 +1,6 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-
 const menuVariants = {
   initial: (direction: number) => ({ x: `${110 * direction}%`, opacity: 0 }),
   active: { x: "0%", opacity: 1 },
@@ -193,7 +192,7 @@ function Header() {
                         <div className="nav-mega-panel-link">
                           <div className="nav-mega-heading">
                             <span className="!tracking-tighter">Reference library</span>
-                            <strong>Keep the patterns you need within reach</strong>
+                            <strong>Keep the code you need within reach</strong>
                           </div>
                           <div className="nav-mega-items">
                             <Link to="/tut">

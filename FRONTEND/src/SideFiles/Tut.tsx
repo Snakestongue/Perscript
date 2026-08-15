@@ -30,7 +30,7 @@ const referenceSections = {
   foundations: {
     eyebrow: "Reference · Foundations",
     title: "Start with the language, then learn the robot concepts.",
-    description: "A compact guide to syntax, classes, control systems, and the terms you will see throughout an FRC codebase.",
+    description: "A guide to syntax, classes, and the terms you will see throughout FRC.",
     topics: [
       ["javaStart", "Language basics"],
       ["javaAdvance", "Classes & objects"],
@@ -40,7 +40,7 @@ const referenceSections = {
   hardware: {
     eyebrow: "Reference · Hardware",
     title: "Connect code to the hardware on your robot.",
-    description: "Look up common motor-controller operations, encoder readings, and physical sensor patterns while you build.",
+    description: "Look up common motor operations, encoder readings, and physical sensor patterns while you build.",
     topics: [
       ["canSpark", "SparkMax"],
       ["talonFX", "TalonFX"],

@@ -2,14 +2,14 @@
   {
     "id": 1,
     "title": "Create a Constant",
-    "description": "Add a constant named MAX_DRIVE_SPEED with a value of 0.8 to the Constants class. Do not declare it with the final keyword.",
+    "description": "Add a constant named MAX_DRIVE_SPEED with a value of 0.8 to the Constants class.",
     "starterCode": {
       "java": "public class Constants {\n    //Write code here and remove this comment.\n}",
       "python": "class Constants:\n    # Write code here and remove this comment.\n    \n",
       "cpp": "class Constants {\n    // Write code here and remove this comment.\n};"
     },
     "solutionCode": {
-      "java": "public class Constants {\n    public static double MAX_DRIVE_SPEED = 0.8;\n}",
+      "java": "public class Constants {\n    public static final double MAX_DRIVE_SPEED = 0.8;\n}",
       "python": "class Constants:\n    MAX_DRIVE_SPEED = 0.8\n",
       "cpp": "class Constants {\n   public:\n       static constexpr double MAX_DRIVE_SPEED = 0.8;\n};\n"
     },
@@ -17,6 +17,7 @@
       "java":[
         { "type": "count", "value": "public", "min": 2, "message": "Did you add public?" },
         { "type": "includes", "value": "static", "message": "Did you add static?" },
+        { "type": "includes", "value": "final", "message": "Did you add final?" },
         { "type": "includes", "value": "double", "message": "Did you use double?" },
         { "type": "includes", "value": "0.8;", "message": "Did you add 0.8;?" }
       ],
@@ -177,40 +178,93 @@
 {
   "id": 6,
   "title": "Button Bindings",
-  "description": "In the RobotContainer, bind the B button on the driver controller so that when it is pressed (onTrue), it runs the runMotor method.",
+  "description": "In the RobotContainer, bind the B button on the driver controller so that when it is pressed (whileTrue), it runs the runMotor method inside the intake subsystem.",
   "starterCode": {
-    "java": "package frc.robot;\nimport edu.wpi.first.wpilibj2.command.button.CommandXboxController;\nimport edu.wpi.first.wpilibj2.command.Commands;\n\npublic class RobotContainer {\n    private final CommandXboxController controller = new CommandXboxController(0);\n\n    public RobotContainer() {\n        // Write code here and remove this comment.\n    }\n}",
-    "python": "from commands2.button import CommandXboxController\nfrom commands2 import cmd\n\nclass RobotContainer:\n    def __init__(self):\n        self.controller = CommandXboxController(0)\n        # Write code here and remove this comment.\n",
-    "cpp": "#include <frc2/command/button/CommandXboxController.h>\n#include <frc2/command/Commands.h>\n\nclass RobotContainer {\npublic:\n    RobotContainer() {\n        // Write code here and remove this comment.\n    }\n\nprivate:\n    frc2::CommandXboxController controller{0};\n};"
+    "java": "package frc.robot;\nimport edu.wpi.first.wpilibj2.command.button.CommandXboxController;\nimport edu.wpi.first.wpilibj2.command.Commands;\nimport frc.robot.subsystems.Intake;\n\npublic class RobotContainer {\n    private final CommandXboxController controller = new CommandXboxController(0);\n    private final Intake intake = new Intake();\n\n    public RobotContainer() {\n        // Write code here and remove this comment.\n    }\n}",
+    "python": "from commands2.button import CommandXboxController\nfrom commands2 import cmd\nfrom subsystems.intake import Intake\n\nclass RobotContainer:\n    def __init__(self):\n        self.controller = CommandXboxController(0)\n        self.intake = Intake()\n        # Write code here and remove this comment.\n",
+    "cpp": "#include <frc2/command/button/CommandXboxController.h>\n#include <frc2/command/Commands.h>\n#include \"subsystems/Intake.h\"\n\nclass RobotContainer {\npublic:\n    RobotContainer() {\n        // Write code here and remove this comment.\n    }\n\nprivate:\n    frc2::CommandXboxController controller{0};\n    Intake intake;\n};"
   },
   "solutionCode": {
-    "java": "package frc.robot;\nimport edu.wpi.first.wpilibj2.command.button.CommandXboxController;\nimport edu.wpi.first.wpilibj2.command.Commands;\n\npublic class RobotContainer {\n    private final CommandXboxController controller = new CommandXboxController(0);\n\n    public RobotContainer() {\n        controller.b().onTrue(Commands.runOnce(this::runMotor));\n    }\n}",
-    "python": "from commands2.button import CommandXboxController\nfrom commands2 import cmd\n\nclass RobotContainer:\n    def __init__(self):\n        self.controller = CommandXboxController(0)\n        self.controller.b().onTrue(cmd.runOnce(self.run_motor))\n",
-    "cpp": "#include <frc2/command/button/CommandXboxController.h>\n#include <frc2/command/Commands.h>\n\nclass RobotContainer {\npublic:\n    RobotContainer() {\n        controller.B().OnTrue(frc2::cmd::RunOnce([this] { RunMotor(); }));\n}\n\nprivate:\n    frc2::CommandXboxController controller{0};\n};"
+    "java": "package frc.robot;\nimport edu.wpi.first.wpilibj2.command.button.CommandXboxController;\nimport edu.wpi.first.wpilibj2.command.Commands;\nimport frc.robot.subsystems.Intake;\n\npublic class RobotContainer {\n    private final CommandXboxController controller = new CommandXboxController(0);\n    private final Intake intake = new Intake();\n\n    public RobotContainer() {\n        controller.b().whileTrue(intake.runMotor);\n    }\n}",
+    "python": "from commands2.button import CommandXboxController\nfrom commands2 import cmd\nfrom subsystems.intake import Intake\n\nclass RobotContainer:\n    def __init__(self):\n        self.controller = CommandXboxController(0)\n        self.intake = Intake()\n        self.controller.b().whileTrue(self.intake.run_motor)\n",
+    "cpp": "#include <frc2/command/button/CommandXboxController.h>\n#include <frc2/command/Commands.h>\n#include \"subsystems/Intake.h\"\n\nclass RobotContainer {\npublic:\n    RobotContainer() {\n        controller.B().WhileTrue(intake.RunMotor);\n    }\n\nprivate:\n    frc2::CommandXboxController controller{0};\n    Intake intake;\n};"
   },
   "checks": {
     "java": [
       { "type": "includes", "value": "controller.b()", "message": "Did you get the B button from the controller?" },
-      { "type": "includes", "value": "onTrue", "message": "Did you use onTrue?" },
-      { "type": "includes", "value": "runmotor", "message": "Did you call runMotor?" },
-      { "type": "includes", "value": "commands.runonce", "message": "Did you wrap runMotor in Commands.runOnce?" }
+      { "type": "includes", "value": "whiletrue", "message": "Did you use whileTrue?" },
+      { "type": "includes", "value": "intake.runmotor", "message": "Did you bind intake.runMotor?" }
     ],
     "python": [
       { "type": "includes", "value": "controller.b()", "message": "Did you get the B button from the controller?" },
-      { "type": "includes", "value": "ontrue", "message": "Did you use onTrue?" },
-      { "type": "includes", "value": "run_motor", "message": "Did you call run_motor?" },
-      { "type": "includes", "value": "cmd.runonce", "message": "Did you wrap run_motor in cmd.runOnce?" }
+      { "type": "includes", "value": "whiletrue", "message": "Did you use whileTrue?" },
+      { "type": "includes", "value": "intake.run_motor", "message": "Did you bind self.intake.run_motor?" }
     ],
     "cpp": [
       { "type": "includes", "value": "controller.B()", "message": "Did you get the B button from the controller?" },
-      { "type": "includes", "value": "OnTrue", "message": "Did you use OnTrue?" },
-      { "type": "includes", "value": "RunMotor", "message": "Did you call RunMotor?" },
-      { "type": "includes", "value": "cmd::RunOnce", "message": "Did you wrap RunMotor in frc2::cmd::RunOnce?" }
+      { "type": "includes", "value": "WhileTrue", "message": "Did you use WhileTrue?" },
+      { "type": "includes", "value": "intake.RunMotor", "message": "Did you bind intake.RunMotor?" }
     ]
   }
 },
 {
-  "id": 7,
+    "id": 7,
+    "title": "Slot0 Configs",
+    "description": "In the Constants class, create a public static final Slot0Configs object named slot0Configs, chained with the following gains and settings: kS=0.02, kV=4.14, kA=0.1, kG=0.33, kP=35, kI=0.0, kD=0.005, GravityType=Elevator_Static, and StaticFeedforwardSign=UseVelocitySign.",
+    "starterCode": {
+      "java": "package frc.robot;\nimport com.ctre.phoenix6.configs.Slot0Configs;\nimport com.ctre.phoenix6.signals.GravityTypeValue;\nimport com.ctre.phoenix6.signals.StaticFeedforwardSignValue;\n\npublic class Constants {\n    // Write code here and remove this comment.\n}",
+      "python": "from phoenix6.configs import Slot0Configs\nfrom phoenix6.signals import GravityTypeValue, StaticFeedforwardSignValue\n\nclass Constants:\n    # Write code here and remove this comment.\n    \n",
+      "cpp": "#include \"ctre/phoenix6/configs/Configs.hpp\"\n\nusing namespace ctre::phoenix6::configs;\nusing namespace ctre::phoenix6::signals;\n\nclass Constants {\npublic:\n    // Write code here and remove this comment.\n};"
+    },
+    "solutionCode": {
+      "java": "package frc.robot;\nimport com.ctre.phoenix6.configs.Slot0Configs;\nimport com.ctre.phoenix6.signals.GravityTypeValue;\nimport com.ctre.phoenix6.signals.StaticFeedforwardSignValue;\n\npublic class Constants {\n    public static final Slot0Configs slot0Configs =\n        new Slot0Configs()\n            .withKS(0.02)\n            .withKV(4.14)\n            .withKA(0.1)\n            .withKG(0.33)\n            .withKP(35)\n            .withKI(0.0)\n            .withKD(0.005)\n            .withGravityType(GravityTypeValue.Elevator_Static)\n            .withStaticFeedforwardSign(StaticFeedforwardSignValue.UseVelocitySign);\n}",
+      "python": "from phoenix6.configs import Slot0Configs\nfrom phoenix6.signals import GravityTypeValue, StaticFeedforwardSignValue\n\nclass Constants:\n    slot0_configs = (\n        Slot0Configs()\n        .with_ks(0.02)\n        .with_kv(4.14)\n        .with_ka(0.1)\n        .with_kg(0.33)\n        .with_kp(35)\n        .with_ki(0.0)\n        .with_kd(0.005)\n        .with_gravity_type(GravityTypeValue.ELEVATOR_STATIC)\n        .with_static_feedforward_sign(StaticFeedforwardSignValue.USE_VELOCITY_SIGN)\n    )\n",
+      "cpp": "#include \"ctre/phoenix6/configs/Configs.hpp\"\n\nusing namespace ctre::phoenix6::configs;\nusing namespace ctre::phoenix6::signals;\n\nclass Constants {\npublic:\n    static inline Slot0Configs slot0Configs =\n        Slot0Configs{}\n            .WithKS(0.02)\n            .WithKV(4.14)\n            .WithKA(0.1)\n            .WithKG(0.33)\n            .WithKP(35)\n            .WithKI(0.0)\n            .WithKD(0.005)\n            .WithGravityType(GravityTypeValue::Elevator_Static)\n            .WithStaticFeedforwardSign(StaticFeedforwardSignValue::UseVelocitySign);\n};"
+    },
+    "checks": {
+      "java": [
+        { "type": "includes", "value": "public static final slot0configs slot0configs", "message": "Did you declare a public static final Slot0Configs named slot0Configs?" },
+        { "type": "includes", "value": "new slot0configs()", "message": "Did you create a new Slot0Configs()?" },
+        { "type": "includes", "value": ".withks(0.02)", "message": "Did you set kS to 0.02?" },
+        { "type": "includes", "value": ".withkv(4.14)", "message": "Did you set kV to 4.14?" },
+        { "type": "includes", "value": ".withka(0.1)", "message": "Did you set kA to 0.1?" },
+        { "type": "includes", "value": ".withkg(0.33)", "message": "Did you set kG to 0.33?" },
+        { "type": "includes", "value": ".withkp(35)", "message": "Did you set kP to 35?" },
+        { "type": "includes", "value": ".withki(0.0)", "message": "Did you set kI to 0.0?" },
+        { "type": "includes", "value": ".withkd(0.005)", "message": "Did you set kD to 0.005?" },
+        { "type": "includes", "value": ".withgravitytype(gravitytypevalue.elevator_static)", "message": "Did you set the gravity type to Elevator_Static?" },
+        { "type": "includes", "value": ".withstaticfeedforwardsign(staticfeedforwardsignvalue.usevelocitysign)", "message": "Did you set the static feedforward sign to UseVelocitySign?" }
+      ],
+      "python": [
+        { "type": "includes", "value": "slot0_configs", "message": "Did you name the variable slot0_configs?" },
+        { "type": "includes", "value": "slot0configs()", "message": "Did you create a Slot0Configs()?" },
+        { "type": "includes", "value": ".with_ks(0.02)", "message": "Did you set kS to 0.02?" },
+        { "type": "includes", "value": ".with_kv(4.14)", "message": "Did you set kV to 4.14?" },
+        { "type": "includes", "value": ".with_ka(0.1)", "message": "Did you set kA to 0.1?" },
+        { "type": "includes", "value": ".with_kg(0.33)", "message": "Did you set kG to 0.33?" },
+        { "type": "includes", "value": ".with_kp(35)", "message": "Did you set kP to 35?" },
+        { "type": "includes", "value": ".with_ki(0.0)", "message": "Did you set kI to 0.0?" },
+        { "type": "includes", "value": ".with_kd(0.005)", "message": "Did you set kD to 0.005?" },
+        { "type": "includes", "value": ".with_gravity_type(gravitytypevalue.elevator_static)", "message": "Did you set the gravity type to ELEVATOR_STATIC?" },
+        { "type": "includes", "value": ".with_static_feedforward_sign(staticfeedforwardsignvalue.use_velocity_sign)", "message": "Did you set the static feedforward sign to USE_VELOCITY_SIGN?" }
+      ],
+      "cpp": [
+        { "type": "includes", "value": "static inline slot0configs slot0configs", "message": "Did you declare a static Slot0Configs named slot0Configs?" },
+        { "type": "includes", "value": "slot0configs{}", "message": "Did you create a Slot0Configs{}?" },
+        { "type": "includes", "value": ".withks(0.02)", "message": "Did you set kS to 0.02?" },
+        { "type": "includes", "value": ".withkv(4.14)", "message": "Did you set kV to 4.14?" },
+        { "type": "includes", "value": ".withka(0.1)", "message": "Did you set kA to 0.1?" },
+        { "type": "includes", "value": ".withkg(0.33)", "message": "Did you set kG to 0.33?" },
+        { "type": "includes", "value": ".withkp(35)", "message": "Did you set kP to 35?" },
+        { "type": "includes", "value": ".withki(0.0)", "message": "Did you set kI to 0.0?" },
+        { "type": "includes", "value": ".withkd(0.005)", "message": "Did you set kD to 0.005?" },
+        { "type": "includes", "value": ".withgravitytype(gravitytypevalue::elevator_static)", "message": "Did you set the gravity type to Elevator_Static?" },
+        { "type": "includes", "value": ".withstaticfeedforwardsign(staticfeedforwardsignvalue::usevelocitysign)", "message": "Did you set the static feedforward sign to UseVelocitySign?" }
+      ]
+    }
+},
+{
+  "id": 8,
   "title": "Intake Subsystem",
   "description": "Create an IntakeSubsystem class with a TalonFX motor. Include three methods: setSpeed(double speed), which sets the motor to the given speed; reverseSpeed(double speed), which sets the motor to the negative of the given speed; and stop(), which stops the motor using set(0)",
   "starterCode": {
@@ -246,7 +300,7 @@
   }
 },
 {
-  "id": 8,
+  "id": 9,
   "title": "Arm Subsystem",
   "description": "Create an ArmSubsystem class with a TalonFX motor named armMotor using device ID 7. Include three methods: raiseArm(), which sets the motor to a speed of 0.5; lowerArm(), which sets the motor to a speed of -0.5; and stopArm(), which stops the motor using stopMotor().",
   "starterCode": {
@@ -328,7 +382,7 @@
   }
 },
 {
-  "id": 10,
+  "id": 11,
   "title": "Outtake Subsystem",
   "description": "Create an OuttakeSubsystem class with a TalonFX motor named outtakeMotor using device ID 4. Include three methods: outtake(double speed), which sets the motor to the given speed; reverseOuttake(double speed), which sets the motor to the negative of the given speed (to pull a game piece back in); and stop(), which stops the motor using stopMotor().",
   "starterCode": {
@@ -369,7 +423,7 @@
   }
 },
 {
-  "id": 11,
+  "id": 12,
   "title": "Arm Command",
   "description": "Create an ArmSubsystem class with a TalonFX motor named armMotor using device ID 7. Include a command method runArm() that returns a command running the motor at a speed of 0.5 continuously, using the run() factory method.",
   "starterCode": {
@@ -403,7 +457,7 @@
   }
 },
 {
-  "id": 12,
+  "id": 13,
   "title": "Outtake Command",
   "description": "Create an OuttakeSubsystem class with a TalonFX motor named outtakeMotor using device ID 4. Include a command method runOuttake(double speed) that returns a command running the motor at the given speed continuously, using the run() factory method.",
   "starterCode": {
@@ -438,7 +492,7 @@
   }
 },
 {
-  "id": 13,
+  "id": 14,
   "title": "Beam Break",
   "description": "Create an IntakeSubsystem with a TalonFX motor named intakeMotor (device ID 3) and a DigitalInput sensor named beamBreak on port 0. Create a command method intakeUntilBeamBreak() that runs the intake motor at speed 0.5 and automatically stops once the beam break sensor returns true, using the until() decorator.",
   "starterCode": {
@@ -474,7 +528,7 @@
   }
 },
 {
-  "id": 14,
+  "id": 15,
   "title": "Run Motor (3s)",
   "description": "Create a method runMotorFor3Seconds() in the given subsystem that runs the motor at a speed of 0.5 for 3 seconds and then stops automatically, using the withTimeout() decorator.",
   "starterCode": {
@@ -507,7 +561,7 @@
   }
 },
 {
-  "id": 15,
+  "id": 16,
   "title": "Parallel Commands",
   "description": "The subsystem already has two command methods, runIntake() and moveToPickup(). Create a method intakeAndLowerArm() that runs both commands at the same time (in parallel), using Commands.parallel().",
   "starterCode": {
@@ -542,7 +596,7 @@
   }
 },
 {
-  "id": 16,
+  "id": 17,
   "title": "Race Commands",
   "description": "The subsystem already has two command methods, runIntake() and moveToPickup(). Create a method intakeAndLowerArmRace() that runs both commands at the same time but stops all of them as soon as the first one finishes, using Commands.race().",
   "starterCode": {

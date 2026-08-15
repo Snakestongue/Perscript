@@ -4,7 +4,6 @@ import Footer from "./components/Footer.js";
 import FeedbackPopover from "./components/FeedbackPopover.js";
 import Header from "./components/Header.js";
 import SyntaxCode from "./components/SyntaxCode.js";
-
 const tracks = [
   {
     to: "/program",
@@ -15,7 +14,7 @@ const tracks = [
   {
     to: "/debug",
     title: "Debugging practice",
-    description: "Read real FRC-style snippets, find the failure, and learn why it happened.",
+    description: "Read real FRC-style snippets, find the failure, and learn why.",
     action: "Start debugging",
   },
   {
@@ -27,6 +26,7 @@ const tracks = [
 ];
 
 function App() {
+  
   useEffect(() => {
     document.title = "FRC Programming Practice | Java, C++, and Python Practice";
   }, []);
@@ -39,9 +39,7 @@ function App() {
             <h1 id="hero-title">Learn FRC coding.
               <span className="mt-6">Practice until it clicks.</span>
             </h1>
-            <p className="hero-summary">
-              Work on Java, C++, or Python exercises made for the code you will use on a robot.
-            </p>
+            <p className="hero-summary">Work on Java, C++, or Python exercises made for the code you will use during build season.</p>
             <div className="hero-actions">
               <Link className="
               button button-primary 
@@ -94,7 +92,7 @@ public class DriveSubsystem {
         <section className="tracks-section" aria-labelledby="tracks-title">
           <div className="section-heading">
             <h2 id="tracks-title">Choose where to start</h2>
-            <p>Each path is short enough to teach before build season.</p>
+            <p>Each path is short enough to teach or learn before build season.</p>
           </div>
 
           <div className="track-list">
@@ -124,6 +122,7 @@ public class DriveSubsystem {
 
       <Footer />
     </div>
+
   );
 }
 

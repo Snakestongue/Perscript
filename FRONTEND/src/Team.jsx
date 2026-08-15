@@ -32,11 +32,9 @@ function TeamModal({ onSubmit }) {
       first.focus();
     }
   }
-
   function handleSubmit(event) {
     event.preventDefault();
     const teamNumber = value.trim();
-
     if (!/^\d{1,5}$/.test(teamNumber)) {
       setError("Enter a team number using 1 to 5 digits.");
       return;
@@ -79,7 +77,7 @@ function TeamModal({ onSubmit }) {
               setValue(event.target.value);
               if (error) setError("");
             }}
-            placeholder="Example: 254"
+            placeholder="Example: 353"
             aria-invalid={Boolean(error)}
             aria-describedby={error ? "team-number-error" : "team-number-note"}
           />
