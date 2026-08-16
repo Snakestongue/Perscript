@@ -18,15 +18,12 @@ function Bug() {
     if (!problemId){
       return;
     }
-    const target =problemId.toUpperCase();
+    const target =problemId
     const frame= requestAnimationFrame(()=>{
       document.getElementById(target)?.scrollIntoView({block: "start", behavior:"smooth"});
     }); return () => cancelAnimationFrame(frame);
   },[problemId])
-
-  useEffect(() => {
-    document.title = "FRC Programming Practice | Debugging Practice";
-  }, []);
+  
   useEffect(() => {
     if (!location.hash) return;
     const frame = requestAnimationFrame(() => {
@@ -38,14 +35,13 @@ function Bug() {
 
   // share
   const [copiedId, setCopiedId] = useState(null);
-  // const [selectedProblem, setSelectedProblem] = useState(0);
   const shareProblem =async (problem) =>{
     const base = import.meta.env.BASE_URL.replace(/\/$/, "")
-    const url = `${window.location.origin}${base}/debug/${problem.id}`
+    const url = `${window.location.origin}${base}/debug/${problem.title}`
     if(navigator.share){
       try {
         await navigator.share({
-          title: `FRC Debugging Practice — ${problem.id}`,
+          title: `FRC Debugging Practice — ${problem.title}`,
           text: problem.question,
           url,
         });
@@ -55,7 +51,7 @@ function Bug() {
     }else{
       try {
         await navigator.clipboard.writeText(url);
-        setCopiedId(problem.id);
+        setCopiedId(problem.title);
         setTimeout(()=>setCopiedId(null), 1500);
       } catch (err) {
         console.error("Copy failed", err);
@@ -84,18 +80,18 @@ function Bug() {
               </div>
               <div className="debug-question-grid">
                 
-                {problems.slice(languageIndex * 8, languageIndex * 8 + 8).map((problem) => {
+                {problems.slice(languageIndex * 10, languageIndex * 10 + 10).map((problem) => {
                   const choices = [problem.choice1, problem.choice2, problem.choice3];
-                  const userChoice = selectedChoices[problem.id];
+                  const userChoice = selectedChoices[problem.title];
                   const isCorrect = userChoice === problem.CC;
 
-                  return <article className="bQ" id={problem.id} key={problem.id}>
+                  return <article className="bQ" id={problem.title} key={problem.id}>
                   <div className="bug-prompt">
                       <div className="
                       flex flex-row 
                       items-center justify-between
                        gap-4">
-                        <Link to={`/debug/${problem.id}`} className="bug-permalink" aria-label={`Link to problem ${problem.id}`}>
+                        <Link to={`/debug/${problem.title}`} className="bug-permalink" aria-label={`Link to problem ${problem.title}`}>
                           #{problem.id}
                         </Link>
                         <h2>{problem.question}</h2>
@@ -109,12 +105,12 @@ function Bug() {
                           hover:bg-[#7AADFF] 
                           hover:!text-black"
                           onClick={() => shareProblem(problem)}
-                          aria-label={`Share problem ${problem.id}`}
+                          aria-label={`Share problem ${problem.title}`}
                         >
-                          {copiedId === problem.id ? "Copied!" : "Share"}
+                          {copiedId === problem.title ? "Copied!" : "Share"}
                         </button>
                       </div>
-                      <pre id={`sample-${problem.id}`}><SyntaxCode code={problem.sampleCode} /></pre>
+                      <pre id={`sample-${problem.title}`}><SyntaxCode code={problem.sampleCode} /></pre>
                   </div>
                   <fieldset>
                     <legend className="sr-only">Choose the cause of the bug</legend>
@@ -122,12 +118,12 @@ function Bug() {
                       <label className="bug-labels" key={choiceIndex}>
                         <input
                           type="radio"
-                          name={`problem-${problem.id}`}
+                          name={`problem-${problem.title}`}
                           value={choice}
                           checked={userChoice === choice}
                           onChange={(event) => setSelectedChoices({
                             ...selectedChoices,
-                            [problem.id]: event.target.value,
+                            [problem.title]: event.target.value,
                           })}
                         />
                         <span>{choice}</span>

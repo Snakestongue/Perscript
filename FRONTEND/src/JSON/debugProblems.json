@@ -7,7 +7,9 @@
         "choice2": "Static must be removed.",
         "choice3": "Double must be a different type.",
         "CC": "Needs public instead of private.",
-        "whyCorrect": "If your constant is private the other classes or subsystems CANNOT acesses it!"
+        "whyCorrect": "If your constant is private the other classes or subsystems CANNOT acesses it!",
+        "language": "java",
+        "title": "java-constant"
     },
     {
         "id": "2",
@@ -17,7 +19,9 @@
         "choice2": "Missing return statement.",
         "choice3": "Motor speed cannot be set to 1.",
         "CC": "Missing return statement.",
-        "whyCorrect": "Every Command must have a return statement!"
+        "whyCorrect": "Every Command must have a return statement!",
+        "language": "java",
+        "title": "java-return"
     },
     {
         "id": "3",
@@ -27,7 +31,9 @@
         "choice2": "Should not be a Command, must be a method.",
         "choice3": "Must use runOnce.",
         "CC": "Must use runOnce.",
-        "whyCorrect": "For stopping any motor, always use runOnce. We don't want to keep stopping the motor, once is fine."
+        "whyCorrect": "For stopping any motor, always use runOnce. We don't want to keep stopping the motor, once is fine.",
+        "language": "java",
+        "title": "java-stop"
     },
     {
         "id": "4",
@@ -37,107 +43,129 @@
         "choice2": "Must use run instead",
         "choice3": "Must include static",
         "CC": "There is void.",
-        "whyCorrect": "Using void means the method does NOT return anything. In this code we DO return something. This format is also for a Command instead of void."
+        "whyCorrect": "Using void means the method does NOT return anything. In this code we DO return something. This format is also for a Command instead of void.",
+        "language": "java",
+        "title": "java-void"
     },
     {
         "id": "5",
-        "question": "What is the error in the following code?",
-        "sampleCode": "public class IntakeCommand extends CommandBase {\n\tprivate final IntakeSubsystem intake;\n\tpublic IntakeCommand(IntakeSubsystem intake) {\n\t\tthis.intake = intake;\n\t}\n}",
-        "choice1": "Needs execute() method only.",
-        "choice2": "Needs addRequirements(intake).",
-        "choice3": "Should not have a constructor.",
-        "CC": "Needs addRequirements(intake).",
-        "whyCorrect": "Without addRequirements, the scheduler doesn't know this command uses the intake subsystem, which can let conflicting commands run at the same time."
-    },
-    {
-        "id": "6",
-        "question": "What is the error in the following code?",
-        "sampleCode": "public Command intakeCommand() {\n\treturn new RunCommand(() -> intakeMotor.set(0.5));\n}",
-        "choice1": "Must use StartEndCommand instead.",
-        "choice2": "RunCommand cannot use lambda.",
-        "choice3": "Missing subsystem requirement in RunCommand.",
-        "CC": "Missing subsystem requirement in RunCommand.",
-        "whyCorrect": "RunCommand's constructor needs the subsystem passed as a requirement (e.g., new RunCommand(() -> ..., this)) so the scheduler can manage conflicts."
-    },
-    {
-        "id": "7",
         "question": "What is the error in the following code?",
         "sampleCode": "public class ShootCommand extends CommandBase {\n\tprivate final ShooterSubsystem shooter;\n\tpublic ShootCommand(ShooterSubsystem shooter) {\n\t\taddRequirements(shooter);\n\t}\n\t@Override\n\tpublic void execute() {\n\t\tshooter.shoot();\n\t}\n}",
         "choice1": "Missing this.shooter = shooter in constructor.",
         "choice2": "addRequirements must be in execute().",
         "choice3": "execute() should return a value.",
         "CC": "Missing this.shooter = shooter in constructor.",
-        "whyCorrect": "The field shooter is never assigned, so it stays null and calling shooter.shoot() will throw a NullPointerException."
+        "whyCorrect": "The field shooter is never assigned, so it stays null and calling shooter.shoot() will throw a NullPointerException.",
+        "language": "java",
+        "title": "java-field"
     },
     {
-        "id": "8",
+        "id": "6",
+        "language": "java",
+        "title": "java-semi",
         "question": "What is the error in the following code?",
-        "sampleCode": "public class AutoIntake extends CommandBase {\n\tpublic void initialize() {\n\t\tnew IntakeCommand(intake).schedule();\n\t}\n}",
-        "choice1": "Initialize needs a return type.",
-        "choice2": "Should not call .schedule() inside a command.",
-        "choice3": "IntakeCommand needs no requirements.",
-        "CC": "Should not call .schedule() inside a command.",
-        "whyCorrect": "Scheduling a command from within another command bypasses proper composition and can cause requirement conflicts. Use command groups like andThen instead."
+        "sampleCode": "public class ShooterSubsystem extends SubsystemBase {\n\tprivate TalonFX shooterMotor = new TalonFX(6)\n}",
+        "choice1": "Missing semicolon after the motor declaration.",
+        "choice2": "TalonFX constructor needs two arguments.",
+        "choice3": "SubsystemBase should not be extended here.",
+        "CC": "Missing semicolon after the motor declaration.",
+        "whyCorrect": "Every field declaration in Java must end with a semicolon, or the code will not compile."
     },
     {
-        "id": "9",
+        "id": "7",
+        "language": "java",
+        "title": "java-comma",
+        "question": "What is the error in the following code?",
+        "sampleCode": "public class Robot extends TimedRobot {\n\t@Override\n\tpublic void robotPeriodic() {\n\t\tSmartDashboard.putNumber(\"Speed\" 0.5);\n\t}\n}",
+        "choice1": "Missing comma between the key and the value.",
+        "choice2": "robotPeriodic should return a double.",
+        "choice3": "@Override is not allowed here.",
+        "CC": "Missing comma between the key and the value.",
+        "whyCorrect": "Method arguments must be separated by commas. Without one, putNumber(\"Speed\" 0.5) will not compile."
+    },
+    {
+        "language": "java",
+        "title": "java-config",
+        "question": "What is the error in the following code?",
+        "sampleCode": "public ElevatorSubsystem() {\n\tTalonFXConfiguration config = new TalonFXConfiguration();\n\tconfig.Slot0.kP = 10;\n\televatorMotor.getConfigurator();\n}",
+        "choice1": "Missing elevatorMotor.getConfigurator().apply(config);",
+        "choice2": "kP should be a String, not an int.",
+        "choice3": "TalonFXConfiguration should extend SubsystemBase.",
+        "CC": "Missing elevatorMotor.getConfigurator().apply(config);",
+        "whyCorrect": "Building a TalonFXConfiguration object only stores the settings locally. You must call apply(config) on the motor's configurator, or the gains are never actually sent to the motor.",
+        "id": "8"
+    },
+    {
+        "language": "java",
+        "title": "java-chain",
+        "question": "What is the error in the following code?",
+        "sampleCode": "Slot0Configs slot0Configs = new Slot0Configs()\n\t.withKS(0.02)\n\t.withKV(4.14)\n\tkA(0.1);",
+        "choice1": "Missing .withKA( ) \u2014 each gain in the chain needs a leading dot and the with prefix.",
+        "choice2": "withKV should come after kA.",
+        "choice3": "Slot0Configs cannot be chained with dots.",
+        "CC": "Missing .withKA( ) \u2014 each gain in the chain needs a leading dot and the with prefix.",
+        "whyCorrect": "Every gain in a chained Slot0Configs call must start with a dot and the with prefix, like .withKA(0.1). Writing kA(0.1) without the dot and prefix breaks the method chain and won't compile.",
+        "id": "9"
+    },
+    {
+        "language": "java",
+        "title": "java-command",
+        "question": "What is the error in the following code?",
+        "sampleCode": "public Command autoScore() {\n\treturn Commands.sequence(\n\t\traiseArm(),\n\t\trunIntake());\n}\npublic Command raiseArm() {\n\treturn run(() -> arm.set(0.5));\n}",
+        "choice1": "raiseArm() never finishes, so the sequence gets stuck on it forever.",
+        "choice2": "Commands.sequence() should be Commands.parallel().",
+        "choice3": "run() cannot be used inside a sequence.",
+        "CC": "raiseArm() never finishes, so the sequence gets stuck on it forever.",
+        "whyCorrect": "run() creates a command that never ends on its own. In a sequence, the next command can't start until the current one finishes, so autoScore() will raise the arm forever unless raiseArm() has an end condition like .until() or .withTimeout().",
+        "id": "10"
+    },
+    {
+        "id": "11",
         "question": "What is the error in the following code?",
         "sampleCode": "def start_intake():\n\tself.intake_motor.set(1)",
         "choice1": "Needs a return statement",
         "choice2": "Motor speed should be a boolean",
         "choice3": "Should have self as a parameter",
         "CC": "Should have self as a parameter",
-        "whyCorrect": "Since self is used, it must be passed through in the function"
+        "whyCorrect": "Since self is used, it must be passed through in the function",
+        "language": "python",
+        "title": "python-self"
     },
     {
-        "id": "10",
+        "id": "12",
         "question": "What is the error in the following code?",
         "sampleCode": "from commands2.button import JoystickButton;\ndef configureBindings(self):\n\tstop_button = XBOXButton(self.controller, 2);\n\tstop_button.onTrue(self.stopIntakeCommand())",
         "choice1": "XBOX button does not match import",
         "choice2": "OnTrue is not allowed.",
         "choice3": "2 is not allowed as a port",
         "CC": "XBOX button does not match import",
-        "whyCorrect": "If you are using XBOX controller, import CommandXboxController. If you are using a joystick, use JoystickButton. "
+        "whyCorrect": "If you are using XBOX controller, import CommandXboxController. If you are using a joystick, use JoystickButton. ",
+        "language": "python",
+        "title": "python-import"
     },
     {
-        "id": "11",
+        "id": "13",
         "question": "What is the error in the following code?",
         "sampleCode": "def keepRunning(self):\n\ttry:\n\t\tself.motor.setSpeed(0.5)\n\tfinally:\n\t\tself.motor.setSpeed(0.0)\n\t\tprint(\"Motor stopped safely\")",
         "choice1": "Requires try/except instead",
         "choice2": "Setspeed is not real",
         "choice3": "Should use stopMotor() instead",
         "CC": "Setspeed is not real",
-        "whyCorrect": "No such thing as setspeed. Use documentation if you're unsure."
+        "whyCorrect": "No such thing as setspeed. Use documentation if you're unsure.",
+        "language": "python",
+        "title": "python-method"
     },
     {
-        "id": "12",
-        "question": "What is the error in the following code?",
-        "sampleCode": "class IntakeCommand(commands2.Command):\n\tdef __init__(self, intake):\n\t\tself.intake = intake\n\t\tself.addRequirements(intake)",
-        "choice1": "Needs static method",
-        "choice2": "addRequirements should be in execute",
-        "choice3": "Missing super().__init__()",
-        "CC": "Missing super().__init__()",
-        "whyCorrect": "Without calling super().__init__(), the base Command class isn't properly initialized, which can cause the command to behave incorrectly."
-    },
-    {
-        "id": "13",
+        "id": "14",
         "question": "What is the error in the following code?",
         "sampleCode": "def intake_command(self):\n\tcommands2.cmd.run(lambda: self.intake_motor.set(0.5), self)",
         "choice1": "Missing return statement",
         "choice2": "Lambda not needed",
         "choice3": "Should use runOnce instead",
         "CC": "Missing return statement",
-        "whyCorrect": "Without return, the command factory method produces nothing usable, so callers can't bind or schedule the command."
-    },
-    {
-        "id": "14",
-        "question": "What is the error in the following code?",
-        "sampleCode": "def stop_intake(self):\n\treturn commands2.cmd.runOnce(lambda: self.intake_motor.stopMotor())",
-        "choice1": "runOnce needs no lambda.",
-        "choice2": "Missing subsystem as second argument.",
-        "choice3": "Should be commands2.cmd.run instead.",
-        "CC": "Missing subsystem as second argument.",
-        "whyCorrect": "runOnce needs the subsystem passed in as a requirement (e.g., runOnce(lambda: ..., self)) so the scheduler knows it uses that subsystem."
+        "whyCorrect": "Without return, the command factory method produces nothing usable, so callers can't bind or schedule the command.",
+        "language": "python",
+        "title": "python-return"
     },
     {
         "id": "15",
@@ -147,7 +175,9 @@
         "choice2": "onTrue should be onFalse.",
         "choice3": "Missing parentheses on stop_intake().",
         "CC": "Missing parentheses on stop_intake().",
-        "whyCorrect": "onTrue needs an actual Command object. Passing self.stop_intake without calling it passes a function reference instead of the Command it returns."
+        "whyCorrect": "onTrue needs an actual Command object. Passing self.stop_intake without calling it passes a function reference instead of the Command it returns.",
+        "language": "python",
+        "title": "python-reference"
     },
     {
         "id": "16",
@@ -157,86 +187,176 @@
         "choice2": "Variable name should not be uppercase.",
         "choice3": "Classes cannot contain constants",
         "CC": "Uses == instead of =",
-        "whyCorrect": "By using ==, you are comparing the 2 values, not setting the value of 0.8 to the variable"
+        "whyCorrect": "By using ==, you are comparing the 2 values, not setting the value of 0.8 to the variable",
+        "language": "python",
+        "title": "python-assignment"
     },
     {
         "id": "17",
+        "language": "python",
+        "title": "python-tab",
+        "question": "What is the error in the following code?",
+        "sampleCode": "def stop_intake(self):\nreturn self.intake_motor.stopMotor()",
+        "choice1": "Missing indentation before return.",
+        "choice2": "stopMotor() should be stop_motor().",
+        "choice3": "Should not use self.",
+        "CC": "Missing indentation before return.",
+        "whyCorrect": "Python uses indentation to define code blocks. Without indenting the return statement, it isn't considered part of the function and will cause an IndentationError."
+    },
+    {
+        "id": "18",
+        "language": "python",
+        "title": "python-method2",
+        "question": "What is the error in the following code?",
+        "sampleCode": "def run_intake(self):\n\tself.intake_motor.Set(0.5)",
+        "choice1": "Set() should be lowercase set().",
+        "choice2": "Missing a return statement.",
+        "choice3": "0.5 should be an integer.",
+        "CC": "Set() should be lowercase set().",
+        "whyCorrect": "Python bindings for motor controllers use lowercase method names like set(), not the capitalized Set() used in Java/C++ style code."
+    },
+    {
+        "language": "python",
+        "title": "python-attribute",
+        "question": "What is the error in the following code?",
+        "sampleCode": "def __init__(self):\n\tconfig = TalonFXConfiguration()\n\tconfig.Slot0.kP = 10\n\tself.elevator_motor.configurator.apply(config)",
+        "choice1": "Should be config.slot0.k_p, not config.Slot0.kP.",
+        "choice2": "configurator should be capitalized.",
+        "choice3": "apply() should take no arguments.",
+        "CC": "Should be config.slot0.k_p, not config.Slot0.kP.",
+        "whyCorrect": "Python phoenix6 bindings use snake_case attribute names like slot0.k_p, not the PascalCase Slot0.kP used in Java/C++.",
+        "id": "19"
+    },
+    {
+        "language": "python",
+        "title": "python-magicmotion",
+        "question": "What is the error in the following code?",
+        "sampleCode": "def __init__(self):\n\tconfig = TalonFXConfiguration()\n\tconfig.motion_magic.motion_magic_cruise_velocity = 80\n\tconfig.motion_magic_acceleration = 160",
+        "choice1": "motion_magic_acceleration should be set under config.motion_magic, not directly on config.",
+        "choice2": "motion_magic_cruise_velocity should be negative.",
+        "choice3": "TalonFXConfiguration doesn't support motion_magic in Python.",
+        "CC": "motion_magic_acceleration should be set under config.motion_magic, not directly on config.",
+        "whyCorrect": "Motion Magic settings are grouped under the motion_magic sub-object of the configuration. Setting config.motion_magic_acceleration directly creates a brand new, unused attribute, so the acceleration stays at its default.",
+        "id": "20"
+    },
+    {
+        "id": "21",
         "question": "What is the error in the following code?",
         "sampleCode": "class Constants {\n\tpublic:\n\t\tstatic constexpr void MAX_DRIVE_SPEED = 0.8;\n};",
         "choice1": "Constexpr is not supposed to be used.",
         "choice2": "Void is used.",
         "choice3": "Constants shouldn't be static",
         "CC": "Void is used.",
-        "whyCorrect": "By using void, you aren't able to have a value. Use double instead. "
+        "whyCorrect": "By using void, you aren't able to have a value. Use double instead. ",
+        "language": "cpp",
+        "title": "cpp-constant"
     },
     {
-        "id": "18",
+        "id": "22",
         "question": "What is the error in the following code?",
         "sampleCode": "public:\nstopIntakeMotor() {\n\t\tintakeMotor.stopMotor();\n\t}",
         "choice1": "Should return a value",
         "choice2": "Must be private",
         "choice3": "Needs void.",
         "CC": "Needs void.",
-        "whyCorrect": "Since we are stopping a motor, nothing should be returned and therefore void is needed."
+        "whyCorrect": "Since we are stopping a motor, nothing should be returned and therefore void is needed.",
+        "language": "cpp",
+        "title": "cpp-void"
     },
     {
-        "id": "19",
+        "id": "23",
         "question": "What is the error in the following code?",
         "sampleCode": "public class Intake : frc2::SubsystemBase {\nprivate:\n\tconst TalonFX intakeMotor{3};\n};",
         "choice1": "You do not put public in front of class.",
         "choice2": "TalonFX should be declared as public",
         "choice3": "Class should be private",
         "CC": "You do not put public in front of class.",
-        "whyCorrect": "Public does not go in front of class, it goes in front of :. "
+        "whyCorrect": "Public does not go in front of class, it goes in front of :. ",
+        "language": "cpp",
+        "title": "cpp-public"
     },
     {
-        "id": "20",
+        "id": "24",
         "question": "What is the error in the following code?",
         "sampleCode": "double IntakeSubsystem::stopIntake() {\n\tm_motor.StopMotor();\n}",
         "choice1": "IntakeSubsystem::stopIntake() is invalid syntax",
         "choice2": "Should remove double",
         "choice3": "StopMotor() is invalid",
         "CC": "Should remove double",
-        "whyCorrect": "Since you are stopping a motor, nothing should be returned, therefore needing void."
+        "whyCorrect": "Since you are stopping a motor, nothing should be returned, therefore needing void.",
+        "language": "cpp",
+        "title": "cpp-double"
     },
     {
-        "id": "21",
-        "question": "What is the error in the following code?",
-        "sampleCode": "class IntakeCommand : public frc2::CommandHelper<frc2::CommandBase, IntakeCommand> {\npublic:\n\tIntakeCommand(IntakeSubsystem* intake) : m_intake(intake) {}\nprivate:\n\tIntakeSubsystem* m_intake;\n};",
-        "choice1": "CommandHelper is unnecessary.",
-        "choice2": "Pointer should not be used.",
-        "choice3": "Missing AddRequirements(m_intake).",
-        "CC": "Missing AddRequirements(m_intake).",
-        "whyCorrect": "Without calling AddRequirements in the constructor body, the scheduler won't know this command requires the intake subsystem."
-    },
-    {
-        "id": "22",
-        "question": "What is the error in the following code?",
-        "sampleCode": "void IntakeSubsystem::IntakeCommand() {\n\treturn RunOnce([this] { m_motor.Set(0.5); });\n}",
-        "choice1": "Return type should be frc2::CommandPtr.",
-        "choice2": "RunOnce needs no lambda.",
-        "choice3": "Must use double as return type.",
-        "CC": "Return type should be frc2::CommandPtr.",
-        "whyCorrect": "A void function can't return a value. Command factory methods must return frc2::CommandPtr so the command can actually be used."
-    },
-    {
-        "id": "23",
-        "question": "What is the error in the following code?",
-        "sampleCode": "frc2::CommandPtr IntakeSubsystem::StopIntake() {\n\treturn RunOnce([] { m_motor.StopMotor(); });\n}",
-        "choice1": "RunOnce should be Run.",
-        "choice2": "Lambda missing [this] capture.",
-        "choice3": "StopMotor() needs an argument.",
-        "CC": "Lambda missing [this] capture.",
-        "whyCorrect": "Without [this] in the capture list, the lambda can't access the member variable m_motor and won't compile."
-    },
-    {
-        "id": "24",
+        "id": "25",
         "question": "What is the error in the following code?",
         "sampleCode": "void RobotContainer::ConfigureBindings() {\n\tm_stopButton.OnTrue(IntakeStopCommand());\n}",
         "choice1": "Button number is invalid.",
         "choice2": "OnTrue needs OnFalse instead.",
         "choice3": "Missing .ToPtr() conversion.",
         "CC": "Missing .ToPtr() conversion.",
-        "whyCorrect": "OnTrue expects a frc2::CommandPtr. A command object built without .ToPtr() won't match the expected type and will fail to compile."
+        "whyCorrect": "OnTrue expects a frc2::CommandPtr. A command object built without .ToPtr() won't match the expected type and will fail to compile.",
+        "language": "cpp",
+        "title": "cpp-conversion"
+    },
+    {
+        "id": "26",
+        "language": "cpp",
+        "title": "cpp-semicolon",
+        "question": "What is the error in the following code?",
+        "sampleCode": "class Intake : public frc2::SubsystemBase {\n\tprivate:\n\t\tTalonFX intakeMotor{3};\n}",
+        "choice1": "Missing semicolon after the closing brace of the class.",
+        "choice2": "TalonFX should not use braces.",
+        "choice3": "private should be public.",
+        "CC": "Missing semicolon after the closing brace of the class.",
+        "whyCorrect": "In C++, a class definition must end with a semicolon after the closing brace, or the code will fail to compile."
+    },
+    {
+        "id": "27",
+        "language": "cpp",
+        "title": "cpp-operator",
+        "question": "What is the error in the following code?",
+        "sampleCode": "IntakeSubsystem* intake;\nintake.Stop();",
+        "choice1": "Should use -> instead of . to call a method through a pointer.",
+        "choice2": "Stop() must be static.",
+        "choice3": "The pointer should be declared as a reference instead.",
+        "CC": "Should use -> instead of . to call a method through a pointer.",
+        "whyCorrect": "When accessing members through a pointer, C++ requires the arrow operator (->), not the dot operator, which is only for objects and references."
+    },
+    {
+        "language": "cpp",
+        "title": "cpp-config",
+        "question": "What is the error in the following code?",
+        "sampleCode": "ctre::phoenix6::configs::TalonFXConfiguration config{};\nconfig.Slot0.kP = 10;\nelevatorMotor.GetConfigurator();",
+        "choice1": "Missing elevatorMotor.GetConfigurator().Apply(config);",
+        "choice2": "kP should be wrapped in quotes.",
+        "choice3": "TalonFXConfiguration should be a pointer.",
+        "CC": "Missing elevatorMotor.GetConfigurator().Apply(config);",
+        "whyCorrect": "Building a TalonFXConfiguration only stores the settings locally. You must call Apply(config) on the motor's configurator, or the gains never actually reach the motor.",
+        "id": "28"
+    },
+    {
+        "language": "cpp",
+        "title": "cpp-command",
+        "question": "What is the error in the following code?",
+        "sampleCode": "frc2::CommandPtr AutoScore() {\n\treturn frc2::cmd::Sequence(\n\t\tRaiseArm(),\n\t\tRunIntake());\n}\nfrc2::CommandPtr RaiseArm() {\n\treturn Run([this] { arm.Set(0.5); });\n}",
+        "choice1": "RaiseArm() never finishes, so the sequence gets stuck on it forever.",
+        "choice2": "frc2::cmd::Sequence() should be frc2::cmd::Parallel().",
+        "choice3": "Run() cannot be used inside a sequence.",
+        "CC": "RaiseArm() never finishes, so the sequence gets stuck on it forever.",
+        "whyCorrect": "Run() creates a command that never ends on its own. In a sequence, the next command can't start until the current one finishes, so AutoScore() will raise the arm forever unless RaiseArm() has an end condition like .Until() or .WithTimeout().",
+        "id": "29"
+    },
+    {
+        "language": "cpp",
+        "title": "cpp-semicolon2",
+        "question": "What is the error in the following code?",
+        "sampleCode": "ctre::phoenix6::configs::TalonFXConfiguration config{};\nconfig.MotionMagic.MotionMagicCruiseVelocity = 80\nconfig.MotionMagic.MotionMagicAcceleration = 160;",
+        "choice1": "Missing semicolon after the cruise velocity line.",
+        "choice2": "MotionMagicAcceleration should come before MotionMagicCruiseVelocity.",
+        "choice3": "The config object should not use braces {}.",
+        "CC": "Missing semicolon after the cruise velocity line.",
+        "whyCorrect": "Every statement in C++ must end with a semicolon. Without one after MotionMagicCruiseVelocity = 80, the code will fail to compile.",
+        "id": "30"
     }
 ]

@@ -77,6 +77,10 @@ function Program() {
   const [currentLang, setCurrentLang] = useState("java")
   const [copiedLink, setCopiedLink] = useState(false);
   const [copiedCode, setCopiedCode] = useState(false);
+  const [openGroupId, setOpenGroupId] = useState(() => {
+  const group = exerciseGroups.find((g) => g.problems.some((p) => p.id === selectedProblem.id));
+    return group?.id ?? exerciseGroups[0].id;
+  });
 
   async function shareLink() {
     const base = import.meta.env.BASE_URL.replace(/\/$/, "")
@@ -167,6 +171,11 @@ function Program() {
     setAiContent("");
   }, [currentLang, selectedProblem]);
   useEffect(() => () => vimRef.current?.dispose(), []);
+  
+  useEffect(() => {
+    const group = exerciseGroups.find((g) => g.problems.some((p) => p.id === selectedProblem.id));
+    if (group) setOpenGroupId(group.id);
+  }, [selectedProblem]);
 
   function selectProblem(problem) {
     setSelectedProblem(problem);
@@ -279,40 +288,57 @@ function Program() {
             </div>
           </fieldset>
 
-          <nav
-            className="exercise-nav media-moveable"
-            aria-label="Exercises"
-          >
-            {exerciseGroups.map((group) => (
-              <section
-                id={group.id}
-                key={group.label}
-                style={{
-                  "--group-progress": Math.min(1, Math.max(0,
-                    (selectedProblemIndex - problems.indexOf(group.problems[0])) / (group.problems.length - 1)
-                  )),
-                }}
-              >
-                <h2 className="max-lg:hidden">{group.label}</h2>
-                <div>
-                  {group.problems.map((problem) => (
-                    <button
-                      className={problem.id === selectedProblem.id ? "program-buttons active" : "program-buttons"}
-                      key={problem.id}
-                      type="button"
-                      data-complete={problem.id < selectedProblem.id}
-                      aria-current={problem.id === selectedProblem.id ? "true" : undefined}
-                      aria-label={`Exercise ${problem.id}: ${problem.title}`}
-                      onClick={() => selectProblem(problem)}
-                    >
-                      <span className="exercise-step-dot" aria-hidden="true" />
-                      {problem.title}
-                    </button>
-                  ))}
-                </div>
-              </section>
-            ))}
-          </nav>
+          <nav className="exercise-nav media-moveable" aria-label="Exercises">
+  {exerciseGroups.map((group) => {
+    const isOpen = openGroupId === group.id;
+    return (
+      <section
+        id={group.id}
+        key={group.label}
+        className="exercise-group"
+        style={{
+          "--group-progress": Math.min(1, Math.max(0,
+            (selectedProblemIndex - problems.indexOf(group.problems[0])) / (group.problems.length - 1)
+          )),
+        }}
+      >
+        <button
+          type="button"
+          className="group-header max-lg:hidden"
+          onClick={() => setOpenGroupId(isOpen ? group.id : group.id)}
+          aria-expanded={isOpen}
+          aria-controls={`${group.id}-panel`}
+        >
+          <h2>{group.label}</h2>
+          <span className="group-chevron" data-open={isOpen} aria-hidden="true">
+            ▾
+          </span>
+        </button>
+
+        <div className="group-collapse" data-open={isOpen} id={`${group.id}-panel`}>
+          <div className="group-collapse-inner">
+            <div>
+              {group.problems.map((problem) => (
+                <button
+                  className={problem.id === selectedProblem.id ? "program-buttons active" : "program-buttons"}
+                  key={problem.id}
+                  type="button"
+                  data-complete={problem.id < selectedProblem.id}
+                  aria-current={problem.id === selectedProblem.id ? "true" : undefined}
+                  aria-label={`Exercise ${problem.id}: ${problem.title}`}
+                  onClick={() => selectProblem(problem)}
+                >
+                  <span className="exercise-step-dot" aria-hidden="true" />
+                  {problem.title}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  })}
+</nav>
         </aside>
 
         <section id="browser-editor" className="editor-stage" aria-labelledby="exercise-title">

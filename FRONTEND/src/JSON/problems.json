@@ -265,6 +265,44 @@
 },
 {
   "id": 8,
+  "title": "SmartDashboard Reading",
+  "description": "In the periodic() method of the subsystem, publish the current motor velocity to SmartDashboard under the key \"Motor Velocity\" using SmartDashboard.putNumber, reading the value from motor.getVelocity().getValueAsDouble().",
+  "starterCode": {
+    "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix6.hardware.TalonFX;\nimport edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class TestSubsystem extends SubsystemBase {\n\tprivate final TalonFX motor = new TalonFX(1);\n\t//Write code here and remove this comment.\n}",
+    "python": "from phoenix6.hardware import TalonFX\nfrom wpilib import SmartDashboard\nfrom wpilib2.command import SubsystemBase\nclass TestSubsystem(SubsystemBase):\n\tmotor = TalonFX(1)\n\t#Write code here and remove this comment.",
+    "cpp": "#include \"frc2/command/SubsystemBase.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\n#include \"frc/smartdashboard/SmartDashboard.h\"\nclass TestSubsystem : public frc2::SubsystemBase {\npublic:\n\t//Write code here and remove this comment.\nprivate:\n\tctre::phoenix6::hardware::TalonFX motor{1};\n};\n"
+  },
+  "solutionCode": {
+    "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix6.hardware.TalonFX;\nimport edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class TestSubsystem extends SubsystemBase {\n\tprivate final TalonFX motor = new TalonFX(1);\n\t@Override\n\tpublic void periodic() {\n\t\tSmartDashboard.putNumber(\"Motor Velocity\", motor.getVelocity().getValueAsDouble());\n\t}\n}",
+    "python": "from phoenix6.hardware import TalonFX\nfrom wpilib import SmartDashboard\nfrom wpilib2.command import SubsystemBase\nclass TestSubsystem(SubsystemBase):\n\tmotor = TalonFX(1)\n\tdef periodic(self):\n\t\tSmartDashboard.putNumber(\"Motor Velocity\", self.motor.get_velocity().value_as_double)\n",
+    "cpp": "#include \"frc2/command/SubsystemBase.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\n#include \"frc/smartdashboard/SmartDashboard.h\"\nclass TestSubsystem : public frc2::SubsystemBase {\npublic:\n\tvoid Periodic() override {\n\t\tfrc::SmartDashboard::PutNumber(\"Motor Velocity\", motor.GetVelocity().GetValueAsDouble());\n\t}\nprivate:\n\tctre::phoenix6::hardware::TalonFX motor{1};\n};\n"
+  },
+  "checks": {
+    "java": [
+      { "type": "includes", "value": "public void periodic", "message": "Did you override the periodic() method?" },
+      { "type": "includes", "value": "smartdashboard.putnumber", "message": "Did you use SmartDashboard.putNumber?" },
+      { "type": "includes", "value": "\"motor velocity\"", "message": "Did you use the key \"Motor Velocity\"?" },
+      { "type": "includes", "value": "getvelocity", "message": "Did you read the motor's velocity?" },
+      { "type": "includes", "value": "getvalueasdouble", "message": "Did you convert the value using getValueAsDouble()?" }
+    ],
+    "python": [
+      { "type": "includes", "value": "def periodic", "message": "Did you define a periodic method?" },
+      { "type": "includes", "value": "smartdashboard.putnumber", "message": "Did you use SmartDashboard.putNumber?" },
+      { "type": "includes", "value": "\"motor velocity\"", "message": "Did you use the key \"Motor Velocity\"?" },
+      { "type": "includes", "value": "get_velocity", "message": "Did you read the motor's velocity?" },
+      { "type": "includes", "value": "value_as_double", "message": "Did you convert the value using value_as_double?" }
+    ],
+    "cpp": [
+      { "type": "includes", "value": "void periodic() override", "message": "Did you override the Periodic() method?" },
+      { "type": "includes", "value": "smartdashboard::putnumber", "message": "Did you use frc::SmartDashboard::PutNumber?" },
+      { "type": "includes", "value": "\"motor velocity\"", "message": "Did you use the key \"Motor Velocity\"?" },
+      { "type": "includes", "value": "getvelocity", "message": "Did you read the motor's velocity?" },
+      { "type": "includes", "value": "getvalueasdouble", "message": "Did you convert the value using GetValueAsDouble()?" }
+    ]
+  }
+},
+{
+  "id": 9,
   "title": "Intake Subsystem",
   "description": "Create an IntakeSubsystem class with a TalonFX motor. Include three methods: setSpeed(double speed), which sets the motor to the given speed; reverseSpeed(double speed), which sets the motor to the negative of the given speed; and stop(), which stops the motor using set(0)",
   "starterCode": {
@@ -300,7 +338,7 @@
   }
 },
 {
-  "id": 9,
+  "id": 10,
   "title": "Arm Subsystem",
   "description": "Create an ArmSubsystem class with a TalonFX motor named armMotor using device ID 7. Include three methods: raiseArm(), which sets the motor to a speed of 0.5; lowerArm(), which sets the motor to a speed of -0.5; and stopArm(), which stops the motor using stopMotor().",
   "starterCode": {
@@ -341,7 +379,7 @@
   }
 },
 {
-  "id": 9,
+  "id": 11,
   "title": "Climber Subsystem",
   "description": "Create a ClimberSubsystem class with a TalonFX motor named climberMotor using device ID 9. Include three methods: climbUp(), which sets the motor to a speed of 1.0; climbDown(), which sets the motor to a speed of -1.0; and stopClimber(), which stops the motor using stopMotor().",
   "starterCode": {
@@ -382,7 +420,7 @@
   }
 },
 {
-  "id": 11,
+  "id": 12,
   "title": "Outtake Subsystem",
   "description": "Create an OuttakeSubsystem class with a TalonFX motor named outtakeMotor using device ID 4. Include three methods: outtake(double speed), which sets the motor to the given speed; reverseOuttake(double speed), which sets the motor to the negative of the given speed (to pull a game piece back in); and stop(), which stops the motor using stopMotor().",
   "starterCode": {
@@ -423,7 +461,7 @@
   }
 },
 {
-  "id": 12,
+  "id": 13,
   "title": "Arm Command",
   "description": "Create an ArmSubsystem class with a TalonFX motor named armMotor using device ID 7. Include a command method runArm() that returns a command running the motor at a speed of 0.5 continuously, using the run() factory method.",
   "starterCode": {
@@ -457,7 +495,7 @@
   }
 },
 {
-  "id": 13,
+  "id": 14,
   "title": "Outtake Command",
   "description": "Create an OuttakeSubsystem class with a TalonFX motor named outtakeMotor using device ID 4. Include a command method runOuttake(double speed) that returns a command running the motor at the given speed continuously, using the run() factory method.",
   "starterCode": {
@@ -492,7 +530,7 @@
   }
 },
 {
-  "id": 14,
+  "id": 15,
   "title": "Beam Break",
   "description": "Create an IntakeSubsystem with a TalonFX motor named intakeMotor (device ID 3) and a DigitalInput sensor named beamBreak on port 0. Create a command method intakeUntilBeamBreak() that runs the intake motor at speed 0.5 and automatically stops once the beam break sensor returns true, using the until() decorator.",
   "starterCode": {
@@ -528,7 +566,7 @@
   }
 },
 {
-  "id": 15,
+  "id": 16,
   "title": "Run Motor (3s)",
   "description": "Create a method runMotorFor3Seconds() in the given subsystem that runs the motor at a speed of 0.5 for 3 seconds and then stops automatically, using the withTimeout() decorator.",
   "starterCode": {
@@ -561,7 +599,7 @@
   }
 },
 {
-  "id": 16,
+  "id": 17,
   "title": "Parallel Commands",
   "description": "The subsystem already has two command methods, runIntake() and moveToPickup(). Create a method intakeAndLowerArm() that runs both commands at the same time (in parallel), using Commands.parallel().",
   "starterCode": {
@@ -596,7 +634,7 @@
   }
 },
 {
-  "id": 17,
+  "id": 18,
   "title": "Race Commands",
   "description": "The subsystem already has two command methods, runIntake() and moveToPickup(). Create a method intakeAndLowerArmRace() that runs both commands at the same time but stops all of them as soon as the first one finishes, using Commands.race().",
   "starterCode": {

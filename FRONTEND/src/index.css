@@ -2050,6 +2050,44 @@ pre code {
   transition: transform 220ms var(--ease-out);
 }
 
+.group-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  color: inherit;
+}
+
+.group-chevron {
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  transition: transform 200ms var(--ease-out), color 140ms ease-out;
+}
+
+.group-chevron[data-open="true"] {
+  color: var(--text-soft);
+  transform: rotate(180deg);
+}
+
+.group-collapse {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 260ms var(--ease-out);
+}
+
+.group-collapse[data-open="true"] {
+  grid-template-rows: 1fr;
+}
+
+.group-collapse-inner {
+  overflow: hidden;
+  min-height: 0;
+}
+
 .program-buttons {
   width: 100%;
   min-height: 2.8rem;
@@ -2809,58 +2847,49 @@ pre code {
     gap: 0;
   }
 
-  .suggestion-form,
-  .legal-sections {
+  .suggestion-form, .legal-sections {
     width: min(100%, 40rem);
     margin-block-start: 0;
   }
-
   .practice-shell {
     grid-template-columns: 1fr;
   }
-
-
-
   .exercise-rail {
-  min-width: 0;
-  padding: 1rem 0;
-  border-inline-end: 0;
-  border-block-end: 1px solid var(--line);
-}
+    min-width: 0;
+    padding: 1rem 0;
+    border-inline-end: 0;
+    border-block-end: 1px solid var(--line);
+  }
 
-.rail-language {
-  width: min(17rem, 100%);
-  margin-inline: 1.25rem;
-  border: 0;
-  justify-self: center;
-}
-
-.exercise-nav {
+  .rail-language {
+    width: min(17rem, 100%);
+    margin-inline: 1.25rem;
+    border: 0;
+    justify-self: center;
+  }
+  .exercise-nav {
     overflow-x: auto;
     scrollbar-width: none;
     display: flex;
-    gap: 1.5rem;
+    gap: 0.6rem;
     margin-block-start: 1rem;
   }
-
   .exercise-nav::-webkit-scrollbar {
     display: none;
   }
-
-  .exercise-nav section {
-    flex: 0 0 auto;
-    min-width: max-content;
-    padding: 0;
-    border: 0;
+  .exercise-nav section, .exercise-nav .group-collapse, .exercise-nav .group-collapse-inner, .exercise-nav .group-collapse-inner > div {
+    display: contents;
   }
-
-  .exercise-nav section > div {
-    display: flex;
-  }
-
-  .exercise-nav section > div::before,
-  .exercise-nav section > div::after {
+  .exercise-nav .group-header {
     display: none;
+  }
+  .exercise-nav section > div::before, .exercise-nav section > div::after {
+    display: none;
+  }
+
+  .program-buttons {
+    width: auto;
+    flex: 0 0 auto;
   }
 
   .program-buttons {
