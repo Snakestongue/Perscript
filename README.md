@@ -39,6 +39,51 @@ The goal of this project is to make learning FRC programming more accessible by 
 - Suggestions and feedback collection
 - Data stored securely using MongoDB
 
+## Project Structure
+
+*Only the main pages are included*
+
+```
+├── BACKEND/
+│   ├── AI/             
+│       ├── generate.js         # Backend for AI Assist
+│   ├── Suggestions
+│        ├── suggest.js         # The code to save suggestion
+│        └── suggestSchema.js   # Structure for suggestions
+│   ├── TeamNumber
+│        ├── store.js          # The code to save team numbers
+│        └── schema.js         # Structure for Team Numbers
+│    ├── database.js           # Connect to MongoDB
+│    ├── routes.js             # Routes for Mongo
+│    ├── server.js             # To start local server used for testing
+│
+├── FRONTEND/
+│   ├── JSON/
+│   │   ├── debugProblems.json  # Debug problems
+│   │   └── problems.json       # Live coding problems
+│   ├── SideFiles/
+│   │   ├── Bug.jsx             # Debugging page
+│   │   ├── PP.tsx              # Privacy policy page
+│   │   ├── Program.jsx         # Live programming page
+│   │   ├── Sug.jsx             # Suggestions page
+│   │   └── Tut.tsx             # Tutorial page
+│   ├── components/
+│   │   ├── FeedbackPopover.tsx # Popover for user feedback
+│   │   ├── Footer.tsx          # Footer
+│   │   ├── Header.tsx          # Header
+│   │   ├── Nav.tsx             # Navigation (mobile only)
+│   │   └── Spinner.tsx         # Spinner
+│   ├── App.tsx                 # Landing page
+│   ├── GA.jsx                  # Google Analytics setup
+│   ├── RoutesPage.jsx          # Routes page
+│   ├── Team.jsx                # Team modal
+│   ├── Template.jsx            # Template
+│   ├── index.css               # Styles
+│   ├── main.jsx                # Redirects to RoutesPage
+│
+└── README.md
+```
+
 ## Technology Stack
 
 ### Frontend
@@ -76,9 +121,9 @@ Planned deployment using:
 
 ## Planned Updates
 
-- More structured programming challenges
 - Advanced subsystem programming problems
-- More FRC-specific examples and simulations
+- More FRC-specific examples and question
+- Anything else people suggest!
 
 ## Feedback / Suggestions
 
@@ -87,3 +132,5 @@ Have ideas, feature requests, or improvements?
 You can submit feedback directly through the Suggestions page located in the website footer.
 
 Please leave a suggestion so we can continue to improve the website!
+
+Feel free to fork this Github repositories. All ideas and changes help!
