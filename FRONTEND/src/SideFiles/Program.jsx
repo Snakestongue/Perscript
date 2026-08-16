@@ -8,14 +8,14 @@ import Footer from "../components/Footer.js";
 
 const exerciseGroups = [
   { id: "lesson-basics", label: "Basics", problems: problems.slice(0, 4) },
-  { id: "lesson-core-patterns", label: "Core patterns", problems: problems.slice(4, 10) },
-  { id: "lesson-command-based", label: "Command based", problems: problems.slice(10, 16) },
+  { id: "lesson-core-patterns", label: "Core patterns", problems: problems.slice(4, 12) },
+  { id: "lesson-command-based", label: "Command based", problems: problems.slice(12, 18) },
 ];
 
 const languages = [
   { value: "java", label: "Java" },
   { value: "python", label: "Python" },
-  { value: "cpp", label: "C++" },
+  { value: "c++", label: "C++" },
 ];
 const languagePositions = ["0.3rem", "calc(33.333% + 0.1rem)", "calc(66.667% - 0.1rem)"];
 
@@ -59,9 +59,9 @@ function defineEditorTheme(monaco) {
 }
 
 function Program() {
-  const { problemId } = useParams()
+  const { lang, problemLink } = useParams();
   const [selectedProblem, setSelectedProblem] = useState(() => {
-    const fromUrl = problems.find((p) => String(p.id) === problemId);
+    const fromUrl = problems.find((p) => String(p.link) === problemLink );
       return fromUrl || problems[0];
   });
   const [userCode, setUserCode] = useState(selectedProblem.starterCode.java);
@@ -74,21 +74,27 @@ function Program() {
   const selectedProblemIndex = problems.findIndex((problem) => problem.id === selectedProblem.id)
   const location = useLocation();
   const navigate = useNavigate()
-  const [currentLang, setCurrentLang] = useState("java")
   const [copiedLink, setCopiedLink] = useState(false);
   const [copiedCode, setCopiedCode] = useState(false);
   const [openGroupId, setOpenGroupId] = useState(() => {
   const group = exerciseGroups.find((g) => g.problems.some((p) => p.id === selectedProblem.id));
     return group?.id ?? exerciseGroups[0].id;
   });
+  const validLangs = languages.map((l) => l.value);
+  const [currentLang, setCurrentLang] = useState(() => normalizeLang(lang));
+
+
+  function normalizeLang(value) {
+    return validLangs.includes(value) ? value : "java";
+  }
 
   async function shareLink() {
     const base = import.meta.env.BASE_URL.replace(/\/$/, "")
-    const url = `${window.location.origin}${base}/program/${selectedProblem.id}`
+    const url = `${window.location.origin}${base}/program/${currentLang}/${selectedProblem.link}`;
     if(navigator.share){
       try {
         await navigator.share({
-          title: `FRC Practice — ${selectedProblem.title}`,
+          title: `Perscript Practice — ${selectedProblem.title}`,
           text: selectedProblem.description,
           url,
         });
@@ -128,17 +134,22 @@ function Program() {
     }
   }
   useEffect(() => {
-    if(!problemId){
+    if(!problemLink){
       return
     }
-    const match = problems.find((p) =>String(p.id) == problemId);
-    if (match&& match.id !== selectedProblem.id){
+    const match = problems.find((p) => p.link === problemLink);
+    if (match && match.id !== selectedProblem.id){
       setSelectedProblem(match);
     }
-  }, [problemId])
-
+  }, [problemLink])
+  
+  useEffect(() => {
+    setUserCode(selectedProblem.starterCode[currentLang]);
+    setCheckResults([]);
+    setAiContent("");
+  }, [currentLang, selectedProblem]);
   useEffect(()=>{
-    document.title = "FRC Programming Practice | Live Challenges";
+    document.title = "Perscript | Live Challenges";
   }, []);
 
 
@@ -157,12 +168,12 @@ function Program() {
   }, [location.hash, location.key]);
 
   useEffect(() => {
-  if (!problemId) return;
-  const frame = requestAnimationFrame(() => {
-    document.getElementById("browser-editor")?.scrollIntoView({ block: "start" });
-  });
-  return () => cancelAnimationFrame(frame);
-}, [problemId]);
+    if (!problemLink) return;
+    const frame = requestAnimationFrame(() => {
+      document.getElementById("browser-editor")?.scrollIntoView({ block: "start" });
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [problemLink]);
 
 
   useEffect(() => {
@@ -177,9 +188,26 @@ function Program() {
     if (group) setOpenGroupId(group.id);
   }, [selectedProblem]);
 
+  useEffect(() => {
+  if (!problemLink) return;
+  const match = problems.find((p) => p.link === problemLink);
+  if (match && match.id !== selectedProblem.id) {
+    setSelectedProblem(match);
+  }
+  const normalizedLang = normalizeLang(lang);
+  if (normalizedLang !== currentLang) {
+    setCurrentLang(normalizedLang);
+  }
+}, [problemLink, lang]);
+
   function selectProblem(problem) {
     setSelectedProblem(problem);
-    navigate(`/program/${problem.id}`, { replace: false });
+    navigate(`/program/${currentLang}/${problem.link}`, { replace: false });
+  }
+
+  function changeLang(newLang) {
+    setCurrentLang(newLang);
+    navigate(`/program/${newLang}/${selectedProblem.link}`, { replace: false });
   }
 
   function runChecks() {
@@ -280,7 +308,7 @@ function Program() {
                     name="language"
                     value={language.value}
                     checked={currentLang === language.value}
-                    onChange={() => setCurrentLang(language.value)}
+                    onChange={() => changeLang(language.value)}
                   />
                   <span>{language.label}</span>
                 </label>

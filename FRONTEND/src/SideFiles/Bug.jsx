@@ -11,7 +11,7 @@ function Bug() {
   const [selectedChoices, setSelectedChoices] = useState({});
 
   useEffect(() => {
-    document.title = "FRC Programming Practice | Debugging Practice";
+    document.title = "Perscript | Debugging Practice";
   }, []);
 
   useEffect(() => {
@@ -41,7 +41,7 @@ function Bug() {
     if(navigator.share){
       try {
         await navigator.share({
-          title: `FRC Debugging Practice — ${problem.title}`,
+          title: `Perscript Debugging Practice — ${problem.title}`,
           text: problem.question,
           url,
         });

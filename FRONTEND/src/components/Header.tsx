@@ -61,7 +61,8 @@ function Header() {
           aria-label="FRC Programming Practice home"
         >
           <span className="brand-name text-[25px] font-bold !text-lg tracking-[3px] uppercase text-white transition duration-200 underline decoration-dashed decoration-[#2a3444] underline-offset-[6px] hover:decoration-[#fff] hover:-translate-y-[3px] max-md:text-[20px]">
-            <span className="text-[#7AADFF]">FRC</span> Programming Practice
+            {/* <span className="text-[#7AADFF]"></span> */}
+            Perscript
           </span>
         </Link>
 

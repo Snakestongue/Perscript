@@ -11,7 +11,7 @@ function Sug() {
   const [status, setStatus] = useState("");
 
   useEffect(() => {
-    document.title = "FRC Programming Practice | Add a Suggestion";
+    document.title = "Perscript | Add a Suggestion";
   }, []);
 
   async function handleSubmit(event) {

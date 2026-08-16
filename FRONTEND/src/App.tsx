@@ -28,7 +28,7 @@ const tracks = [
 function App() {
   
   useEffect(() => {
-    document.title = "FRC Programming Practice | Java, C++, and Python Practice";
+    document.title = "Perscript | Learn coding for FRC";
   }, []);
 
   return (
@@ -36,9 +36,11 @@ function App() {
       <main id="main-content" className="home-main">
         <section className="hero" aria-labelledby="hero-title">
           <div className="hero-copy">
+            <p className="text-[14px] italic text-[#C3C3C6]"><i>Formally known as FRC Programming Practice</i></p>
             <h1 id="hero-title">Learn FRC coding.
               <span className="mt-6">Practice until it clicks.</span>
             </h1>
+
             <p className="hero-summary">Work on Java, C++, or Python exercises made for the code you will use during build season.</p>
             <div className="hero-actions">
               <Link className="

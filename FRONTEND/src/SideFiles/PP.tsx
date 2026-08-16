@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import Footer from "../components/Footer.js";
 function PP() {
   useEffect(() => {
-    document.title = "FRC Programming Practice | Privacy Policy";
+    document.title = "Perscript | Privacy Policy";
   }, []);
   return (
     <div className="site-page">

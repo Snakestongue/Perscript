@@ -7,5 +7,5 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
-  base: '/FRC-Programming-Practice/',
+  base: '/Perscript/',
 })

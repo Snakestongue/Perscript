@@ -414,7 +414,7 @@ function Tut({ section = "foundations" }: { section?: ReferenceSection }) {
   const sectionLabel = categoryLinks.find(([key]) => key === section)?.[2] ?? "Reference";
 
   useEffect(() => {
-    document.title = `${sectionLabel} Reference | FRC Programming Practice`;
+    document.title = `${sectionLabel} Reference | Perscript`;
   }, [sectionLabel]);
 
   useEffect(() => {

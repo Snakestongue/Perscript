@@ -248,8 +248,8 @@
         "choice3": "Constants shouldn't be static",
         "CC": "Void is used.",
         "whyCorrect": "By using void, you aren't able to have a value. Use double instead. ",
-        "language": "cpp",
-        "title": "cpp-constant"
+        "language": "c++",
+        "title": "c++-constant"
     },
     {
         "id": "22",
@@ -260,8 +260,8 @@
         "choice3": "Needs void.",
         "CC": "Needs void.",
         "whyCorrect": "Since we are stopping a motor, nothing should be returned and therefore void is needed.",
-        "language": "cpp",
-        "title": "cpp-void"
+        "language": "c++",
+        "title": "c++-void"
     },
     {
         "id": "23",
@@ -272,8 +272,8 @@
         "choice3": "Class should be private",
         "CC": "You do not put public in front of class.",
         "whyCorrect": "Public does not go in front of class, it goes in front of :. ",
-        "language": "cpp",
-        "title": "cpp-public"
+        "language": "c++",
+        "title": "c++-public"
     },
     {
         "id": "24",
@@ -284,8 +284,8 @@
         "choice3": "StopMotor() is invalid",
         "CC": "Should remove double",
         "whyCorrect": "Since you are stopping a motor, nothing should be returned, therefore needing void.",
-        "language": "cpp",
-        "title": "cpp-double"
+        "language": "c++",
+        "title": "c++-double"
     },
     {
         "id": "25",
@@ -296,13 +296,13 @@
         "choice3": "Missing .ToPtr() conversion.",
         "CC": "Missing .ToPtr() conversion.",
         "whyCorrect": "OnTrue expects a frc2::CommandPtr. A command object built without .ToPtr() won't match the expected type and will fail to compile.",
-        "language": "cpp",
-        "title": "cpp-conversion"
+        "language": "c++",
+        "title": "c++-conversion"
     },
     {
         "id": "26",
-        "language": "cpp",
-        "title": "cpp-semicolon",
+        "language": "c++",
+        "title": "c++-semicolon",
         "question": "What is the error in the following code?",
         "sampleCode": "class Intake : public frc2::SubsystemBase {\n\tprivate:\n\t\tTalonFX intakeMotor{3};\n}",
         "choice1": "Missing semicolon after the closing brace of the class.",
@@ -313,8 +313,8 @@
     },
     {
         "id": "27",
-        "language": "cpp",
-        "title": "cpp-operator",
+        "language": "c++",
+        "title": "c++-operator",
         "question": "What is the error in the following code?",
         "sampleCode": "IntakeSubsystem* intake;\nintake.Stop();",
         "choice1": "Should use -> instead of . to call a method through a pointer.",
@@ -324,8 +324,8 @@
         "whyCorrect": "When accessing members through a pointer, C++ requires the arrow operator (->), not the dot operator, which is only for objects and references."
     },
     {
-        "language": "cpp",
-        "title": "cpp-config",
+        "language": "c++",
+        "title": "c++-config",
         "question": "What is the error in the following code?",
         "sampleCode": "ctre::phoenix6::configs::TalonFXConfiguration config{};\nconfig.Slot0.kP = 10;\nelevatorMotor.GetConfigurator();",
         "choice1": "Missing elevatorMotor.GetConfigurator().Apply(config);",
@@ -336,8 +336,8 @@
         "id": "28"
     },
     {
-        "language": "cpp",
-        "title": "cpp-command",
+        "language": "c++",
+        "title": "c++-command",
         "question": "What is the error in the following code?",
         "sampleCode": "frc2::CommandPtr AutoScore() {\n\treturn frc2::cmd::Sequence(\n\t\tRaiseArm(),\n\t\tRunIntake());\n}\nfrc2::CommandPtr RaiseArm() {\n\treturn Run([this] { arm.Set(0.5); });\n}",
         "choice1": "RaiseArm() never finishes, so the sequence gets stuck on it forever.",
@@ -348,8 +348,8 @@
         "id": "29"
     },
     {
-        "language": "cpp",
-        "title": "cpp-semicolon2",
+        "language": "c++",
+        "title": "c++-semicolon2",
         "question": "What is the error in the following code?",
         "sampleCode": "ctre::phoenix6::configs::TalonFXConfiguration config{};\nconfig.MotionMagic.MotionMagicCruiseVelocity = 80\nconfig.MotionMagic.MotionMagicAcceleration = 160;",
         "choice1": "Missing semicolon after the cruise velocity line.",

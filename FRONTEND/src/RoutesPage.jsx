@@ -40,7 +40,7 @@ function RoutesPage(){
     }
   };
   return (
-    <BrowserRouter basename="/FRC-Programming-Practice">
+    <BrowserRouter basename="/Perscript">
       <GA />
       {team && <TeamModal onSubmit={handleSubmit} />}
       <MotionConfig reducedMotion="user">
@@ -57,7 +57,7 @@ function RoutesPage(){
               <Route path="/tut" element={<Tut />} />
               <Route path="/tut/hardware" element={<Tut section="hardware" />} />
               <Route path="/tut/robot-structure" element={<Tut section="structure" />} />
-              <Route path="/program/:problemId" element={<Program />} />
+              <Route path="/program/:lang/:problemLink" element={<Program />} />
               <Route path="/program" element={<Program />} />
             </Routes>
           </Suspense>

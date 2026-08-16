@@ -2,6 +2,7 @@
   {
     "id": 1,
     "title": "Create a Constant",
+    "link":"constant",
     "description": "Add a constant named MAX_DRIVE_SPEED with a value of 0.8 to the Constants class.",
     "starterCode": {
       "java": "public class Constants {\n    //Write code here and remove this comment.\n}",
@@ -36,6 +37,7 @@
   {
     "id": 2,
     "title": "Create an Object",
+    "link":"object",
     "description": "Create a TalonFX object named intakeMotor. It should be declared as private and final within the class, and be initialized using device ID 3.",
     "starterCode": {
       "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix.motorcontrol.can.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class Intake extends SubsystemBase{\n    //Write code here and remove this comment.\n}",
@@ -69,6 +71,7 @@
   {
     "id": 3,
     "title": "Create a Method",
+    "link":"method",
     "description": "Create a method called stopIntakeMotor. The method should must stop the motor named intakeMotor using the appropriate motor function (do not set the motor speed to 0).",
     "starterCode": {
       "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix.motorcontrol.can.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class Intake extends SubsystemBase{\n   //Write code here and remove this comment.\n}",
@@ -100,6 +103,7 @@
   {
   "id": 4,
   "title": "Constructors",
+  "link":"constructor",
   "description": "Create a TalonFX motor named elevatorMotor with device ID 5. In the constructor, create a TalonFXConfiguration object, set Slot0.kP to 10, and apply the configuration to the motor using the motor's configurator.",
   "starterCode": {
     "java": "import com.ctre.phoenix6.hardware.TalonFX;\nimport com.ctre.phoenix6.configs.TalonFXConfiguration;\n\npublic class ElevatorSubsystem {\n    // Write code here.\n\n    public ElevatorSubsystem() {\n        // Write code here.\n    }\n}",
@@ -137,6 +141,7 @@
   {
   "id": 5,
   "title": "Motion Magic & PID",
+  "link":"pid",
   "description": "Create a TalonFXConfiguration object named config. Configure Slot0 with kP = 10, kI = 0, and kD = 0. Then configure Motion Magic with a cruise velocity of 80 and an acceleration of 160.",
   "starterCode": {
     "java": "import com.ctre.phoenix6.configs.TalonFXConfiguration;\n\npublic class ElevatorSubsystem {\n    public ElevatorSubsystem() {\n        // Write code here and remove this comment.\n    }\n}",
@@ -178,6 +183,7 @@
 {
   "id": 6,
   "title": "Button Bindings",
+  "link":"button",
   "description": "In the RobotContainer, bind the B button on the driver controller so that when it is pressed (whileTrue), it runs the runMotor method inside the intake subsystem.",
   "starterCode": {
     "java": "package frc.robot;\nimport edu.wpi.first.wpilibj2.command.button.CommandXboxController;\nimport edu.wpi.first.wpilibj2.command.Commands;\nimport frc.robot.subsystems.Intake;\n\npublic class RobotContainer {\n    private final CommandXboxController controller = new CommandXboxController(0);\n    private final Intake intake = new Intake();\n\n    public RobotContainer() {\n        // Write code here and remove this comment.\n    }\n}",
@@ -210,6 +216,7 @@
 {
     "id": 7,
     "title": "Slot0 Configs",
+    "link":"slot0",
     "description": "In the Constants class, create a public static final Slot0Configs object named slot0Configs, chained with the following gains and settings: kS=0.02, kV=4.14, kA=0.1, kG=0.33, kP=35, kI=0.0, kD=0.005, GravityType=Elevator_Static, and StaticFeedforwardSign=UseVelocitySign.",
     "starterCode": {
       "java": "package frc.robot;\nimport com.ctre.phoenix6.configs.Slot0Configs;\nimport com.ctre.phoenix6.signals.GravityTypeValue;\nimport com.ctre.phoenix6.signals.StaticFeedforwardSignValue;\n\npublic class Constants {\n    // Write code here and remove this comment.\n}",
@@ -266,6 +273,7 @@
 {
   "id": 8,
   "title": "SmartDashboard Reading",
+  "link":"smartdashboard",
   "description": "In the periodic() method of the subsystem, publish the current motor velocity to SmartDashboard under the key \"Motor Velocity\" using SmartDashboard.putNumber, reading the value from motor.getVelocity().getValueAsDouble().",
   "starterCode": {
     "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix6.hardware.TalonFX;\nimport edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class TestSubsystem extends SubsystemBase {\n\tprivate final TalonFX motor = new TalonFX(1);\n\t//Write code here and remove this comment.\n}",
@@ -304,6 +312,7 @@
 {
   "id": 9,
   "title": "Intake Subsystem",
+  "link":"intake",
   "description": "Create an IntakeSubsystem class with a TalonFX motor. Include three methods: setSpeed(double speed), which sets the motor to the given speed; reverseSpeed(double speed), which sets the motor to the negative of the given speed; and stop(), which stops the motor using set(0)",
   "starterCode": {
     "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix6.hardware.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class IntakeSubsystem extends SubsystemBase {\n\t//Write code here and remove this comment.\n}",
@@ -340,6 +349,7 @@
 {
   "id": 10,
   "title": "Arm Subsystem",
+  "link":"arm",
   "description": "Create an ArmSubsystem class with a TalonFX motor named armMotor using device ID 7. Include three methods: raiseArm(), which sets the motor to a speed of 0.5; lowerArm(), which sets the motor to a speed of -0.5; and stopArm(), which stops the motor using stopMotor().",
   "starterCode": {
     "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix6.hardware.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class ArmSubsystem extends SubsystemBase {\n\t//Write code here and remove this comment.\n}",
@@ -381,6 +391,7 @@
 {
   "id": 11,
   "title": "Climber Subsystem",
+  "link":"climber",
   "description": "Create a ClimberSubsystem class with a TalonFX motor named climberMotor using device ID 9. Include three methods: climbUp(), which sets the motor to a speed of 1.0; climbDown(), which sets the motor to a speed of -1.0; and stopClimber(), which stops the motor using stopMotor().",
   "starterCode": {
     "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix6.hardware.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class ClimberSubsystem extends SubsystemBase {\n\t//Write code here and remove this comment.\n}",
@@ -422,6 +433,7 @@
 {
   "id": 12,
   "title": "Outtake Subsystem",
+  "link":"outtake",
   "description": "Create an OuttakeSubsystem class with a TalonFX motor named outtakeMotor using device ID 4. Include three methods: outtake(double speed), which sets the motor to the given speed; reverseOuttake(double speed), which sets the motor to the negative of the given speed (to pull a game piece back in); and stop(), which stops the motor using stopMotor().",
   "starterCode": {
     "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix6.hardware.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class OuttakeSubsystem extends SubsystemBase {\n\t//Write code here and remove this comment.\n}",
@@ -463,6 +475,7 @@
 {
   "id": 13,
   "title": "Arm Command",
+  "link":"arm-command",
   "description": "Create an ArmSubsystem class with a TalonFX motor named armMotor using device ID 7. Include a command method runArm() that returns a command running the motor at a speed of 0.5 continuously, using the run() factory method.",
   "starterCode": {
     "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix6.hardware.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\nimport edu.wpi.first.wpilibj2.command.Command;\npublic class ArmSubsystem extends SubsystemBase {\n\tprivate final TalonFX armMotor = new TalonFX(7);\n\t//Write code here and remove this comment.\n}",
@@ -497,6 +510,7 @@
 {
   "id": 14,
   "title": "Outtake Command",
+  "link":"outtake-command",
   "description": "Create an OuttakeSubsystem class with a TalonFX motor named outtakeMotor using device ID 4. Include a command method runOuttake(double speed) that returns a command running the motor at the given speed continuously, using the run() factory method.",
   "starterCode": {
     "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix6.hardware.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\nimport edu.wpi.first.wpilibj2.command.Command;\npublic class OuttakeSubsystem extends SubsystemBase {\n\tprivate final TalonFX outtakeMotor = new TalonFX(4);\n\t//Write code here and remove this comment.\n}",
@@ -532,6 +546,7 @@
 {
   "id": 15,
   "title": "Beam Break",
+  "link":"beak-break",
   "description": "Create an IntakeSubsystem with a TalonFX motor named intakeMotor (device ID 3) and a DigitalInput sensor named beamBreak on port 0. Create a command method intakeUntilBeamBreak() that runs the intake motor at speed 0.5 and automatically stops once the beam break sensor returns true, using the until() decorator.",
   "starterCode": {
     "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix6.hardware.TalonFX;\nimport edu.wpi.first.wpilibj.DigitalInput;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\nimport edu.wpi.first.wpilibj2.command.Command;\npublic class IntakeSubsystem extends SubsystemBase {\n\tprivate final TalonFX intakeMotor = new TalonFX(3);\n\tprivate final DigitalInput beamBreak = new DigitalInput(0);\n\t//Write code here and remove this comment.\n}",
@@ -568,6 +583,7 @@
 {
   "id": 16,
   "title": "Run Motor (3s)",
+  "link":"run-motor",
   "description": "Create a method runMotorFor3Seconds() in the given subsystem that runs the motor at a speed of 0.5 for 3 seconds and then stops automatically, using the withTimeout() decorator.",
   "starterCode": {
     "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix6.hardware.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\nimport edu.wpi.first.wpilibj2.command.Command;\npublic class TestSubsystem extends SubsystemBase {\n\tprivate final TalonFX motor = new TalonFX(1);\n\t//Write code here and remove this comment.\n}",
@@ -601,6 +617,7 @@
 {
   "id": 17,
   "title": "Parallel Commands",
+  "link":"parallel",
   "description": "The subsystem already has two command methods, runIntake() and moveToPickup(). Create a method intakeAndLowerArm() that runs both commands at the same time (in parallel), using Commands.parallel().",
   "starterCode": {
     "java": "package frc.robot.subsystems;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\nimport edu.wpi.first.wpilibj2.command.Command;\nimport edu.wpi.first.wpilibj2.command.Commands;\npublic class SuperSubsystem extends SubsystemBase {\n\tpublic Command runIntake() {\n\t\treturn run(() -> {});\n\t}\n\tpublic Command moveToPickup() {\n\t\treturn run(() -> {});\n\t}\n\t//Write code here and remove this comment.\n}",
@@ -636,6 +653,7 @@
 {
   "id": 18,
   "title": "Race Commands",
+  "link":"race",
   "description": "The subsystem already has two command methods, runIntake() and moveToPickup(). Create a method intakeAndLowerArmRace() that runs both commands at the same time but stops all of them as soon as the first one finishes, using Commands.race().",
   "starterCode": {
     "java": "package frc.robot.subsystems;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\nimport edu.wpi.first.wpilibj2.command.Command;\nimport edu.wpi.first.wpilibj2.command.Commands;\npublic class SuperSubsystem extends SubsystemBase {\n\tpublic Command runIntake() {\n\t\treturn run(() -> {});\n\t}\n\tpublic Command moveToPickup() {\n\t\treturn run(() -> {});\n\t}\n\t//Write code here and remove this comment.\n}",
