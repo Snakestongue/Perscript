@@ -1,4 +1,6 @@
-# FRC Programming Practice
+# Welcome to Perscript!
+
+*Formally known as FRC Programming Practice*
 
 A web-based programming practice site built with React and Monaco Editor to help students learn and improve FRC (FIRST Robotics Competition) programming skills.
 
