@@ -16,6 +16,7 @@ dist
 dist-ssr
 *.local
 
+FRONTEND/public/google5abe7520d23d8c65.html
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

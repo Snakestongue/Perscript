@@ -36,7 +36,7 @@ function App() {
       <main id="main-content" className="home-main">
         <section className="hero" aria-labelledby="hero-title">
           <div className="hero-copy">
-            <p className="text-[14px] italic text-[#C3C3C6]"><i>Formally known as FRC Programming Practice</i></p>
+            <p className="text-[14px] italic text-[#C3C3C6]"><i>Formerly known as FRC Programming Practice</i></p>
             <h1 id="hero-title">Learn FRC coding.
               <span className="mt-6">Practice until it clicks.</span>
             </h1>
