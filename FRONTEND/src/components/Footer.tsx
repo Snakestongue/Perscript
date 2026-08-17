@@ -8,7 +8,7 @@ function Footer() {
         <nav aria-label="Footer navigation">
           <Link to="/PP">Privacy</Link>
           <a
-            href="https://github.com/Snakestongue/FRC-Programming-Practice"
+            href="https://github.com/Snakestongue/Perscript"
             target="_blank"
             rel="noopener noreferrer"
           >
