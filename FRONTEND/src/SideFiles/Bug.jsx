@@ -71,7 +71,7 @@ function Bug() {
         <div id="f3">
           {languages.map((language, languageIndex) => (
             <section
-              id={`debug-${language === "C++" ? "cpp" : language.toLowerCase()}`}
+              id={`debug-${language === "C++" ? "c++" : language.toLowerCase()}`}
               className="debug-language-group"
               key={language}
             >
@@ -97,16 +97,9 @@ function Bug() {
                         <h2>{problem.question}</h2>
                         <button
                           type="button"
-                          className="
-                          text-sm px-2 py-1 
-                          rounded-md border border-[#7AADFF] 
-                          bg-transparent cursor-pointer 
-                          whitespace-nowrap transition duration-200 
-                          hover:bg-[#7AADFF] 
-                          hover:!text-black"
+                          className="bug-share"
                           onClick={() => shareProblem(problem)}
-                          aria-label={`Share problem ${problem.title}`}
-                        >
+                          aria-label={`Share problem ${problem.title}`}>
                           {copiedId === problem.title ? "Copied!" : "Share"}
                         </button>
                       </div>

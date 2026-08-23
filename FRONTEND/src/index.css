@@ -3,7 +3,9 @@
 
 /* This is the root. From my (Snakestongue) understanding it's basically a variable system so if you wanna 
 change a color its easier then going to every single mention of that color! 
+#7AADFF - accent color
 */
+
 :root {
   color-scheme: dark;
   font-family: "Manrope", "Avenir Next", Avenir, system-ui, sans-serif;
@@ -19,15 +21,15 @@ change a color its easier then going to every single mention of that color!
   --text: oklch(0.96 0.003 260);
   --text-soft: oklch(0.78 0.004 260);
   --text-muted: oklch(0.62 0.005 260);
-  --accent: oklch(0.71 0.129 265);
-  --accent-strong: oklch(0.82 0.003 260);
-  --accent-soft: oklch(0.92 0.003 260 / 0.09);
   --line: oklch(0.31 0.004 260 / 0.66);
   --line-strong: oklch(0.5 0.004 260);
   --success: oklch(0.76 0.13 155);
   --danger: oklch(0.7 0.17 25);
   --warning: oklch(0.79 0.13 85);
-  --focus: oklch(0.98 0.002 260);
+  --accent: oklch(0.71 0.129 265);
+  --accent-strong: oklch(0.8 0.1 265);      /* was oklch(0.82 0.003 260) */
+  --accent-soft: oklch(0.71 0.129 265 / 0.14); /* was oklch(0.92 0.003 260 / 0.09) */
+  --focus: oklch(0.8 0.11 265);             /* was oklch(0.98 0.002 260), pure white ring */
   --shadow-raised:
     0 0 0 1px oklch(0.03 0.002 260 / 0.5),
     0 18px 50px -26px oklch(0.02 0.002 260 / 0.86);
@@ -43,6 +45,7 @@ html{
   min-width: 20rem;
   scroll-behavior: smooth;
   background: var(--canvas);
+  color: #1f2c3f;
 }
 body{
   min-width: 20rem;
@@ -425,7 +428,7 @@ code,pre,.character-count,.track-action,.code-window, .exercise-heading > div > 
 }
 
 .mobile-nav-link.active {
-  color: var(--text);
+  color: var(--accent-strong);
 }
 
 .header-github {
@@ -829,7 +832,7 @@ code,pre,.character-count,.track-action,.code-window, .exercise-heading > div > 
 
 .footer-credit {
   justify-self: end;
-  color:white !important;
+  color: var(--text) !important;
 }
 
 /* In-place feedback */
@@ -1106,6 +1109,31 @@ code,pre,.character-count,.track-action,.code-window, .exercise-heading > div > 
   to { opacity: 1; transform: translateY(0); }
 }
 
+
+.bug-share {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  min-height: 2.25rem;
+  padding-inline: 0.85rem;
+  border: 1px solid var(--accent);
+  border-radius: 0.4rem;
+  background: transparent;
+  color: var(--accent);
+  font-size: 0.78rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 140ms ease-out, color 140ms ease-out, border-color 140ms ease-out;
+}
+
+
+.bug-share:hover {
+  background: var(--accent);
+  color: var(--canvas-deep);
+}
+
 /* Shared-layout feedback morph */
 .feedback-dock {
   display: flex;
@@ -1242,7 +1270,8 @@ code,pre,.character-count,.track-action,.code-window, .exercise-heading > div > 
   transition: .2s;
 }
 .feedback-trigger:hover{
-  border-color: #7AADFF; /*SUGGESTION MODAL BASE*/
+  border-color: var(--accent); 
+  /* suggestion modal base */
 }
 .feedback-trigger[data-covered="true"] {
   pointer-events: none;
@@ -1547,7 +1576,8 @@ code,pre,.character-count,.track-action,.code-window, .exercise-heading > div > 
 }
 
 .page-intro h1 {
-  margin-block-start: 1rem;
+  margin-block-start: .8rem;
+  margin-bottom: 15px;
 }
 
 /* Form */
@@ -1667,8 +1697,8 @@ textarea[aria-invalid="true"] {
 }
 
 .category-option[data-active="true"] {
-  border-color: var(--text);
-  background: var(--text);
+  border-color: var(--accent);
+  background: var(--accent);
   color: var(--canvas-deep);
 }
 
@@ -2000,7 +2030,7 @@ pre code {
   width: calc((100% - 0.6rem) / 3);
   z-index: 0;
   border-radius: 999px;
-  background: var(--text);
+  background: var(--accent);
   clip-path: inset(0 round 999px);
   transition: left 220ms var(--ease-out);
 }
@@ -2125,8 +2155,8 @@ pre code {
 
 .program-buttons[data-complete="true"] .exercise-step-dot,
 .program-buttons.active .exercise-step-dot {
-  border-color: var(--text);
-  background: var(--text);
+  border-color: #000;
+  background: #fff;
 }
 
 .program-buttons.active .exercise-step-dot {
@@ -2215,8 +2245,9 @@ pre code {
   transition: transform 130ms var(--ease-out), color 140ms ease-out, background-color 140ms ease-out, border-color 140ms ease-out;
 }
 .action-buttons:hover{
-  background-color: white !important;
-  color:black;
+  background-color: var(--accent) !important;
+  border-color: var(--accent) !important;
+  color: var(--canvas-deep);
 }
 #run-submit:hover{
   background: color-mix(in oklch, var(--accent), white) !important;
@@ -2444,8 +2475,8 @@ pre code {
 }
 
 .internalNavLink[aria-current="location"] .toc-marker {
-  border-color: var(--text);
-  background: var(--text);
+ border-color: #000;
+  background: #fff;
   box-shadow: 0 0 0 3px var(--canvas);
 }
 
@@ -2725,7 +2756,7 @@ pre code {
   .bug-labels:hover,
   .internalNavLink:hover {
     background: var(--surface-hover);
-    color: var(--text);
+    color: var(--accent-strong);
   }
 
   .nav-mega-items > a:hover {

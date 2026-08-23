@@ -7,12 +7,12 @@
     "starterCode": {
       "java": "public class Constants {\n    //Write code here and remove this comment.\n}",
       "python": "class Constants:\n    # Write code here and remove this comment.\n    \n",
-      "cpp": "class Constants {\n    // Write code here and remove this comment.\n};"
+      "c++": "class Constants {\n    // Write code here and remove this comment.\n};"
     },
     "solutionCode": {
       "java": "public class Constants {\n    public static final double MAX_DRIVE_SPEED = 0.8;\n}",
       "python": "class Constants:\n    MAX_DRIVE_SPEED = 0.8\n",
-      "cpp": "class Constants {\n   public:\n       static constexpr double MAX_DRIVE_SPEED = 0.8;\n};\n"
+      "c++": "class Constants {\n   public:\n       static constexpr double MAX_DRIVE_SPEED = 0.8;\n};\n"
     },
     "checks":{
       "java":[
@@ -25,7 +25,7 @@
       "python":[
         { "type": "includes", "value": "0.8", "message": "Did you add 0.8?" }
       ],
-      "cpp":[
+      "c++":[
         { "type": "includes", "value": "public", "message": "Did you add public?" },
         { "type": "includes", "value": "static", "message": "Did you add static?" },
         { "type": "includes", "value": "double", "message": "Did you use double?" },
@@ -42,12 +42,12 @@
     "starterCode": {
       "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix.motorcontrol.can.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class Intake extends SubsystemBase{\n    //Write code here and remove this comment.\n}",
       "python": "from wpilib2.command import SubsystemBase\nfrom phoenix6.hardware import TalonFX\n\nclass Intake(SubsystemBase):\n    #Write code here and remove this comment.\n",
-      "cpp": "#include <frc2/command/SubsystemBase.h>\n#include <ctre/phoenix/motorcontrol/can/TalonFX.h>\n\nclass Intake : public frc2::SubsystemBase {\n    //Write code here and remove this comment.\n};\n"
+      "c++": "#include <frc2/command/SubsystemBase.h>\n#include <ctre/phoenix/motorcontrol/can/TalonFX.h>\n\nclass Intake : public frc2::SubsystemBase {\n    //Write code here and remove this comment.\n};\n"
     },
     "solutionCode": {
       "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix.motorcontrol.can.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class Intake extends SubsystemBase{\n    private final TalonFX intakeMotor = new TalonFX(3);\n}",
       "python": "from wpilib2.command import SubsystemBase\nfrom phoenix6.hardware import TalonFX\n\nclass Intake(SubsystemBase):\n    __intakeMotor = TalonFX(3)",
-      "cpp": "#include <frc2/command/SubsystemBase.h>\n#include <ctre/phoenix/motorcontrol/can/TalonFX.h>\n\nclass Intake : public frc2::SubsystemBase {\n    private:\n        const TalonFX intakeMotor{3};\n};"
+      "c++": "#include <frc2/command/SubsystemBase.h>\n#include <ctre/phoenix/motorcontrol/can/TalonFX.h>\n\nclass Intake : public frc2::SubsystemBase {\n    private:\n        const TalonFX intakeMotor{3};\n};"
     },
     "checks":{
       "java":[
@@ -61,7 +61,7 @@
         { "type": "includes", "value": "__intakemotor", "message": "Did you name it intakeMotor and add __?" },
         { "type": "includes", "value": "3", "message": "Is the ID 3?" }
       ],
-      "cpp":[
+      "c++":[
         { "type": "includes", "value": "private", "message": "Did you add private?" },
         { "type": "includes", "value": "const", "message": "Did you use const?" },
         { "type": "includes", "value": "3", "message": "Is the ID 3?" }
@@ -76,12 +76,12 @@
     "starterCode": {
       "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix.motorcontrol.can.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class Intake extends SubsystemBase{\n   //Write code here and remove this comment.\n}",
       "python": "from ctre import TalonFX\nfrom wpilib2.command import SubsystemBase\nclass Intake(SubsystemBase):\n    #Write code here and remove this comment.",
-      "cpp": "#include <ctre/phoenix/motorcontrol/can/TalonFX.h>\n#include <frc2/command/SubsystemBase.h>\nclass Intake : public frc2::SubsystemBase {\n    public:\n      //Write code here and remove this comment.\n};"
+      "c++": "#include <ctre/phoenix/motorcontrol/can/TalonFX.h>\n#include <frc2/command/SubsystemBase.h>\nclass Intake : public frc2::SubsystemBase {\n    public:\n      //Write code here and remove this comment.\n};"
     },
     "solutionCode": {
       "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix.motorcontrol.can.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class Intake extends SubsystemBase{\n    public void stopIntakeMotor(){\n        intakeMotor.stopMotor();\n    }\n}",
       "python": "from ctre import TalonFX\nfrom wpilib2.command import SubsystemBase\nclass Intake(SubsystemBase):\n    def stopIntakeMotor(self):\n        intakeMotor.stopMotor()",
-      "cpp": "#include <ctre/phoenix/motorcontrol/can/TalonFX.h>\n#include <frc2/command/SubsystemBase.h>\nclass Intake : public frc2::SubsystemBase {\n    public:\n       void stopIntakeMotor() { \n           intakeMotor.StopMotor(); \n   } \n};"
+      "c++": "#include <ctre/phoenix/motorcontrol/can/TalonFX.h>\n#include <frc2/command/SubsystemBase.h>\nclass Intake : public frc2::SubsystemBase {\n    public:\n       void stopIntakeMotor() { \n           intakeMotor.StopMotor(); \n   } \n};"
     },
     "checks":{
       "java":[
@@ -94,7 +94,7 @@
         { "type": "includes", "value": "self", "message": "Did you add self as a parameter?" },
         { "type": "includes", "value": "stopmotor", "message": "Did you add stopMotor as a parameter?" }
       ],
-      "cpp":[
+      "c++":[
         { "type": "includes", "value": "void", "message": "Did you add void?" },
         { "type": "includes", "value": "stopmotor", "message": "Did you use StopMotor?" }
       ]
@@ -108,12 +108,12 @@
   "starterCode": {
     "java": "import com.ctre.phoenix6.hardware.TalonFX;\nimport com.ctre.phoenix6.configs.TalonFXConfiguration;\n\npublic class ElevatorSubsystem {\n    // Write code here.\n\n    public ElevatorSubsystem() {\n        // Write code here.\n    }\n}",
     "python": "from phoenix6.hardware import TalonFX\nfrom phoenix6.configs import TalonFXConfiguration\n\nclass ElevatorSubsystem:\n    # Write code here.\n\n    def __init__(self):\n        # Write code here.\n",
-    "cpp": "#include <ctre/phoenix6/hardware/TalonFX.hpp>\n#include <ctre/phoenix6/configs/TalonFXConfigs.hpp>\n\nclass ElevatorSubsystem {\npublic:\n    ElevatorSubsystem() {\n        // Write code here.\n    }\n\nprivate:\n    // Write code here.\n};"
+    "c++": "#include <ctre/phoenix6/hardware/TalonFX.hpp>\n#include <ctre/phoenix6/configs/TalonFXConfigs.hpp>\n\nclass ElevatorSubsystem {\npublic:\n    ElevatorSubsystem() {\n        // Write code here.\n    }\n\nprivate:\n    // Write code here.\n};"
   },
   "solutionCode": {
     "java": "import com.ctre.phoenix6.hardware.TalonFX;\nimport com.ctre.phoenix6.configs.TalonFXConfiguration;\n\npublic class ElevatorSubsystem {\n    private final TalonFX elevatorMotor = new TalonFX(5);\n\n    public ElevatorSubsystem() {\n        TalonFXConfiguration config = new TalonFXConfiguration();\n        config.Slot0.kP = 10;\n        elevatorMotor.getConfigurator().apply(config);\n    }\n}",
     "python": "from phoenix6.hardware import TalonFX\nfrom phoenix6.configs import TalonFXConfiguration\n\nclass ElevatorSubsystem:\n    elevator_motor = TalonFX(5)\n\n    def __init__(self):\n        config = TalonFXConfiguration()\n        config.slot0.k_p = 10\n        self.elevator_motor.configurator.apply(config)\n",
-    "cpp": "#include <ctre/phoenix6/hardware/TalonFX.hpp>\n#include <ctre/phoenix6/configs/TalonFXConfigs.hpp>\n\nclass ElevatorSubsystem {\npublic:\n    ElevatorSubsystem() {\n        ctre::phoenix6::configs::TalonFXConfiguration config{};\n        config.Slot0.kP = 10;\n        elevatorMotor.GetConfigurator().Apply(config);\n    }\n\nprivate:\n    ctre::phoenix6::hardware::TalonFX elevatorMotor{5};\n};"
+    "c++": "#include <ctre/phoenix6/hardware/TalonFX.hpp>\n#include <ctre/phoenix6/configs/TalonFXConfigs.hpp>\n\nclass ElevatorSubsystem {\npublic:\n    ElevatorSubsystem() {\n        ctre::phoenix6::configs::TalonFXConfiguration config{};\n        config.Slot0.kP = 10;\n        elevatorMotor.GetConfigurator().Apply(config);\n    }\n\nprivate:\n    ctre::phoenix6::hardware::TalonFX elevatorMotor{5};\n};"
   },
   "checks": {
     "java": [
@@ -129,7 +129,7 @@
       { "type": "includes", "value": "k_p", "message": "Did you configure k_p?" },
       { "type": "includes", "value": "apply", "message": "Did you apply the config?" }
     ],
-    "cpp": [
+    "c++": [
       { "type": "count", "value": "TalonFX", "min":3, "message": "Did you create the TalonFX?" },
       { "type": "includes", "value": "TalonFXConfiguration", "message": "Did you create a TalonFXConfiguration object?" },
       { "type": "includes", "value": "kP", "message": "Did you configure kP?" },
@@ -146,12 +146,12 @@
   "starterCode": {
     "java": "import com.ctre.phoenix6.configs.TalonFXConfiguration;\n\npublic class ElevatorSubsystem {\n    public ElevatorSubsystem() {\n        // Write code here and remove this comment.\n    }\n}",
     "python": "from phoenix6.configs import TalonFXConfiguration\n\nclass ElevatorSubsystem:\n    def __init__(self):\n        # Write code here and remove this comment.\n",
-    "cpp": "#include <ctre/phoenix6/configs/TalonFXConfigs.hpp>\n\nclass ElevatorSubsystem {\npublic:\n    ElevatorSubsystem() {\n        // Write code here and remove this comment.\n    }\n};"
+    "c++": "#include <ctre/phoenix6/configs/TalonFXConfigs.hpp>\n\nclass ElevatorSubsystem {\npublic:\n    ElevatorSubsystem() {\n        // Write code here and remove this comment.\n    }\n};"
   },
   "solutionCode": {
     "java": "import com.ctre.phoenix6.configs.TalonFXConfiguration;\n\npublic class ElevatorSubsystem {\n    public ElevatorSubsystem() {\n        TalonFXConfiguration config = new TalonFXConfiguration();\n        config.Slot0.kP = 10;\n        config.Slot0.kI = 0;\n        config.Slot0.kD = 0;\n        config.MotionMagic.MotionMagicCruiseVelocity = 80;\n        config.MotionMagic.MotionMagicAcceleration = 160;\n    }\n}",
     "python": "from phoenix6.configs import TalonFXConfiguration\n\nclass ElevatorSubsystem:\n    def __init__(self):\n        config = TalonFXConfiguration()\n        config.slot0.k_p = 10\n        config.slot0.k_i = 0\n        config.slot0.k_d = 0\n        config.motion_magic.motion_magic_cruise_velocity = 80\n        config.motion_magic.motion_magic_acceleration = 160\n",
-    "cpp": "#include <ctre/phoenix6/configs/TalonFXConfigs.hpp>\n\nclass ElevatorSubsystem {\npublic:\n    ElevatorSubsystem() {\n        ctre::phoenix6::configs::TalonFXConfiguration config{};\n        config.Slot0.kP = 10;\n        config.Slot0.kI = 0;\n        config.Slot0.kD = 0;\n        config.MotionMagic.MotionMagicCruiseVelocity = 80;\n        config.MotionMagic.MotionMagicAcceleration = 160;\n    }\n};"
+    "c++": "#include <ctre/phoenix6/configs/TalonFXConfigs.hpp>\n\nclass ElevatorSubsystem {\npublic:\n    ElevatorSubsystem() {\n        ctre::phoenix6::configs::TalonFXConfiguration config{};\n        config.Slot0.kP = 10;\n        config.Slot0.kI = 0;\n        config.Slot0.kD = 0;\n        config.MotionMagic.MotionMagicCruiseVelocity = 80;\n        config.MotionMagic.MotionMagicAcceleration = 160;\n    }\n};"
   },
   "checks": {
     "java": [
@@ -170,7 +170,7 @@
       { "type": "includes", "value": "motion_magic_cruise_velocity", "message": "Did you add the cruise velocity?" },
       { "type": "includes", "value": "motion_magic_acceleration", "message": "Did you add the acceleration?" }
     ],
-    "cpp": [
+    "c++": [
       { "type": "includes", "value": "TalonFXConfiguration", "message": "Did you add an object" },
       { "type": "includes", "value": "kP", "message": "Did you add kP?" },
       { "type": "includes", "value": "kI", "message": "Did you add kI?" },
@@ -188,12 +188,12 @@
   "starterCode": {
     "java": "package frc.robot;\nimport edu.wpi.first.wpilibj2.command.button.CommandXboxController;\nimport edu.wpi.first.wpilibj2.command.Commands;\nimport frc.robot.subsystems.Intake;\n\npublic class RobotContainer {\n    private final CommandXboxController controller = new CommandXboxController(0);\n    private final Intake intake = new Intake();\n\n    public RobotContainer() {\n        // Write code here and remove this comment.\n    }\n}",
     "python": "from commands2.button import CommandXboxController\nfrom commands2 import cmd\nfrom subsystems.intake import Intake\n\nclass RobotContainer:\n    def __init__(self):\n        self.controller = CommandXboxController(0)\n        self.intake = Intake()\n        # Write code here and remove this comment.\n",
-    "cpp": "#include <frc2/command/button/CommandXboxController.h>\n#include <frc2/command/Commands.h>\n#include \"subsystems/Intake.h\"\n\nclass RobotContainer {\npublic:\n    RobotContainer() {\n        // Write code here and remove this comment.\n    }\n\nprivate:\n    frc2::CommandXboxController controller{0};\n    Intake intake;\n};"
+    "c++": "#include <frc2/command/button/CommandXboxController.h>\n#include <frc2/command/Commands.h>\n#include \"subsystems/Intake.h\"\n\nclass RobotContainer {\npublic:\n    RobotContainer() {\n        // Write code here and remove this comment.\n    }\n\nprivate:\n    frc2::CommandXboxController controller{0};\n    Intake intake;\n};"
   },
   "solutionCode": {
     "java": "package frc.robot;\nimport edu.wpi.first.wpilibj2.command.button.CommandXboxController;\nimport edu.wpi.first.wpilibj2.command.Commands;\nimport frc.robot.subsystems.Intake;\n\npublic class RobotContainer {\n    private final CommandXboxController controller = new CommandXboxController(0);\n    private final Intake intake = new Intake();\n\n    public RobotContainer() {\n        controller.b().whileTrue(intake.runMotor);\n    }\n}",
     "python": "from commands2.button import CommandXboxController\nfrom commands2 import cmd\nfrom subsystems.intake import Intake\n\nclass RobotContainer:\n    def __init__(self):\n        self.controller = CommandXboxController(0)\n        self.intake = Intake()\n        self.controller.b().whileTrue(self.intake.run_motor)\n",
-    "cpp": "#include <frc2/command/button/CommandXboxController.h>\n#include <frc2/command/Commands.h>\n#include \"subsystems/Intake.h\"\n\nclass RobotContainer {\npublic:\n    RobotContainer() {\n        controller.B().WhileTrue(intake.RunMotor);\n    }\n\nprivate:\n    frc2::CommandXboxController controller{0};\n    Intake intake;\n};"
+    "c++": "#include <frc2/command/button/CommandXboxController.h>\n#include <frc2/command/Commands.h>\n#include \"subsystems/Intake.h\"\n\nclass RobotContainer {\npublic:\n    RobotContainer() {\n        controller.B().WhileTrue(intake.RunMotor);\n    }\n\nprivate:\n    frc2::CommandXboxController controller{0};\n    Intake intake;\n};"
   },
   "checks": {
     "java": [
@@ -206,7 +206,7 @@
       { "type": "includes", "value": "whiletrue", "message": "Did you use whileTrue?" },
       { "type": "includes", "value": "intake.run_motor", "message": "Did you bind self.intake.run_motor?" }
     ],
-    "cpp": [
+    "c++": [
       { "type": "includes", "value": "controller.B()", "message": "Did you get the B button from the controller?" },
       { "type": "includes", "value": "WhileTrue", "message": "Did you use WhileTrue?" },
       { "type": "includes", "value": "intake.RunMotor", "message": "Did you bind intake.RunMotor?" }
@@ -221,12 +221,12 @@
     "starterCode": {
       "java": "package frc.robot;\nimport com.ctre.phoenix6.configs.Slot0Configs;\nimport com.ctre.phoenix6.signals.GravityTypeValue;\nimport com.ctre.phoenix6.signals.StaticFeedforwardSignValue;\n\npublic class Constants {\n    // Write code here and remove this comment.\n}",
       "python": "from phoenix6.configs import Slot0Configs\nfrom phoenix6.signals import GravityTypeValue, StaticFeedforwardSignValue\n\nclass Constants:\n    # Write code here and remove this comment.\n    \n",
-      "cpp": "#include \"ctre/phoenix6/configs/Configs.hpp\"\n\nusing namespace ctre::phoenix6::configs;\nusing namespace ctre::phoenix6::signals;\n\nclass Constants {\npublic:\n    // Write code here and remove this comment.\n};"
+      "c++": "#include \"ctre/phoenix6/configs/Configs.hpp\"\n\nusing namespace ctre::phoenix6::configs;\nusing namespace ctre::phoenix6::signals;\n\nclass Constants {\npublic:\n    // Write code here and remove this comment.\n};"
     },
     "solutionCode": {
       "java": "package frc.robot;\nimport com.ctre.phoenix6.configs.Slot0Configs;\nimport com.ctre.phoenix6.signals.GravityTypeValue;\nimport com.ctre.phoenix6.signals.StaticFeedforwardSignValue;\n\npublic class Constants {\n    public static final Slot0Configs slot0Configs =\n        new Slot0Configs()\n            .withKS(0.02)\n            .withKV(4.14)\n            .withKA(0.1)\n            .withKG(0.33)\n            .withKP(35)\n            .withKI(0.0)\n            .withKD(0.005)\n            .withGravityType(GravityTypeValue.Elevator_Static)\n            .withStaticFeedforwardSign(StaticFeedforwardSignValue.UseVelocitySign);\n}",
       "python": "from phoenix6.configs import Slot0Configs\nfrom phoenix6.signals import GravityTypeValue, StaticFeedforwardSignValue\n\nclass Constants:\n    slot0_configs = (\n        Slot0Configs()\n        .with_ks(0.02)\n        .with_kv(4.14)\n        .with_ka(0.1)\n        .with_kg(0.33)\n        .with_kp(35)\n        .with_ki(0.0)\n        .with_kd(0.005)\n        .with_gravity_type(GravityTypeValue.ELEVATOR_STATIC)\n        .with_static_feedforward_sign(StaticFeedforwardSignValue.USE_VELOCITY_SIGN)\n    )\n",
-      "cpp": "#include \"ctre/phoenix6/configs/Configs.hpp\"\n\nusing namespace ctre::phoenix6::configs;\nusing namespace ctre::phoenix6::signals;\n\nclass Constants {\npublic:\n    static inline Slot0Configs slot0Configs =\n        Slot0Configs{}\n            .WithKS(0.02)\n            .WithKV(4.14)\n            .WithKA(0.1)\n            .WithKG(0.33)\n            .WithKP(35)\n            .WithKI(0.0)\n            .WithKD(0.005)\n            .WithGravityType(GravityTypeValue::Elevator_Static)\n            .WithStaticFeedforwardSign(StaticFeedforwardSignValue::UseVelocitySign);\n};"
+      "c++": "#include \"ctre/phoenix6/configs/Configs.hpp\"\n\nusing namespace ctre::phoenix6::configs;\nusing namespace ctre::phoenix6::signals;\n\nclass Constants {\npublic:\n    static inline Slot0Configs slot0Configs =\n        Slot0Configs{}\n            .WithKS(0.02)\n            .WithKV(4.14)\n            .WithKA(0.1)\n            .WithKG(0.33)\n            .WithKP(35)\n            .WithKI(0.0)\n            .WithKD(0.005)\n            .WithGravityType(GravityTypeValue::Elevator_Static)\n            .WithStaticFeedforwardSign(StaticFeedforwardSignValue::UseVelocitySign);\n};"
     },
     "checks": {
       "java": [
@@ -255,7 +255,7 @@
         { "type": "includes", "value": ".with_gravity_type(gravitytypevalue.elevator_static)", "message": "Did you set the gravity type to ELEVATOR_STATIC?" },
         { "type": "includes", "value": ".with_static_feedforward_sign(staticfeedforwardsignvalue.use_velocity_sign)", "message": "Did you set the static feedforward sign to USE_VELOCITY_SIGN?" }
       ],
-      "cpp": [
+      "c++": [
         { "type": "includes", "value": "static inline slot0configs slot0configs", "message": "Did you declare a static Slot0Configs named slot0Configs?" },
         { "type": "includes", "value": "slot0configs{}", "message": "Did you create a Slot0Configs{}?" },
         { "type": "includes", "value": ".withks(0.02)", "message": "Did you set kS to 0.02?" },
@@ -278,12 +278,12 @@
   "starterCode": {
     "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix6.hardware.TalonFX;\nimport edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class TestSubsystem extends SubsystemBase {\n\tprivate final TalonFX motor = new TalonFX(1);\n\t//Write code here and remove this comment.\n}",
     "python": "from phoenix6.hardware import TalonFX\nfrom wpilib import SmartDashboard\nfrom wpilib2.command import SubsystemBase\nclass TestSubsystem(SubsystemBase):\n\tmotor = TalonFX(1)\n\t#Write code here and remove this comment.",
-    "cpp": "#include \"frc2/command/SubsystemBase.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\n#include \"frc/smartdashboard/SmartDashboard.h\"\nclass TestSubsystem : public frc2::SubsystemBase {\npublic:\n\t//Write code here and remove this comment.\nprivate:\n\tctre::phoenix6::hardware::TalonFX motor{1};\n};\n"
+    "c++": "#include \"frc2/command/SubsystemBase.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\n#include \"frc/smartdashboard/SmartDashboard.h\"\nclass TestSubsystem : public frc2::SubsystemBase {\npublic:\n\t//Write code here and remove this comment.\nprivate:\n\tctre::phoenix6::hardware::TalonFX motor{1};\n};\n"
   },
   "solutionCode": {
     "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix6.hardware.TalonFX;\nimport edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class TestSubsystem extends SubsystemBase {\n\tprivate final TalonFX motor = new TalonFX(1);\n\t@Override\n\tpublic void periodic() {\n\t\tSmartDashboard.putNumber(\"Motor Velocity\", motor.getVelocity().getValueAsDouble());\n\t}\n}",
     "python": "from phoenix6.hardware import TalonFX\nfrom wpilib import SmartDashboard\nfrom wpilib2.command import SubsystemBase\nclass TestSubsystem(SubsystemBase):\n\tmotor = TalonFX(1)\n\tdef periodic(self):\n\t\tSmartDashboard.putNumber(\"Motor Velocity\", self.motor.get_velocity().value_as_double)\n",
-    "cpp": "#include \"frc2/command/SubsystemBase.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\n#include \"frc/smartdashboard/SmartDashboard.h\"\nclass TestSubsystem : public frc2::SubsystemBase {\npublic:\n\tvoid Periodic() override {\n\t\tfrc::SmartDashboard::PutNumber(\"Motor Velocity\", motor.GetVelocity().GetValueAsDouble());\n\t}\nprivate:\n\tctre::phoenix6::hardware::TalonFX motor{1};\n};\n"
+    "c++": "#include \"frc2/command/SubsystemBase.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\n#include \"frc/smartdashboard/SmartDashboard.h\"\nclass TestSubsystem : public frc2::SubsystemBase {\npublic:\n\tvoid Periodic() override {\n\t\tfrc::SmartDashboard::PutNumber(\"Motor Velocity\", motor.GetVelocity().GetValueAsDouble());\n\t}\nprivate:\n\tctre::phoenix6::hardware::TalonFX motor{1};\n};\n"
   },
   "checks": {
     "java": [
@@ -300,7 +300,7 @@
       { "type": "includes", "value": "get_velocity", "message": "Did you read the motor's velocity?" },
       { "type": "includes", "value": "value_as_double", "message": "Did you convert the value using value_as_double?" }
     ],
-    "cpp": [
+    "c++": [
       { "type": "includes", "value": "void periodic() override", "message": "Did you override the Periodic() method?" },
       { "type": "includes", "value": "smartdashboard::putnumber", "message": "Did you use frc::SmartDashboard::PutNumber?" },
       { "type": "includes", "value": "\"motor velocity\"", "message": "Did you use the key \"Motor Velocity\"?" },
@@ -317,12 +317,12 @@
   "starterCode": {
     "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix6.hardware.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class IntakeSubsystem extends SubsystemBase {\n\t//Write code here and remove this comment.\n}",
     "python": "from phoenix6.hardware import TalonFX\nfrom wpilib2.command import SubsystemBase\nclass IntakeSubsystem(SubsystemBase):\n\t#Write code here and remove this comment.",
-    "cpp": "#include \"frc2/command/SubsystemBase.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\nclass IntakeSubsystem : public frc2::SubsystemBase {\npublic:\n\t//Write code here and remove this comment.\nprivate:\n\t//Write code here and remove this comment too.\n};\n"
+    "c++": "#include \"frc2/command/SubsystemBase.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\nclass IntakeSubsystem : public frc2::SubsystemBase {\npublic:\n\t//Write code here and remove this comment.\nprivate:\n\t//Write code here and remove this comment too.\n};\n"
   },
   "solutionCode": {
     "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix6.hardware.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class IntakeSubsystem extends SubsystemBase {\n\tprivate final TalonFX intakeMotor = new TalonFX(3);\n\tpublic void setSpeed(double speed) {\n\t\tintakeMotor.set(speed);\n\t}\n\tpublic void reverseSpeed(double speed) {\n\t\tintakeMotor.set(-speed);\n\t}\n\tpublic void stop() {\n\t\tintakeMotor.set(0);\n\t}\n}",
     "python": "from phoenix6.hardware import TalonFX\nfrom wpilib2.command import SubsystemBase\nclass IntakeSubsystem(SubsystemBase):\n\tintake_motor = TalonFX(3)\n\tdef set_speed(self, speed: float):\n\t\tself.intake_motor.set(speed)\n\tdef reverse_speed(self, speed: float):\n\t\tself.intake_motor.set(-speed)\n\tdef stop(self):\n\t\tself.intake_motor.set(0)\n",
-    "cpp": "#include \"frc2/command/SubsystemBase.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\nclass IntakeSubsystem : public frc2::SubsystemBase {\npublic:\n\tvoid SetSpeed(double speed) {\n\t\tintakeMotor.Set(speed);\n\t}\n\tvoid ReverseSpeed(double speed) {\n\t\tintakeMotor.Set(-speed);\n\t}\n\tvoid Stop() {\n\t\tintakeMotor.StopMotor();\n\t}\nprivate:\n\tctre::phoenix6::hardware::TalonFX intakeMotor{3};\n};\n"
+    "c++": "#include \"frc2/command/SubsystemBase.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\nclass IntakeSubsystem : public frc2::SubsystemBase {\npublic:\n\tvoid SetSpeed(double speed) {\n\t\tintakeMotor.Set(speed);\n\t}\n\tvoid ReverseSpeed(double speed) {\n\t\tintakeMotor.Set(-speed);\n\t}\n\tvoid Stop() {\n\t\tintakeMotor.StopMotor();\n\t}\nprivate:\n\tctre::phoenix6::hardware::TalonFX intakeMotor{3};\n};\n"
   },
   "checks":{
     "java":[
@@ -338,7 +338,7 @@
       { "type": "count", "value": "def", "min": 3, "message": "Did you add def to all methods?" },
       { "type": "count", "value": "TalonFX", "min": 2, "message": "Did you add TalonFX as an object?" }
     ],
-    "cpp":[
+    "c++":[
       { "type": "count", "value": "void", "min": 3, "message": "Did you add void to all methods?" },
       { "type": "count", "value": "double speed", "min": 2, "message": "Did you add 'double speed' as a parameter to 2 methods?" },
       { "type": "count", "value": "talonfx", "min": 2, "message": "Did you add TalonFX as an object?" },
@@ -354,12 +354,12 @@
   "starterCode": {
     "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix6.hardware.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class ArmSubsystem extends SubsystemBase {\n\t//Write code here and remove this comment.\n}",
     "python": "from phoenix6.hardware import TalonFX\nfrom wpilib2.command import SubsystemBase\nclass ArmSubsystem(SubsystemBase):\n\t#Write code here and remove this comment.",
-    "cpp": "#include \"frc2/command/SubsystemBase.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\nclass ArmSubsystem : public frc2::SubsystemBase {\npublic:\n\t//Write code here and remove this comment.\nprivate:\n\t//Write code here and remove this comment too.\n};\n"
+    "c++": "#include \"frc2/command/SubsystemBase.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\nclass ArmSubsystem : public frc2::SubsystemBase {\npublic:\n\t//Write code here and remove this comment.\nprivate:\n\t//Write code here and remove this comment too.\n};\n"
   },
   "solutionCode": {
     "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix6.hardware.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class ArmSubsystem extends SubsystemBase {\n\tprivate final TalonFX armMotor = new TalonFX(7);\n\tpublic void raiseArm() {\n\t\tarmMotor.set(0.5);\n\t}\n\tpublic void lowerArm() {\n\t\tarmMotor.set(-0.5);\n\t}\n\tpublic void stopArm() {\n\t\tarmMotor.stopMotor();\n\t}\n}",
     "python": "from phoenix6.hardware import TalonFX\nfrom wpilib2.command import SubsystemBase\nclass ArmSubsystem(SubsystemBase):\n\tarm_motor = TalonFX(7)\n\tdef raise_arm(self):\n\t\tself.arm_motor.set(0.5)\n\tdef lower_arm(self):\n\t\tself.arm_motor.set(-0.5)\n\tdef stop_arm(self):\n\t\tself.arm_motor.stop_motor()\n",
-    "cpp": "#include \"frc2/command/SubsystemBase.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\nclass ArmSubsystem : public frc2::SubsystemBase {\npublic:\n\tvoid RaiseArm() {\n\t\tarmMotor.Set(0.5);\n\t}\n\tvoid LowerArm() {\n\t\tarmMotor.Set(-0.5);\n\t}\n\tvoid StopArm() {\n\t\tarmMotor.StopMotor();\n\t}\nprivate:\n\tctre::phoenix6::hardware::TalonFX armMotor{7};\n};\n"
+    "c++": "#include \"frc2/command/SubsystemBase.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\nclass ArmSubsystem : public frc2::SubsystemBase {\npublic:\n\tvoid RaiseArm() {\n\t\tarmMotor.Set(0.5);\n\t}\n\tvoid LowerArm() {\n\t\tarmMotor.Set(-0.5);\n\t}\n\tvoid StopArm() {\n\t\tarmMotor.StopMotor();\n\t}\nprivate:\n\tctre::phoenix6::hardware::TalonFX armMotor{7};\n};\n"
   },
   "checks": {
     "java": [
@@ -378,7 +378,7 @@
       { "type": "includes", "value": "7", "message": "Is the device ID 7?" },
       { "type": "includes", "value": "0.5", "message": "Did you use a speed of 0.5?" }
     ],
-    "cpp": [
+    "c++": [
       { "type": "count", "value": "void", "min": 3, "message": "Did you add void to all methods?" },
       { "type": "count", "value": "talonfx", "min": 2, "message": "Did you add TalonFX as an object?" },
       { "type": "includes", "value": "7", "message": "Is the device ID 7?" },
@@ -396,12 +396,12 @@
   "starterCode": {
     "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix6.hardware.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class ClimberSubsystem extends SubsystemBase {\n\t//Write code here and remove this comment.\n}",
     "python": "from phoenix6.hardware import TalonFX\nfrom wpilib2.command import SubsystemBase\nclass ClimberSubsystem(SubsystemBase):\n\t#Write code here and remove this comment.",
-    "cpp": "#include \"frc2/command/SubsystemBase.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\nclass ClimberSubsystem : public frc2::SubsystemBase {\npublic:\n\t//Write code here and remove this comment.\nprivate:\n\t//Write code here and remove this comment too.\n};\n"
+    "c++": "#include \"frc2/command/SubsystemBase.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\nclass ClimberSubsystem : public frc2::SubsystemBase {\npublic:\n\t//Write code here and remove this comment.\nprivate:\n\t//Write code here and remove this comment too.\n};\n"
   },
   "solutionCode": {
     "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix6.hardware.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class ClimberSubsystem extends SubsystemBase {\n\tprivate final TalonFX climberMotor = new TalonFX(9);\n\tpublic void climbUp() {\n\t\tclimberMotor.set(1.0);\n\t}\n\tpublic void climbDown() {\n\t\tclimberMotor.set(-1.0);\n\t}\n\tpublic void stopClimber() {\n\t\tclimberMotor.stopMotor();\n\t}\n}",
     "python": "from phoenix6.hardware import TalonFX\nfrom wpilib2.command import SubsystemBase\nclass ClimberSubsystem(SubsystemBase):\n\tclimber_motor = TalonFX(9)\n\tdef climb_up(self):\n\t\tself.climber_motor.set(1.0)\n\tdef climb_down(self):\n\t\tself.climber_motor.set(-1.0)\n\tdef stop_climber(self):\n\t\tself.climber_motor.stop_motor()\n",
-    "cpp": "#include \"frc2/command/SubsystemBase.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\nclass ClimberSubsystem : public frc2::SubsystemBase {\npublic:\n\tvoid ClimbUp() {\n\t\tclimberMotor.Set(1.0);\n\t}\n\tvoid ClimbDown() {\n\t\tclimberMotor.Set(-1.0);\n\t}\n\tvoid StopClimber() {\n\t\tclimberMotor.StopMotor();\n\t}\nprivate:\n\tctre::phoenix6::hardware::TalonFX climberMotor{9};\n};\n"
+    "c++": "#include \"frc2/command/SubsystemBase.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\nclass ClimberSubsystem : public frc2::SubsystemBase {\npublic:\n\tvoid ClimbUp() {\n\t\tclimberMotor.Set(1.0);\n\t}\n\tvoid ClimbDown() {\n\t\tclimberMotor.Set(-1.0);\n\t}\n\tvoid StopClimber() {\n\t\tclimberMotor.StopMotor();\n\t}\nprivate:\n\tctre::phoenix6::hardware::TalonFX climberMotor{9};\n};\n"
   },
   "checks": {
     "java": [
@@ -420,7 +420,7 @@
       { "type": "includes", "value": "9", "message": "Is the device ID 9?" },
       { "type": "includes", "value": "1.0", "message": "Did you use a speed of 1.0?" }
     ],
-    "cpp": [
+    "c++": [
       { "type": "count", "value": "void", "min": 3, "message": "Did you add void to all methods?" },
       { "type": "count", "value": "talonfx", "min": 2, "message": "Did you add TalonFX as an object?" },
       { "type": "includes", "value": "9", "message": "Is the device ID 9?" },
@@ -438,12 +438,12 @@
   "starterCode": {
     "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix6.hardware.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class OuttakeSubsystem extends SubsystemBase {\n\t//Write code here and remove this comment.\n}",
     "python": "from phoenix6.hardware import TalonFX\nfrom wpilib2.command import SubsystemBase\nclass OuttakeSubsystem(SubsystemBase):\n\t#Write code here and remove this comment.",
-    "cpp": "#include \"frc2/command/SubsystemBase.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\nclass OuttakeSubsystem : public frc2::SubsystemBase {\npublic:\n\t//Write code here and remove this comment.\nprivate:\n\t//Write code here and remove this comment too.\n};\n"
+    "c++": "#include \"frc2/command/SubsystemBase.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\nclass OuttakeSubsystem : public frc2::SubsystemBase {\npublic:\n\t//Write code here and remove this comment.\nprivate:\n\t//Write code here and remove this comment too.\n};\n"
   },
   "solutionCode": {
     "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix6.hardware.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class OuttakeSubsystem extends SubsystemBase {\n\tprivate final TalonFX outtakeMotor = new TalonFX(4);\n\tpublic void outtake(double speed) {\n\t\touttakeMotor.set(speed);\n\t}\n\tpublic void reverseOuttake(double speed) {\n\t\touttakeMotor.set(-speed);\n\t}\n\tpublic void stop() {\n\t\touttakeMotor.stopMotor();\n\t}\n}",
     "python": "from phoenix6.hardware import TalonFX\nfrom wpilib2.command import SubsystemBase\nclass OuttakeSubsystem(SubsystemBase):\n\touttake_motor = TalonFX(4)\n\tdef outtake(self, speed: float):\n\t\tself.outtake_motor.set(speed)\n\tdef reverse_outtake(self, speed: float):\n\t\tself.outtake_motor.set(-speed)\n\tdef stop(self):\n\t\tself.outtake_motor.stop_motor()\n",
-    "cpp": "#include \"frc2/command/SubsystemBase.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\nclass OuttakeSubsystem : public frc2::SubsystemBase {\npublic:\n\tvoid Outtake(double speed) {\n\t\touttakeMotor.Set(speed);\n\t}\n\tvoid ReverseOuttake(double speed) {\n\t\touttakeMotor.Set(-speed);\n\t}\n\tvoid Stop() {\n\t\touttakeMotor.StopMotor();\n\t}\nprivate:\n\tctre::phoenix6::hardware::TalonFX outtakeMotor{4};\n};\n"
+    "c++": "#include \"frc2/command/SubsystemBase.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\nclass OuttakeSubsystem : public frc2::SubsystemBase {\npublic:\n\tvoid Outtake(double speed) {\n\t\touttakeMotor.Set(speed);\n\t}\n\tvoid ReverseOuttake(double speed) {\n\t\touttakeMotor.Set(-speed);\n\t}\n\tvoid Stop() {\n\t\touttakeMotor.StopMotor();\n\t}\nprivate:\n\tctre::phoenix6::hardware::TalonFX outtakeMotor{4};\n};\n"
   },
   "checks": {
     "java": [
@@ -462,7 +462,7 @@
       { "type": "includes", "value": "4", "message": "Is the device ID 4?" },
       { "type": "includes", "value": "stop_motor", "message": "Did you use stop_motor for stop()?" }
     ],
-    "cpp": [
+    "c++": [
       { "type": "count", "value": "void", "min": 3, "message": "Did you add void to all methods?" },
       { "type": "count", "value": "double speed", "min": 2, "message": "Did you add 'double speed' as a parameter to 2 methods?" },
       { "type": "count", "value": "talonfx", "min": 2, "message": "Did you add TalonFX as an object?" },
@@ -480,12 +480,12 @@
   "starterCode": {
     "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix6.hardware.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\nimport edu.wpi.first.wpilibj2.command.Command;\npublic class ArmSubsystem extends SubsystemBase {\n\tprivate final TalonFX armMotor = new TalonFX(7);\n\t//Write code here and remove this comment.\n}",
     "python": "from phoenix6.hardware import TalonFX\nfrom wpilib2.command import SubsystemBase\nclass ArmSubsystem(SubsystemBase):\n\tarm_motor = TalonFX(7)\n\t#Write code here and remove this comment.",
-    "cpp": "#include \"frc2/command/SubsystemBase.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\nclass ArmSubsystem : public frc2::SubsystemBase {\npublic:\n\t//Write code here and remove this comment.\nprivate:\n\tctre::phoenix6::hardware::TalonFX armMotor{7};\n};\n"
+    "c++": "#include \"frc2/command/SubsystemBase.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\nclass ArmSubsystem : public frc2::SubsystemBase {\npublic:\n\t//Write code here and remove this comment.\nprivate:\n\tctre::phoenix6::hardware::TalonFX armMotor{7};\n};\n"
   },
   "solutionCode": {
     "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix6.hardware.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\nimport edu.wpi.first.wpilibj2.command.Command;\npublic class ArmSubsystem extends SubsystemBase {\n\tprivate final TalonFX armMotor = new TalonFX(7);\n\tpublic Command runArm() {\n\t\treturn run(() -> armMotor.set(0.5));\n\t}\n}",
     "python": "from phoenix6.hardware import TalonFX\nfrom wpilib2.command import SubsystemBase\nclass ArmSubsystem(SubsystemBase):\n\tarm_motor = TalonFX(7)\n\tdef run_arm(self):\n\t\treturn self.run(lambda: self.arm_motor.set(0.5))\n",
-    "cpp": "#include \"frc2/command/SubsystemBase.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\nclass ArmSubsystem : public frc2::SubsystemBase {\npublic:\n\tfrc2::CommandPtr RunArm() {\n\t\treturn Run([this] { armMotor.Set(0.5); });\n\t}\nprivate:\n\tctre::phoenix6::hardware::TalonFX armMotor{7};\n};\n"
+    "c++": "#include \"frc2/command/SubsystemBase.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\nclass ArmSubsystem : public frc2::SubsystemBase {\npublic:\n\tfrc2::CommandPtr RunArm() {\n\t\treturn Run([this] { armMotor.Set(0.5); });\n\t}\nprivate:\n\tctre::phoenix6::hardware::TalonFX armMotor{7};\n};\n"
   },
   "checks": {
     "java": [
@@ -499,7 +499,7 @@
       { "type": "includes", "value": "self.run", "message": "Did you use self.run()?" },
       { "type": "includes", "value": "0.5", "message": "Did you use a speed of 0.5?" }
     ],
-    "cpp": [
+    "c++": [
       { "type": "includes", "value": "CommandPtr", "message": "Did you return a CommandPtr?" },
       { "type": "includes", "value": "Run(", "message": "Did you use the Run() factory method?" },
       { "type": "includes", "value": "armMotor.Set", "message": "Did you set the arm motor speed?" },
@@ -515,12 +515,12 @@
   "starterCode": {
     "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix6.hardware.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\nimport edu.wpi.first.wpilibj2.command.Command;\npublic class OuttakeSubsystem extends SubsystemBase {\n\tprivate final TalonFX outtakeMotor = new TalonFX(4);\n\t//Write code here and remove this comment.\n}",
     "python": "from phoenix6.hardware import TalonFX\nfrom wpilib2.command import SubsystemBase\nclass OuttakeSubsystem(SubsystemBase):\n\touttake_motor = TalonFX(4)\n\t#Write code here and remove this comment.",
-    "cpp": "#include \"frc2/command/SubsystemBase.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\nclass OuttakeSubsystem : public frc2::SubsystemBase {\npublic:\n\t//Write code here and remove this comment.\nprivate:\n\tctre::phoenix6::hardware::TalonFX outtakeMotor{4};\n};\n"
+    "c++": "#include \"frc2/command/SubsystemBase.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\nclass OuttakeSubsystem : public frc2::SubsystemBase {\npublic:\n\t//Write code here and remove this comment.\nprivate:\n\tctre::phoenix6::hardware::TalonFX outtakeMotor{4};\n};\n"
   },
   "solutionCode": {
     "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix6.hardware.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\nimport edu.wpi.first.wpilibj2.command.Command;\npublic class OuttakeSubsystem extends SubsystemBase {\n\tprivate final TalonFX outtakeMotor = new TalonFX(4);\n\tpublic Command runOuttake(double speed) {\n\t\treturn run(() -> outtakeMotor.set(speed));\n\t}\n}",
     "python": "from phoenix6.hardware import TalonFX\nfrom wpilib2.command import SubsystemBase\nclass OuttakeSubsystem(SubsystemBase):\n\touttake_motor = TalonFX(4)\n\tdef run_outtake(self, speed: float):\n\t\treturn self.run(lambda: self.outtake_motor.set(speed))\n",
-    "cpp": "#include \"frc2/command/SubsystemBase.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\nclass OuttakeSubsystem : public frc2::SubsystemBase {\npublic:\n\tfrc2::CommandPtr RunOuttake(double speed) {\n\t\treturn Run([this, speed] { outtakeMotor.Set(speed); });\n\t}\nprivate:\n\tctre::phoenix6::hardware::TalonFX outtakeMotor{4};\n};\n"
+    "c++": "#include \"frc2/command/SubsystemBase.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\nclass OuttakeSubsystem : public frc2::SubsystemBase {\npublic:\n\tfrc2::CommandPtr RunOuttake(double speed) {\n\t\treturn Run([this, speed] { outtakeMotor.Set(speed); });\n\t}\nprivate:\n\tctre::phoenix6::hardware::TalonFX outtakeMotor{4};\n};\n"
   },
   "checks": {
     "java": [
@@ -535,7 +535,7 @@
       { "type": "includes", "value": "self.run", "message": "Did you use self.run()?" },
       { "type": "includes", "value": "outtake_motor.set(speed)", "message": "Did you set the outtake motor to speed?" }
     ],
-    "cpp": [
+    "c++": [
       { "type": "includes", "value": "CommandPtr", "message": "Did you return a CommandPtr?" },
       { "type": "includes", "value": "double speed", "message": "Did you add speed as a parameter?" },
       { "type": "includes", "value": "Run(", "message": "Did you use the Run() factory method?" },
@@ -551,12 +551,12 @@
   "starterCode": {
     "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix6.hardware.TalonFX;\nimport edu.wpi.first.wpilibj.DigitalInput;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\nimport edu.wpi.first.wpilibj2.command.Command;\npublic class IntakeSubsystem extends SubsystemBase {\n\tprivate final TalonFX intakeMotor = new TalonFX(3);\n\tprivate final DigitalInput beamBreak = new DigitalInput(0);\n\t//Write code here and remove this comment.\n}",
     "python": "from phoenix6.hardware import TalonFX\nfrom wpilib2 import DigitalInput\nfrom wpilib2.command import SubsystemBase\nclass IntakeSubsystem(SubsystemBase):\n\tintake_motor = TalonFX(3)\n\tbeam_break = DigitalInput(0)\n\t#Write code here and remove this comment.",
-    "cpp": "#include \"frc2/command/SubsystemBase.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\n#include \"frc/DigitalInput.h\"\nclass IntakeSubsystem : public frc2::SubsystemBase {\npublic:\n\t//Write code here and remove this comment.\nprivate:\n\tctre::phoenix6::hardware::TalonFX intakeMotor{3};\n\tfrc::DigitalInput beamBreak{0};\n};\n"
+    "c++": "#include \"frc2/command/SubsystemBase.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\n#include \"frc/DigitalInput.h\"\nclass IntakeSubsystem : public frc2::SubsystemBase {\npublic:\n\t//Write code here and remove this comment.\nprivate:\n\tctre::phoenix6::hardware::TalonFX intakeMotor{3};\n\tfrc::DigitalInput beamBreak{0};\n};\n"
   },
   "solutionCode": {
     "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix6.hardware.TalonFX;\nimport edu.wpi.first.wpilibj.DigitalInput;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\nimport edu.wpi.first.wpilibj2.command.Command;\npublic class IntakeSubsystem extends SubsystemBase {\n\tprivate final TalonFX intakeMotor = new TalonFX(3);\n\tprivate final DigitalInput beamBreak = new DigitalInput(0);\n\tpublic Command intakeUntilBeamBreak() {\n\t\treturn run(() -> intakeMotor.set(0.5)).until(beamBreak::get);\n\t}\n}",
     "python": "from phoenix6.hardware import TalonFX\nfrom wpilib2 import DigitalInput\nfrom wpilib2.command import SubsystemBase\nclass IntakeSubsystem(SubsystemBase):\n\tintake_motor = TalonFX(3)\n\tbeam_break = DigitalInput(0)\n\tdef intake_until_beam_break(self):\n\t\treturn self.run(lambda: self.intake_motor.set(0.5)).until(lambda: self.beam_break.get())\n",
-    "cpp": "#include \"frc2/command/SubsystemBase.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\n#include \"frc/DigitalInput.h\"\nclass IntakeSubsystem : public frc2::SubsystemBase {\npublic:\n\tfrc2::CommandPtr IntakeUntilBeamBreak() {\n\t\treturn Run([this] { intakeMotor.Set(0.5); }).Until([this] { return beamBreak.Get(); });\n\t}\nprivate:\n\tctre::phoenix6::hardware::TalonFX intakeMotor{3};\n\tfrc::DigitalInput beamBreak{0};\n};\n"
+    "c++": "#include \"frc2/command/SubsystemBase.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\n#include \"frc/DigitalInput.h\"\nclass IntakeSubsystem : public frc2::SubsystemBase {\npublic:\n\tfrc2::CommandPtr IntakeUntilBeamBreak() {\n\t\treturn Run([this] { intakeMotor.Set(0.5); }).Until([this] { return beamBreak.Get(); });\n\t}\nprivate:\n\tctre::phoenix6::hardware::TalonFX intakeMotor{3};\n\tfrc::DigitalInput beamBreak{0};\n};\n"
   },
   "checks": {
     "java": [
@@ -572,7 +572,7 @@
       { "type": "includes", "value": ".until(", "message": "Did you use the until() decorator?" },
       { "type": "count", "value": "beam_break", "min":2,"message": "Did you reference the beam_break sensor?" }
     ],
-    "cpp": [
+    "c++": [
       { "type": "includes", "value": "CommandPtr", "message": "Did you return a CommandPtr?" },
       { "type": "includes", "value": "Run(", "message": "Did you use the Run() factory method?" },
       { "type": "includes", "value": ".Until(", "message": "Did you use the Until() decorator?" },
@@ -588,12 +588,12 @@
   "starterCode": {
     "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix6.hardware.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\nimport edu.wpi.first.wpilibj2.command.Command;\npublic class TestSubsystem extends SubsystemBase {\n\tprivate final TalonFX motor = new TalonFX(1);\n\t//Write code here and remove this comment.\n}",
     "python": "from phoenix6.hardware import TalonFX\nfrom wpilib2.command import SubsystemBase\nclass TestSubsystem(SubsystemBase):\n\tmotor = TalonFX(1)\n\t#Write code here and remove this comment.",
-    "cpp": "#include \"frc2/command/SubsystemBase.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\nclass TestSubsystem : public frc2::SubsystemBase {\npublic:\n\t//Write code here and remove this comment.\nprivate:\n\tctre::phoenix6::hardware::TalonFX motor{1};\n};\n"
+    "c++": "#include \"frc2/command/SubsystemBase.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\nclass TestSubsystem : public frc2::SubsystemBase {\npublic:\n\t//Write code here and remove this comment.\nprivate:\n\tctre::phoenix6::hardware::TalonFX motor{1};\n};\n"
   },
   "solutionCode": {
     "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix6.hardware.TalonFX;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\nimport edu.wpi.first.wpilibj2.command.Command;\npublic class TestSubsystem extends SubsystemBase {\n\tprivate final TalonFX motor = new TalonFX(1);\n\tpublic Command runMotorFor3Seconds() {\n\t\treturn run(() -> motor.set(0.5)).withTimeout(3);\n\t}\n}",
     "python": "from phoenix6.hardware import TalonFX\nfrom wpilib2.command import SubsystemBase\nclass TestSubsystem(SubsystemBase):\n\tmotor = TalonFX(1)\n\tdef run_motor_for_3_seconds(self):\n\t\treturn self.run(lambda: self.motor.set(0.5)).withTimeout(3)\n",
-    "cpp": "#include \"frc2/command/SubsystemBase.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\nclass TestSubsystem : public frc2::SubsystemBase {\npublic:\n\tfrc2::CommandPtr RunMotorFor3Seconds() {\n\t\treturn Run([this] { motor.Set(0.5); }).WithTimeout(3_s);\n\t}\nprivate:\n\tctre::phoenix6::hardware::TalonFX motor{1};\n};\n"
+    "c++": "#include \"frc2/command/SubsystemBase.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\nclass TestSubsystem : public frc2::SubsystemBase {\npublic:\n\tfrc2::CommandPtr RunMotorFor3Seconds() {\n\t\treturn Run([this] { motor.Set(0.5); }).WithTimeout(3_s);\n\t}\nprivate:\n\tctre::phoenix6::hardware::TalonFX motor{1};\n};\n"
   },
   "checks": {
     "java": [
@@ -607,7 +607,7 @@
       { "type": "includes", "value": "self.run", "message": "Did you use self.run()?" },
       { "type": "includes", "value": ".withTimeout(3)", "message": "Did you use withTimeout(3)?" }
     ],
-    "cpp": [
+    "c++": [
       { "type": "includes", "value": "CommandPtr", "message": "Did you return a CommandPtr?" },
       { "type": "includes", "value": "Run(", "message": "Did you use the Run() factory method?" },
       { "type": "includes", "value": ".WithTimeout(3_s)", "message": "Did you use WithTimeout(3_s)?" }
@@ -622,12 +622,12 @@
   "starterCode": {
     "java": "package frc.robot.subsystems;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\nimport edu.wpi.first.wpilibj2.command.Command;\nimport edu.wpi.first.wpilibj2.command.Commands;\npublic class SuperSubsystem extends SubsystemBase {\n\tpublic Command runIntake() {\n\t\treturn run(() -> {});\n\t}\n\tpublic Command moveToPickup() {\n\t\treturn run(() -> {});\n\t}\n\t//Write code here and remove this comment.\n}",
     "python": "from commands2 import cmd\nfrom wpilib2.command import SubsystemBase\nclass SuperSubsystem(SubsystemBase):\n\tdef run_intake(self):\n\t\treturn self.run(lambda: None)\n\tdef move_to_pickup(self):\n\t\treturn self.run(lambda: None)\n\t#Write code here and remove this comment.",
-    "cpp": "#include \"frc2/command/SubsystemBase.h\"\n#include \"frc2/command/Commands.h\"\nclass SuperSubsystem : public frc2::SubsystemBase {\npublic:\n\tfrc2::CommandPtr RunIntake() { return Run([this] {}); }\n\tfrc2::CommandPtr MoveToPickup() { return Run([this] {}); }\n\t//Write code here and remove this comment.\n};\n"
+    "c++": "#include \"frc2/command/SubsystemBase.h\"\n#include \"frc2/command/Commands.h\"\nclass SuperSubsystem : public frc2::SubsystemBase {\npublic:\n\tfrc2::CommandPtr RunIntake() { return Run([this] {}); }\n\tfrc2::CommandPtr MoveToPickup() { return Run([this] {}); }\n\t//Write code here and remove this comment.\n};\n"
   },
   "solutionCode": {
     "java": "package frc.robot.subsystems;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\nimport edu.wpi.first.wpilibj2.command.Command;\nimport edu.wpi.first.wpilibj2.command.Commands;\npublic class SuperSubsystem extends SubsystemBase {\n\tpublic Command runIntake() {\n\t\treturn run(() -> {});\n\t}\n\tpublic Command moveToPickup() {\n\t\treturn run(() -> {});\n\t}\n\tpublic Command intakeAndLowerArm() {\n\t\treturn Commands.parallel(\n\t\t\trunIntake(),\n\t\t\tmoveToPickup());\n\t}\n}",
     "python": "from commands2 import cmd\nfrom wpilib2.command import SubsystemBase\nclass SuperSubsystem(SubsystemBase):\n\tdef run_intake(self):\n\t\treturn self.run(lambda: None)\n\tdef move_to_pickup(self):\n\t\treturn self.run(lambda: None)\n\tdef intake_and_lower_arm(self):\n\t\treturn cmd.parallel(\n\t\t\tself.run_intake(),\n\t\t\tself.move_to_pickup())\n",
-    "cpp": "#include \"frc2/command/SubsystemBase.h\"\n#include \"frc2/command/Commands.h\"\nclass SuperSubsystem : public frc2::SubsystemBase {\npublic:\n\tfrc2::CommandPtr RunIntake() { return Run([this] {}); }\n\tfrc2::CommandPtr MoveToPickup() { return Run([this] {}); }\n\tfrc2::CommandPtr IntakeAndLowerArm() {\n\t\treturn frc2::cmd::Parallel(\n\t\t\tRunIntake(),\n\t\t\tMoveToPickup());\n\t}\n};\n"
+    "c++": "#include \"frc2/command/SubsystemBase.h\"\n#include \"frc2/command/Commands.h\"\nclass SuperSubsystem : public frc2::SubsystemBase {\npublic:\n\tfrc2::CommandPtr RunIntake() { return Run([this] {}); }\n\tfrc2::CommandPtr MoveToPickup() { return Run([this] {}); }\n\tfrc2::CommandPtr IntakeAndLowerArm() {\n\t\treturn frc2::cmd::Parallel(\n\t\t\tRunIntake(),\n\t\t\tMoveToPickup());\n\t}\n};\n"
   },
   "checks": {
     "java": [
@@ -642,7 +642,7 @@
       { "type": "includes", "value": "run_intake()", "message": "Did you include run_intake()?" },
       { "type": "includes", "value": "move_to_pickup()", "message": "Did you include move_to_pickup()?" }
     ],
-    "cpp": [
+    "c++": [
       { "type": "includes", "value": "CommandPtr IntakeAndLowerArm", "message": "Did you name the method IntakeAndLowerArm?" },
       { "type": "includes", "value": "frc2::cmd::Parallel(", "message": "Did you use frc2::cmd::Parallel()?" },
       { "type": "count", "value": "RunIntake()", "min": 2, "message": "Did you include RunIntake()?" },
@@ -658,12 +658,12 @@
   "starterCode": {
     "java": "package frc.robot.subsystems;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\nimport edu.wpi.first.wpilibj2.command.Command;\nimport edu.wpi.first.wpilibj2.command.Commands;\npublic class SuperSubsystem extends SubsystemBase {\n\tpublic Command runIntake() {\n\t\treturn run(() -> {});\n\t}\n\tpublic Command moveToPickup() {\n\t\treturn run(() -> {});\n\t}\n\t//Write code here and remove this comment.\n}",
     "python": "from commands2 import cmd\nfrom wpilib2.command import SubsystemBase\nclass SuperSubsystem(SubsystemBase):\n\tdef run_intake(self):\n\t\treturn self.run(lambda: None)\n\tdef move_to_pickup(self):\n\t\treturn self.run(lambda: None)\n\t#Write code here and remove this comment.",
-    "cpp": "#include \"frc2/command/SubsystemBase.h\"\n#include \"frc2/command/Commands.h\"\nclass SuperSubsystem : public frc2::SubsystemBase {\npublic:\n\tfrc2::CommandPtr RunIntake() { return Run([this] {}); }\n\tfrc2::CommandPtr MoveToPickup() { return Run([this] {}); }\n\t//Write code here and remove this comment.\n};\n"
+    "c++": "#include \"frc2/command/SubsystemBase.h\"\n#include \"frc2/command/Commands.h\"\nclass SuperSubsystem : public frc2::SubsystemBase {\npublic:\n\tfrc2::CommandPtr RunIntake() { return Run([this] {}); }\n\tfrc2::CommandPtr MoveToPickup() { return Run([this] {}); }\n\t//Write code here and remove this comment.\n};\n"
   },
   "solutionCode": {
     "java": "package frc.robot.subsystems;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\nimport edu.wpi.first.wpilibj2.command.Command;\nimport edu.wpi.first.wpilibj2.command.Commands;\npublic class SuperSubsystem extends SubsystemBase {\n\tpublic Command runIntake() {\n\t\treturn run(() -> {});\n\t}\n\tpublic Command moveToPickup() {\n\t\treturn run(() -> {});\n\t}\n\tpublic Command intakeAndLowerArmRace() {\n\t\treturn Commands.race(\n\t\t\trunIntake(),\n\t\t\tmoveToPickup());\n\t}\n}",
     "python": "from commands2 import cmd\nfrom wpilib2.command import SubsystemBase\nclass SuperSubsystem(SubsystemBase):\n\tdef run_intake(self):\n\t\treturn self.run(lambda: None)\n\tdef move_to_pickup(self):\n\t\treturn self.run(lambda: None)\n\tdef intake_and_lower_arm_race(self):\n\t\treturn cmd.race(\n\t\t\tself.run_intake(),\n\t\t\tself.move_to_pickup())\n",
-    "cpp": "#include \"frc2/command/SubsystemBase.h\"\n#include \"frc2/command/Commands.h\"\nclass SuperSubsystem : public frc2::SubsystemBase {\npublic:\n\tfrc2::CommandPtr RunIntake() { return Run([this] {}); }\n\tfrc2::CommandPtr MoveToPickup() { return Run([this] {}); }\n\tfrc2::CommandPtr IntakeAndLowerArmRace() {\n\t\treturn frc2::cmd::Race(\n\t\t\tRunIntake(),\n\t\t\tMoveToPickup());\n\t}\n};\n"
+    "c++": "#include \"frc2/command/SubsystemBase.h\"\n#include \"frc2/command/Commands.h\"\nclass SuperSubsystem : public frc2::SubsystemBase {\npublic:\n\tfrc2::CommandPtr RunIntake() { return Run([this] {}); }\n\tfrc2::CommandPtr MoveToPickup() { return Run([this] {}); }\n\tfrc2::CommandPtr IntakeAndLowerArmRace() {\n\t\treturn frc2::cmd::Race(\n\t\t\tRunIntake(),\n\t\t\tMoveToPickup());\n\t}\n};\n"
   },
   "checks": {
     "java": [
@@ -678,7 +678,7 @@
       { "type": "includes", "value": "run_intake()", "message": "Did you include run_intake()?" },
       { "type": "includes", "value": "move_to_pickup()", "message": "Did you include move_to_pickup()?" }
     ],
-    "cpp": [
+    "c++": [
       { "type": "includes", "value": "CommandPtr IntakeAndLowerArmRace", "message": "Did you name the method IntakeAndLowerArmRace?" },
       { "type": "includes", "value": "frc2::cmd::Race(", "message": "Did you use frc2::cmd::Race()?" },
       { "type": "count", "value": "RunIntake()", "min": 2, "message": "Did you include RunIntake()?" },

@@ -60,9 +60,16 @@ function Header() {
           className="justify-self-start inline-flex items-center gap-[0.5rem] min-h-11 font-bold leading-none tracking-[-0.03em] transition-all duration-200 ease-in max-lg:justify-self-center"
           aria-label="FRC Programming Practice home"
         >
-          <span className="brand-name text-[25px] font-bold !text-lg tracking-[3px] uppercase text-white transition duration-200 underline decoration-dashed decoration-[#2a3444] underline-offset-[6px] hover:decoration-[#fff] hover:-translate-y-[3px] max-md:text-[20px]">
+          <span className="
+          brand-name text-[25px] 
+          font-bold !text-lg tracking-[3px] 
+          uppercase text-white transition duration-200 
+          underline decoration-dashed decoration-[#2a3444] underline-offset-[6px]
+           hover:decoration-[#fff] hover:-translate-y-[3px] max-md:text-[20px]
+           flex flex-row justify-center items-center
+           ">
             {/* <span className="text-[#7AADFF]"></span> */}
-            Perscript
+            <img className="w-auto h-7 mr-2"src="IMG/image.png"/> Perscript
           </span>
         </Link>
 

@@ -4,7 +4,7 @@ function Footer() {
   return (
     <footer className="site-footer">
       <div className="footer-inner">
-        <p className="text-[#fff]">FRC Programming Practice</p>
+        <p className="text-[#fff]">Perscript</p>
         <nav aria-label="Footer navigation">
           <Link to="/PP">Privacy</Link>
           <a

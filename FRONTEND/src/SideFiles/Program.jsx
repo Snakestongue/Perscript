@@ -18,7 +18,9 @@ const languages = [
   { value: "c++", label: "C++" },
 ];
 const languagePositions = ["0.3rem", "calc(33.333% + 0.1rem)", "calc(66.667% - 0.1rem)"];
-
+const monacoLangMap = {
+  "c++": "cpp",
+};
 function defineEditorTheme(monaco) {
   monaco.editor.defineTheme("frc-practice", {
     base: "vs-dark",
@@ -381,7 +383,7 @@ function Program() {
           <div className="editor-frame">
             <Editor
               height="100%"
-              language={currentLang}
+              language={monacoLangMap[currentLang] ?? currentLang}
               theme="frc-practice"
               value={userCode}
               onChange={(value) => setUserCode(value || "")}
