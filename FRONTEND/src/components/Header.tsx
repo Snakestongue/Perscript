@@ -143,6 +143,10 @@ function Header() {
                               <strong>Command based</strong>
                               <span>Build commands, triggers, and command-based robot flows.</span>
                             </Link>
+                            <Link to="/program#lesson-difficult">
+                              <strong>Difficult Problems</strong>
+                              <span>Use hardware and complex commaands.</span>
+                            </Link>
                           </div>
                           <Link className="nav-mega-cta" to="/program">
                             Open practice <span aria-hidden="true">→</span>

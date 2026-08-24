@@ -10,6 +10,7 @@ const exerciseGroups = [
   { id: "lesson-basics", label: "Basics", problems: problems.slice(0, 4) },
   { id: "lesson-core-patterns", label: "Core patterns", problems: problems.slice(4, 12) },
   { id: "lesson-command-based", label: "Command based", problems: problems.slice(12, 18) },
+  { id: "lesson-difficult", label: "Difficult", problems: problems.slice(18,22)},
 ];
 
 const languages = [
@@ -419,8 +420,14 @@ function Program() {
               className="action-buttons quiet-action"
               type="button"
               onClick={() => setUserCode(selectedProblem.solutionCode[currentLang])}
-            >
-              Show answer
+            >Show answer
+            </button>
+            <button
+              className="action-buttons quiet-action"
+              type="button"
+              id="clear-button"
+              onClick={() => setUserCode(selectedProblem.starterCode[currentLang])}
+            >Reset Code
             </button>
 
             <button type="button" className="action-buttons quiet-action" onClick={shareLink}>

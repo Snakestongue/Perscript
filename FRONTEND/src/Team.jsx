@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-
-function TeamModal({ onSubmit }) {
+function TeamModal({ onSubmit }){
   const [value, setValue] = useState("");
   const [error, setError] = useState("");
   const [showPrivacy, setShowPrivacy] = useState(false);
@@ -8,32 +7,30 @@ function TeamModal({ onSubmit }) {
   const inputRef = useRef(null);
   const privacyDialogRef = useRef(null);
   const privacyTriggerRef = useRef(null);
-
-  useEffect(() => {
+  useEffect(() =>{
     const previousFocus = document.activeElement;
     inputRef.current?.focus();
-
-    return () => {
+    return () =>{
       if (previousFocus instanceof HTMLElement) previousFocus.focus();
     };
   }, []);
-
-  useEffect(() => {
+  useEffect(() =>{
     if (showPrivacy) {
       privacyDialogRef.current?.focus();
     } else {
       privacyTriggerRef.current?.focus();
     }
-  }, [showPrivacy]);
+  },[showPrivacy]);
 
   function keepFocusInDialog(event, containerRef) {
-    if (event.key !== "Tab" || !containerRef.current) return;
-
+    if (event.key !== "Tab" || !containerRef.current){
+      return
+    }
     const focusable = Array.from(
       containerRef.current.querySelectorAll("button:not([disabled]), input:not([disabled])")
     );
-    const first = focusable[0];
-    const last = focusable[focusable.length - 1];
+    const first = focusable[0]
+    const last = focusable[focusable.length - 1]
 
     if (event.shiftKey && (document.activeElement === first || document.activeElement === containerRef.current)) {
       event.preventDefault();
@@ -44,19 +41,21 @@ function TeamModal({ onSubmit }) {
     }
   }
 
-  function handleSubmit(event) {
+  function handleSubmit(event){
     event.preventDefault();
     const teamNumber = value.trim();
     if (!/^\d{1,5}$/.test(teamNumber)) {
       setError("Enter a team number using 1 to 5 digits.");
       return;
     }
-
     setError("");
     onSubmit(teamNumber);
   }
 
-  return (
+  function handleDismiss() {
+    onSubmit("90019");
+  }
+  return(
     <div id="bgModal" role="presentation">
       <div
         id="modal"
@@ -67,13 +66,21 @@ function TeamModal({ onSubmit }) {
         aria-describedby="team-number-note"
         onKeyDown={(event) => keepFocusInDialog(event, dialogRef)}
         tabIndex={-1}
-      >
+        className="relative">
+
+        <button
+          type="button"
+          id="modalDismiss"
+          aria-label="Close, skip entering team number"
+          onClick={handleDismiss}
+          className="absolute top-3 right-3 text-white/50 hover:text-white text-xl leading-none hover:cursor-pointer"
+        >&times;</button>
+
         <p className="modal-kicker">One quick question</p>
         <h2 id="h2Team">What is your FRC team number?</h2>
         <p id="team-number-note">
           It helps count how many teams use the practice site. No name or email is collected.
         </p>
-
         <form onSubmit={handleSubmit} className="team-form">
           <label htmlFor="modalInput">Team number</label>
           <input
@@ -96,8 +103,6 @@ function TeamModal({ onSubmit }) {
           {error && <p id="team-number-error" className="field-error">{error}</p>}
           <button id="modalSubmit" type="submit">Continue</button>
         </form>
-
-
         <div className="!mx-auto">
           <button
             type="button"
@@ -110,9 +115,7 @@ function TeamModal({ onSubmit }) {
             aria-expanded={showPrivacy}
             aria-controls="privacyModal"
             onClick={() => setShowPrivacy((prev) => !prev)}
-          >
-            Privacy policy
-          </button>
+          >Privacy policy</button>
 
           {showPrivacy && (
             <div
@@ -125,8 +128,7 @@ function TeamModal({ onSubmit }) {
                 keepFocusInDialog(event, privacyDialogRef)
               }
               tabIndex={-1}
-              className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 px-4"
-            >
+              className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 px-4">
               <div className="w-full max-w-lg rounded-2xl border border-[#7AADFF]/40 bg-black p-6 text-white shadow-2xl shadow-[#7AADFF]/10">
                 <div className="mb-5">
                   <h2 id="h2Privacy" className="mb-2 text-2xl font-bold text-[#7AADFF]">Privacy Policy</h2>
@@ -149,8 +151,7 @@ function TeamModal({ onSubmit }) {
                     text-black transition-all 
                     hover:bg-[#1f2c3f] 
                     hover:cursor-pointer
-                    "
-                  >Close
+                    ">Close
                   </button>
                 </div>
               </div>

@@ -554,9 +554,9 @@
     "c++": "#include \"frc2/command/SubsystemBase.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\n#include \"frc/DigitalInput.h\"\nclass IntakeSubsystem : public frc2::SubsystemBase {\npublic:\n\t//Write code here and remove this comment.\nprivate:\n\tctre::phoenix6::hardware::TalonFX intakeMotor{3};\n\tfrc::DigitalInput beamBreak{0};\n};\n"
   },
   "solutionCode": {
-    "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix6.hardware.TalonFX;\nimport edu.wpi.first.wpilibj.DigitalInput;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\nimport edu.wpi.first.wpilibj2.command.Command;\npublic class IntakeSubsystem extends SubsystemBase {\n\tprivate final TalonFX intakeMotor = new TalonFX(3);\n\tprivate final DigitalInput beamBreak = new DigitalInput(0);\n\tpublic Command intakeUntilBeamBreak() {\n\t\treturn run(() -> intakeMotor.set(0.5)).until(beamBreak::get);\n\t}\n}",
-    "python": "from phoenix6.hardware import TalonFX\nfrom wpilib2 import DigitalInput\nfrom wpilib2.command import SubsystemBase\nclass IntakeSubsystem(SubsystemBase):\n\tintake_motor = TalonFX(3)\n\tbeam_break = DigitalInput(0)\n\tdef intake_until_beam_break(self):\n\t\treturn self.run(lambda: self.intake_motor.set(0.5)).until(lambda: self.beam_break.get())\n",
-    "c++": "#include \"frc2/command/SubsystemBase.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\n#include \"frc/DigitalInput.h\"\nclass IntakeSubsystem : public frc2::SubsystemBase {\npublic:\n\tfrc2::CommandPtr IntakeUntilBeamBreak() {\n\t\treturn Run([this] { intakeMotor.Set(0.5); }).Until([this] { return beamBreak.Get(); });\n\t}\nprivate:\n\tctre::phoenix6::hardware::TalonFX intakeMotor{3};\n\tfrc::DigitalInput beamBreak{0};\n};\n"
+    "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix6.hardware.TalonFX;\nimport edu.wpi.first.wpilibj.DigitalInput;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\nimport edu.wpi.first.wpilibj2.command.Command;\npublic class IntakeSubsystem extends SubsystemBase {\n\tprivate final TalonFX intakeMotor = new TalonFX(3);\n\tprivate final DigitalInput beamBreak = new DigitalInput(0);\n\tpublic Command intakeUntilBeamBreak() {\n\t\treturn run(() -> intakeMotor.set(0.5)).until(() -> beamBreak.get());\n\t}\n}",
+    "python": "from phoenix6.hardware import TalonFX\nfrom wpilib2 import DigitalInput\nfrom wpilib2.command import SubsystemBase\nclass IntakeSubsystem(SubsystemBase):\n\tintake_motor = TalonFX(3)\n\tbeam_break = DigitalInput(0)\n\tdef intake_until_beam_break(self):\n\t\treturn self.run(lambda: self.intake_motor.set(0.5)).until(lambda: not self.beam_break.get())\n",
+    "c++": "#include \"frc2/command/SubsystemBase.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\n#include \"frc/DigitalInput.h\"\nclass IntakeSubsystem : public frc2::SubsystemBase {\npublic:\n\tfrc2::CommandPtr IntakeUntilBeamBreak() {\n\t\treturn Run([this] { intakeMotor.Set(0.5); }).Until([this] { return !beamBreak.Get(); });\n\t}\nprivate:\n\tctre::phoenix6::hardware::TalonFX intakeMotor{3};\n\tfrc::DigitalInput beamBreak{0};\n};\n"
   },
   "checks": {
     "java": [
@@ -570,7 +570,9 @@
       { "type": "includes", "value": "def intake_until_beam_break", "message": "Did you name the method intake_until_beam_break?" },
       { "type": "includes", "value": "self.run", "message": "Did you use self.run()?" },
       { "type": "includes", "value": ".until(", "message": "Did you use the until() decorator?" },
-      { "type": "count", "value": "beam_break", "min":2,"message": "Did you reference the beam_break sensor?" }
+      { "type": "count", "value": "beam_break", "min":2,"message": "Did you reference the beam_break sensor?" },
+      { "type": "includes", "value": "not", "message": "Did you use the not for beam break?" }
+
     ],
     "c++": [
       { "type": "includes", "value": "CommandPtr", "message": "Did you return a CommandPtr?" },
@@ -683,6 +685,210 @@
       { "type": "includes", "value": "frc2::cmd::Race(", "message": "Did you use frc2::cmd::Race()?" },
       { "type": "count", "value": "RunIntake()", "min": 2, "message": "Did you include RunIntake()?" },
       { "type": "count", "value": "MoveToPickup()", "min": 2, "message": "Did you include MoveToPickup()?" }
+    ]
+  }
+},
+{
+  "id": 19,
+  "title": "Intake Sequence",
+  "link": "intake-advanced",
+  "description": "Create an IntakeSubsystem with a TalonFX motor named intakeMotor (device ID 3) and a DigitalInput sensor named beamBreak on port 0. Create a command intakeSequence() that: (1) runs the motor at 0.6 until the beam break returns true, (2) then runs the motor at 0.2 for 0.5 seconds to seat the game piece, (3) then stops the motor. Use Commands.sequence() (or the equivalent), the until() decorator, withTimeout(), and a final stop step.",
+  "starterCode": {
+    "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix6.hardware.TalonFX;\nimport edu.wpi.first.wpilibj.DigitalInput;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\nimport edu.wpi.first.wpilibj2.command.Command;\nimport edu.wpi.first.wpilibj2.command.Commands;\npublic class IntakeSubsystem extends SubsystemBase {\n\tprivate final TalonFX intakeMotor = new TalonFX(3);\n\tprivate final DigitalInput beamBreak = new DigitalInput(0);\n\t//Write code here and remove this comment.\n}",
+    "python": "from phoenix6.hardware import TalonFX\nfrom wpilib2 import DigitalInput\nfrom wpilib2.command import SubsystemBase\nfrom commands2 import cmd\nclass IntakeSubsystem(SubsystemBase):\n\tintake_motor = TalonFX(3)\n\tbeam_break = DigitalInput(0)\n\t#Write code here and remove this comment.",
+    "c++": "#include \"frc2/command/SubsystemBase.h\"\n#include \"frc2/command/Commands.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\n#include \"frc/DigitalInput.h\"\nclass IntakeSubsystem : public frc2::SubsystemBase {\npublic:\n\t//Write code here and remove this comment.\nprivate:\n\tctre::phoenix6::hardware::TalonFX intakeMotor{3};\n\tfrc::DigitalInput beamBreak{0};\n};\n"
+  },
+  "solutionCode": {
+    "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix6.hardware.TalonFX;\nimport edu.wpi.first.wpilibj.DigitalInput;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\nimport edu.wpi.first.wpilibj2.command.Command;\nimport edu.wpi.first.wpilibj2.command.Commands;\npublic class IntakeSubsystem extends SubsystemBase {\n\tprivate final TalonFX intakeMotor = new TalonFX(3);\n\tprivate final DigitalInput beamBreak = new DigitalInput(0);\n\tpublic Command intakeSequence() {\n\t\treturn Commands.sequence(\n\t\t\trun(() -> intakeMotor.set(0.6)).until(() -> beamBreak.get()),\n\t\t\trun(() -> intakeMotor.set(0.2)).withTimeout(0.5),\n\t\t\trunOnce(() -> intakeMotor.stopMotor())\n\t\t);\n\t}\n}",
+    "python": "from phoenix6.hardware import TalonFX\nfrom wpilib2 import DigitalInput\nfrom wpilib2.command import SubsystemBase\nfrom commands2 import cmd\nclass IntakeSubsystem(SubsystemBase):\n\tintake_motor = TalonFX(3)\n\tbeam_break = DigitalInput(0)\n\tdef intake_sequence(self):\n\t\treturn cmd.sequence(\n\t\t\tself.run(lambda: self.intake_motor.set(0.6)).until(lambda: not self.beam_break.get()),\n\t\t\tself.run(lambda: self.intake_motor.set(0.2)).withTimeout(0.5),\n\t\t\tself.runOnce(lambda: self.intake_motor.stop_motor())\n\t\t)\n",
+    "c++": "#include \"frc2/command/SubsystemBase.h\"\n#include \"frc2/command/Commands.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\n#include \"frc/DigitalInput.h\"\nclass IntakeSubsystem : public frc2::SubsystemBase {\npublic:\n\tfrc2::CommandPtr IntakeSequence() {\n\t\treturn frc2::cmd::Sequence(\n\t\t\tRun([this] { intakeMotor.Set(0.6); }).Until([this] { return !beamBreak.Get(); }),\n\t\t\tRun([this] { intakeMotor.Set(0.2); }).WithTimeout(0.5_s),\n\t\t\tRunOnce([this] { intakeMotor.StopMotor(); })\n\t\t);\n\t}\nprivate:\n\tctre::phoenix6::hardware::TalonFX intakeMotor{3};\n\tfrc::DigitalInput beamBreak{0};\n};\n"
+  },
+  "checks": {
+    "java": [
+      { "type": "includes", "value": "public Command intakeSequence", "message": "Did you name the method intakeSequence?" },
+      { "type": "includes", "value": "Commands.sequence(", "message": "Did you use Commands.sequence()?" },
+      { "type": "includes", "value": "intakeMotor.set(0.6)", "message": "Did you run the intake at 0.6 first?" },
+      { "type": "includes", "value": ".until(", "message": "Did you use until() to gate on the beam break?" },
+      { "type": "count", "value": "beamBreak", "min":2, "message": "Did you reference beamBreak?" },
+      { "type": "includes", "value": "intakeMotor.set(0.2)", "message": "Did you run the seating stage at 0.2?" },
+      { "type": "includes", "value": ".withTimeout(0.5)", "message": "Did you time the seating stage at 0.5 seconds?" },
+      { "type": "includes", "value": "stopMotor", "message": "Did you stop the motor at the end?" }
+    ],
+    "python": [
+      { "type": "includes", "value": "def intake_sequence", "message": "Did you name the method intake_sequence?" },
+      { "type": "includes", "value": "cmd.sequence(", "message": "Did you use cmd.sequence()?" },
+      { "type": "includes", "value": "intake_motor.set(0.6)", "message": "Did you run the intake at 0.6 first?" },
+      { "type": "includes", "value": ".until(", "message": "Did you use until() to gate on the beam break?" },
+      { "type": "count", "value": "beam_break", "min":2,"message": "Did you reference beam_break?" },
+      { "type": "includes", "value": "intake_motor.set(0.2)", "message": "Did you run the seating stage at 0.2?" },
+      { "type": "includes", "value": "withTimeout(0.5)", "message": "Did you time the seating stage at 0.5 seconds?" },
+      { "type": "includes", "value": "stop_motor", "message": "Did you stop the motor at the end?" },
+      { "type": "includes", "value": "not", "message": "Did you use the not for beam break?" }
+    ],
+    "c++": [
+      { "type": "includes", "value": "CommandPtr IntakeSequence", "message": "Did you name the method IntakeSequence?" },
+      { "type": "includes", "value": "frc2::cmd::Sequence(", "message": "Did you use frc2::cmd::Sequence()?" },
+      { "type": "includes", "value": "intakeMotor.Set(0.6)", "message": "Did you run the intake at 0.6 first?" },
+      { "type": "includes", "value": ".Until(", "message": "Did you use Until() to gate on the beam break?" },
+      { "type": "count", "value": "beamBreak", "min":2,"message": "Did you reference beamBreak?" },
+      { "type": "includes", "value": "intakeMotor.Set(0.2)", "message": "Did you run the seating stage at 0.2?" },
+      { "type": "includes", "value": ".WithTimeout(0.5_s)", "message": "Did you time the seating stage at 0.5 seconds?" },
+      { "type": "includes", "value": "StopMotor", "message": "Did you stop the motor at the end?" }
+    ]
+  }
+},
+{
+  "id": 20,
+  "title": "Elevator Routine",
+  "link": "elevator-routine",
+  "description": "Create an ElevatorSubsystem with a TalonFX motor named elevatorMotor (device ID 5) and a DigitalInput limit switch named bottomLimitSwitch on port 1. Create a command homeElevator() that drives the motor downward at a speed of -0.2 until the bottom limit switch returns true, then stops the motor and resets the TalonFX's internal encoder position to 0 using setPosition(). Use the until() decorator and andThen() to chain the finishing steps.",
+  "starterCode": {
+    "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix6.hardware.TalonFX;\nimport edu.wpi.first.wpilibj.DigitalInput;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\nimport edu.wpi.first.wpilibj2.command.Command;\npublic class ElevatorSubsystem extends SubsystemBase {\n\tprivate final TalonFX elevatorMotor = new TalonFX(5);\n\tprivate final DigitalInput bottomLimitSwitch = new DigitalInput(1);\n\t//Write code here and remove this comment.\n}",
+    "python": "from phoenix6.hardware import TalonFX\nfrom wpilib2 import DigitalInput\nfrom wpilib2.command import SubsystemBase\nclass ElevatorSubsystem(SubsystemBase):\n\televator_motor = TalonFX(5)\n\tbottom_limit_switch = DigitalInput(1)\n\t#Write code here and remove this comment.",
+    "c++": "#include \"frc2/command/SubsystemBase.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\n#include \"frc/DigitalInput.h\"\nclass ElevatorSubsystem : public frc2::SubsystemBase {\npublic:\n\t//Write code here and remove this comment.\nprivate:\n\tctre::phoenix6::hardware::TalonFX elevatorMotor{5};\n\tfrc::DigitalInput bottomLimitSwitch{1};\n};\n"
+  },
+  "solutionCode": {
+    "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix6.hardware.TalonFX;\nimport edu.wpi.first.wpilibj.DigitalInput;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\nimport edu.wpi.first.wpilibj2.command.Command;\npublic class ElevatorSubsystem extends SubsystemBase {\n\tprivate final TalonFX elevatorMotor = new TalonFX(5);\n\tprivate final DigitalInput bottomLimitSwitch = new DigitalInput(1);\n\tpublic Command homeElevator() {\n\t\treturn run(() -> elevatorMotor.set(-0.2))\n\t\t\t.until(bottomLimitSwitch::get)\n\t\t\t.andThen(() -> {\n\t\t\t\televatorMotor.stopMotor();\n\t\t\t\televatorMotor.setPosition(0);\n\t\t\t});\n\t}\n}",
+    "python": "from phoenix6.hardware import TalonFX\nfrom wpilib2 import DigitalInput\nfrom wpilib2.command import SubsystemBase\nclass ElevatorSubsystem(SubsystemBase):\n\televator_motor = TalonFX(5)\n\tbottom_limit_switch = DigitalInput(1)\n\tdef home_elevator(self):\n\t\tdef finish():\n\t\t\tself.elevator_motor.stop_motor()\n\t\t\tself.elevator_motor.set_position(0)\n\t\treturn self.run(lambda: self.elevator_motor.set(-0.2)) \\\n\t\t\t.until(lambda: self.bottom_limit_switch.get()) \\\n\t\t\t.andThen(lambda: finish())\n",
+    "c++": "#include \"frc2/command/SubsystemBase.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\n#include \"frc/DigitalInput.h\"\nclass ElevatorSubsystem : public frc2::SubsystemBase {\npublic:\n\tfrc2::CommandPtr HomeElevator() {\n\t\treturn Run([this] { elevatorMotor.Set(-0.2); })\n\t\t\t.Until([this] { return bottomLimitSwitch.Get(); })\n\t\t\t.AndThen([this] {\n\t\t\t\televatorMotor.StopMotor();\n\t\t\t\televatorMotor.SetPosition(0_tr);\n\t\t\t});\n\t}\nprivate:\n\tctre::phoenix6::hardware::TalonFX elevatorMotor{5};\n\tfrc::DigitalInput bottomLimitSwitch{1};\n};\n"
+  },
+  "checks": {
+    "java": [
+      { "type": "includes", "value": "public Command homeElevator", "message": "Did you name the method homeElevator?" },
+      { "type": "includes", "value": "elevatorMotor.set(-0.2)", "message": "Did you drive the elevator down at -0.2?" },
+      { "type": "includes", "value": ".until(", "message": "Did you use until() to gate on the limit switch?" },
+      { "type": "count", "value": "bottomLimitSwitch", "min":2, "message": "Did you reference bottomLimitSwitch?" },
+      { "type": "includes", "value": ".andThen(", "message": "Did you use andThen() to chain the finishing steps?" },
+      { "type": "includes", "value": "stopMotor", "message": "Did you stop the motor?" },
+      { "type": "includes", "value": "setPosition(0)", "message": "Did you reset the encoder position to 0?" }
+    ],
+    "python": [
+      { "type": "includes", "value": "def home_elevator", "message": "Did you name the method home_elevator?" },
+      { "type": "includes", "value": "elevator_motor.set(-0.2)", "message": "Did you drive the elevator down at -0.2?" },
+      { "type": "includes", "value": ".until(", "message": "Did you use until() to gate on the limit switch?" },
+      { "type": "count", "value": "bottom_limit_switch",  "min":2, "message": "Did you reference bottom_limit_switch?" },
+      { "type": "includes", "value": ".andThen(", "message": "Did you use andThen() to chain the finishing steps?" },
+      { "type": "includes", "value": "stop_motor", "message": "Did you stop the motor?" },
+      { "type": "includes", "value": "set_position(0)", "message": "Did you reset the encoder position to 0?" }
+    ],
+    "c++": [
+      { "type": "includes", "value": "CommandPtr HomeElevator", "message": "Did you name the method HomeElevator?" },
+      { "type": "includes", "value": "elevatorMotor.Set(-0.2)", "message": "Did you drive the elevator down at -0.2?" },
+      { "type": "includes", "value": ".Until(", "message": "Did you use Until() to gate on the limit switch?" },
+      { "type": "count", "value": "bottomLimitSwitch", "min":2, "message": "Did you reference bottomLimitSwitch?" },
+      { "type": "includes", "value": ".AndThen(", "message": "Did you use AndThen() to chain the finishing steps?" },
+      { "type": "includes", "value": "StopMotor", "message": "Did you stop the motor?" },
+      { "type": "includes", "value": "SetPosition", "message": "Did you reset the encoder position?" }
+    ]
+  }
+},
+{
+  "id": 21,
+  "title": "Intake Stall Detection (LaserCAN)",
+  "link": "intake-stall-detection",
+  "description": "Create an IntakeSubsystem with a TalonFX motor named intakeMotor (device ID 3), a LaserCan sensor named laserCan on port 0, and a StatusSignal<Current> field named statorCurrent initialized from intakeMotor.getStatorCurrent(). Create a command intakeUntilDetected() that runs the motor at 0.5 and stops (using until()) as soon as EITHER the LaserCAN's getMeasurement().distance_mm is less than 50, OR the refreshed statorCurrent's value exceeds 40 amps (stall protection). Combine both conditions with a logical OR inside a single until() lambda.",
+  "starterCode": {
+    "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix6.hardware.TalonFX;\nimport com.ctre.phoenix6.StatusSignal;\nimport com.ctre.phoenix6.units.Current;\nimport au.grapplerobotics.LaserCan;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\nimport edu.wpi.first.wpilibj2.command.Command;\npublic class IntakeSubsystem extends SubsystemBase {\n\t//Write code here and remove this comment.\n}",
+    "python": "from phoenix6.hardware import TalonFX\nfrom phoenix6 import StatusSignal\nfrom lasercan import LaserCan\nfrom wpilib2.command import SubsystemBase\nclass IntakeSubsystem(SubsystemBase):\n\t#Write code here and remove this comment.",
+    "c++": "#include \"frc2/command/SubsystemBase.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\n#include \"ctre/phoenix6/StatusSignal.hpp\"\n#include \"LaserCan.h\"\nclass IntakeSubsystem : public frc2::SubsystemBase {\npublic:\n\t//Write code here and remove this comment.\nprivate:\n\t//Write code here and remove this comment too.\n};\n"
+  },
+  "solutionCode": {
+    "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix6.hardware.TalonFX;\nimport com.ctre.phoenix6.StatusSignal;\nimport com.ctre.phoenix6.units.Current;\nimport au.grapplerobotics.LaserCan;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\nimport edu.wpi.first.wpilibj2.command.Command;\npublic class IntakeSubsystem extends SubsystemBase {\n\tprivate final TalonFX intakeMotor = new TalonFX(3);\n\tprivate final LaserCan laserCan = new LaserCan(0);\n\tprivate final StatusSignal<Current> statorCurrent = intakeMotor.getStatorCurrent();\n\n\tpublic Command intakeUntilDetected() {\n\t\treturn run(() -> intakeMotor.set(0.5))\n\t\t\t.until(() -> laserCan.getMeasurement().distance_mm < 50 || statorCurrent.refresh().getValueAsDouble() > 40);\n\t}\n}",
+    "python": "from phoenix6.hardware import TalonFX\nfrom phoenix6 import StatusSignal\nfrom lasercan import LaserCan\nfrom wpilib2.command import SubsystemBase\nclass IntakeSubsystem(SubsystemBase):\n\tintake_motor = TalonFX(3)\n\tlaser_can = LaserCan(0)\n\tstator_current = intake_motor.get_stator_current()\n\n\tdef intake_until_detected(self):\n\t\treturn self.run(lambda: self.intake_motor.set(0.5)) \\\n\t\t\t.until(lambda: self.laser_can.get_measurement().distance_mm < 50 or self.stator_current.refresh().value_as_double > 40)\n",
+    "c++": "#include \"frc2/command/SubsystemBase.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\n#include \"ctre/phoenix6/StatusSignal.hpp\"\n#include \"LaserCan.h\"\nclass IntakeSubsystem : public frc2::SubsystemBase {\npublic:\n\tfrc2::CommandPtr IntakeUntilDetected() {\n\t\treturn Run([this] { intakeMotor.Set(0.5); })\n\t\t\t.Until([this] { return laserCan.GetMeasurement().distance_mm < 50 || statorCurrent.Refresh().GetValueAsDouble() > 40; });\n\t}\nprivate:\n\tctre::phoenix6::hardware::TalonFX intakeMotor{3};\n\tLaserCan laserCan{0};\n\tctre::phoenix6::StatusSignal<units::current::ampere_t> statorCurrent = intakeMotor.GetStatorCurrent();\n};\n"
+  },
+  "checks": {
+    "java": [
+      { "type": "count", "value": "public", "min": 2, "message": "Did you add public to the class and the command method?" },
+      { "type": "count", "value": "talonfx", "min": 3, "message": "Did you import and declare the TalonFX motor?" },
+      { "type": "includes", "value": "private", "message": "Did you use private for the fields?" },
+      { "type": "count", "value": "lasercan", "min": 3, "message": "Did you import, declare, and use the LaserCan sensor?" },
+      { "type": "count", "value": "statorcurrent", "min": 2, "message": "Did you declare and use the statorCurrent StatusSignal?" },
+      { "type": "includes", "value": "getstatorcurrent", "message": "Did you initialize statorCurrent from getStatorCurrent()?" },
+      { "type": "includes", "value": ".until(", "message": "Did you use the until() decorator?" },
+      { "type": "includes", "value": "0.5", "message": "Did you run the motor at 0.5?" },
+      { "type": "includes", "value": "50", "message": "Did you check distance_mm < 50?" },
+      { "type": "includes", "value": "40", "message": "Did you check the stall current threshold of 40?" },
+      { "type": "includes", "value": "refresh()", "message": "Did you call refresh() on the StatusSignal before reading it?" },
+      { "type": "includes", "value": "||", "message": "Did you combine both conditions with a logical OR?" }
+    ],
+    "python": [
+      { "type": "count", "value": "def", "min": 1, "message": "Did you define the intake_until_detected method?" },
+      { "type": "includes", "value": "def intake_until_detected", "message": "Did you name the method intake_until_detected?" },
+      { "type": "count", "value": "self", "min": 6, "message": "Did you correctly reference self for all fields and calls?" },
+      { "type": "count", "value": "talonfx", "min": 2, "message": "Did you import and declare the TalonFX motor?" },
+      { "type": "count", "value": "laser_can", "min": 3, "message": "Did you declare and use the laser_can sensor?" },
+      { "type": "count", "value": "stator_current", "min": 2, "message": "Did you declare and use stator_current?" },
+      { "type": "includes", "value": "get_stator_current", "message": "Did you initialize stator_current from get_stator_current()?" },
+      { "type": "includes", "value": ".until(", "message": "Did you use the until() decorator?" },
+      { "type": "includes", "value": "0.5", "message": "Did you run the motor at 0.5?" },
+      { "type": "includes", "value": "50", "message": "Did you check distance_mm < 50?" },
+      { "type": "includes", "value": "40", "message": "Did you check the stall current threshold of 40?" },
+      { "type": "includes", "value": "refresh()", "message": "Did you call refresh() before reading the value?" }
+    ],
+    "c++": [
+      { "type": "includes", "value": "CommandPtr", "message": "Did you return a CommandPtr?" },
+      { "type": "includes", "value": "Run(", "message": "Did you use the Run() factory method?" },
+      { "type": "count", "value": "talonfx", "min": 2, "message": "Did you declare a TalonFX motor?" },
+      { "type": "count", "value": "lasercan", "min": 3, "message": "Did you declare and use the LaserCan sensor?" },
+      { "type": "count", "value": "statorcurrent", "min": 2, "message": "Did you declare and use statorCurrent?" },
+      { "type": "includes", "value": "GetStatorCurrent", "message": "Did you initialize statorCurrent from GetStatorCurrent()?" },
+      { "type": "includes", "value": ".Until(", "message": "Did you use the Until() decorator?" },
+      { "type": "includes", "value": "0.5", "message": "Did you run the motor at 0.5?" },
+      { "type": "includes", "value": "50", "message": "Did you check distance_mm < 50?" },
+      { "type": "includes", "value": "40", "message": "Did you check the stall current threshold of 40?" },
+      { "type": "includes", "value": "Refresh()", "message": "Did you call Refresh() before reading the value?" },
+      { "type": "includes", "value": "||", "message": "Did you combine both conditions with a logical OR?" }
+    ]
+  }
+},
+{
+  "id": 22,
+  "title": "Hood and Motion Magic",
+  "link": "hood-motion-magic",
+  "description": "Create a HoodSubsystem that controls a TalonFX hood motor with Motion Magic. Include fields for the motor, a Motion Magic request, and velocity tracking. Add a method to move the hood to a target position and a method to read its current velocity.",
+  "starterCode": {
+    "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix6.hardware.TalonFX;\nimport com.ctre.phoenix6.controls.MotionMagicVoltage;\nimport com.ctre.phoenix6.StatusSignal;\nimport com.ctre.phoenix6.units.AngularVelocity;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class HoodSubsystem extends SubsystemBase {\n\t//Write code here and remove this comment.\n}",
+    "python": "from phoenix6.hardware import TalonFX\nfrom phoenix6.controls import MotionMagicVoltage\nfrom phoenix6 import StatusSignal\nfrom wpilib2.command import SubsystemBase\nclass HoodSubsystem(SubsystemBase):\n\t#Write code here and remove this comment.",
+    "c++": "#include \"frc2/command/SubsystemBase.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\n#include \"ctre/phoenix6/controls/MotionMagicVoltage.hpp\"\nclass HoodSubsystem : public frc2::SubsystemBase {\npublic:\n\t//Write code here and remove this comment.\nprivate:\n\t//Write code here and remove this comment too.\n};\n"
+  },
+  "solutionCode": {
+    "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix6.hardware.TalonFX;\nimport com.ctre.phoenix6.controls.MotionMagicVoltage;\nimport com.ctre.phoenix6.StatusSignal;\nimport com.ctre.phoenix6.units.AngularVelocity;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class HoodSubsystem extends SubsystemBase {\n\tprivate final TalonFX hoodMotor = new TalonFX(6);\n\tprivate final MotionMagicVoltage motionMagicRequest = new MotionMagicVoltage(0);\n\tprivate final StatusSignal<AngularVelocity> hoodVelocity = hoodMotor.getVelocity();\n\n\tpublic void setHoodAngle(double rotations) {\n\t\thoodMotor.setControl(motionMagicRequest.withPosition(rotations));\n\t}\n\n\tpublic double getHoodVelocity() {\n\t\treturn hoodVelocity.getValueAsDouble();\n\t}\n}",
+    "python": "from phoenix6.hardware import TalonFX\nfrom phoenix6.controls import MotionMagicVoltage\nfrom phoenix6 import StatusSignal\nfrom wpilib2.command import SubsystemBase\nclass HoodSubsystem(SubsystemBase):\n\thood_motor = TalonFX(6)\n\tmotion_magic_request = MotionMagicVoltage(0)\n\thood_velocity = hood_motor.get_velocity()\n\n\tdef set_hood_angle(self, rotations: float):\n\t\tself.hood_motor.set_control(self.motion_magic_request.with_position(rotations))\n\n\tdef get_hood_velocity(self) -> float:\n\t\treturn self.hood_velocity.value_as_double\n",
+    "c++": "#include \"frc2/command/SubsystemBase.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\n#include \"ctre/phoenix6/controls/MotionMagicVoltage.hpp\"\nclass HoodSubsystem : public frc2::SubsystemBase {\npublic:\n\tvoid SetHoodAngle(double rotations) {\n\t\thoodMotor.SetControl(motionMagicRequest.WithPosition(rotations));\n\t}\n\n\tdouble GetHoodVelocity() {\n\t\treturn hoodVelocity.GetValueAsDouble();\n\t}\n\nprivate:\n\tctre::phoenix6::hardware::TalonFX hoodMotor{6};\n\tctre::phoenix6::controls::MotionMagicVoltage motionMagicRequest{0_tr};\n\tctre::phoenix6::StatusSignal<units::angular_velocity::turns_per_second_t> hoodVelocity = hoodMotor.GetVelocity();\n};\n"
+  },
+  "checks": {
+    "java": [
+      { "type": "count", "value": "public", "min": 3, "message": "Did you add public to the class and both methods?" },
+      { "type": "includes", "value": "void", "message": "Did you add void to setHoodAngle?" },
+      { "type": "count", "value": "talonfx", "min": 2, "message": "Did you import and declare TalonFX?" },
+      { "type": "count", "value": "hoodmotor", "min": 3, "message": "Did you declare and reference hoodMotor in all the right places?" },
+      { "type": "count", "value": "motionmagicvoltage", "min": 3, "message": "Did you use a MotionMagicVoltage request?" },
+      { "type": "includes", "value": "motionmagicrequest.withposition", "message": "Did you use motionMagicRequest.withPosition()?" },
+      { "type": "includes", "value": "setcontrol", "message": "Did you call setControl on the motor?" },
+      { "type": "count", "value": "statussignal", "min":2, "message": "Did you declare a StatusSignal field?" },
+      { "type": "count", "value": "angularvelocity", "min":2,  "message": "Did you type hoodVelocity as StatusSignal<AngularVelocity>?" },
+      { "type": "includes", "value": "getvalueasdouble", "message": "Did you convert the velocity using getValueAsDouble()?" }
+    ],
+    "python": [
+      { "type": "count", "value": "def", "min": 2, "message": "Did you define set_hood_angle and get_hood_velocity?" },
+      { "type": "count", "value": "self", "min": 5, "message": "Did you correctly reference self throughout?" },
+      { "type": "count", "value": "talonfx", "min":2, "message": "Did you import TalonFX?" },
+      { "type": "count", "value": "hood_motor", "min": 3, "message": "Did you declare and reference hood_motor in all the right places?" },
+      { "type": "count", "value": "motionmagicvoltage", "min":2,"message": "Did you use a MotionMagicVoltage request?" },
+      { "type": "includes", "value": "with_position", "message": "Did you use motion_magic_request.with_position()?" },
+      { "type": "includes", "value": "set_control", "message": "Did you call set_control on the motor?" },
+      { "type": "includes", "value": "value_as_double", "message": "Did you convert the velocity using value_as_double?" }
+    ],
+    "c++": [
+      { "type": "includes", "value": "void", "message": "Did you add void to SetHoodAngle?" },
+      { "type": "count", "value": "talonfx", "min":2, "message": "Did you declare a TalonFX?" },
+      { "type": "count", "value": "hoodmotor", "min": 3, "message": "Did you declare and reference hoodMotor in all the right places?" },
+      { "type": "count", "value": "MotionMagicVoltage", "min":2, "message": "Did you use MotionMagicVoltage?" },
+      { "type": "includes", "value": "motionMagicRequest.WithPosition", "message": "Did you use motionMagicRequest.WithPosition()?" },
+      { "type": "includes", "value": "SetControl", "message": "Did you call SetControl on the motor?" },
+      { "type": "includes", "value": "StatusSignal", "message": "Did you declare a StatusSignal field?" },
+      { "type": "includes", "value": "GetValueAsDouble", "message": "Did you convert the velocity using GetValueAsDouble()?" }
     ]
   }
 }
