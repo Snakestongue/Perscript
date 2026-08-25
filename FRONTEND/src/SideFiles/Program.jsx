@@ -10,7 +10,7 @@ const exerciseGroups = [
   { id: "lesson-basics", label: "Basics", problems: problems.slice(0, 4) },
   { id: "lesson-core-patterns", label: "Core patterns", problems: problems.slice(4, 12) },
   { id: "lesson-command-based", label: "Command based", problems: problems.slice(12, 18) },
-  { id: "lesson-difficult", label: "Difficult", problems: problems.slice(18,22)},
+  { id: "lesson-difficult", label: "Difficult", problems: problems.slice(18,23)},
 ];
 
 const languages = [
@@ -97,7 +97,7 @@ function Program() {
     if(navigator.share){
       try {
         await navigator.share({
-          title: `Perscript Practice — ${selectedProblem.title}`,
+          title: `Perscript · ${selectedProblem.title}`,
           text: selectedProblem.description,
           url,
         });
@@ -151,9 +151,10 @@ function Program() {
     setCheckResults([]);
     setAiContent("");
   }, [currentLang, selectedProblem]);
+
   useEffect(()=>{
-    document.title = "Perscript | Live Challenges";
-  }, []);
+    document.title = "Perscript · " + selectedProblem.title;
+  }, [selectProblem]);
 
 
   useEffect(() => {

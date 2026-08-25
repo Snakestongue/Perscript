@@ -891,5 +891,84 @@
       { "type": "includes", "value": "GetValueAsDouble", "message": "Did you convert the velocity using GetValueAsDouble()?" }
     ]
   }
+},
+{
+  "id": 23,
+  "title": "Elevator Zero, Detect & Score",
+  "link": "elevator-zero-detect-score",
+  "description": "Create an ElevatorSubsystem that controls an elevator mechanism using a motor controller, position feedback, a game piece sensor, and a limit switch. Include functionality to zero the elevator, detect whether a game piece is present, move the elevator to a scoring position, and safely control manual movement. Add command-based methods for conditional scoring preparation and update position tracking periodically.",
+  "starterCode": {
+    "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix6.StatusSignal;\nimport com.ctre.phoenix6.hardware.TalonFX;\nimport au.grapplerobotics.LaserCan;\nimport edu.wpi.first.units.measure.Angle;\nimport edu.wpi.first.wpilibj.DigitalInput;\nimport edu.wpi.first.wpilibj2.command.Command;\nimport edu.wpi.first.wpilibj2.command.Commands;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\npublic class ElevatorSubsystem extends SubsystemBase {\n\t//Write code here and remove this comment.\n}",
+    "python": "from phoenix6.hardware import TalonFX\nfrom phoenix6 import StatusSignal\nfrom lasercan import LaserCan\nfrom wpilib2 import DigitalInput\nfrom wpilib2.command import SubsystemBase\nfrom commands2 import cmd\nclass ElevatorSubsystem(SubsystemBase):\n\t#Write code here and remove this comment.",
+    "c++": "#include \"frc2/command/SubsystemBase.h\"\n#include \"frc2/command/Commands.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\n#include \"ctre/phoenix6/StatusSignal.hpp\"\n#include \"LaserCan.h\"\n#include \"frc/DigitalInput.h\"\nclass ElevatorSubsystem : public frc2::SubsystemBase {\npublic:\n\t//Write code here and remove this comment.\nprivate:\n\t//Write code here and remove this comment too.\n};\n"
+  },
+  "solutionCode": {
+    "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix6.StatusSignal;\nimport com.ctre.phoenix6.hardware.TalonFX;\nimport au.grapplerobotics.LaserCan;\nimport edu.wpi.first.units.measure.Angle;\nimport edu.wpi.first.wpilibj.DigitalInput;\nimport edu.wpi.first.wpilibj2.command.Command;\nimport edu.wpi.first.wpilibj2.command.Commands;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\nimport edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;\npublic class ElevatorSubsystem extends SubsystemBase {\n\tprivate final TalonFX elevatorMotor;\n\tprivate final LaserCan laserCan;\n\tprivate final DigitalInput bottomLimit;\n\tprivate final StatusSignal<Angle> elevatorPosition;\n\tprivate static final double SCORE_HEIGHT = 50.0;\n\tprivate static final double POSITION_TOLERANCE = 2.0;\n\n\tpublic ElevatorSubsystem() {\n\t\televatorMotor = new TalonFX(5);\n\t\televatorPosition = elevatorMotor.getPosition();\n\t\tlaserCan = new LaserCan(0);\n\t\tbottomLimit = new DigitalInput(1);\n\t}\n\t\n\tpublic Command zeroElevator() {\n\t\treturn run(() -> {\n\t\t\televatorMotor.set(-0.2);\n\t\t})\n\t\t.until(() -> bottomLimit.get())\n\t\t.finallyDo(() -> {\n\t\t\televatorMotor.stopMotor();\n\t\t\televatorMotor.setPosition(0);\n\t\t});\n\t}\n\n\tpublic boolean hasGamePiece() {\n\t\tLaserCan.Measurement measurement = laserCan.getMeasurement();\n\t\tif (measurement == null) {\n\t\t\treturn false;\n\t\t}\n\t\treturn measurement.distance_mm < 75;\n\t}\n\n\tpublic Command moveToScoreHeight() {\n\t\treturn run(() -> {\n\t\t\televatorPosition.refresh();\n\t\t\tdouble current = elevatorPosition.getValueAsDouble();\n\t\t\tif (current < SCORE_HEIGHT) {\n\t\t\t\televatorMotor.set(0.4);\n\t\t\t} else {\n\t\t\t\televatorMotor.set(-0.2);\n\t\t\t}\n\t\t})\n\t\t.until(() -> {\n\t\t\tdouble current = elevatorPosition.getValueAsDouble();\n\t\t\treturn Math.abs(current - SCORE_HEIGHT) < POSITION_TOLERANCE;\n\t\t})\n\t\t.finallyDo(() -> {\n\t\t\televatorMotor.stopMotor();\n\t\t});\n\t}\n\n\tpublic Command prepareToScore() {\n\t\treturn Commands.either(\n\t\t\tmoveToScoreHeight(),\n\t\t\tCommands.none(),\n\t\t\tthis::hasGamePiece\n\t\t);\n\t}\n\n\tpublic void moveElevator(double speed) {\n\t\tif (speed < 0 && bottomLimit.get()) {\n\t\t\televatorMotor.stopMotor();\n\t\t\treturn;\n\t\t}\n\t\televatorMotor.set(speed);\n\t}\n\n\t@Override\n\tpublic void periodic() {\n\t\televatorPosition.refresh();\n\t\tSmartDashboard.putNumber(\"Elevator Position\", elevatorPosition.getValueAsDouble());\n\t}\n}",
+    "python": "from phoenix6.hardware import TalonFX\nfrom phoenix6 import StatusSignal\nfrom lasercan import LaserCan\nfrom wpilib import DigitalInput\nfrom commands2 import SubsystemBase\nfrom commands2.cmd import either, none\n\nclass ElevatorSubsystem(SubsystemBase):\n\tSCORE_HEIGHT = 50.0\n\tPOSITION_TOLERANCE = 2.0\n\n\tdef __init__(self):\n\t\tsuper().__init__()\n\t\tself.elevator_motor = TalonFX(5)\n\t\tself.laser_can = LaserCan(0)\n\t\tself.bottom_limit = DigitalInput(1)\n\t\tself.elevator_position = self.elevator_motor.get_position()\n\n\tdef zero_elevator(self):\n\t\treturn self.run(lambda: self.elevator_motor.set(-0.2)) \\\n\t\t\t.until(lambda: self.bottom_limit.get()) \\\n\t\t\t.finallyDo(lambda: (self.elevator_motor.stop_motor(), self.elevator_motor.set_position(0)))\n\n\tdef has_game_piece(self):\n\t\tmeasurement = self.laser_can.get_measurement()\n\t\tif measurement is None:\n\t\t\treturn False\n\t\treturn measurement.distance_mm < 75\n\n\tdef move_to_score_height(self):\n\t\tdef drive():\n\t\t\tself.elevator_position.refresh()\n\t\t\tcurrent = self.elevator_position.value_as_double\n\n\t\t\tif current < self.SCORE_HEIGHT:\n\t\t\t\tself.elevator_motor.set(0.4)\n\t\t\telse:\n\t\t\t\tself.elevator_motor.set(-0.2)\n\n\t\tdef at_target():\n\t\t\tcurrent = self.elevator_position.value_as_double\n\t\t\treturn abs(current - self.SCORE_HEIGHT) < self.POSITION_TOLERANCE\n\n\t\treturn self.run(drive) \\\n\t\t\t.until(at_target) \\\n\t\t\t.finallyDo(lambda: self.elevator_motor.stop_motor())\n\n\tdef prepare_to_score(self):\n\t\treturn either(\n\t\t\tself.move_to_score_height(),\n\t\t\tnone(),\n\t\t\tself.has_game_piece\n\t\t)\n\n\tdef move_elevator(self, speed: float):\n\t\tif speed < 0 and self.bottom_limit.get():\n\t\t\tself.elevator_motor.stop_motor()\n\t\t\treturn\n\t\tself.elevator_motor.set(speed)\n\n\tdef periodic(self):\n\t\tself.elevator_position.refresh()\n\t\t SmartDashboard.putNumber(\n\t\t\t\"Elevator Position\",\n\t\t\t self.elevator_position.value_as_double\n\t\t)\n",    
+    "c++": "#include \"frc2/command/SubsystemBase.h\"\n#include \"frc2/command/Commands.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\n#include \"ctre/phoenix6/StatusSignal.hpp\"\n#include \"frc/DigitalInput.h\"\n#include \"LaserCan.h\"\n\nclass ElevatorSubsystem : public frc2::SubsystemBase {\npublic:\n\tElevatorSubsystem()\n\t\t: elevatorMotor(5),\n\t\t  laserCan(0),\n\t\t  bottomLimit(1),\n\t\t  elevatorPosition(elevatorMotor.GetPosition()) {}\n\n\tfrc2::CommandPtr ZeroElevator() {\n\t\treturn Run([this] {\n\t\t\televatorMotor.Set(-0.2);\n\t\t})\n\t\t.Until([this] {\n\t\t\treturn bottomLimit.Get();\n\t\t})\n\t\t.FinallyDo([this] {\n\t\t\televatorMotor.StopMotor();\n\t\t\televatorMotor.SetPosition(0_tr);\n\t\t});\n\t}\n\n\tbool HasGamePiece() {\n\t\tauto measurement = laserCan.GetMeasurement();\n\t\tif (!measurement) {\n\t\t\treturn false;\n\t\t}\n\t\treturn measurement->distance_mm < 75;\n\t}\n\n\tfrc2::CommandPtr MoveToScoreHeight() {\n\t\treturn Run([this] {\n\t\t\televatorPosition.Refresh();\n\t\t\tdouble current = elevatorPosition.GetValueAsDouble();\n\n\t\t\tif (current < kScoreHeight) {\n\t\t\t\televatorMotor.Set(0.4);\n\t\t\t} else {\n\t\t\t\televatorMotor.Set(-0.2);\n\t\t\t}\n\t\t})\n\t\t.Until([this] {\n\t\t\tdouble current = elevatorPosition.GetValueAsDouble();\n\t\t\treturn std::abs(current - kScoreHeight) < kPositionTolerance;\n\t\t})\n\t\t.FinallyDo([this] {\n\t\t\televatorMotor.StopMotor();\n\t\t});\n\t}\n\n\tfrc2::CommandPtr PrepareToScore() {\n\t\treturn frc2::cmd::Either(\n\t\t\tMoveToScoreHeight(),\n\t\t\tfrc2::cmd::None(),\n\t\t\t[this] { return HasGamePiece(); }\n\t\t);\n\t}\n\n\tvoid MoveElevator(double speed) {\n\t\tif (speed < 0 && bottomLimit.Get()) {\n\t\t\televatorMotor.StopMotor();\n\t\t\treturn;\n\t\t}\n\t\televatorMotor.Set(speed);\n\t}\n\n\tvoid Periodic() override {\n\t\televatorPosition.Refresh();\n\t\tfrc::SmartDashboard::PutNumber(\n\t\t\t\"Elevator Position\",\n\t\t\televatorPosition.GetValueAsDouble()\n\t\t);\n\t}\n\nprivate:\n\tctre::phoenix6::hardware::TalonFX elevatorMotor;\n\tLaserCan laserCan;\n\tfrc::DigitalInput bottomLimit;\n\tctre::phoenix6::StatusSignal<units::angle::turn_t> elevatorPosition;\n\n\tstatic constexpr double kScoreHeight = 50.0;\n\tstatic constexpr double kPositionTolerance = 2.0;\n};\n"  },
+  "checks": {
+    "java": [
+      { "type": "count", "value": "public", "min": 8, "message": "Did you add public to the class and every method?" },
+      { "type": "count", "value": "private", "min": 6, "message": "Did you declare all fields and constants as private?" },
+      { "type": "count", "value": "talonfx", "min": 3, "message": "Did you import and declare the TalonFX motor?" },
+      { "type": "count", "value": "elevatormotor", "min": 10, "message": "Did you reference elevatorMotor in every method that needs it?" },
+      { "type": "count", "value": "lasercan", "min": 6, "message": "Did you import, declare, and use the LaserCan sensor?" },
+      { "type": "count", "value": "digitalinput", "min": 3, "message": "Did you import and declare the DigitalInput limit switch?" },
+      { "type": "count", "value": "bottomlimit", "min": 3, "message": "Did you reference bottomLimit in zeroElevator and moveElevator?" },
+      { "type": "count", "value": "statussignal", "min": 2, "message": "Did you import and declare the StatusSignal field?" },
+      { "type": "count", "value": "elevatorposition", "min": 6, "message": "Did you reference elevatorPosition everywhere it's needed?" },
+      { "type": "count", "value": ".until(", "min": 2, "message": "Did you use until() in both zeroElevator and moveToScoreHeight?" },
+      { "type": "count", "value": "finallydo", "min": 2, "message": "Did you use finallyDo() in both zeroElevator and moveToScoreHeight?" },
+      { "type": "count", "value": "score_height", "min": 3, "message": "Did you reference SCORE_HEIGHT in the constant, drive logic, and target check?" },
+      { "type": "count", "value": "position_tolerance", "min": 2, "message": "Did you reference POSITION_TOLERANCE in the constant and target check?" },
+      { "type": "includes", "value": "setposition(0)", "message": "Did you reset the encoder position to 0 in zeroElevator?" },
+      { "type": "includes", "value": "distance_mm", "message": "Did you check the LaserCan's distance_mm?" },
+      { "type": "includes", "value": "75", "message": "Did you use a detection threshold of 75mm?" },
+      { "type": "includes", "value": "commands.either(", "message": "Did you use Commands.either() in prepareToScore?" },
+      { "type": "includes", "value": "commands.none()", "message": "Did you use Commands.none() as the fallback?" },
+      { "type": "includes", "value": "this::hasgamepiece", "message": "Did you pass hasGamePiece as the condition?" },
+      { "type": "includes", "value": "speed < 0", "message": "Did you check for downward motion in moveElevator?" }
+    ],
+    "python": [
+      { "type": "count", "value": "elevator_motor", "min": 10, "message": "Did you reference elevator_motor in every method that needs it?" },
+      { "type": "count", "value": "lasercan", "min": 5, "message": "Did you import, declare, and use the LaserCan sensor?" },
+      { "type": "count", "value": "digitalinput", "min": 2, "message": "Did you import and declare the DigitalInput limit switch?" },
+      { "type": "count", "value": "bottom_limit", "min": 3, "message": "Did you reference bottom_limit in zero_elevator and move_elevator?" },
+      { "type": "count", "value": "elevator_position", "min": 5, "message": "Did you reference elevator_position everywhere it's needed?" },
+      { "type": "count", "value": "talonfx", "min": 2, "message": "Did you import and declare the TalonFX motor?" },
+      { "type": "count", "value": ".until(", "min": 2, "message": "Did you use until() in both zero_elevator and move_to_score_height?" },
+      { "type": "count", "value": "finallydo", "min": 2, "message": "Did you use finallyDo() in both zero_elevator and move_to_score_height?" },
+      { "type": "count", "value": "score_height", "min": 3, "message": "Did you reference SCORE_HEIGHT in the constant, drive logic, and target check?" },
+      { "type": "count", "value": "position_tolerance", "min": 2, "message": "Did you reference POSITION_TOLERANCE in the constant and target check?" },
+      { "type": "includes", "value": "set_position(0)", "message": "Did you reset the encoder position to 0 in zero_elevator?" },
+      { "type": "includes", "value": "distance_mm", "message": "Did you check the LaserCan's distance_mm?" },
+      { "type": "includes", "value": "75", "message": "Did you use a detection threshold of 75mm?" },
+      { "type": "includes", "value": "cmd.either(", "message": "Did you use cmd.either() in prepare_to_score?" },
+      { "type": "includes", "value": "cmd.none()", "message": "Did you use cmd.none() as the fallback?" },
+      { "type": "includes", "value": "has_game_piece", "message": "Did you pass has_game_piece as the condition?" },
+      { "type": "includes", "value": "speed < 0", "message": "Did you check for downward motion in move_elevator?" }
+    ],
+    "c++": [
+      { "type": "count", "value": "talonfx", "min": 2, "message": "Did you declare the TalonFX motor?" },
+      { "type": "count", "value": "elevatormotor", "min": 10, "message": "Did you reference elevatorMotor in every method that needs it?" },
+      { "type": "count", "value": "lasercan", "min": 4, "message": "Did you include, declare, and use the LaserCan sensor?" },
+      { "type": "count", "value": "digitalinput", "min": 2, "message": "Did you include and declare the DigitalInput limit switch?" },
+      { "type": "count", "value": "bottomlimit", "min": 3, "message": "Did you reference bottomLimit in ZeroElevator and MoveElevator?" },
+      { "type": "count", "value": "statussignal", "min": 2, "message": "Did you include and declare the StatusSignal field?" },
+      { "type": "count", "value": "elevatorposition", "min": 6, "message": "Did you reference elevatorPosition everywhere it's needed?" },
+      { "type": "count", "value": "commandptr", "min": 3, "message": "Did you return a CommandPtr from ZeroElevator, MoveToScoreHeight, and PrepareToScore?" },
+      { "type": "count", "value": ".Until(", "min": 2, "message": "Did you use Until() in both ZeroElevator and MoveToScoreHeight?" },
+      { "type": "count", "value": "finallydo", "min": 2, "message": "Did you use FinallyDo() in both ZeroElevator and MoveToScoreHeight?" },
+      { "type": "count", "value": "kscoreheight", "min": 3, "message": "Did you reference kScoreHeight in the constant, drive logic, and target check?" },
+      { "type": "count", "value": "kpositiontolerance", "min": 2, "message": "Did you reference kPositionTolerance in the constant and target check?" },
+      { "type": "includes", "value": "SetPosition", "message": "Did you reset the encoder position in ZeroElevator?" },
+      { "type": "includes", "value": "distance_mm", "message": "Did you check the LaserCan's distance_mm?" },
+      { "type": "includes", "value": "75", "message": "Did you use a detection threshold of 75mm?" },
+      { "type": "includes", "value": "frc2::cmd::Either(", "message": "Did you use frc2::cmd::Either() in PrepareToScore?" },
+      { "type": "includes", "value": "frc2::cmd::None()", "message": "Did you use frc2::cmd::None() as the fallback?" },
+      { "type": "includes", "value": "HasGamePiece()", "message": "Did you pass HasGamePiece as the condition?" },
+      { "type": "includes", "value": "speed < 0", "message": "Did you check for downward motion in MoveElevator?" }
+    ]
+  }
 }
 ]
