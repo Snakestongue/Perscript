@@ -181,40 +181,7 @@
   }
 },
 {
-  "id": 6,
-  "title": "Button Bindings",
-  "link":"button",
-  "description": "In the RobotContainer, bind the B button on the driver controller so that when it is pressed (whileTrue), it runs the runMotor method inside the intake subsystem.",
-  "starterCode": {
-    "java": "package frc.robot;\nimport edu.wpi.first.wpilibj2.command.button.CommandXboxController;\nimport edu.wpi.first.wpilibj2.command.Commands;\nimport frc.robot.subsystems.Intake;\n\npublic class RobotContainer {\n    private final CommandXboxController controller = new CommandXboxController(0);\n    private final Intake intake = new Intake();\n\n    public RobotContainer() {\n        // Write code here and remove this comment.\n    }\n}",
-    "python": "from commands2.button import CommandXboxController\nfrom commands2 import cmd\nfrom subsystems.intake import Intake\n\nclass RobotContainer:\n    def __init__(self):\n        self.controller = CommandXboxController(0)\n        self.intake = Intake()\n        # Write code here and remove this comment.\n",
-    "c++": "#include <frc2/command/button/CommandXboxController.h>\n#include <frc2/command/Commands.h>\n#include \"subsystems/Intake.h\"\n\nclass RobotContainer {\npublic:\n    RobotContainer() {\n        // Write code here and remove this comment.\n    }\n\nprivate:\n    frc2::CommandXboxController controller{0};\n    Intake intake;\n};"
-  },
-  "solutionCode": {
-    "java": "package frc.robot;\nimport edu.wpi.first.wpilibj2.command.button.CommandXboxController;\nimport edu.wpi.first.wpilibj2.command.Commands;\nimport frc.robot.subsystems.Intake;\n\npublic class RobotContainer {\n    private final CommandXboxController controller = new CommandXboxController(0);\n    private final Intake intake = new Intake();\n\n    public RobotContainer() {\n        controller.b().whileTrue(intake.runMotor);\n    }\n}",
-    "python": "from commands2.button import CommandXboxController\nfrom commands2 import cmd\nfrom subsystems.intake import Intake\n\nclass RobotContainer:\n    def __init__(self):\n        self.controller = CommandXboxController(0)\n        self.intake = Intake()\n        self.controller.b().whileTrue(self.intake.run_motor)\n",
-    "c++": "#include <frc2/command/button/CommandXboxController.h>\n#include <frc2/command/Commands.h>\n#include \"subsystems/Intake.h\"\n\nclass RobotContainer {\npublic:\n    RobotContainer() {\n        controller.B().WhileTrue(intake.RunMotor);\n    }\n\nprivate:\n    frc2::CommandXboxController controller{0};\n    Intake intake;\n};"
-  },
-  "checks": {
-    "java": [
-      { "type": "includes", "value": "controller.b()", "message": "Did you get the B button from the controller?" },
-      { "type": "includes", "value": "whiletrue", "message": "Did you use whileTrue?" },
-      { "type": "includes", "value": "intake.runmotor", "message": "Did you bind intake.runMotor?" }
-    ],
-    "python": [
-      { "type": "includes", "value": "controller.b()", "message": "Did you get the B button from the controller?" },
-      { "type": "includes", "value": "whiletrue", "message": "Did you use whileTrue?" },
-      { "type": "includes", "value": "intake.run_motor", "message": "Did you bind self.intake.run_motor?" }
-    ],
-    "c++": [
-      { "type": "includes", "value": "controller.B()", "message": "Did you get the B button from the controller?" },
-      { "type": "includes", "value": "WhileTrue", "message": "Did you use WhileTrue?" },
-      { "type": "includes", "value": "intake.RunMotor", "message": "Did you bind intake.RunMotor?" }
-    ]
-  }
-},
-{
-    "id": 7,
+    "id": 6,
     "title": "Slot0 Configs",
     "link":"slot0",
     "description": "In the Constants class, create a public static final Slot0Configs object named slot0Configs, chained with the following gains and settings: kS=0.02, kV=4.14, kA=0.1, kG=0.33, kP=35, kI=0.0, kD=0.005, GravityType=Elevator_Static, and StaticFeedforwardSign=UseVelocitySign.",
@@ -269,6 +236,40 @@
         { "type": "includes", "value": ".withstaticfeedforwardsign(staticfeedforwardsignvalue::usevelocitysign)", "message": "Did you set the static feedforward sign to UseVelocitySign?" }
       ]
     }
+},
+
+{
+  "id": 7,
+  "title": "Button Bindings",
+  "link":"button",
+  "description": "In the RobotContainer, bind the B button on the driver controller so that when it is pressed (whileTrue), it runs the runMotor method inside the intake subsystem.",
+  "starterCode": {
+    "java": "package frc.robot;\nimport edu.wpi.first.wpilibj2.command.button.CommandXboxController;\nimport edu.wpi.first.wpilibj2.command.Commands;\nimport frc.robot.subsystems.Intake;\n\npublic class RobotContainer {\n    private final CommandXboxController controller = new CommandXboxController(0);\n    private final Intake intake = new Intake();\n\n    public RobotContainer() {\n        // Write code here and remove this comment.\n    }\n}",
+    "python": "from commands2.button import CommandXboxController\nfrom commands2 import cmd\nfrom subsystems.intake import Intake\n\nclass RobotContainer:\n    def __init__(self):\n        self.controller = CommandXboxController(0)\n        self.intake = Intake()\n        # Write code here and remove this comment.\n",
+    "c++": "#include <frc2/command/button/CommandXboxController.h>\n#include <frc2/command/Commands.h>\n#include \"subsystems/Intake.h\"\n\nclass RobotContainer {\npublic:\n    RobotContainer() {\n        // Write code here and remove this comment.\n    }\n\nprivate:\n    frc2::CommandXboxController controller{0};\n    Intake intake;\n};"
+  },
+  "solutionCode": {
+    "java": "package frc.robot;\nimport edu.wpi.first.wpilibj2.command.button.CommandXboxController;\nimport edu.wpi.first.wpilibj2.command.Commands;\nimport frc.robot.subsystems.Intake;\n\npublic class RobotContainer {\n    private final CommandXboxController controller = new CommandXboxController(0);\n    private final Intake intake = new Intake();\n\n    public RobotContainer() {\n        controller.b().whileTrue(intake.runMotor);\n    }\n}",
+    "python": "from commands2.button import CommandXboxController\nfrom commands2 import cmd\nfrom subsystems.intake import Intake\n\nclass RobotContainer:\n    def __init__(self):\n        self.controller = CommandXboxController(0)\n        self.intake = Intake()\n        self.controller.b().whileTrue(self.intake.run_motor)\n",
+    "c++": "#include <frc2/command/button/CommandXboxController.h>\n#include <frc2/command/Commands.h>\n#include \"subsystems/Intake.h\"\n\nclass RobotContainer {\npublic:\n    RobotContainer() {\n        controller.B().WhileTrue(intake.RunMotor);\n    }\n\nprivate:\n    frc2::CommandXboxController controller{0};\n    Intake intake;\n};"
+  },
+  "checks": {
+    "java": [
+      { "type": "includes", "value": "controller.b()", "message": "Did you get the B button from the controller?" },
+      { "type": "includes", "value": "whiletrue", "message": "Did you use whileTrue?" },
+      { "type": "includes", "value": "intake.runmotor", "message": "Did you bind intake.runMotor?" }
+    ],
+    "python": [
+      { "type": "includes", "value": "controller.b()", "message": "Did you get the B button from the controller?" },
+      { "type": "includes", "value": "whiletrue", "message": "Did you use whileTrue?" },
+      { "type": "includes", "value": "intake.run_motor", "message": "Did you bind self.intake.run_motor?" }
+    ],
+    "c++": [
+      { "type": "includes", "value": "controller.B()", "message": "Did you get the B button from the controller?" },
+      { "type": "includes", "value": "WhileTrue", "message": "Did you use WhileTrue?" },
+      { "type": "includes", "value": "intake.RunMotor", "message": "Did you bind intake.RunMotor?" }
+    ]
+  }
 },
 {
   "id": 8,
@@ -554,7 +555,7 @@
     "c++": "#include \"frc2/command/SubsystemBase.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\n#include \"frc/DigitalInput.h\"\nclass IntakeSubsystem : public frc2::SubsystemBase {\npublic:\n\t//Write code here and remove this comment.\nprivate:\n\tctre::phoenix6::hardware::TalonFX intakeMotor{3};\n\tfrc::DigitalInput beamBreak{0};\n};\n"
   },
   "solutionCode": {
-    "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix6.hardware.TalonFX;\nimport edu.wpi.first.wpilibj.DigitalInput;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\nimport edu.wpi.first.wpilibj2.command.Command;\npublic class IntakeSubsystem extends SubsystemBase {\n\tprivate final TalonFX intakeMotor = new TalonFX(3);\n\tprivate final DigitalInput beamBreak = new DigitalInput(0);\n\tpublic Command intakeUntilBeamBreak() {\n\t\treturn run(() -> intakeMotor.set(0.5)).until(() -> beamBreak.get());\n\t}\n}",
+    "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix6.hardware.TalonFX;\nimport edu.wpi.first.wpilibj.DigitalInput;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\nimport edu.wpi.first.wpilibj2.command.Command;\npublic class IntakeSubsystem extends SubsystemBase {\n\tprivate final TalonFX intakeMotor = new TalonFX(3);\n\tprivate final DigitalInput beamBreak = new DigitalInput(0);\n\tpublic Command intakeUntilBeamBreak() {\n\t\treturn run(() -> intakeMotor.set(0.5)).until(() -> !beamBreak.get());\n\t}\n}",
     "python": "from phoenix6.hardware import TalonFX\nfrom wpilib2 import DigitalInput\nfrom wpilib2.command import SubsystemBase\nclass IntakeSubsystem(SubsystemBase):\n\tintake_motor = TalonFX(3)\n\tbeam_break = DigitalInput(0)\n\tdef intake_until_beam_break(self):\n\t\treturn self.run(lambda: self.intake_motor.set(0.5)).until(lambda: not self.beam_break.get())\n",
     "c++": "#include \"frc2/command/SubsystemBase.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\n#include \"frc/DigitalInput.h\"\nclass IntakeSubsystem : public frc2::SubsystemBase {\npublic:\n\tfrc2::CommandPtr IntakeUntilBeamBreak() {\n\t\treturn Run([this] { intakeMotor.Set(0.5); }).Until([this] { return !beamBreak.Get(); });\n\t}\nprivate:\n\tctre::phoenix6::hardware::TalonFX intakeMotor{3};\n\tfrc::DigitalInput beamBreak{0};\n};\n"
   },
@@ -699,7 +700,7 @@
     "c++": "#include \"frc2/command/SubsystemBase.h\"\n#include \"frc2/command/Commands.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\n#include \"frc/DigitalInput.h\"\nclass IntakeSubsystem : public frc2::SubsystemBase {\npublic:\n\t//Write code here and remove this comment.\nprivate:\n\tctre::phoenix6::hardware::TalonFX intakeMotor{3};\n\tfrc::DigitalInput beamBreak{0};\n};\n"
   },
   "solutionCode": {
-    "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix6.hardware.TalonFX;\nimport edu.wpi.first.wpilibj.DigitalInput;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\nimport edu.wpi.first.wpilibj2.command.Command;\nimport edu.wpi.first.wpilibj2.command.Commands;\npublic class IntakeSubsystem extends SubsystemBase {\n\tprivate final TalonFX intakeMotor = new TalonFX(3);\n\tprivate final DigitalInput beamBreak = new DigitalInput(0);\n\tpublic Command intakeSequence() {\n\t\treturn Commands.sequence(\n\t\t\trun(() -> intakeMotor.set(0.6)).until(() -> beamBreak.get()),\n\t\t\trun(() -> intakeMotor.set(0.2)).withTimeout(0.5),\n\t\t\trunOnce(() -> intakeMotor.stopMotor())\n\t\t);\n\t}\n}",
+    "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix6.hardware.TalonFX;\nimport edu.wpi.first.wpilibj.DigitalInput;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\nimport edu.wpi.first.wpilibj2.command.Command;\nimport edu.wpi.first.wpilibj2.command.Commands;\npublic class IntakeSubsystem extends SubsystemBase {\n\tprivate final TalonFX intakeMotor = new TalonFX(3);\n\tprivate final DigitalInput beamBreak = new DigitalInput(0);\n\tpublic Command intakeSequence() {\n\t\treturn Commands.sequence(\n\t\t\trun(() -> intakeMotor.set(0.6)).until(() -> !beamBreak.get()),\n\t\t\trun(() -> intakeMotor.set(0.2)).withTimeout(0.5),\n\t\t\trunOnce(() -> intakeMotor.stopMotor())\n\t\t);\n\t}\n}",
     "python": "from phoenix6.hardware import TalonFX\nfrom wpilib2 import DigitalInput\nfrom wpilib2.command import SubsystemBase\nfrom commands2 import cmd\nclass IntakeSubsystem(SubsystemBase):\n\tintake_motor = TalonFX(3)\n\tbeam_break = DigitalInput(0)\n\tdef intake_sequence(self):\n\t\treturn cmd.sequence(\n\t\t\tself.run(lambda: self.intake_motor.set(0.6)).until(lambda: not self.beam_break.get()),\n\t\t\tself.run(lambda: self.intake_motor.set(0.2)).withTimeout(0.5),\n\t\t\tself.runOnce(lambda: self.intake_motor.stop_motor())\n\t\t)\n",
     "c++": "#include \"frc2/command/SubsystemBase.h\"\n#include \"frc2/command/Commands.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\n#include \"frc/DigitalInput.h\"\nclass IntakeSubsystem : public frc2::SubsystemBase {\npublic:\n\tfrc2::CommandPtr IntakeSequence() {\n\t\treturn frc2::cmd::Sequence(\n\t\t\tRun([this] { intakeMotor.Set(0.6); }).Until([this] { return !beamBreak.Get(); }),\n\t\t\tRun([this] { intakeMotor.Set(0.2); }).WithTimeout(0.5_s),\n\t\t\tRunOnce([this] { intakeMotor.StopMotor(); })\n\t\t);\n\t}\nprivate:\n\tctre::phoenix6::hardware::TalonFX intakeMotor{3};\n\tfrc::DigitalInput beamBreak{0};\n};\n"
   },
@@ -748,7 +749,7 @@
     "c++": "#include \"frc2/command/SubsystemBase.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\n#include \"frc/DigitalInput.h\"\nclass ElevatorSubsystem : public frc2::SubsystemBase {\npublic:\n\t//Write code here and remove this comment.\nprivate:\n\tctre::phoenix6::hardware::TalonFX elevatorMotor{5};\n\tfrc::DigitalInput bottomLimitSwitch{1};\n};\n"
   },
   "solutionCode": {
-    "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix6.hardware.TalonFX;\nimport edu.wpi.first.wpilibj.DigitalInput;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\nimport edu.wpi.first.wpilibj2.command.Command;\npublic class ElevatorSubsystem extends SubsystemBase {\n\tprivate final TalonFX elevatorMotor = new TalonFX(5);\n\tprivate final DigitalInput bottomLimitSwitch = new DigitalInput(1);\n\tpublic Command homeElevator() {\n\t\treturn run(() -> elevatorMotor.set(-0.2))\n\t\t\t.until(bottomLimitSwitch::get)\n\t\t\t.andThen(() -> {\n\t\t\t\televatorMotor.stopMotor();\n\t\t\t\televatorMotor.setPosition(0);\n\t\t\t});\n\t}\n}",
+    "java": "package frc.robot.subsystems;\nimport com.ctre.phoenix6.hardware.TalonFX;\nimport edu.wpi.first.wpilibj.DigitalInput;\nimport edu.wpi.first.wpilibj2.command.SubsystemBase;\nimport edu.wpi.first.wpilibj2.command.Command;\npublic class ElevatorSubsystem extends SubsystemBase {\n\tprivate final TalonFX elevatorMotor = new TalonFX(5);\n\tprivate final DigitalInput bottomLimitSwitch = new DigitalInput(1);\n\tpublic Command homeElevator() {\n\t\treturn run(() -> elevatorMotor.set(-0.2))\n\t\t\t.until(() -> bottomLimitSwitch.get())\n\t\t\t.andThen(() -> {\n\t\t\t\televatorMotor.stopMotor();\n\t\t\t\televatorMotor.setPosition(0);\n\t\t\t});\n\t}\n}",
     "python": "from phoenix6.hardware import TalonFX\nfrom wpilib2 import DigitalInput\nfrom wpilib2.command import SubsystemBase\nclass ElevatorSubsystem(SubsystemBase):\n\televator_motor = TalonFX(5)\n\tbottom_limit_switch = DigitalInput(1)\n\tdef home_elevator(self):\n\t\tdef finish():\n\t\t\tself.elevator_motor.stop_motor()\n\t\t\tself.elevator_motor.set_position(0)\n\t\treturn self.run(lambda: self.elevator_motor.set(-0.2)) \\\n\t\t\t.until(lambda: self.bottom_limit_switch.get()) \\\n\t\t\t.andThen(lambda: finish())\n",
     "c++": "#include \"frc2/command/SubsystemBase.h\"\n#include \"ctre/phoenix6/TalonFX.hpp\"\n#include \"frc/DigitalInput.h\"\nclass ElevatorSubsystem : public frc2::SubsystemBase {\npublic:\n\tfrc2::CommandPtr HomeElevator() {\n\t\treturn Run([this] { elevatorMotor.Set(-0.2); })\n\t\t\t.Until([this] { return bottomLimitSwitch.Get(); })\n\t\t\t.AndThen([this] {\n\t\t\t\televatorMotor.StopMotor();\n\t\t\t\televatorMotor.SetPosition(0_tr);\n\t\t\t});\n\t}\nprivate:\n\tctre::phoenix6::hardware::TalonFX elevatorMotor{5};\n\tfrc::DigitalInput bottomLimitSwitch{1};\n};\n"
   },
