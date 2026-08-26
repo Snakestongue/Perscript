@@ -214,21 +214,28 @@ function Program() {
     navigate(`/program/${newLang}/${selectedProblem.link}`, { replace: false });
   }
 
+  function escapeRegExp(str) {
+    return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  }
+
   function runChecks() {
     const code = (userCode || "").toLowerCase();
     const results = selectedProblem.checks[currentLang].map((check) => {
       let passed = true;
-
-      if (check.type === "includes") {
+      if (check.type === "includes"){
         passed = code.includes(check.value.toLowerCase());
       }
 
-      if (check.type === "count") {
-        const count = (code.match(new RegExp(check.value, "gi")) || []).length;
+      if (check.type === "count"){
+        const escaped = escapeRegExp(check.value);
+        const count = (code.match(new RegExp(escaped, "gi")) || []).length;
         passed = count >= check.min;
       }
 
-      return { message: check.message, passed };
+      return {
+        message: check.message, 
+        passed 
+      };
     });
 
     setCheckResults(results);
