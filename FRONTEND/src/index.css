@@ -2933,8 +2933,9 @@ pre code {
     width: min(100%, 40rem);
     margin-block-start: 0;
   }
-  .practice-shell {
+  .practice-shell,   .debug-shell {
     grid-template-columns: 1fr;
+    justify-content: center;   
   }
   .exercise-rail {
     min-width: 0;
@@ -2955,6 +2956,9 @@ pre code {
     display: flex;
     gap: 0.6rem;
     margin-block-start: 1rem;
+  }
+  .bug-en{
+    justify-content: center;
   }
   .exercise-nav::-webkit-scrollbar {
     display: none;

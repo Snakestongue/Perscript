@@ -203,7 +203,7 @@ function Bug() {
               </div>
             </fieldset>
 
-            <nav className="exercise-nav" aria-label="Difficulty">
+            <nav className="exercise-nav bug-en" aria-label="Difficulty">
               <section className="exercise-group">
                 <div className="group-header">
                   <h2>Difficulty</h2>
