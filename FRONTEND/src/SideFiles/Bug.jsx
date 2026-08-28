@@ -28,10 +28,24 @@ function Bug() {
   const [copiedId, setCopiedId] = useState(null);
   const [highlightedProblem, setHighlightedProblem] = useState(null);
 
-  useEffect(() => {
-    document.title = "Perscript | Debugging Practice";
-  }, []);
+  function formatProblemTitle(s) {
+    return s
+      .split("-")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  }
 
+  useEffect(() => {
+    const languageLabel =languages.find((l) => l.value== selectedLanguage)?.label ??selectedLanguage
+    if (problemId){
+      document.title = `Perscript · ${formatProblemTitle(problemId)}`;
+      return;
+    }
+    const difficultyLabel =selectedDifficulty !== "all"
+      ? difficulties.find((d) => d.value === selectedDifficulty)?.label ?? "": ""
+    document.title = `Perscript · ${difficultyLabel ? `${difficultyLabel} ` : ""}${languageLabel} Debugging Problems`;
+  }, [selectedLanguage, selectedDifficulty, problemId]);
+  
   useEffect(() => {
     if (problemId){
       return

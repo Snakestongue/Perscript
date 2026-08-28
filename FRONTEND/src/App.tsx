@@ -28,7 +28,7 @@ const tracks = [
 function App() {
   
   useEffect(() => {
-    document.title = "Perscript | Learn coding for FRC";
+    document.title = "Perscript | Learn Programming for FRC";
   }, []);
 
   return (
