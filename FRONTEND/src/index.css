@@ -1857,6 +1857,8 @@ textarea[aria-invalid="true"] {
   padding-block: 1.75rem 2.25rem;
   border-block-end: 1px solid var(--line);
   scroll-margin-top: 100px;
+  padding: 20px;
+  border-radius: 10px;
 }
 
 .bug-prompt {
@@ -2713,6 +2715,55 @@ pre code {
 
 #modalSubmit:active {
   transform: scale(0.97);
+}
+
+.debug-shell {
+  display: grid;
+  grid-template-columns: 16rem minmax(0, 1fr);
+  gap: 0 2.5rem;
+  align-items: start;
+}
+ 
+.difficulty-badge{
+  flex-shrink: 0;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  color: var(--text-muted);
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+ 
+.difficulty-badge[data-difficulty="easy"]{
+  border-color: var(--success);
+  color: var(--success);
+}
+ 
+.difficulty-badge[data-difficulty="medium"]{
+  border-color: var(--warning);
+  color: var(--warning);
+}
+ 
+.difficulty-badge[data-difficulty="hard"]{
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+.selected-problem {
+  animation: problem-flicker 0.5s ease-in-out infinite alternate;
+}
+@keyframes problem-flicker{
+  from {
+    border-color: transparent;
+    box-shadow: none;
+  }
+  to{
+    border-color: var(--accent);
+    box-shadow: 0 0 15px var(--accent);
+  }
 }
 
 @media (hover: hover) and (pointer: fine) {

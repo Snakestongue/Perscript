@@ -50,8 +50,9 @@ function RoutesPage(){
           <Suspense fallback={<main className="route-loading" aria-live="polite">Loading practice tools…</main>}>
             <Routes>
               <Route path="/" element={<App />} />
-              <Route path="/debug/:problemId" element={<Bug />} />
               <Route path="/debug" element={<Bug />} />
+              <Route path="/debug/:language/:difficulty" element={<Bug />} />
+              <Route path="/debug/:language/:difficulty/:problemId" element={<Bug />} />
               <Route path="/PP" element={<PP />} />
               <Route path="/Sug" element={<Sug />} />
               <Route path="/tut" element={<Tut />} />

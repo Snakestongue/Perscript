@@ -172,15 +172,15 @@ function Header() {
                             <strong>Learn to spot failures before match day</strong>
                           </div>
                           <div className="nav-mega-items">
-                            <Link to="/debug#debug-java">
+                            <Link to="/debug/java/all">
                               <strong>Java debugging</strong>
                               <span>Review command-based and object-oriented Java mistakes.</span>
                             </Link>
-                            <Link to="/debug#debug-python">
+                            <Link to="/debug/python/all">
                               <strong>Python debugging</strong>
                               <span>Find syntax and control-flow problems in Python snippets.</span>
                             </Link>
-                            <Link to="/debug#debug-cpp">
+                            <Link to="/debug/c++/all">
                               <strong>C++ debugging</strong>
                               <span>Practice diagnosing common robot-code failures in C++.</span>
                             </Link>
