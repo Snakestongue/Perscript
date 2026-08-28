@@ -45,7 +45,7 @@ function Bug() {
       ? difficulties.find((d) => d.value === selectedDifficulty)?.label ?? "": ""
     document.title = `Perscript · ${difficultyLabel ? `${difficultyLabel} ` : ""}${languageLabel} Debugging Problems`;
   }, [selectedLanguage, selectedDifficulty, problemId]);
-  
+
   useEffect(() => {
     if (problemId){
       return
@@ -184,7 +184,6 @@ function Bug() {
 
         <div className="debug-shell">
           <aside className="exercise-rail" aria-label="Problem filters">
-            {/* Sliding language switch, same pattern as the Program page */}
             <fieldset className="rail-language">
               <legend className="max-lg:!text-center">Language</legend>
               <div className="language-switch">
