@@ -5,13 +5,14 @@
 A web-based programming practice site built with React and Monaco Editor to help students learn and improve FRC (FIRST Robotics Competition) programming skills.
 
 Huge thanks to [@Zw96042](https://github.com/Zw96042)!
+
 ## About
 
-FRC Programming Practice is designed to help beginner and intermediate robotics programmers strengthen their programming fundamentals.
+Perscript is designed to help beginner and intermediate robotics programmers strengthen their programming fundamentals.
 
-The platform provides FRC-style (Command Based) Java, C++, and Python programming challenges. Students can write and test code directly in the browser using the Monaco Editor.
+The platform provides FRC-style Java, C++, and Python programming challenges. Students can write and test code directly in the browser using the Monaco Editor.
 
-The goal of this project is to make learning FRC programming more accessible by providing guided practice, debugging support, tutorials, and AI-powered assistance to help mentors and students.
+The goal of this project is to make learning and practicing FRC programming more accessible by providing guided practice, debugging support, tutorials, and AI-powered assistance to help mentors and students.
 
 ## Features
 
@@ -22,12 +23,16 @@ The goal of this project is to make learning FRC programming more accessible by 
   - C++
   - Python
 - Real-time code editing experience.
+- Currently 23 Live Coding Problems
+
+### Debugging Practice
+- 30 debugging problems in Java, C++ and Python (10 each)
+- Variety of difficulties ranging from easy to hard
 
 ### Learning Resources
 - Java tutorials
 - Python tutorials
 - C++ tutorials
-- Debugging exercises for Java, Python, and C++
 
 ### AI Programming Assistant
 - AI-powered assistance for programming questions and debugging
@@ -122,8 +127,7 @@ Planned deployment using:
 
 ## Planned Updates
 
-- Advanced subsystem programming problems
-- More FRC-specific examples and question
+- V3 Commands Questions
 - Anything else people suggest!
 
 ## Feedback / Suggestions
