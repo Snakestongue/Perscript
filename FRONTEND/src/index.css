@@ -2230,7 +2230,7 @@ pre code {
   padding-block: 0.85rem;
 }
 
-.action-buttons {
+.action-buttons,.bug-buttons {
   min-height: 2.75rem;
   display: inline-flex;
   align-items: center;
@@ -2245,6 +2245,12 @@ pre code {
   white-space: nowrap;
   cursor: pointer;
   transition: transform 130ms var(--ease-out), color 140ms ease-out, background-color 140ms ease-out, border-color 140ms ease-out;
+}
+.bug-buttons:hover{
+  cursor: pointer;
+  background-color: var(--accent) !important;
+  border-color: var(--accent) !important;
+  color: var(--canvas-deep);
 }
 .action-buttons:hover{
   background-color: var(--accent) !important;

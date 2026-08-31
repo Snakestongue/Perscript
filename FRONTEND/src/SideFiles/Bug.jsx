@@ -23,11 +23,12 @@ function Bug() {
   const navigate = useNavigate();
 
   const [selectedChoices, setSelectedChoices] = useState({});
-  const [selectedLanguage, setSelectedLanguage] = useState("java");
-  const [selectedDifficulty, setSelectedDifficulty] = useState("all");
-  const [copiedId, setCopiedId] = useState(null);
+  const [selectedLanguage, setSelectedLanguage] = useState("java")
+  const [selectedDifficulty, setSelectedDifficulty] = useState("all")
+  const [copiedId, setCopiedId] = useState(null)
   const [highlightedProblem, setHighlightedProblem] = useState(null);
-
+  const [submittedProblems, setSubmittedProblems] = useState({})
+  
   function formatProblemTitle(s) {
     return s
       .split("-")
@@ -140,6 +141,12 @@ function Bug() {
     navigate(`/debug/${selectedLanguage}/${newDifficulty}`, { replace: true });
   }
 
+  const submitAnswer = (problemTitle) => {
+    setSubmittedProblems({
+      ...submittedProblems,
+      [problemTitle]: true,
+    })
+  }
   const shareProblem = async (problem) => {
     const base = import.meta.env.BASE_URL.replace(/\/$/, "");
     const url = `${window.location.origin}${base}/debug/${problem.language}/${problem.difficulty}/${problem.title}`;
@@ -256,8 +263,9 @@ function Bug() {
               ) : (
                 filteredProblems.map((problem) => {
                   const choices = [problem.choice1, problem.choice2, problem.choice3];
-                  const userChoice = selectedChoices[problem.title];
-                  const isCorrect = userChoice === problem.CC;
+                  const userChoice = selectedChoices[problem.title]
+                  const isSubmitted = !!submittedProblems[problem.title]
+                  const isCorrect = isSubmitted && userChoice === problem.CC
 
                   return (
                     <article  className={`bQ ${
@@ -280,7 +288,7 @@ function Bug() {
                           </span>
                           <button
                             type="button"
-                            className="bug-share"
+                            className="bug-buttons"
                             onClick={() => shareProblem(problem)}
                             aria-label={`Share problem ${problem.title}`}
                           >
@@ -300,24 +308,37 @@ function Bug() {
                               name={`problem-${problem.title}`}
                               value={choice}
                               checked={userChoice === choice}
-                              onChange={(event) =>
-                                setSelectedChoices({
-                                  ...selectedChoices,
-                                  [problem.title]: event.target.value,
-                                })
-                              }
+                             onChange={(event) => {
+                              setSelectedChoices({
+                                ...selectedChoices,
+                                [problem.title]: event.target.value,
+                              });
+                              setSubmittedProblems({
+                                ...submittedProblems,
+                                [problem.title]: false,
+                              });
+                            }}
                             />
                             <span>{choice}</span>
                           </label>
                         ))}
                       </fieldset>
+                      <button
+                        type="button"
+                        className="bug-buttons
+                        hover:!cursor-pointer   
+                        "
+                        disabled={!userChoice || isSubmitted}
+                        onClick={() => submitAnswer(problem.title)}
+                      >
+                        Submit
+                      </button>
                       <div className="bug-feedback-slot" aria-live="polite" aria-atomic="true">
                         <p
-                          className={`bug-feedback ${userChoice ? (isCorrect ? "correctFeedback" : "incorrectFeedback") : "is-empty"}`}
-                          aria-hidden={!userChoice}
-                        >
+                          className={`bug-feedback ${isSubmitted ? (isCorrect ? "correctFeedback" : "incorrectFeedback") : "is-empty"}`}
+                          aria-hidden={!isSubmitted}>
                           <strong>{isCorrect ? "Correct." : "Not quite."}</strong>{" "}
-                          {!isCorrect && problem.whyCorrect}
+                          {isSubmitted && !isCorrect && problem.whyCorrect}
                         </p>
                       </div>
                     </article>
