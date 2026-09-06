@@ -2758,6 +2758,12 @@ pre code {
   color: var(--danger);
 }
 
+.language-option:has(input:disabled) {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
 .selected-problem {
   animation: problem-flicker 0.5s ease-in-out infinite alternate;
 }

@@ -971,5 +971,49 @@
       { "type": "includes", "value": "speed < 0", "message": "Did you check for downward motion in MoveElevator?" }
     ]
   }
+},
+{
+  "id": 24,
+  "title": "Coroutine Yield Loop",
+  "link": "coroutine-yield",
+  "description": "Using the v3 Command framework, create a method waitForBeamBreak() that returns a Command with no requirements. Inside its coroutine body, loop while the beamBreak sensor is not tripped (beamBreak.get() is false), calling coroutine.yield() each iteration so the scheduler isn't blocked. Name the command \"Wait For Beam Break\".",
+  "starterCode": {
+    "java": "import edu.wpi.first.wpilibj.DigitalInput;\nimport org.wpilib.command3.Command;\n\npublic class SensorUtil {\n\tprivate final DigitalInput beamBreak = new DigitalInput(0);\n\n\t//Write code here and remove this comment.\n}"
+  },
+  "solutionCode": {
+    "java": "import edu.wpi.first.wpilibj.DigitalInput;\nimport org.wpilib.command3.Command;\n\npublic class SensorUtil {\n\tprivate final DigitalInput beamBreak = new DigitalInput(0);\n\n\tpublic Command waitForBeamBreak() {\n\t\treturn Command.noRequirements(coroutine -> {\n\t\t\twhile (!beamBreak.get()) {\n\t\t\t\tcoroutine.yield();\n\t\t\t}\n\t\t}).named(\"Wait For Beam Break\");\n\t}\n}"
+  },
+  "checks": {
+    "java": [
+      { "type": "includes", "value": "public Command waitForBeamBreak", "message": "Did you name the method waitForBeamBreak?" },
+      { "type": "includes", "value": "Command.noRequirements(", "message": "Did you use Command.noRequirements() since no mechanism is needed?" },
+      { "type": "includes", "value": "while", "message": "Did you loop while the sensor isn't tripped?" },
+      { "type": "includes", "value": "beamBreak.get()", "message": "Did you check beamBreak.get() in your loop condition?" },
+      { "type": "includes", "value": "coroutine.yield()", "message": "Did you call coroutine.yield() inside the loop so the scheduler isn't blocked?" },
+      { "type": "includes", "value": ".named(\"Wait For Beam Break\")", "message": "Did you name the command \"Wait For Beam Break\"?" }
+    ]
+  }
+},
+{
+  "id": 25,
+  "title": "Awaiting Commands",
+  "link": "coroutine-await",
+  "description": "Using the v3 Command framework, create a method scoreSequence() that returns a Command with no requirements. Inside its coroutine body, use coroutine.await() to run driveToScoringLocation() to completion, and then coroutine.await() again to run raiseElevator() to completion. Name the command \"Score Sequence\".",
+  "starterCode": {
+    "java": "import org.wpilib.command3.Command;\n\npublic class Robot {\n\tprivate Command driveToScoringLocation() {\n\t\treturn Command.noRequirements(coroutine -> {}).named(\"Drive To Scoring Location\");\n\t}\n\tprivate Command raiseElevator() {\n\t\treturn Command.noRequirements(coroutine -> {}).named(\"Raise Elevator\");\n\t}\n\n\t//Write code here and remove this comment.\n}"
+  },
+  "solutionCode": {
+    "java": "import org.wpilib.command3.Command;\n\npublic class Robot {\n\tprivate Command driveToScoringLocation() {\n\t\treturn Command.noRequirements(coroutine -> {}).named(\"Drive To Scoring Location\");\n\t}\n\tprivate Command raiseElevator() {\n\t\treturn Command.noRequirements(coroutine -> {}).named(\"Raise Elevator\");\n\t}\n\n\tpublic Command scoreSequence() {\n\t\treturn Command.noRequirements(coroutine -> {\n\t\t\tcoroutine.await(driveToScoringLocation());\n\t\t\tcoroutine.await(raiseElevator());\n\t\t}).named(\"Score Sequence\");\n\t}\n}"
+  },
+  "checks": {
+    "java": [
+      { "type": "includes", "value": "public Command scoreSequence", "message": "Did you name the method scoreSequence?" },
+      { "type": "includes", "value": "Command.noRequirements(", "message": "Did you use Command.noRequirements() since no mechanism is needed?" },
+      { "type": "count", "value": "coroutine.await(", "min": 2, "message": "Did you use coroutine.await() for both inner commands?" },
+      { "type": "includes", "value": "driveToScoringLocation()", "message": "Did you await driveToScoringLocation()?" },
+      { "type": "includes", "value": "raiseElevator()", "message": "Did you await raiseElevator()?" },
+      { "type": "includes", "value": ".named(\"Score Sequence\")", "message": "Did you name the command \"Score Sequence\"?" }
+    ]
+  }
 }
 ]

@@ -11,6 +11,8 @@ const exerciseGroups = [
   { id: "lesson-core-patterns", label: "Core patterns", problems: problems.slice(4, 12) },
   { id: "lesson-command-based", label: "Command based", problems: problems.slice(12, 18) },
   { id: "lesson-difficult", label: "Difficult", problems: problems.slice(18,23)},
+  { id: "lesson-V3", label: "V3 Commands (Java Only)", problems: problems.slice(23,25)},
+
 ];
 
 const languages = [
@@ -85,6 +87,8 @@ function Program() {
   });
   const validLangs = languages.map((l) => l.value);
   const [currentLang, setCurrentLang] = useState(() => normalizeLang(lang));
+  const v3Group =exerciseGroups.find((g)=>g.id=="lesson-V3")
+  const isJavaOnly = v3Group?.problems.some((p)=>p.id== selectedProblem.id)?? false
 
 
   function normalizeLang(value) {
@@ -156,6 +160,11 @@ function Program() {
     document.title = "Perscript · " + selectedProblem.title;
   }, [selectProblem]);
 
+  useEffect(() => {
+    if (isJavaOnly && currentLang !== "java") {
+      changeLang("java");
+    }
+  }, [isJavaOnly, selectedProblem]);
 
   useEffect(() => {
     if (!location.hash) return;
@@ -306,24 +315,29 @@ function Program() {
                   left: languagePositions[languages.findIndex(({ value }) => value === currentLang)],
                 }}
               />
-              {languages.map((language, index) => (
-                <label
-                  className="language-option"
-                  data-active={currentLang === language.value}
-                  key={language.value}
-                  style={{ gridColumn: index + 1, gridRow: 1 }}
-                >
-                  <input
-                    className="sr-only"
-                    type="radio"
-                    name="language"
-                    value={language.value}
-                    checked={currentLang === language.value}
-                    onChange={() => changeLang(language.value)}
-                  />
-                  <span>{language.label}</span>
-                </label>
-              ))}
+              {languages.map((language, index) => {
+                const disabled = isJavaOnly && language.value !== "java";
+                return (
+                  <label
+                    className="language-option"
+                    data-active={currentLang === language.value}
+                    data-disabled={disabled}
+                    key={language.value}
+                    style={{ gridColumn: index + 1, gridRow: 1 }}
+                  >
+                    <input
+                      className="sr-only"
+                      type="radio"
+                      name="language"
+                      value={language.value}
+                      checked={currentLang === language.value}
+                      disabled={disabled}
+                      onChange={() => !disabled && changeLang(language.value)}
+                    />
+                    <span>{language.label}</span>
+                  </label>
+                );
+              })}
             </div>
           </fieldset>
 
