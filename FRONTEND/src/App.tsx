@@ -33,7 +33,7 @@ function App() {
   }, []);
   
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_LOCAL}/rating`)
+    fetch(`${import.meta.env.VITE_LINK}/rating`)
       .then((res) => res.json())
       .then((data)=>{
         setRating(data.average)
