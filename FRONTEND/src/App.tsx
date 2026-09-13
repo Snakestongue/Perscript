@@ -27,20 +27,22 @@ const tracks = [
 
 function App() {
   const[rating, setRating] =useState<number|null>(null)
+  const [numberOfRatings, setNumberOfRatings] =useState<number|null>(null)
   useEffect(() => {
     document.title = "Perscript | Learn Programming for FRC";
   }, []);
   
-    useEffect(() => {
-    fetch(`${import.meta.env.VITE_LINK}/rating`)
+  useEffect(() => {
+    fetch(`${import.meta.env.VITE_LOCAL}/rating`)
       .then((res) => res.json())
-      .then((data) => {
-        setRating(data.average);
+      .then((data)=>{
+        setRating(data.average)
+        setNumberOfRatings(data.numberOfRatings-5)
       })
-      .catch((error) => {
-        console.error("Failed to fetch rating:", error);
-      });
-  }, []);
+      .catch((error)=>{
+        console.error("Fail to fetch:",error)
+      })
+  },[])
 
   return (
     <div className="site-page home-page">
@@ -53,9 +55,10 @@ function App() {
             </h1>
             <div className=" flex flex-row">
               <div>
-                  <p className="rating !mb-3 !mt-0">
-                    Average Rating:{" "}
-                    {rating !== null ? rating.toFixed(1) : "Loading..."}
+                  <p className="rating !mb-2">
+                    ★ {rating !== null ? rating.toFixed(1) : "..."}
+                    {" "}
+                    ({numberOfRatings !== null ? numberOfRatings : "..."} ratings)
                   </p>
                 </div>
               <div className="rating ml-4">
