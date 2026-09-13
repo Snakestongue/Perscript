@@ -11,7 +11,7 @@ const exerciseGroups = [
   { id: "lesson-core-patterns", label: "Core patterns", problems: problems.slice(4, 12) },
   { id: "lesson-command-based", label: "Command based", problems: problems.slice(12, 18) },
   { id: "lesson-difficult", label: "Difficult", problems: problems.slice(18,23)},
-  { id: "lesson-V3", label: "V3 Commands (Java Only)", problems: problems.slice(23,25)},
+  { id: "lesson-V3", label: "V3 Commands (Java Only)", problems: problems.slice(23,27)},
 
 ];
 
@@ -149,7 +149,7 @@ function Program() {
       setSelectedProblem(match);
     }
   }, [problemLink])
-  
+
   useEffect(() => {
     setUserCode(selectedProblem.starterCode[currentLang]);
     setCheckResults([]);
@@ -488,6 +488,7 @@ function Program() {
               <div className="words-content ai-content" aria-live="polite">
                 {aiLoading ? "Reviewing your code…" : aiContent || "Ask for a hint when the built-in checks are not enough."}
               </div>
+              
             </section>
           </div>
         </section>

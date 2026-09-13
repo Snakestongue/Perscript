@@ -1015,5 +1015,53 @@
       { "type": "includes", "value": ".named(\"Score Sequence\")", "message": "Did you name the command \"Score Sequence\"?" }
     ]
   }
+},
+{
+  "id": 26,
+  "title": "Yield For Sensor",
+  "link": "coroutine-yield-sensor",
+  "description": "Using the v3 Command framework, create a method waitForEitherSensor() that returns a Command with no requirements. Inside its coroutine body, loop while neither sensor is tripped — leftBeamBreak.get() is false AND rightBeamBreak.get() is false — calling coroutine.yield() each iteration so the scheduler isn't blocked. Name the command \"Wait For Either Sensor\".",
+  "starterCode": {
+    "java": "import edu.wpi.first.wpilibj.DigitalInput;\nimport org.wpilib.command3.Command;\n\npublic class SensorUtil {\n\tprivate final DigitalInput leftBeamBreak = new DigitalInput(0);\n\tprivate final DigitalInput rightBeamBreak = new DigitalInput(1);\n\n\t//Write code here and remove this comment.\n}"
+  },
+  "solutionCode": {
+    "java": "import edu.wpi.first.wpilibj.DigitalInput;\nimport org.wpilib.command3.Command;\n\npublic class SensorUtil {\n\tprivate final DigitalInput leftBeamBreak = new DigitalInput(0);\n\tprivate final DigitalInput rightBeamBreak = new DigitalInput(1);\n\n\tpublic Command waitForEitherSensor() {\n\t\treturn Command.noRequirements(coroutine -> {\n\t\t\twhile (!leftBeamBreak.get() && !rightBeamBreak.get()) {\n\t\t\t\tcoroutine.yield();\n\t\t\t}\n\t\t}).named(\"Wait For Either Sensor\");\n\t}\n}"
+  },
+  "checks": {
+    "java": [
+      { "type": "includes", "value": "public Command waitForEitherSensor", "message": "Did you name the method waitForEitherSensor?" },
+      { "type": "includes", "value": "Command.noRequirements(", "message": "Did you use Command.noRequirements() since no mechanism is needed?" },
+      { "type": "includes", "value": "while", "message": "Did you loop while neither sensor is tripped?" },
+      { "type": "includes", "value": "leftBeamBreak.get()", "message": "Did you check leftBeamBreak.get() in your loop condition?" },
+      { "type": "includes", "value": "rightBeamBreak.get()", "message": "Did you check rightBeamBreak.get() in your loop condition?" },
+      { "type": "includes", "value": "&&", "message": "Did you combine both conditions with a logical AND?" },
+      { "type": "includes", "value": "coroutine.yield()", "message": "Did you call coroutine.yield() inside the loop so the scheduler isn't blocked?" },
+      { "type": "includes", "value": ".named(\"Wait For Either Sensor\")", "message": "Did you name the command \"Wait For Either Sensor\"?" }
+    ]
+  }
+},
+{
+  "id": 27,
+  "title": "Repeated Await",
+  "link": "coroutine-repeat-await",
+  "description": "Using the v3 Command framework, create a method intakeCycle() that returns a Command with no requirements. Inside its coroutine body, use a for loop to call coroutine.await() on pulseIntake() three times in a row, and then call coroutine.await() once more on stopIntake(). Name the command \"Intake Cycle\".",
+  "starterCode": {
+    "java": "import org.wpilib.command3.Command;\n\npublic class Robot {\n\tprivate Command pulseIntake() {\n\t\treturn Command.noRequirements(coroutine -> {}).named(\"Pulse Intake\");\n\t}\n\tprivate Command stopIntake() {\n\t\treturn Command.noRequirements(coroutine -> {}).named(\"Stop Intake\");\n\t}\n\n\t//Write code here and remove this comment.\n}"
+  },
+  "solutionCode": {
+    "java": "import org.wpilib.command3.Command;\n\npublic class Robot {\n\tprivate Command pulseIntake() {\n\t\treturn Command.noRequirements(coroutine -> {}).named(\"Pulse Intake\");\n\t}\n\tprivate Command stopIntake() {\n\t\treturn Command.noRequirements(coroutine -> {}).named(\"Stop Intake\");\n\t}\n\n\tpublic Command intakeCycle() {\n\t\treturn Command.noRequirements(coroutine -> {\n\t\t\tfor (int i = 0; i < 3; i++) {\n\t\t\t\tcoroutine.await(pulseIntake());\n\t\t\t}\n\t\t\tcoroutine.await(stopIntake());\n\t\t}).named(\"Intake Cycle\");\n\t}\n}"
+  },
+  "checks": {
+    "java": [
+      { "type": "includes", "value": "public Command intakeCycle", "message": "Did you name the method intakeCycle?" },
+      { "type": "includes", "value": "Command.noRequirements(", "message": "Did you use Command.noRequirements() since no mechanism is needed?" },
+      { "type": "includes", "value": "for", "message": "Did you use a for loop to repeat the pulse three times?" },
+      { "type": "includes", "value": "< 3", "message": "Did you loop exactly 3 times?" },
+      { "type": "count", "value": "coroutine.await(", "min": 2, "message": "Did you use coroutine.await() for both the pulse loop and the final stop?" },
+      { "type": "includes", "value": "pulseIntake()", "message": "Did you await pulseIntake() inside the loop?" },
+      { "type": "includes", "value": "stopIntake()", "message": "Did you await stopIntake() after the loop?" },
+      { "type": "includes", "value": ".named(\"Intake Cycle\")", "message": "Did you name the command \"Intake Cycle\"?" }
+    ]
+  }
 }
 ]

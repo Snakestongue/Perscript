@@ -2767,6 +2767,15 @@ pre code {
 .selected-problem {
   animation: problem-flicker 0.5s ease-in-out infinite alternate;
 }
+.rating {
+  font-size: 20px;
+}
+.filled {
+  color: gold;
+}
+.empty {
+  color: lightgray;
+}
 @keyframes problem-flicker{
   from {
     border-color: transparent;

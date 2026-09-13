@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect,useState } from "react";
 import Footer from "./components/Footer.js";
 import FeedbackPopover from "./components/FeedbackPopover.js";
 import Header from "./components/Header.js";
@@ -26,9 +26,20 @@ const tracks = [
 ];
 
 function App() {
-  
+  const[rating, setRating] =useState<number|null>(null)
   useEffect(() => {
     document.title = "Perscript | Learn Programming for FRC";
+  }, []);
+  
+    useEffect(() => {
+    fetch(`${import.meta.env.VITE_LOCAL}/rating`)
+      .then((res) => res.json())
+      .then((data) => {
+        setRating(data.average);
+      })
+      .catch((error) => {
+        console.error("Failed to fetch rating:", error);
+      });
   }, []);
 
   return (
@@ -38,9 +49,23 @@ function App() {
           <div className="hero-copy">
             <p className="text-[14px] italic text-[#C3C3C6]"><i>Formerly known as FRC Programming Practice</i></p>
             <h1 id="hero-title">Learn FRC coding.
-              <span className="mt-6">Practice until it clicks.</span>
+              <span className="mt-6 !mb-0">Practice until it clicks.</span>
             </h1>
-
+            <div className=" flex flex-row">
+              <div>
+                  <p className="rating !mb-3 !mt-0">
+                    Average Rating:{" "}
+                    {rating !== null ? rating.toFixed(1) : "Loading..."}
+                  </p>
+                </div>
+              <div className="rating ml-4">
+              {[1, 2, 3, 4, 5].map((star) => (
+                <span key={star} className={star <= Math.round(rating ?? 0) ? "filled" : "empty"}>
+                  ★
+                </span>
+              ))}
+            </div>
+          </div>
             <p className="hero-summary">Work on Java, C++, or Python exercises made for the code you will use during build season.</p>
             <div className="hero-actions">
               <Link className="
@@ -51,6 +76,7 @@ function App() {
               <Link className="text-link" to="/tut">Browse the reference<span aria-hidden="true">↗</span></Link>
             </div>
           </div>
+          
 
           <div className="code-window" aria-label="Example FRC Java code">
             
