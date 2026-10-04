@@ -197,7 +197,7 @@ const [todayKey, setTodayKey] = useState(getTodayKey);
   }, [currentLang, selectedProblem]);
 
   useEffect(()=>{
-    document.title = "Perscript · " + selectedProblem.title;
+    document.title = "Perscript · Daily Challenge";
   }, [selectProblem]);
 
   useEffect(() => {

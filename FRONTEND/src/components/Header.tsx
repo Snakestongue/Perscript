@@ -249,7 +249,7 @@ function Header() {
                           <div className="nav-mega-items">
                             <Link to="/daily">
                               <strong>Daily Challenge</strong>
-                              <span>A new challenge every single day to keep you skills sharp</span>
+                              <span>A new challenge every day to keep your skills sharp and your problem-solving strong.</span>
                             </Link>
                           </div>
                           <Link className="nav-mega-cta" to="/daily">
