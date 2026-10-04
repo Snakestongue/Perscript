@@ -5,6 +5,7 @@ const links = [
   { to: "/program", label: "Practice" },
   { to: "/debug", label: "Debug" },
   { to: "/tut", label: "Reference" },
+  { to: "/daily", label: "Daily Challenge" }
 ];
 
 function Nav() {
@@ -16,14 +17,23 @@ function Nav() {
   return (
     <nav className="mobile-nav" aria-label="Mobile navigation">
       <motion.span
-        className="mobile-nav-pill"
-        aria-hidden="true"
-        animate={{
-          x: `${Math.max(activeIndex, 0) * 100}%`,
-          opacity: activeIndex === -1 ? 0 : 1,
-        }}
-        transition={{ duration: 0.14, ease: "easeOut" }}
-      />
+  className="mobile-nav-pill"
+  aria-hidden="true"
+  animate={{
+    left:
+      activeIndex === 3
+        ? `calc(0.5rem + 3 * (((100% - 1.6rem) / 5) + 0.2rem))`
+        : `calc(0.5rem + ${Math.max(activeIndex, 0)} * (((100% - 1.6rem) / 5) + 0.2rem))`,
+
+    width:
+      activeIndex === 3
+        ? `calc(2 * ((100% - 1.6rem) / 5))`
+        : `calc((100% - 1.6rem) / 5)`,
+
+    opacity: activeIndex === -1 ? 0 : 1,
+  }}
+  transition={{ duration: 0.14, ease: "easeOut" }}
+/>
       {links.map((item) => (
         <NavLink
           key={item.to}

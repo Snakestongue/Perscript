@@ -40,6 +40,7 @@ change a color its easier then going to every single mention of that color!
 }
 *{
   box-sizing: border-box;
+  /* border: 1px solid red; */
 }
 html{
   min-width: 20rem;
@@ -227,12 +228,13 @@ code,pre,.character-count,.track-action,.code-window, .exercise-heading > div > 
   position: relative;
   isolation: isolate;
   display: grid;
-  grid-template-columns: repeat(3, 6.75rem);
+  grid-template-columns: repeat(4, 6.75rem);
   gap: 0.15rem;
   padding: 0.3rem;
   border: 0;
   border-radius: 999px;
   background: transparent;
+  width: 100% !important;
 }
 
 .header-nav-group {
@@ -383,7 +385,7 @@ code,pre,.character-count,.track-action,.code-window, .exercise-heading > div > 
   justify-content: center;
   padding-inline: 0.85rem;
   color: var(--text-muted);
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   font-weight: 600;
   transition: color 140ms ease-out, background-color 140ms ease-out;
 }
@@ -414,7 +416,7 @@ code,pre,.character-count,.track-action,.code-window, .exercise-heading > div > 
 .site-nav-pill {
   inset-block: 0.3rem;
   left: 0.3rem;
-  width: 6.75rem;
+  width: calc(25% - 0.6rem);
 }
 
 .site-nav-label,
@@ -1969,7 +1971,13 @@ pre code {
   grid-template-columns: 16rem minmax(0, 1fr);
   min-height: calc(100dvh - var(--header-height));
 }
-
+.practice-shellDC{
+  width: min(100% - 2.5rem, 82rem);
+  margin-inline: auto;
+  display: grid;
+  min-height: calc(100dvh - var(--header-height));
+  
+}
 .exercise-rail {
   padding-block: 2.5rem 4rem;
   padding-inline-end: 2rem;
@@ -2211,7 +2219,18 @@ pre code {
   box-shadow: var(--shadow-raised);
   border: 1px solid var(--accent);
 }
-
+.editor-frameD{
+  height: min(58dvh, 38rem);
+  min-height: 26rem;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  overflow: hidden;
+  border-radius: 0.65rem;
+  background: var(--canvas-deep);
+  box-shadow: var(--shadow-raised);
+  border: 1px solid var(--accent);
+  width: 100%;
+}
 #vim-status {
   min-height: 1.65rem;
   padding: 0.3rem 0.75rem;
@@ -2889,7 +2908,7 @@ pre code {
     z-index: calc(var(--z-header) - 1);
     min-height: 3.75rem;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 1fr 1fr 1fr 2fr;
     align-items: center;
     gap: 0.2rem;
     padding: 0.4rem 0.5rem;
@@ -2906,12 +2925,16 @@ pre code {
     border-radius: 999px;
   }
 
-  .mobile-nav-pill {
-    inset-block: 0.4rem;
-    inset-inline-start: 0.5rem;
-    width: calc((100% - 1.4rem) / 3);
-  }
+.mobile-nav-pill {
+  position: absolute;
+  z-index: -1;
+  inset-block: 0.4rem;
+}
 
+.mobile-nav-link {
+  white-space: nowrap;
+  padding-inline: 0.35rem;
+}
   #browser-editor,
   #built-in-checks,
   #ai-assist,
@@ -3152,7 +3175,6 @@ pre code {
   }
 
   .footer-credit {
-    /* border: 1px solid red; */
     justify-self: start;
     width: 100% !important;
     grid-column: 1 / -1;

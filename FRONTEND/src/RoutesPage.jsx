@@ -7,12 +7,13 @@ import GA from "./GA.jsx";
 import TeamModal from "./Team.jsx";
 import Header from "./components/Header.tsx";
 import Nav from "./components/Nav.jsx";
-
 const Bug = lazy(() => import("./SideFiles/Bug.jsx"));
 const PP = lazy(() => import("./SideFiles/PP.tsx"));
 const Sug = lazy(() => import("./SideFiles/Sug.jsx"));
 const Tut = lazy(() => import("./SideFiles/Tut.tsx"));
 const Program = lazy(() => import("./SideFiles/Program.jsx"));
+const Daily = lazy(() => import("./SideFiles/Daily.jsx"));
+
 
 function RoutesPage(){
   const [team, setTeam] = useState(() => !localStorage.getItem("teamNumber"));
@@ -60,6 +61,7 @@ function RoutesPage(){
               <Route path="/tut/robot-structure" element={<Tut section="structure" />} />
               <Route path="/program/:lang/:problemLink" element={<Program />} />
               <Route path="/program" element={<Program />} />
+              <Route path="/daily" element={<Daily />} />
             </Routes>
           </Suspense>
         </div>

@@ -8,12 +8,12 @@ const menuVariants = {
 };
 function Header() {
   const location = useLocation();
-  //0=Practice,1 =Debug, 2 =Reference, -1=none active
+  //0=Practice,1 =Debug, 2 =Reference, -1=none active, 3 ==daily challenge
   const activeIndex =
     location.pathname === "/program" ? 0 :
     location.pathname === "/debug" ? 1 :
     location.pathname.startsWith("/tut") ? 2 :
-    -1;
+    location.pathname === "/daily" ? 3 : -1;
 
 
   const [menuIndex, setMenuIndex] = useState<number | null>(null)
@@ -100,6 +100,10 @@ function Header() {
 
             <button type="button" {...navTriggerProps(2)}>
               <span className="site-nav-label">Reference</span>
+            </button>
+
+            <button type="button" {...navTriggerProps(3)}>
+              <span className="site-nav-label">Daily Challenge</span>
             </button>
           </nav>
 
@@ -222,6 +226,34 @@ function Header() {
                           </div>
                           <Link className="nav-mega-cta" to="/tut">
                             Open reference <span aria-hidden="true">→</span>
+                          </Link>
+                        </div>
+                      </motion.div>
+                    ):null}
+                    {menuIndex == 3 ?(
+                      <motion.div
+                        className="nav-mega-content"
+                        key={1}
+                        custom={direction}
+                        variants={menuVariants}
+                        initial="initial"
+                        animate="active"
+                        exit="exit"
+                        transition={{ type: "spring", duration: 0.3, bounce: 0 }}>
+
+                        <div className="nav-mega-panel-link">
+                          <div className="nav-mega-heading">
+                            <span className="!tracking-tighter">Daily Challenge</span>
+                            <strong>A new challenge, every single day.</strong>
+                          </div>
+                          <div className="nav-mega-items">
+                            <Link to="/daily">
+                              <strong>Daily Challenge</strong>
+                              <span>A new challenge every single day to keep you skills sharp</span>
+                            </Link>
+                          </div>
+                          <Link className="nav-mega-cta" to="/daily">
+                            Open Daily Challenge <span aria-hidden="true">→</span>
                           </Link>
                         </div>
                       </motion.div>
