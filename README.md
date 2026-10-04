@@ -64,9 +64,6 @@ The goal of this project is to make learning and practicing FRC programming more
 │    ├── server.js             # To start local server used for testing
 │
 ├── FRONTEND/
-│   ├── JSON/
-│   │   ├── debugProblems.json  # Debug problems
-│   │   └── problems.json       # Live coding problems
 │   ├── SideFiles/
 │   │   ├── Bug.jsx             # Debugging page
 │   │   ├── PP.tsx              # Privacy policy page
