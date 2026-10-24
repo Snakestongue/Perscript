@@ -17,7 +17,7 @@ function PP() {
             site, understand how it is being used, and improve its exercises,
             tutorials, and usability.
           </p>
-          <p><strong>Last updated: August 23, 2026</strong></p>
+          <p><strong>Last updated: October 23, 2026</strong></p>
         </header>
 
         <div className="legal-sections">
@@ -58,7 +58,7 @@ function PP() {
           </section>
           <section>
             <h2>Aggregate statistics</h2>
-            <p>We may publicly share aggregated or anonymized statistics about Perscript's usage.</p>
+            <p>We may publicly share statistics about Perscript's usage.</p>
             <p>Examples include:</p>
             <ul>
               <li>The approximate number of users who have used Perscript.</li>

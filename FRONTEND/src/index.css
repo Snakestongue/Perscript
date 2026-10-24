@@ -414,7 +414,7 @@ code,pre,.character-count,.track-action,.code-window, .exercise-heading > div > 
 }
 
 .site-nav-pill {
-  inset-block: 0.3rem;
+  inset-block: 0.65rem;
   left: 0.3rem;
   width: calc(25% - 0.6rem);
 }
@@ -843,6 +843,7 @@ code,pre,.character-count,.track-action,.code-window, .exercise-heading > div > 
   inset-inline-end: 1.25rem;
   inset-block-end: 1.25rem;
   z-index: calc(var(--z-header) + 10);
+  
 }
 
 .feedback-trigger {
@@ -858,6 +859,8 @@ code,pre,.character-count,.track-action,.code-window, .exercise-heading > div > 
   opacity: 1;
   transform: translateY(0) scale(1);
   transition: opacity 120ms ease-out, transform 180ms var(--ease-out);
+  background: transparent !important;
+  backdrop-filter: blur(25px) !important;
 }
 
 .feedback-shell .feedback-trigger {
@@ -911,10 +914,15 @@ code,pre,.character-count,.track-action,.code-window, .exercise-heading > div > 
   width: min(calc(100vw - 2rem), 24rem);
   visibility: hidden;
   overflow: hidden;
-  border: 1px solid var(--line-strong);
+
+  /* Translucent glass effect */
+  border: 1px solid rgb(255 255 255 / 10%);
   border-radius: 0.7rem;
-  background: var(--surface);
-  box-shadow: var(--shadow-raised);
+  background: rgb(20 20 20 / 72%);
+  -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(24px);
+  box-shadow: 0 8px 32px rgb(0 0 0 / 25%);
+
   opacity: 0;
   transform: translateY(0.6rem) scale(0.97);
   transform-origin: bottom right;
@@ -972,7 +980,8 @@ code,pre,.character-count,.track-action,.code-window, .exercise-heading > div > 
   resize: vertical;
   border: 1px solid var(--line-strong);
   border-radius: 0.45rem;
-  background: var(--canvas-deep);
+  background: rgb(11 11 12 / 65%);
+
   padding: 0.8rem;
   color: var(--text);
   font: inherit;
@@ -988,7 +997,7 @@ code,pre,.character-count,.track-action,.code-window, .exercise-heading > div > 
   padding: 0.25rem;
   border: 1px solid var(--line);
   border-radius: 0.45rem;
-  background: var(--canvas-deep);
+  background: rgb(11 11 12 / 55%);
 }
 
 .feedback-categories label {
@@ -1155,6 +1164,12 @@ code,pre,.character-count,.track-action,.code-window, .exercise-heading > div > 
   color: var(--text);
   box-shadow: var(--shadow-raised);
   transition: background-color 140ms ease-out, color 140ms ease-out;
+  background: rgb(20 20 20 / 72%);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgb(255 255 255 / 9%);
+  box-shadow: 0 8px 32px rgb(0 0 0 / 25%);
+  overflow: hidden;
 }
 
 .feedback-shell[data-open="true"] {
@@ -1194,6 +1209,9 @@ code,pre,.character-count,.track-action,.code-window, .exercise-heading > div > 
   transform: none;
   transform-origin: bottom right;
   transition: none;
+
+  background: transparent;
+
 }
 
 .feedback-placeholder {
@@ -1270,9 +1288,13 @@ code,pre,.character-count,.track-action,.code-window, .exercise-heading > div > 
   border-radius: 0.5rem;
   outline: none;
   transition: .2s;
+  background: transparent !important;
+  backdrop-filter: blur(25px) !important;
 }
 .feedback-trigger:hover{
   border-color: var(--accent); 
+ background: rgb(255 255 255 / 4%);
+
   /* suggestion modal base */
 }
 .feedback-trigger[data-covered="true"] {
@@ -1287,7 +1309,7 @@ code,pre,.character-count,.track-action,.code-window, .exercise-heading > div > 
   overflow: hidden;
   border: 0;
   border-radius: 0.75rem;
-  background: var(--surface);
+  /* background: var(--surface); */
   padding: 0.25rem;
   box-shadow: var(--shadow-raised);
   outline: none;

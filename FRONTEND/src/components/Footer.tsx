@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import FooterFeedbackPopover from "./FooterFeedback.js";
 function Footer() {
   return (
     <footer className="site-footer">
@@ -15,8 +14,7 @@ function Footer() {
             GitHub
           </a>
         </nav>
-        <p className="footer-credit">Built by Snakestongue · UI by Zw96042 & Snakestongue</p>
-        {/* <FooterFeedbackPopover /> */}
+        <p className="footer-credit">Built by Snakestongue · Shaped by the community</p>
       </div>
     </footer>
   );

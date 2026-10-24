@@ -7,11 +7,12 @@ import Footer from "../components/Footer.js";
 
 
 const exerciseGroups = [
-  { id: "lesson-basics", label: "Basics", problems: problems.slice(0, 4) },
-  { id: "lesson-core-patterns", label: "Core patterns", problems: problems.slice(4, 12) },
-  { id: "lesson-command-based", label: "Command based", problems: problems.slice(12, 18) },
-  { id: "lesson-difficult", label: "Difficult", problems: problems.slice(18,23)},
-  { id: "lesson-V3", label: "V3 Commands (Java Only)", problems: problems.slice(23,27)},
+  { id: "lesson-OOP", label: "OOP", problems: problems.slice(0, 4) },
+  { id: "lesson-basics", label: "FRC Basics", problems: problems.slice(4, 8) },
+  { id: "lesson-core-patterns", label: "Core patterns", problems: problems.slice(8, 16) },
+  { id: "lesson-command-based", label: "Command based", problems: problems.slice(16, 22) },
+  { id: "lesson-difficult", label: "Difficult", problems: problems.slice(22, 27) },
+  { id: "lesson-V3", label: "V3 Commands (Java Only)", problems: problems.slice(27, 31) },
 
 ];
 
@@ -66,8 +67,8 @@ function defineEditorTheme(monaco) {
 function Program() {
   const { lang, problemLink } = useParams();
   const [selectedProblem, setSelectedProblem] = useState(() => {
-    const fromUrl = problems.find((p) => String(p.link) === problemLink );
-      return fromUrl || problems[0];
+    const fromUrl = problems.find((p) => String(p.link) === problemLink);
+    return fromUrl || problems[0];
   });
   const [userCode, setUserCode] = useState(selectedProblem.starterCode.java);
   const [aiContent, setAiContent] = useState("")
@@ -82,13 +83,13 @@ function Program() {
   const [copiedLink, setCopiedLink] = useState(false);
   const [copiedCode, setCopiedCode] = useState(false);
   const [openGroupId, setOpenGroupId] = useState(() => {
-  const group = exerciseGroups.find((g) => g.problems.some((p) => p.id === selectedProblem.id));
+    const group = exerciseGroups.find((g) => g.problems.some((p) => p.id === selectedProblem.id));
     return group?.id ?? exerciseGroups[0].id;
   });
   const validLangs = languages.map((l) => l.value);
   const [currentLang, setCurrentLang] = useState(() => normalizeLang(lang));
-  const v3Group =exerciseGroups.find((g)=>g.id=="lesson-V3")
-  const isJavaOnly = v3Group?.problems.some((p)=>p.id== selectedProblem.id)?? false
+  const v3Group = exerciseGroups.find((g) => g.id == "lesson-V3")
+  const isJavaOnly = v3Group?.problems.some((p) => p.id == selectedProblem.id) ?? false
 
 
   function normalizeLang(value) {
@@ -98,7 +99,7 @@ function Program() {
   async function shareLink() {
     const base = import.meta.env.BASE_URL.replace(/\/$/, "")
     const url = `${window.location.origin}${base}/program/${currentLang}/${selectedProblem.link}`;
-    if(navigator.share){
+    if (navigator.share) {
       try {
         await navigator.share({
           title: `Perscript · ${selectedProblem.title}`,
@@ -113,15 +114,15 @@ function Program() {
     try {
       await navigator.clipboard.writeText(url);
       setCopiedLink(true);
-      setTimeout(() =>setCopiedLink(false),1500);
-    }catch (error){ //dont want alerts anymore!
+      setTimeout(() => setCopiedLink(false), 1500);
+    } catch (error) { //dont want alerts anymore!
       console.error("Copy failed", error);
     }
   }
   async function shareCode() {
     const code = userCode || "";
     if (!code.trim()) return;
-    if(navigator.share){
+    if (navigator.share) {
       try {
         await navigator.share({
           title: `${selectedProblem.title} — my ${currentLang} solution`,
@@ -141,11 +142,11 @@ function Program() {
     }
   }
   useEffect(() => {
-    if(!problemLink){
+    if (!problemLink) {
       return
     }
     const match = problems.find((p) => p.link === problemLink);
-    if (match && match.id !== selectedProblem.id){
+    if (match && match.id !== selectedProblem.id) {
       setSelectedProblem(match);
     }
   }, [problemLink])
@@ -156,7 +157,7 @@ function Program() {
     setAiContent("");
   }, [currentLang, selectedProblem]);
 
-  useEffect(()=>{
+  useEffect(() => {
     document.title = "Perscript · " + selectedProblem.title;
   }, [selectProblem]);
 
@@ -195,23 +196,23 @@ function Program() {
     setAiContent("");
   }, [currentLang, selectedProblem]);
   useEffect(() => () => vimRef.current?.dispose(), []);
-  
+
   useEffect(() => {
     const group = exerciseGroups.find((g) => g.problems.some((p) => p.id === selectedProblem.id));
     if (group) setOpenGroupId(group.id);
   }, [selectedProblem]);
 
   useEffect(() => {
-  if (!problemLink) return;
-  const match = problems.find((p) => p.link === problemLink);
-  if (match && match.id !== selectedProblem.id) {
-    setSelectedProblem(match);
-  }
-  const normalizedLang = normalizeLang(lang);
-  if (normalizedLang !== currentLang) {
-    setCurrentLang(normalizedLang);
-  }
-}, [problemLink, lang]);
+    if (!problemLink) return;
+    const match = problems.find((p) => p.link === problemLink);
+    if (match && match.id !== selectedProblem.id) {
+      setSelectedProblem(match);
+    }
+    const normalizedLang = normalizeLang(lang);
+    if (normalizedLang !== currentLang) {
+      setCurrentLang(normalizedLang);
+    }
+  }, [problemLink, lang]);
 
   function selectProblem(problem) {
     setSelectedProblem(problem);
@@ -231,19 +232,19 @@ function Program() {
     const code = (userCode || "").toLowerCase();
     const results = selectedProblem.checks[currentLang].map((check) => {
       let passed = true;
-      if (check.type === "includes"){
+      if (check.type === "includes") {
         passed = code.includes(check.value.toLowerCase());
       }
 
-      if (check.type === "count"){
+      if (check.type === "count") {
         const escaped = escapeRegExp(check.value);
         const count = (code.match(new RegExp(escaped, "gi")) || []).length;
         passed = count >= check.min;
       }
 
       return {
-        message: check.message, 
-        passed 
+        message: check.message,
+        passed
       };
     });
 
@@ -342,56 +343,56 @@ function Program() {
           </fieldset>
 
           <nav className="exercise-nav media-moveable" aria-label="Exercises">
-  {exerciseGroups.map((group) => {
-    const isOpen = openGroupId === group.id;
-    return (
-      <section
-        id={group.id}
-        key={group.label}
-        className="exercise-group"
-        style={{
-          "--group-progress": Math.min(1, Math.max(0,
-            (selectedProblemIndex - problems.indexOf(group.problems[0])) / (group.problems.length - 1)
-          )),
-        }}
-      >
-        <button
-          type="button"
-          className="group-header max-lg:hidden"
-          onClick={() => setOpenGroupId(isOpen ? group.id : group.id)}
-          aria-expanded={isOpen}
-          aria-controls={`${group.id}-panel`}
-        >
-          <h2>{group.label}</h2>
-          <span className="group-chevron" data-open={isOpen} aria-hidden="true">
-            ▾
-          </span>
-        </button>
-
-        <div className="group-collapse" data-open={isOpen} id={`${group.id}-panel`}>
-          <div className="group-collapse-inner">
-            <div>
-              {group.problems.map((problem) => (
-                <button
-                  className={problem.id === selectedProblem.id ? "program-buttons active" : "program-buttons"}
-                  key={problem.id}
-                  type="button"
-                  data-complete={problem.id < selectedProblem.id}
-                  aria-current={problem.id === selectedProblem.id ? "true" : undefined}
-                  aria-label={`Exercise ${problem.id}: ${problem.title}`}
-                  onClick={() => selectProblem(problem)}
+            {exerciseGroups.map((group) => {
+              const isOpen = openGroupId === group.id;
+              return (
+                <section
+                  id={group.id}
+                  key={group.label}
+                  className="exercise-group"
+                  style={{
+                    "--group-progress": Math.min(1, Math.max(0,
+                      (selectedProblemIndex - problems.indexOf(group.problems[0])) / (group.problems.length - 1)
+                    )),
+                  }}
                 >
-                  <span className="exercise-step-dot" aria-hidden="true" />
-                  {problem.title}
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-    );
-  })}
-</nav>
+                  <button
+                    type="button"
+                    className="group-header max-lg:hidden"
+                    onClick={() => setOpenGroupId(isOpen ? group.id : group.id)}
+                    aria-expanded={isOpen}
+                    aria-controls={`${group.id}-panel`}
+                  >
+                    <h2>{group.label}</h2>
+                    <span className="group-chevron" data-open={isOpen} aria-hidden="true">
+                      ▾
+                    </span>
+                  </button>
+
+                  <div className="group-collapse" data-open={isOpen} id={`${group.id}-panel`}>
+                    <div className="group-collapse-inner">
+                      <div>
+                        {group.problems.map((problem) => (
+                          <button
+                            className={problem.id === selectedProblem.id ? "program-buttons active" : "program-buttons"}
+                            key={problem.id}
+                            type="button"
+                            data-complete={problem.id < selectedProblem.id}
+                            aria-current={problem.id === selectedProblem.id ? "true" : undefined}
+                            aria-label={`Exercise ${problem.id}: ${problem.title}`}
+                            onClick={() => selectProblem(problem)}
+                          >
+                            <span className="exercise-step-dot" aria-hidden="true" />
+                            {problem.title}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              );
+            })}
+          </nav>
         </aside>
 
         <section id="browser-editor" className="editor-stage" aria-labelledby="exercise-title">
@@ -453,13 +454,13 @@ function Program() {
             </button>
 
             <button type="button" className="action-buttons quiet-action" onClick={shareLink}>
-                {copiedLink ? "Link copied!" : "Share link"}
+              {copiedLink ? "Link copied!" : "Share link"}
             </button>
 
             <button type="button" className="action-buttons quiet-action" onClick={shareCode}>
-                {copiedCode ? "Code copied!" : "Share code"}
+              {copiedCode ? "Code copied!" : "Share code"}
             </button>
-            
+
             <button className="action-buttons" type="button" onClick={submitToAI} disabled={aiLoading}>
               {aiLoading ? "Thinking…" : "Ask AI"}
             </button>
@@ -482,13 +483,13 @@ function Program() {
                 )}
               </ul>
             </section>
-            
+
             <section id="ai-assist" className="feedback-panel" aria-labelledby="ai-heading">
               <h2 id="ai-heading">AI Assist</h2>
               <div className="words-content ai-content" aria-live="polite">
                 {aiLoading ? "Reviewing your code…" : aiContent || "Ask for a hint when the built-in checks are not enough."}
               </div>
-              
+
             </section>
           </div>
         </section>
