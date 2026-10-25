@@ -12,7 +12,8 @@ const exerciseGroups = [
   { id: "lesson-core-patterns", label: "Core patterns", problems: problems.slice(8, 16) },
   { id: "lesson-command-based", label: "Command based", problems: problems.slice(16, 22) },
   { id: "lesson-difficult", label: "Difficult", problems: problems.slice(22, 27) },
-  { id: "lesson-V3", label: "V3 Commands (Java Only)", problems: problems.slice(27, 31) },
+  { id: "lesson-V3", label: "V3 Commands", problems: problems.slice(27, 31) },
+  { id: "lesson-spark-max", label: "SparkMax", problems: problems.slice(31,34) },
 
 ];
 
@@ -89,8 +90,15 @@ function Program() {
   const validLangs = languages.map((l) => l.value);
   const [currentLang, setCurrentLang] = useState(() => normalizeLang(lang));
   const v3Group = exerciseGroups.find((g) => g.id == "lesson-V3")
-  const isJavaOnly = v3Group?.problems.some((p) => p.id == selectedProblem.id) ?? false
+  const javaOnlyGroups = exerciseGroups.filter(
+    (g) =>
+      g.id === "lesson-V3" ||
+      g.id === "lesson-spark-max"
+  );
 
+  const isJavaOnly = javaOnlyGroups.some((group) =>
+    group.problems.some((p) => p.id === selectedProblem.id)
+  );
 
   function normalizeLang(value) {
     return validLangs.includes(value) ? value : "java";

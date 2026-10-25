@@ -11,7 +11,7 @@ function PP() {
       <main id="main-content" className="legal-page">
         <header className="page-intro">
           <p className="eyebrow">Privacy</p>
-          <h1>A short, plain-language policy.</h1>
+          <h1>A short policy.</h1>
           <p>
             We collect a limited amount of information to operate the practice
             site, understand how it is being used, and improve its exercises,

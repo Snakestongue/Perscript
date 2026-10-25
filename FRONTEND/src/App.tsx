@@ -9,7 +9,7 @@ const tracks = [
     number: "01",
     title: "Programming practice",
     description:
-      "Write robot code in the browser. Build your understanding one exercise at a time.",
+      "Write code directly in the browser. Build your understanding one exercise at a time.",
     action: "Start practicing",
     to: "/program",
   },
@@ -17,7 +17,7 @@ const tracks = [
     number: "02",
     title: "Debugging practice",
     description:
-      "Investigate real FRC-style snippets, identify failures, and learn how to fix them.",
+      "Read real FRC-style snippets, identify issues, and learn how to fix them.",
     action: "Start debugging",
     to: "/debug",
   },
@@ -25,7 +25,7 @@ const tracks = [
     number: "03",
     title: "Reference library",
     description:
-      "Explore Java, C++, Python, motors, sensors, and the command-based framework.",
+      "Explore Java, C++, Python, motors, sensors, and the command-based code.",
     action: "Browse reference",
     to: "/tut",
   },
@@ -33,7 +33,7 @@ const tracks = [
     number: "04",
     title: "Daily challenge",
     description:
-      "Take on a quick coding challenge each day to sharpen your FRC programming skills.",
+      "Take on a daily challenge every day to sharpen your programming skills.",
     action: "Take the challenge",
     to: "/daily",
   },
@@ -116,10 +116,9 @@ function App() {
                   <div className="border-b border-white/[0.08] bg-[#0d131c]">
                     <div className="flex overflow-x-auto">
                       {[
-                        { name: "Robot.java", active: false },
+                        { name: "RobotContainer.java", active: false },
                         { name: "Constants.java", active: false },
                         { name: "Intake.java", active: true },
-                        { name: "DriveSubsystem.java", active: false },
                       ].map((file) => (
                         <div
                           key={file.name}
