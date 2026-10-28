@@ -4,7 +4,7 @@
 
 A web-based programming practice site built with React and Monaco Editor to help students learn and improve FRC (FIRST Robotics Competition) programming skills.
 
-Huge thanks to [@Zw96042](https://github.com/Zw96042)!
+Thanks to [@Zw96042](https://github.com/Zw96042) and [@anupamme](https://github.com/anupamme)!
 
 ## About
 
@@ -66,6 +66,7 @@ The goal of this project is to make learning and practicing FRC programming more
 ├── FRONTEND/
 │   ├── SideFiles/
 │   │   ├── Bug.jsx             # Debugging page
+│   │   ├── Daily.jsx           # Daily Challenge page
 │   │   ├── PP.tsx              # Privacy policy page
 │   │   ├── Program.jsx         # Live programming page
 │   │   ├── Sug.jsx             # Suggestions page
@@ -125,6 +126,9 @@ Planned deployment using:
 ## Planned Updates
 
 - V3 Commands Questions
+- SparkMAX Questions
+- New debugging Questions.
+- Cleaning up the code for the website itself!
 - Anything else people suggest!
 
 ## Feedback / Suggestions
