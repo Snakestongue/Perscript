@@ -136,7 +136,7 @@ function Header() {
                           </div>
                           <div className="nav-mega-items">
                             <Link to="/program#lesson-basics">
-                              <strong>Basics</strong>
+                              <strong>FRC Basics</strong>
                               <span>Start with constants, objects, methods, and constructors with FRC libraries.</span>
                             </Link>
                             <Link to="/program#lesson-core-patterns">

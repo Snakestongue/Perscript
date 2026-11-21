@@ -184,7 +184,6 @@ function Bug() {
     <div className="site-page">
       <main id="main-content" className="debug-page">
         <header className="page-intro debug-intro">
-          <p className="eyebrow">Debugging practice</p>
           <h1>Find the bug before the robot does.</h1>
           <p>Read each snippet, select the issue, and use the explanation to sharpen your skills.</p>
         </header>
@@ -215,6 +214,7 @@ function Bug() {
                       name="debug-language"
                       value={language.value}
                       checked={selectedLanguage === language.value}
+                      onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                       onChange={() => changeLanguage(language.value)}
                     />
                     <span>{language.label}</span>
@@ -229,7 +229,7 @@ function Bug() {
                   <h2>Difficulty</h2>
                 </div>
                 <div className="group-collapse-inner">
-                  <div>
+                  <div >
                     {difficulties.map((difficulty) => (
                       <button
                         key={difficulty.value}
@@ -238,7 +238,10 @@ function Bug() {
                           difficulty.value === selectedDifficulty ? "program-buttons active" : "program-buttons"
                         }
                         aria-pressed={difficulty.value === selectedDifficulty}
-                        onClick={() => changeDifficulty(difficulty.value)}
+                        onClick={() => {
+                          changeDifficulty(difficulty.value);
+                          window.scrollTo({ top: 0, behavior: "smooth"});
+                        }}
                       >
                         <span className="exercise-step-dot" aria-hidden="true" />
                         {difficulty.label}

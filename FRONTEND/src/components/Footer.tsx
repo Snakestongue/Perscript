@@ -14,7 +14,11 @@ function Footer() {
             GitHub
           </a>
         </nav>
-        <p className="footer-credit">Built by FRC Team 353</p>
+        <Link
+          to="https://www.thebluealliance.com/team/353"
+          className="footer-credit">
+          Built by FRC Team  <span className="cool3"> 353</span> · Shaped by the Community
+        </Link>
       </div>
     </footer>
   );

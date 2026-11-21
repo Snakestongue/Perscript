@@ -637,9 +637,14 @@ pre,
 
 .footer-credit {
   justify-self: end;
-  color: var(--text) !important;
 }
-
+.footer-credit:hover{
+  text-decoration: underline !important;
+}
+.cool3{
+  color: var(--text);
+  margin: 0px 3px;
+}
 /* In-place feedback */
 .feedback-dock {
   position: fixed;
@@ -1854,6 +1859,9 @@ pre code {
 .exercise-rail {
   padding-block: 2.5rem 4rem;
   padding-inline-end: 2rem;
+  position: sticky;
+  top: 0;
+  height: 100vh;
 }
 
 .rail-language {
@@ -2739,7 +2747,12 @@ pre code {
 }
 
 @media (max-width: 70rem) {
-
+  .exercise-rail {
+    position: static;
+    height: auto;
+    padding-block: 1.5rem;
+    padding-inline-end: 0;
+  }
   .bQ {
     grid-template-columns: 1fr;
   }

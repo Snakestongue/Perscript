@@ -10,8 +10,8 @@ const exerciseGroups = [
   { id: "lesson-basics", label: "Basics", problems: problems.slice(0, 4) },
   { id: "lesson-core-patterns", label: "Core patterns", problems: problems.slice(4, 12) },
   { id: "lesson-command-based", label: "Command based", problems: problems.slice(12, 18) },
-  { id: "lesson-difficult", label: "Difficult", problems: problems.slice(18,23)},
-  { id: "lesson-V3", label: "V3 Commands (Java Only)", problems: problems.slice(23,27)},
+  { id: "lesson-difficult", label: "Difficult", problems: problems.slice(18, 23) },
+  { id: "lesson-V3", label: "V3 Commands (Java Only)", problems: problems.slice(23, 27) },
 
 ];
 
@@ -63,34 +63,24 @@ function defineEditorTheme(monaco) {
   });
 }
 
-function getTodayKey(){
+function getTodayKey() {
   const today = new Date();
   return `${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`;
-//TESTING
-  //return Math.floor(Date.now() / 10000);
 }
-
-/**TESTING */
-// function getDailyProblem() {
-//   const testDay = Math.floor(Date.now() / 10000);
-
-//   return problems[testDay % problems.length];
-// }
-function getDailyProblem(){
-  const today = new Date();
-    const dayNumber =
-    Date.UTC(
-      today.getFullYear(),
-      today.getMonth(),
-      today.getDate()
-    )/ 86400000;
- // START_DAY= 1;
-  return problems[dayNumber % problems.length]
+function getDailyProblem() {
+  const today = new Date()
+  const dayNumber = Math.floor(
+    Date.UTC(today.getFullYear(), today.getMonth(), today.getDate()) / 86400000
+  )
+  let offset = 17;
+  return problems[(dayNumber - offset + problems.length) % problems.length]
+  /**TESTING */
+  // return problems[0]; 
 }
 
 function Daily() {
   const [selectedProblem, setSelectedProblem] = useState(getDailyProblem);
-const [todayKey, setTodayKey] = useState(getTodayKey);
+  const [todayKey, setTodayKey] = useState(getTodayKey);
   const [currentLang, setCurrentLang] = useState("java");
   const [userCode, setUserCode] = useState(selectedProblem.starterCode.java);
   const [aiContent, setAiContent] = useState("")
@@ -105,12 +95,12 @@ const [todayKey, setTodayKey] = useState(getTodayKey);
   const [copiedLink, setCopiedLink] = useState(false);
   const [copiedCode, setCopiedCode] = useState(false);
   const [openGroupId, setOpenGroupId] = useState(() => {
-  const group = exerciseGroups.find((g) => g.problems.some((p) => p.id === selectedProblem.id));
+    const group = exerciseGroups.find((g) => g.problems.some((p) => p.id === selectedProblem.id));
     return group?.id ?? exerciseGroups[0].id;
   });
   const validLangs = languages.map((l) => l.value);
-  const v3Group =exerciseGroups.find((g)=>g.id=="lesson-V3")
-  const isJavaOnly = v3Group?.problems.some((p)=>p.id== selectedProblem.id)?? false
+  const v3Group = exerciseGroups.find((g) => g.id == "lesson-V3")
+  const isJavaOnly = v3Group?.problems.some((p) => p.id == selectedProblem.id) ?? false
 
 
   function normalizeLang(value) {
@@ -120,7 +110,7 @@ const [todayKey, setTodayKey] = useState(getTodayKey);
   async function shareLink() {
     const base = import.meta.env.BASE_URL.replace(/\/$/, "")
     const url = `${window.location.origin}${base}/program/${currentLang}/${selectedProblem.link}`;
-    if(navigator.share){
+    if (navigator.share) {
       try {
         await navigator.share({
           title: `Perscript · ${selectedProblem.title}`,
@@ -135,15 +125,15 @@ const [todayKey, setTodayKey] = useState(getTodayKey);
     try {
       await navigator.clipboard.writeText(url);
       setCopiedLink(true);
-      setTimeout(() =>setCopiedLink(false),1500);
-    }catch (error){ //dont want alerts anymore!
+      setTimeout(() => setCopiedLink(false), 1500);
+    } catch (error) { //dont want alerts anymore!
       console.error("Copy failed", error);
     }
   }
   async function shareCode() {
     const code = userCode || "";
     if (!code.trim()) return;
-    if(navigator.share){
+    if (navigator.share) {
       try {
         await navigator.share({
           title: `${selectedProblem.title} — my ${currentLang} solution`,
@@ -164,31 +154,16 @@ const [todayKey, setTodayKey] = useState(getTodayKey);
   }
 
   useEffect(() => {
-    const checkDate = () =>{
+    const checkDate = () => {
       const newKey = getTodayKey();
       if (newKey !== todayKey) {
         setTodayKey(newKey);
         setSelectedProblem(getDailyProblem());
-      }}
+      }
+    }
     const interval = setInterval(checkDate, 30 * 1000);
-    return () =>clearInterval(interval);
-  },[todayKey]);
-
- /**TESTING */ 
-// useEffect(() => {
-//   const checkDate = () => {
-//     const newKey = getTodayKey();
-
-//     if (newKey !== todayKey) {
-//       setTodayKey(newKey);
-//       setSelectedProblem(getDailyProblem());
-//     }
-//   };
-
-//   const interval = setInterval(checkDate, 1000);
-
-//   return () => clearInterval(interval);
-// }, [todayKey]);
+    return () => clearInterval(interval);
+  }, [todayKey]);
 
   useEffect(() => {
     setUserCode(selectedProblem.starterCode[currentLang]);
@@ -196,7 +171,7 @@ const [todayKey, setTodayKey] = useState(getTodayKey);
     setAiContent("");
   }, [currentLang, selectedProblem]);
 
-  useEffect(()=>{
+  useEffect(() => {
     document.title = "Perscript · Daily Challenge";
   }, [selectProblem]);
 
@@ -231,19 +206,19 @@ const [todayKey, setTodayKey] = useState(getTodayKey);
     const code = (userCode || "").toLowerCase();
     const results = selectedProblem.checks[currentLang].map((check) => {
       let passed = true;
-      if (check.type === "includes"){
+      if (check.type === "includes") {
         passed = code.includes(check.value.toLowerCase());
       }
 
-      if (check.type === "count"){
+      if (check.type === "count") {
         const escaped = escapeRegExp(check.value);
         const count = (code.match(new RegExp(escaped, "gi")) || []).length;
         passed = count >= check.min;
       }
 
       return {
-        message: check.message, 
-        passed 
+        message: check.message,
+        passed
       };
     });
 
@@ -303,7 +278,7 @@ const [todayKey, setTodayKey] = useState(getTodayKey);
   return (
     <div className="site-page practice-page" id="overall-program">
       <main id="main-content" className="practice-shellDC">
-        
+
         <section id="browser-editor" className="editor-stage" aria-labelledby="exercise-title">
           <header className="exercise-heading">
             <div>
@@ -311,16 +286,16 @@ const [todayKey, setTodayKey] = useState(getTodayKey);
 
               <div className="flex flex-row items-center gap-3">
                 <h1 id="exercise-title">{selectedProblem.title}</h1>
-                
+
               </div>
             </div>
 
             <p>{selectedProblem.description}<span
-                  className="difficulty-badge ml-6 "
-                  data-difficulty={selectedProblem.difficulty}
-                >
-                  {selectedProblem.difficulty}
-                </span></p>
+              className="difficulty-badge ml-6 "
+              data-difficulty={selectedProblem.difficulty}
+            >
+              {selectedProblem.difficulty}
+            </span></p>
           </header>
 
           <div className="editor-frame">
@@ -373,13 +348,13 @@ const [todayKey, setTodayKey] = useState(getTodayKey);
             </button>
 
             <button type="button" className="action-buttons quiet-action" onClick={shareLink}>
-                {copiedLink ? "Link copied!" : "Share link"}
+              {copiedLink ? "Link copied!" : "Share link"}
             </button>
 
             <button type="button" className="action-buttons quiet-action" onClick={shareCode}>
-                {copiedCode ? "Code copied!" : "Share code"}
+              {copiedCode ? "Code copied!" : "Share code"}
             </button>
-            
+
             <button className="action-buttons" type="button" onClick={submitToAI} disabled={aiLoading}>
               {aiLoading ? "Thinking…" : "Ask AI"}
             </button>
@@ -415,6 +390,7 @@ const [todayKey, setTodayKey] = useState(getTodayKey);
                       value={language.value}
                       checked={currentLang === language.value}
                       disabled={disabled}
+                      onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                       onChange={() => !disabled && changeLang(language.value)}
                     />
                     <span>{language.label}</span>
@@ -437,13 +413,13 @@ const [todayKey, setTodayKey] = useState(getTodayKey);
                 )}
               </ul>
             </section>
-            
+
             <section id="ai-assist" className="feedback-panel" aria-labelledby="ai-heading">
               <h2 id="ai-heading">AI Assist</h2>
               <div className="words-content ai-content" aria-live="polite">
                 {aiLoading ? "Reviewing your code…" : aiContent || "Ask for a hint when the built-in checks are not enough."}
               </div>
-              
+
             </section>
           </div>
         </section>
