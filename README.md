@@ -23,10 +23,10 @@ The goal of this project is to make learning and practicing FRC programming more
   - C++
   - Python
 - Real-time code editing experience.
-- Currently 23 Live Coding Problems
+- Currently 33 Live Coding Problems
 
 ### Debugging Practice
-- 30 debugging problems in Java, C++ and Python (10 each)
+- 60 debugging problems in Java, C++ and Python
 - Variety of difficulties ranging from easy to hard
 
 ### Learning Resources
@@ -127,8 +127,7 @@ Planned deployment using:
 
 - V3 Commands Questions
 - SparkMAX Questions
-- New debugging Questions.
-- Cleaning up the code for the website itself!
+- Completely new debugging problems
 - Anything else people suggest!
 
 ## Feedback / Suggestions
