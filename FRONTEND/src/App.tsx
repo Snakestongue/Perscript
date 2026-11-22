@@ -37,6 +37,14 @@ const tracks = [
     action: "Take the challenge",
     to: "/daily",
   },
+  {
+    number: "05",
+    title: "PID tuning lab",
+    description:
+      "Tune P, I, D and feedforward on simulated elevators, arms, slides and flywheels.",
+    action: "Start tuning",
+    to: "/tune",
+  },
 ];
 
 function App() {

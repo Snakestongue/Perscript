@@ -13,6 +13,7 @@ const Sug = lazy(() => import("./SideFiles/Sug.jsx"));
 const Tut = lazy(() => import("./SideFiles/Tut.tsx"));
 const Program = lazy(() => import("./SideFiles/Program.jsx"));
 const Daily = lazy(() => import("./SideFiles/Daily.jsx"));
+const Tune = lazy(() => import("./SideFiles/Tune.jsx"));
 
 
 function RoutesPage(){
@@ -62,6 +63,7 @@ function RoutesPage(){
               <Route path="/program/:lang/:problemLink" element={<Program />} />
               <Route path="/program" element={<Program />} />
               <Route path="/daily" element={<Daily />} />
+              <Route path="/tune" element={<Tune />} />
             </Routes>
           </Suspense>
         </div>
