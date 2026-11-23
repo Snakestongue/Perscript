@@ -5,7 +5,7 @@ import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import problems from "../JSON/problems.json";
 import Footer from "../components/Footer.js";
 import { attachLint } from "../codeLint.js";
-import { registerJavaIntelliSense, attachJavaHelpers } from "../lang/javaProvider.js";
+import { registerJavaIntelliSense, attachJavaHelpers, warmLanguage } from "../lang/javaProvider.js";
 import Tune from "./Tune.jsx";
 
 
@@ -93,6 +93,7 @@ function Program() {
   });
   const validLangs = languages.map((l) => l.value);
   const [currentLang, setCurrentLang] = useState(() => normalizeLang(lang));
+  useEffect(() => { if (currentLang === "python") warmLanguage("python"); else if (currentLang === "c++" || currentLang === "cpp") warmLanguage("cpp"); }, [currentLang]);
   const v3Group = exerciseGroups.find((g) => g.id == "lesson-V3")
   const javaOnlyGroups = exerciseGroups.filter(
     (g) =>

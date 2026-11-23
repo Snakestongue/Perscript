@@ -5,7 +5,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import problems from "../JSON/dc.json";
 import Footer from "../components/Footer.js";
 import { attachLint } from "../codeLint.js";
-import { registerJavaIntelliSense, attachJavaHelpers } from "../lang/javaProvider.js";
+import { registerJavaIntelliSense, attachJavaHelpers, warmLanguage } from "../lang/javaProvider.js";
 
 
 const exerciseGroups = [
@@ -84,6 +84,7 @@ function Daily() {
   const [selectedProblem, setSelectedProblem] = useState(getDailyProblem);
   const [todayKey, setTodayKey] = useState(getTodayKey);
   const [currentLang, setCurrentLang] = useState("java");
+  useEffect(() => { if (currentLang === "python") warmLanguage("python"); else if (currentLang === "c++" || currentLang === "cpp") warmLanguage("cpp"); }, [currentLang]);
   const [userCode, setUserCode] = useState(selectedProblem.starterCode.java);
   const [aiContent, setAiContent] = useState("")
   const [aiLoading, setAiLoading] = useState(false)
