@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { initVimMode } from "monaco-vim";
 import Editor from "@monaco-editor/react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import problems from "../JSON/problems.json";
 import Footer from "../components/Footer.js";
+import { attachLint } from "../codeLint.js";
 
 
 const exerciseGroups = [
@@ -400,6 +401,22 @@ function Program() {
                 </section>
               );
             })}
+
+            <section id="lesson-pid-tuning" className="exercise-group">
+              <button type="button" className="group-header max-lg:hidden" aria-expanded="true" tabIndex={-1}>
+                <h2>PID Tuning</h2>
+              </button>
+              <div className="group-collapse" data-open="true">
+                <div className="group-collapse-inner">
+                  <div>
+                    <Link className="program-buttons" to="/tune" aria-label="PID Tuning Lab">
+                      <span className="exercise-step-dot" aria-hidden="true" />
+                      PID Tuning Lab
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </section>
           </nav>
         </aside>
 
@@ -420,8 +437,9 @@ function Program() {
               value={userCode}
               onChange={(value) => setUserCode(value || "")}
               beforeMount={defineEditorTheme}
-              onMount={(editor) => {
+              onMount={(editor, monaco) => {
                 editorRef.current = editor;
+                attachLint(monaco, editor);
               }}
               options={{
                 fontFamily: "JetBrains Mono, monospace",
