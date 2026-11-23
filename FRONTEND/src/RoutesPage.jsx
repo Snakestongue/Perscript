@@ -63,6 +63,8 @@ function RoutesPage(){
               <Route path="/program/:lang/:problemLink" element={<Program />} />
               <Route path="/program" element={<Program />} />
               <Route path="/program/pid-tuning" element={<Program />} />
+              <Route path="/program/rev-hardware-client" element={<Program />} />
+              <Route path="/program/phoenix-tuner" element={<Program />} />
               <Route path="/daily" element={<Daily />} />
               <Route path="/tune" element={<Tune />} />
             </Routes>

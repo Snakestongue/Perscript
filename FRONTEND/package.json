@@ -15,6 +15,7 @@
   "dependencies": {
     "@monaco-editor/react": "^4.7.0",
     "@tailwindcss/vite": "^4.3.3",
+    "antd": "^6.7.1",
     "clsx": "^2.1.1",
     "monaco-vim": "^0.4.4",
     "motion": "^13.1.0",

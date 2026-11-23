@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { initVimMode } from "monaco-vim";
 import Editor from "@monaco-editor/react";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
@@ -7,6 +7,13 @@ import Footer from "../components/Footer.js";
 import { attachLint } from "../codeLint.js";
 import { registerJavaIntelliSense, attachJavaHelpers } from "../lang/javaProvider.js";
 import Tune from "./Tune.jsx";
+// Vendor-tool training mocks stay decoupled (own folders, own dependencies) and load on demand.
+const RevMock = lazy(() => import("../mocks/rev-hardware-client/index.jsx"));
+const PhoenixMock = lazy(() => import("../mocks/phoenix-tuner/index.jsx"));
+const TOOL_PAGES = {
+  "/program/rev-hardware-client": { id: "rev", title: "REV Hardware Client: CAN IDs and PID slots", Mock: RevMock },
+  "/program/phoenix-tuner": { id: "phoenix", title: "Phoenix Tuner: device IDs and Slot 0 configs", Mock: PhoenixMock },
+};
 
 
 const exerciseGroups = [
@@ -85,6 +92,8 @@ function Program() {
   const location = useLocation();
   const navigate = useNavigate()
   const isPid = location.pathname.endsWith("/program/pid-tuning");
+  const toolPage = Object.entries(TOOL_PAGES).find(([path]) => location.pathname.endsWith(path))?.[1] ?? null;
+  const isTool = isPid || !!toolPage;
   const [copiedLink, setCopiedLink] = useState(false);
   const [copiedCode, setCopiedCode] = useState(false);
   const [openGroupId, setOpenGroupId] = useState(() => {
@@ -170,7 +179,7 @@ function Program() {
   }, [currentLang, selectedProblem]);
 
   useEffect(() => {
-    document.title = isPid ? "Perscript · PID Tuning Lab" : "Perscript · " + selectedProblem.title;
+    document.title = isPid ? "Perscript · PID Tuning Lab" : toolPage ? "Perscript · " + toolPage.title : "Perscript · " + selectedProblem.title;
   }, [selectProblem]);
 
   useEffect(() => {
@@ -317,7 +326,7 @@ function Program() {
     <div className="site-page practice-page" id="overall-program">
       <main id="main-content" className="practice-shell">
         <aside className="exercise-rail" aria-label="Exercise selection">
-          <fieldset className="rail-language" hidden={isPid}>
+          <fieldset className="rail-language" hidden={isTool}>
             <legend className="max-lg:!text-center">Language</legend>
             <div className="language-switch">
               <span
@@ -386,11 +395,11 @@ function Program() {
                       <div>
                         {group.problems.map((problem) => (
                           <button
-                            className={!isPid && problem.id === selectedProblem.id ? "program-buttons active" : "program-buttons"}
+                            className={!isTool && problem.id === selectedProblem.id ? "program-buttons active" : "program-buttons"}
                             key={problem.id}
                             type="button"
                             data-complete={problem.id < selectedProblem.id}
-                            aria-current={!isPid && problem.id === selectedProblem.id ? "true" : undefined}
+                            aria-current={!isTool && problem.id === selectedProblem.id ? "true" : undefined}
                             aria-label={`Exercise ${problem.id}: ${problem.title}`}
                             onClick={() => selectProblem(problem)}
                           >
@@ -420,12 +429,45 @@ function Program() {
                 </div>
               </div>
             </section>
+
+            <section id="lesson-tool-setup" className="exercise-group">
+              <button type="button" className="group-header max-lg:hidden" aria-expanded="true" tabIndex={-1}>
+                <h2>Tool Setup</h2>
+              </button>
+              <div className="group-collapse" data-open="true">
+                <div className="group-collapse-inner">
+                  <div>
+                    {Object.entries(TOOL_PAGES).map(([path, page]) => (
+                      <Link key={path} className={toolPage?.id === page.id ? "program-buttons active" : "program-buttons"} to={path} aria-label={page.title} aria-current={toolPage?.id === page.id ? "page" : undefined}>
+                        <span className="exercise-step-dot" aria-hidden="true" />
+                        {page.id === "rev" ? "REV Hardware Client" : "Phoenix Tuner"}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </section>
           </nav>
         </aside>
 
         {isPid ? (
           <section id="browser-editor" className="editor-stage" aria-label="PID Tuning Lab">
             <Tune embedded />
+          </section>
+        ) : toolPage ? (
+          <section id="browser-editor" className="editor-stage" aria-label={toolPage.title}>
+            <header className="exercise-heading">
+              <div>
+                <p>Tool Setup</p>
+                <h1>{toolPage.title}</h1>
+              </div>
+              <p>A practice version of the real tool. Assign CAN IDs and set the Slot 0 gains from the PID Tuning Lab, then check off each task.</p>
+            </header>
+            <div style={{ overflow: "auto", minHeight: 0, flex: 1, padding: "0 0 1rem" }}>
+              <Suspense fallback={<p className="p-4 text-sm text-slate-400">Loading tool…</p>}>
+                <toolPage.Mock />
+              </Suspense>
+            </div>
           </section>
         ) : (
         <section id="browser-editor" className="editor-stage" aria-labelledby="exercise-title">

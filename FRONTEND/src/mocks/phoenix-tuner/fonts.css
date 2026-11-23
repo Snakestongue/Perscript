@@ -1,0 +1,3 @@
+/* Open Sans, as bundled with the real app. SIL OFL licensed font. */
+@font-face { font-family: "Open Sans"; font-style: normal; font-weight: 400; font-display: swap; src: url("./fonts/OpenSans-Regular.ttf") format("truetype"); }
+@font-face { font-family: "Open Sans"; font-style: normal; font-weight: 600 700; font-display: swap; src: url("./fonts/OpenSans-Semibold.ttf") format("truetype"); }
