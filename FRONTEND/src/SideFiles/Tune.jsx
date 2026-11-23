@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { LANGUAGES, LIBRARIES, generateCode } from "../pidCodegen.js";
 import { CHALLENGES, CONDITIONS, DURATION, MECHANISMS, evaluate, simulate } from "../pidSim.js";
 
 const ZERO = { kP: 0, kI: 0, kD: 0, kS: 0, kG: 0, kV: 0, kA: 0 };
@@ -46,6 +47,9 @@ export default function Tune() {
   const [done, setDone] = useState(() => {
     try { return JSON.parse(localStorage.getItem("pidDone") || "[]"); } catch { return []; }
   });
+  const [lang, setLang] = useState("java");
+  const [lib, setLib] = useState("wpimath");
+  const [copied, setCopied] = useState(false);
   const challenge = CHALLENGES.find((c) => c.id === challengeId);
   const mech = MECHANISMS[challenge.mech];
 
@@ -63,6 +67,7 @@ export default function Tune() {
     try { localStorage.setItem("pidDone", JSON.stringify(completed)); } catch { /* ignore */ }
   }, [completed]);
 
+  const code = useMemo(() => generateCode(lang, lib, challenge.mech, gains, challenge.target), [lang, lib, challenge, gains]);
   const pick = (id) => { setDone(completed); setChallengeId(id); setGains(ZERO); };
   const fmt = (v, d = 2) => (v === null ? "never" : v.toFixed(d));
 
@@ -130,6 +135,24 @@ export default function Tune() {
           ))}
         </section>
       </div>
+
+      <section className="mt-6 rounded-xl border border-zinc-800 p-4">
+        <div className="mb-3 flex flex-wrap items-center gap-3">
+          <h2 className="mr-auto text-lg font-semibold">Equivalent code</h2>
+          <select value={lib} onChange={(e) => setLib(e.target.value)} className="rounded border border-zinc-700 bg-black px-2 py-1 text-sm" aria-label="Library">
+            {LIBRARIES.map((l) => <option key={l.value} value={l.value}>{l.label}</option>)}
+          </select>
+          <select value={lang} onChange={(e) => setLang(e.target.value)} className="rounded border border-zinc-700 bg-black px-2 py-1 text-sm" aria-label="Language">
+            {LANGUAGES.map((l) => <option key={l.value} value={l.value}>{l.label}</option>)}
+          </select>
+          <button
+            className="text-sm text-[#7AADFF]"
+            onClick={() => { navigator.clipboard?.writeText(code); setCopied(true); setTimeout(() => setCopied(false), 1500); }}
+          >{copied ? "Copied!" : "Copy"}</button>
+        </div>
+        <pre className="overflow-x-auto rounded bg-zinc-950 p-3 text-xs leading-relaxed text-slate-200"><code>{code}</code></pre>
+        <p className="mt-2 text-xs text-slate-500">Starter code for your current gains. Check units and class names against the library version you use.</p>
+      </section>
     </main>
   );
 }
