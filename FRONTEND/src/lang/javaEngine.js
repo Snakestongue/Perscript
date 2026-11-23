@@ -354,7 +354,14 @@ export function createEngine(parser) {
       }
     }
     if (!sigs.length) return null;
-    const infos = sigs.map((m) => ({ ...parseMember(m), doc: m.d || "" }));
+    const infos = sigs.map((m) => {
+      const doc = m.d || "";
+      const paramDocs = {};
+      const lines = doc.split("\n");
+      for (const line of lines) { const pm = line.match(/^\*\*@param\*\* `([^`]+)`\s*(.*)$/); if (pm) paramDocs[pm[1]] = pm[2]; }
+      const summary = lines.filter((l) => !l.startsWith("**@")).join("\n").trim();
+      return { ...parseMember(m), doc: summary, paramDocs };
+    });
     infos.sort((a, b) => a.params.length - b.params.length);
     const fit = infos.findIndex((s) => s.params.length > call.argIndex);
     return { signatures: infos, active: Math.max(0, fit), argIndex: call.argIndex };
@@ -372,7 +379,12 @@ export function createEngine(parser) {
       const t = typeOfExpr(receiverBefore(src, s - 1), ctx);
       if (t) {
         const hits = membersOf(t.cls).filter((x) => x.m.n === word);
-        if (hits.length) return { start: s, end: e, title: hits.map((h) => "```java\n" + parseMember(h.m).label + "\n```").join("\n"), doc: hits[0].m.d || "", owner: hits[0].owner.n };
+        if (hits.length) {
+          const shown = hits.slice(0, 3).map((h) => "```java\n" + parseMember(h.m).label + "\n```").join("\n");
+          const more = hits.length > 3 ? `\n*+${hits.length - 3} more overloads*` : "";
+          const withDoc = hits.find((h) => h.m.d) || hits[0];
+          return { start: s, end: e, title: shown + more, doc: withDoc.m.d || "", owner: hits[0].owner.n };
+        }
         const nested = findClass(`${t.cls.n}.${word}`, ctx.imports);
         if (nested) return { start: s, end: e, title: "```java\n" + `${nested.k} ${nested.n}` + "\n```", doc: nested.d || "", owner: nested.p };
       }

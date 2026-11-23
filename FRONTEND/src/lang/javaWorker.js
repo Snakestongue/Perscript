@@ -42,9 +42,15 @@ async function ensureLibs(libs) {
 self.onmessage = async ({ data }) => {
   const { id, type, src, offset, libs = ["wpilib", "ctre"] } = data;
   try {
+    if (type === "ping") { self.postMessage({ id, result: "pong" }); return; }
     const e = await ensureLibs(libs);
     let result = null;
-    if (type === "complete") result = e.complete(src, offset);
+    if (type === "warm") {
+      // Run one tiny completion so parser and index code paths are hot before the user types.
+      const warm = "class W extends SubsystemBase { void f() { PIDC";
+      e.complete(warm, warm.length);
+      result = "ready";
+    } else if (type === "complete") result = e.complete(src, offset);
     else if (type === "signature") result = e.signatureHelp(src, offset);
     else if (type === "hover") result = e.hover(src, offset);
     self.postMessage({ id, result });
