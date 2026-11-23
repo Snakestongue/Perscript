@@ -5,7 +5,7 @@ const GHOST = "#77777F";
 
 export default function MechanismView({ mech, value, target, phase }) {
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} className="w-full rounded-lg bg-zinc-950" role="img" aria-label={`${mech} animation`}>
+    <svg viewBox={`0 0 ${W} ${H}`} className="mx-auto mt-1 block h-40 w-full rounded-lg bg-zinc-950" role="img" aria-label={`${mech} animation`}>
       {mech === "elevator" && <Elevator y={value} target={target} />}
       {mech === "slide" && <Slide x={value} target={target} />}
       {mech === "pivot" && <Pivot angle={value} target={target} />}

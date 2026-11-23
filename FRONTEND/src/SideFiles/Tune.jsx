@@ -15,7 +15,7 @@ const SLIDERS = [
 ];
 
 function Chart({ data, target, unit, playT }) {
-  const W = 640, H = 260, pad = 36;
+  const W = 640, H = 170, pad = 30;
   const ys = data.flatMap((d) => [d.y, d.ref]).concat([target, 0]);
   let min = Math.min(...ys), max = Math.max(...ys);
   if (max - min < 1e-6) max = min + 1;
@@ -26,7 +26,7 @@ function Chart({ data, target, unit, playT }) {
   const path = (k) => data.map((d, i) => `${i ? "L" : "M"}${x(d.t).toFixed(1)},${y(d[k]).toFixed(1)}`).join("");
   const band = Math.abs(target) * 0.02;
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} className="w-full" role="img" aria-label="Mechanism response chart">
+    <svg viewBox={`0 0 ${W} ${H}`} className="block w-full" role="img" aria-label="Mechanism response chart">
       <rect x={pad} y={y(target + band)} width={W - pad * 1.5} height={Math.max(1, y(target - band) - y(target + band))} fill="#7AADFF" opacity="0.15" />
       <line x1={pad} x2={W - pad / 2} y1={y(target)} y2={y(target)} stroke="#555" strokeDasharray="4 4" />
       <line x1={pad} x2={pad} y1={pad / 2} y2={H - pad} stroke="#555" />
@@ -118,86 +118,87 @@ export default function Tune({ embedded = false }) {
 
   return (
     <Shell embedded={embedded}>
-      {embedded ? <p className="text-sm uppercase tracking-wide text-slate-500">Lesson</p> : null}
-      <h1 className="text-3xl font-semibold">PID Tuning Lab</h1>
-      <p className="mt-2 text-slate-400">
-        Tune P, I, D and the feedforward terms (kS, kG, kV, kA) on a simulated mechanism. Meet every goal to clear the challenge.
-      </p>
+      <div className="flex flex-wrap items-baseline gap-x-3">
+        <h1 className="text-2xl font-semibold">PID Tuning Lab</h1>
+        <p className="text-sm text-slate-400">Tune P, I, D and feedforward (kS, kG, kV, kA). Meet every goal to clear the challenge.</p>
+      </div>
 
-      <div className="mt-6 flex flex-wrap gap-2">
+      <div className="mt-3 flex flex-wrap gap-1.5">
         {CHALLENGES.map((c) => (
           <button
             key={c.id}
             onClick={() => pick(c.id)}
-            className={`rounded-full border px-3 py-1 text-sm ${c.id === challengeId ? "border-[#7AADFF] bg-[#7AADFF]/20" : "border-zinc-700 hover:border-zinc-500"}`}
+            className={`rounded-full border px-2.5 py-0.5 text-xs ${c.id === challengeId && !custom ? "border-[#7AADFF] bg-[#7AADFF]/20" : "border-zinc-700 hover:border-zinc-500"}`}
           >
             {completed.includes(c.id) ? "✓ " : ""}{c.title}
           </button>
         ))}
         <button
           onClick={roll}
-          className={`rounded-full border px-3 py-1 text-sm ${custom ? "border-[#7AADFF] bg-[#7AADFF]/20" : "border-zinc-700 hover:border-zinc-500"}`}
+          className={`rounded-full border px-2.5 py-0.5 text-xs ${custom ? "border-[#7AADFF] bg-[#7AADFF]/20" : "border-zinc-700 hover:border-zinc-500"}`}
         >
           🎲 Random
         </button>
       </div>
 
-      <div className={`mt-6 grid gap-6 ${embedded ? "2xl:grid-cols-[1.4fr_1fr]" : "lg:grid-cols-[1.4fr_1fr]"}`}>
-        <section className="rounded-xl border border-zinc-800 p-4">
-          <h2 className="text-lg font-semibold">{challenge.title}</h2>
-          <p className="text-sm text-slate-400">
-            {mech.label} · {CONDITIONS[challenge.cond].label} · target {challenge.target} {mech.unit}
-          </p>
-          <p className="mb-2 text-sm text-slate-500">{mech.blurb}</p>
-          <MechanismView
-            mech={challenge.mech}
-            value={data[idx].y}
-            target={challenge.target}
-            phase={phases ? phases[idx] : 0}
-          />
-          <div className="my-2 flex items-center gap-3 text-sm">
-            <button className="text-[#7AADFF]" onClick={replay}>{playing ? "Restart" : "▶ Play"}</button>
-            <input
-              type="range" min="0" max={DURATION} step="0.01" value={playT}
-              onChange={(e) => { setPlaying(false); setPlayT(parseFloat(e.target.value)); }}
-              className="flex-1" aria-label="Playback time"
+      <div className="@container mt-3">
+        <div className="grid gap-3 @xl:grid-cols-[minmax(0,1.5fr)_minmax(14rem,1fr)]">
+          <section className="min-w-0 rounded-xl border border-zinc-800 p-3">
+            <div className="flex flex-wrap items-baseline justify-between gap-x-3">
+              <h2 className="text-base font-semibold">{challenge.title}</h2>
+              <p className="text-xs text-slate-400">
+                {mech.label} · {CONDITIONS[challenge.cond].label} · target {challenge.target} {mech.unit}
+              </p>
+            </div>
+            <MechanismView
+              mech={challenge.mech}
+              value={data[idx].y}
+              target={challenge.target}
+              phase={phases ? phases[idx] : 0}
             />
-            <span className="tabular-nums text-slate-400">{playT.toFixed(2)} s</span>
-          </div>
-          <Chart data={data} target={challenge.target} unit={mech.unit} playT={playT} />
-          <ul className="mt-3 space-y-1 text-sm">
-            {rows.map((r) => (
-              <li key={r.label} className={r.ok ? "text-green-400" : "text-red-400"}>
-                {r.ok ? "✓" : "✗"} {r.label}: {r.value} <span className="text-slate-500">(goal {r.goal})</span>
-              </li>
-            ))}
-          </ul>
-          {passed && <p className="mt-3 font-semibold text-green-400">Challenge complete!</p>}
-          <p className="mt-3 text-sm text-slate-500">Hint: {challenge.hint}</p>
-        </section>
-
-        <section className="rounded-xl border border-zinc-800 p-4">
-          <div className="mb-3 flex items-center justify-between">
-            <h2 className="text-lg font-semibold">Gains</h2>
-            <button className="text-sm text-[#7AADFF]" onClick={() => setGainsAndReplay(ZERO)}>Reset</button>
-          </div>
-          {SLIDERS.map((s) => (
-            <label key={s.key} className="mb-3 block text-sm">
-              <span className="flex justify-between">
-                <span>{s.key}</span><span className="tabular-nums">{gains[s.key].toFixed(3)}</span>
-              </span>
+            <div className="my-1.5 flex items-center gap-2 text-xs">
+              <button className="text-[#7AADFF]" onClick={replay}>{playing ? "Restart" : "▶ Play"}</button>
               <input
-                type="range" min="0" max={s.max} step={s.step}
-                value={gains[s.key]}
-                onChange={(e) => setGainsAndReplay({ ...gains, [s.key]: parseFloat(e.target.value) })}
-                className="w-full"
+                type="range" min="0" max={DURATION} step="0.01" value={playT}
+                onChange={(e) => { setPlaying(false); setPlayT(parseFloat(e.target.value)); }}
+                className="flex-1" aria-label="Playback time"
               />
-            </label>
-          ))}
-        </section>
+              <span className="w-12 text-right tabular-nums text-slate-400">{playT.toFixed(2)} s</span>
+            </div>
+            <Chart data={data} target={challenge.target} unit={mech.unit} playT={playT} />
+          </section>
+
+          <section className="min-w-0 rounded-xl border border-zinc-800 p-3 @xl:sticky @xl:top-3 @xl:self-start">
+            <div className="mb-1.5 flex items-center justify-between">
+              <h2 className="text-base font-semibold">Gains</h2>
+              <button className="text-xs text-[#7AADFF]" onClick={() => setGainsAndReplay(ZERO)}>Reset</button>
+            </div>
+            {SLIDERS.map((s) => (
+              <label key={s.key} className="grid grid-cols-[1.6rem_minmax(0,1fr)_3.4rem] items-center gap-2 py-0.5 text-xs">
+                <span className="font-medium">{s.key}</span>
+                <input
+                  type="range" min="0" max={s.max} step={s.step}
+                  value={gains[s.key]}
+                  onChange={(e) => setGainsAndReplay({ ...gains, [s.key]: parseFloat(e.target.value) })}
+                  className="w-full"
+                />
+                <span className="text-right tabular-nums text-slate-300">{gains[s.key].toFixed(3)}</span>
+              </label>
+            ))}
+            <ul className="mt-2 space-y-0.5 border-t border-zinc-800 pt-2 text-xs">
+              {rows.map((r) => (
+                <li key={r.label} className={r.ok ? "text-green-400" : "text-red-400"}>
+                  {r.ok ? "✓" : "✗"} {r.label}: {r.value} <span className="text-slate-500">(goal {r.goal})</span>
+                </li>
+              ))}
+            </ul>
+            {passed && <p className="mt-1.5 text-sm font-semibold text-green-400">Challenge complete!</p>}
+            <p className="mt-1.5 text-xs text-slate-500">Hint: {challenge.hint}</p>
+          </section>
+        </div>
       </div>
 
-      <section className="mt-6 rounded-xl border border-zinc-800 p-4">
+      <section className="mt-3 rounded-xl border border-zinc-800 p-3">
         <div className="mb-3 flex flex-wrap items-center gap-3">
           <h2 className="mr-auto text-lg font-semibold">Equivalent code</h2>
           <select value={lib} onChange={(e) => setLib(e.target.value)} className="rounded border border-zinc-700 bg-black px-2 py-1 text-sm" aria-label="Library">
