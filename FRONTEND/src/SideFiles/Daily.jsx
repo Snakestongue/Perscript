@@ -5,6 +5,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import problems from "../JSON/dc.json";
 import Footer from "../components/Footer.js";
 import { attachLint } from "../codeLint.js";
+import { registerJavaIntelliSense } from "../lang/javaProvider.js";
 
 
 const exerciseGroups = [
@@ -310,6 +311,7 @@ function Daily() {
               onMount={(editor, monaco) => {
                 editorRef.current = editor;
                 attachLint(monaco, editor);
+                registerJavaIntelliSense(monaco);
               }}
               options={{
                 fontFamily: "JetBrains Mono, monospace",

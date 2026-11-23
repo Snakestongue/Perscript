@@ -5,6 +5,7 @@ import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import problems from "../JSON/problems.json";
 import Footer from "../components/Footer.js";
 import { attachLint } from "../codeLint.js";
+import { registerJavaIntelliSense } from "../lang/javaProvider.js";
 import Tune from "./Tune.jsx";
 
 
@@ -447,6 +448,7 @@ function Program() {
               onMount={(editor, monaco) => {
                 editorRef.current = editor;
                 attachLint(monaco, editor);
+                registerJavaIntelliSense(monaco);
               }}
               options={{
                 fontFamily: "JetBrains Mono, monospace",
