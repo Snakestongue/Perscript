@@ -43,7 +43,13 @@ function Chart({ data, target, unit, playT }) {
   );
 }
 
-export default function Tune() {
+function Shell({ embedded, children }) {
+  return embedded
+    ? <div className="w-full text-slate-100">{children}</div>
+    : <main className="mx-auto w-full max-w-[1200px] px-5 py-10 text-slate-100">{children}</main>;
+}
+
+export default function Tune({ embedded = false }) {
   const [challengeId, setChallengeId] = useState(CHALLENGES[0].id);
   const [gains, setGains] = useState(ZERO);
   const [done, setDone] = useState(() => {
@@ -59,7 +65,7 @@ export default function Tune() {
   const challenge = custom ?? CHALLENGES.find((c) => c.id === challengeId);
   const mech = MECHANISMS[challenge.mech];
 
-  useEffect(() => { document.title = "Perscript | PID Tuning"; }, []);
+  useEffect(() => { if (!embedded) document.title = "Perscript | PID Tuning"; }, [embedded]);
 
   const { data, metrics } = useMemo(
     () => simulate(challenge.mech, challenge.cond, challenge.target, gains, challenge.scale),
@@ -111,7 +117,8 @@ export default function Tune() {
   ];
 
   return (
-    <main className="mx-auto w-full max-w-[1200px] px-5 py-10 text-slate-100">
+    <Shell embedded={embedded}>
+      {embedded ? <p className="text-sm uppercase tracking-wide text-slate-500">Lesson</p> : null}
       <h1 className="text-3xl font-semibold">PID Tuning Lab</h1>
       <p className="mt-2 text-slate-400">
         Tune P, I, D and the feedforward terms (kS, kG, kV, kA) on a simulated mechanism. Meet every goal to clear the challenge.
@@ -135,7 +142,7 @@ export default function Tune() {
         </button>
       </div>
 
-      <div className="mt-6 grid gap-6 lg:grid-cols-[1.4fr_1fr]">
+      <div className={`mt-6 grid gap-6 ${embedded ? "2xl:grid-cols-[1.4fr_1fr]" : "lg:grid-cols-[1.4fr_1fr]"}`}>
         <section className="rounded-xl border border-zinc-800 p-4">
           <h2 className="text-lg font-semibold">{challenge.title}</h2>
           <p className="text-sm text-slate-400">
@@ -207,6 +214,6 @@ export default function Tune() {
         <pre className="overflow-x-auto rounded bg-zinc-950 p-3 text-xs leading-relaxed text-slate-200"><code>{code}</code></pre>
         <p className="mt-2 text-xs text-slate-500">Starter code for your current gains. Check units and class names against the library version you use.</p>
       </section>
-    </main>
+    </Shell>
   );
 }

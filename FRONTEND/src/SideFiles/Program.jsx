@@ -5,6 +5,7 @@ import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import problems from "../JSON/problems.json";
 import Footer from "../components/Footer.js";
 import { attachLint } from "../codeLint.js";
+import Tune from "./Tune.jsx";
 
 
 const exerciseGroups = [
@@ -82,6 +83,7 @@ function Program() {
   const selectedProblemIndex = problems.findIndex((problem) => problem.id === selectedProblem.id)
   const location = useLocation();
   const navigate = useNavigate()
+  const isPid = location.pathname.endsWith("/program/pid-tuning");
   const [copiedLink, setCopiedLink] = useState(false);
   const [copiedCode, setCopiedCode] = useState(false);
   const [openGroupId, setOpenGroupId] = useState(() => {
@@ -167,7 +169,7 @@ function Program() {
   }, [currentLang, selectedProblem]);
 
   useEffect(() => {
-    document.title = "Perscript · " + selectedProblem.title;
+    document.title = isPid ? "Perscript · PID Tuning Lab" : "Perscript · " + selectedProblem.title;
   }, [selectProblem]);
 
   useEffect(() => {
@@ -314,7 +316,7 @@ function Program() {
     <div className="site-page practice-page" id="overall-program">
       <main id="main-content" className="practice-shell">
         <aside className="exercise-rail" aria-label="Exercise selection">
-          <fieldset className="rail-language">
+          <fieldset className="rail-language" hidden={isPid}>
             <legend className="max-lg:!text-center">Language</legend>
             <div className="language-switch">
               <span
@@ -383,11 +385,11 @@ function Program() {
                       <div>
                         {group.problems.map((problem) => (
                           <button
-                            className={problem.id === selectedProblem.id ? "program-buttons active" : "program-buttons"}
+                            className={!isPid && problem.id === selectedProblem.id ? "program-buttons active" : "program-buttons"}
                             key={problem.id}
                             type="button"
                             data-complete={problem.id < selectedProblem.id}
-                            aria-current={problem.id === selectedProblem.id ? "true" : undefined}
+                            aria-current={!isPid && problem.id === selectedProblem.id ? "true" : undefined}
                             aria-label={`Exercise ${problem.id}: ${problem.title}`}
                             onClick={() => selectProblem(problem)}
                           >
@@ -409,7 +411,7 @@ function Program() {
               <div className="group-collapse" data-open="true">
                 <div className="group-collapse-inner">
                   <div>
-                    <Link className="program-buttons" to="/tune" aria-label="PID Tuning Lab">
+                    <Link className={isPid ? "program-buttons active" : "program-buttons"} to="/program/pid-tuning" aria-label="PID Tuning Lab" aria-current={isPid ? "page" : undefined}>
                       <span className="exercise-step-dot" aria-hidden="true" />
                       PID Tuning Lab
                     </Link>
@@ -420,6 +422,11 @@ function Program() {
           </nav>
         </aside>
 
+        {isPid ? (
+          <section id="browser-editor" className="editor-stage" aria-label="PID Tuning Lab">
+            <Tune embedded />
+          </section>
+        ) : (
         <section id="browser-editor" className="editor-stage" aria-labelledby="exercise-title">
           <header className="exercise-heading">
             <div>
@@ -519,6 +526,7 @@ function Program() {
             </section>
           </div>
         </section>
+        )}
       </main>
 
       <Footer />
