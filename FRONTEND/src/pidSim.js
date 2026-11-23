@@ -100,15 +100,15 @@ function makeProfile(mech, from, to) {
   };
 }
 
-export function simulate(mechId, condId, target, gains) {
+export function simulate(mechId, condId, target, gains, scale = {}) {
   const mech = MECHANISMS[mechId];
   const cond = CONDITIONS[condId];
   const { kP, kI, kD, kS, kG, kV, kA } = gains;
   const plant = {
-    kS: mech.plant.kS * cond.friction,
-    kG: mech.plant.kG * cond.mass,
-    kV: mech.plant.kV,
-    kA: mech.plant.kA * cond.mass,
+    kS: mech.plant.kS * cond.friction * (scale.kS ?? 1),
+    kG: mech.plant.kG * cond.mass * (scale.kG ?? 1),
+    kV: mech.plant.kV * (scale.kV ?? 1),
+    kA: mech.plant.kA * cond.mass * (scale.kA ?? 1),
   };
   const profile = makeProfile(mech, mech.start, target);
   const isVel = mech.kind === "velocity";
@@ -173,5 +173,37 @@ export function evaluate(metrics, goal) {
     settle: metrics.settle !== null && metrics.settle <= goal.settle,
     overshoot: metrics.overshoot <= goal.overshoot,
     sse: metrics.sse <= goal.sse,
+  };
+}
+
+// Random challenge: random mechanism, condition, target and slightly
+// different plant constants, so feedforward values must be re-discovered.
+const TARGET_RANGE = {
+  elevator: [0.4, 1.4],
+  slide: [0.4, 1.2],
+  pivot: [0.4, 1.5],
+  flywheel: [150, 300],
+};
+let randomCount = 0;
+export function randomChallenge() {
+  const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
+  const jitter = () => +(0.8 + Math.random() * 0.4).toFixed(2);
+  const mechId = pick(Object.keys(MECHANISMS));
+  const condId = pick(Object.keys(CONDITIONS));
+  const [lo, hi] = TARGET_RANGE[mechId];
+  const raw = lo + Math.random() * (hi - lo);
+  const target = mechId === "flywheel" ? Math.round(raw / 10) * 10 : +raw.toFixed(2);
+  const m = MECHANISMS[mechId];
+  randomCount += 1;
+  return {
+    id: `random-${randomCount}`,
+    random: true,
+    mech: mechId,
+    cond: condId,
+    target,
+    scale: { kS: jitter(), kG: jitter(), kV: jitter(), kA: jitter() },
+    title: `Random: ${m.label}, ${CONDITIONS[condId].label}, ${target} ${m.unit}`,
+    goal: { settle: 2.0, overshoot: 8, sse: +(0.02 * target).toFixed(3) },
+    hint: "This mechanism's constants are slightly different from the standard ones. Tune by feel.",
   };
 }

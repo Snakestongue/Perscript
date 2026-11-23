@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
+import MechanismView from "../components/MechanismView.jsx";
 import { LANGUAGES, LIBRARIES, generateCode } from "../pidCodegen.js";
-import { CHALLENGES, CONDITIONS, DURATION, MECHANISMS, evaluate, simulate } from "../pidSim.js";
+import { CHALLENGES, CONDITIONS, DURATION, MECHANISMS, evaluate, randomChallenge, simulate } from "../pidSim.js";
 
 const ZERO = { kP: 0, kI: 0, kD: 0, kS: 0, kG: 0, kV: 0, kA: 0 };
 const SLIDERS = [
@@ -13,7 +14,7 @@ const SLIDERS = [
   { key: "kA", max: 0.5, step: 0.005 },
 ];
 
-function Chart({ data, target, unit }) {
+function Chart({ data, target, unit, playT }) {
   const W = 640, H = 260, pad = 36;
   const ys = data.flatMap((d) => [d.y, d.ref]).concat([target, 0]);
   let min = Math.min(...ys), max = Math.max(...ys);
@@ -32,6 +33,7 @@ function Chart({ data, target, unit }) {
       <line x1={pad} x2={W - pad / 2} y1={H - pad} y2={H - pad} stroke="#555" />
       <path d={path("ref")} fill="none" stroke="#77777F" strokeWidth="1.5" strokeDasharray="5 3" />
       <path d={path("y")} fill="none" stroke="#7AADFF" strokeWidth="2.5" />
+      <line x1={x(playT)} x2={x(playT)} y1={pad / 2} y2={H - pad} stroke="#e4e4e7" strokeWidth="1" opacity="0.6" />
       <text x={pad} y={H - 8} fill="#999" fontSize="11">0 s</text>
       <text x={W - pad} y={H - 8} fill="#999" fontSize="11">{DURATION} s</text>
       <text x={4} y={y(target) + 4} fill="#999" fontSize="11">{+target.toFixed(2)}</text>
@@ -50,25 +52,56 @@ export default function Tune() {
   const [lang, setLang] = useState("java");
   const [lib, setLib] = useState("wpimath");
   const [copied, setCopied] = useState(false);
-  const challenge = CHALLENGES.find((c) => c.id === challengeId);
+  const [custom, setCustom] = useState(null);
+  const [playT, setPlayT] = useState(DURATION);
+  const [playing, setPlaying] = useState(false);
+  const [runId, setRunId] = useState(0);
+  const challenge = custom ?? CHALLENGES.find((c) => c.id === challengeId);
   const mech = MECHANISMS[challenge.mech];
 
   useEffect(() => { document.title = "Perscript | PID Tuning"; }, []);
 
   const { data, metrics } = useMemo(
-    () => simulate(challenge.mech, challenge.cond, challenge.target, gains),
+    () => simulate(challenge.mech, challenge.cond, challenge.target, gains, challenge.scale),
     [challenge, gains]
   );
   const result = evaluate(metrics, challenge.goal);
   const passed = result.settle && result.overshoot && result.sse;
 
-  const completed = passed && !done.includes(challenge.id) ? [...done, challenge.id] : done;
+  const completed = passed && !challenge.random && !done.includes(challenge.id) ? [...done, challenge.id] : done;
+
+  // Playback: animate through the simulated run in real time.
+  useEffect(() => {
+    if (!playing) return undefined;
+    let raf;
+    const start = performance.now() - playT * 1000;
+    const tick = (now) => {
+      const t = Math.max(0, (now - start) / 1000);
+      if (t >= DURATION) { setPlayT(DURATION); setPlaying(false); return; }
+      setPlayT(t);
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [playing, runId]);
+
+  const idx = Math.max(0, Math.min(data.length - 1, Math.round(playT / (data[1].t - data[0].t))));
+  const phases = useMemo(() => {
+    if (challenge.mech !== "flywheel") return null;
+    const dt = data[1].t - data[0].t;
+    let p = 0;
+    return data.map((d) => (p += d.y * dt));
+  }, [data, challenge.mech]);
+  const replay = () => { setPlayT(0); setRunId((n) => n + 1); setPlaying(true); };
+  const setGainsAndReplay = (g) => { setGains(g); replay(); };
   useEffect(() => {
     try { localStorage.setItem("pidDone", JSON.stringify(completed)); } catch { /* ignore */ }
   }, [completed]);
 
   const code = useMemo(() => generateCode(lang, lib, challenge.mech, gains, challenge.target), [lang, lib, challenge, gains]);
-  const pick = (id) => { setDone(completed); setChallengeId(id); setGains(ZERO); };
+  const pick = (id) => { setDone(completed); setCustom(null); setChallengeId(id); setGains(ZERO); replay(); };
+  const roll = () => { setDone(completed); setCustom(randomChallenge()); setGains(ZERO); replay(); };
   const fmt = (v, d = 2) => (v === null ? "never" : v.toFixed(d));
 
   const rows = [
@@ -94,6 +127,12 @@ export default function Tune() {
             {completed.includes(c.id) ? "✓ " : ""}{c.title}
           </button>
         ))}
+        <button
+          onClick={roll}
+          className={`rounded-full border px-3 py-1 text-sm ${custom ? "border-[#7AADFF] bg-[#7AADFF]/20" : "border-zinc-700 hover:border-zinc-500"}`}
+        >
+          🎲 Random
+        </button>
       </div>
 
       <div className="mt-6 grid gap-6 lg:grid-cols-[1.4fr_1fr]">
@@ -103,7 +142,22 @@ export default function Tune() {
             {mech.label} · {CONDITIONS[challenge.cond].label} · target {challenge.target} {mech.unit}
           </p>
           <p className="mb-2 text-sm text-slate-500">{mech.blurb}</p>
-          <Chart data={data} target={challenge.target} unit={mech.unit} />
+          <MechanismView
+            mech={challenge.mech}
+            value={data[idx].y}
+            target={challenge.target}
+            phase={phases ? phases[idx] : 0}
+          />
+          <div className="my-2 flex items-center gap-3 text-sm">
+            <button className="text-[#7AADFF]" onClick={replay}>{playing ? "Restart" : "▶ Play"}</button>
+            <input
+              type="range" min="0" max={DURATION} step="0.01" value={playT}
+              onChange={(e) => { setPlaying(false); setPlayT(parseFloat(e.target.value)); }}
+              className="flex-1" aria-label="Playback time"
+            />
+            <span className="tabular-nums text-slate-400">{playT.toFixed(2)} s</span>
+          </div>
+          <Chart data={data} target={challenge.target} unit={mech.unit} playT={playT} />
           <ul className="mt-3 space-y-1 text-sm">
             {rows.map((r) => (
               <li key={r.label} className={r.ok ? "text-green-400" : "text-red-400"}>
@@ -118,7 +172,7 @@ export default function Tune() {
         <section className="rounded-xl border border-zinc-800 p-4">
           <div className="mb-3 flex items-center justify-between">
             <h2 className="text-lg font-semibold">Gains</h2>
-            <button className="text-sm text-[#7AADFF]" onClick={() => setGains(ZERO)}>Reset</button>
+            <button className="text-sm text-[#7AADFF]" onClick={() => setGainsAndReplay(ZERO)}>Reset</button>
           </div>
           {SLIDERS.map((s) => (
             <label key={s.key} className="mb-3 block text-sm">
@@ -128,7 +182,7 @@ export default function Tune() {
               <input
                 type="range" min="0" max={s.max} step={s.step}
                 value={gains[s.key]}
-                onChange={(e) => setGains({ ...gains, [s.key]: parseFloat(e.target.value) })}
+                onChange={(e) => setGainsAndReplay({ ...gains, [s.key]: parseFloat(e.target.value) })}
                 className="w-full"
               />
             </label>
