@@ -69,6 +69,13 @@ function wipeAppStorage() {
   try { Object.keys(localStorage).filter((k) => k.startsWith("flutter.")).forEach((k) => localStorage.removeItem(k)); } catch { /* ignore */ }
 }
 
+// Elastic keeps its layout and settings in this origin's storage as `flutter.*` keys.
+function readElasticStorage() {
+  const out = {};
+  try { Object.keys(localStorage).filter((k) => k.startsWith("flutter.")).forEach((k) => { out[k] = localStorage.getItem(k); }); } catch { /* ignore */ }
+  return out;
+}
+
 function Clock() {
   const [now, setNow] = useState(() => new Date());
   useEffect(() => { const t = setInterval(() => setNow(new Date()), 15000); return () => clearInterval(t); }, []);
@@ -316,8 +323,8 @@ export default function LabDesktop() {
     window.addEventListener("pointerup", up);
   };
 
-  const hasProgress = () => Object.entries(files).some(([k, v]) => v !== startFiles(lessonId)[k]) || !!deploy || commandRuns.length > 0 || Object.keys(project.autos).length > 0;
-  const bundle = () => ({ project, files, wins, deploy, openedLessonFile, todoVisited, commandRuns, log, dsState });
+  const hasProgress = () => Object.entries(files).some(([k, v]) => v !== startFiles(lessonId)[k]) || !!deploy || commandRuns.length > 0 || Object.keys(project.autos).length > 0 || widgets.length > 0;
+  const bundle = () => ({ elastic: readElasticStorage(), project, files, wins, deploy, openedLessonFile, todoVisited, commandRuns, log, dsState });
 
   // Put the desktop back to a lesson's starting point (or a saved snapshot of it) and reload the apps.
   const loadLesson = (id, snap) => {
@@ -334,6 +341,7 @@ export default function LabDesktop() {
     setLog(next.log);
     setDsState(next.dsState);
     // Fake file system: hand PathPlanner the saved project so it opens with it.
+    try { Object.entries(snap?.elastic ?? {}).forEach(([k, v]) => localStorage.setItem(k, v)); } catch { /* ignore */ }
     const saved = snap?.project;
     if (saved && (Object.keys(saved.autos).length || Object.keys(saved.paths).length)) {
       const fs = {};
@@ -351,6 +359,7 @@ export default function LabDesktop() {
   const switchLesson = (id) => {
     if (id === lessonId) return;
     if (hasProgress()) snapshots.current[lessonId] = bundle();
+    else delete snapshots.current[lessonId];
     loadLesson(id, snapshots.current[id]);
   };
   const resetLesson = () => {
