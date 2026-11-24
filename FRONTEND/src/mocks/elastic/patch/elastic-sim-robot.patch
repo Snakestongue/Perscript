@@ -1,0 +1,165 @@
+diff --git a/lib/services/nt4_client.dart b/lib/services/nt4_client.dart
+index f703a92..429f433 100644
+--- a/lib/services/nt4_client.dart
++++ b/lib/services/nt4_client.dart
+@@ -12,6 +12,7 @@ import 'package:dot_cast/dot_cast.dart';
+ import 'package:msgpack_dart/msgpack_dart.dart';
+ import 'package:web_socket_channel/web_socket_channel.dart';
+ 
++import 'package:elastic_dashboard/services/sim_robot.dart';
+ import 'package:elastic_dashboard/services/log.dart';
+ import 'package:elastic_dashboard/services/nt4_type.dart';
+ import 'package:elastic_dashboard/services/struct_schemas/nt_struct.dart';
+@@ -375,8 +376,13 @@ class NT4Client {
+   bool _serverConnectionActive = false;
+   bool _rttConnectionActive = false;
+ 
++  // Simulated robot (web training build): no sockets, values come from SimRobot.
++  SimRobot? _sim;
++  Timer? _simTimer;
++  bool _simulating = false;
++
+   bool get mainWebsocketActive =>
+-      _mainWebsocket != null && _mainWebsocket!.closeCode == null;
++      _simulating || (_mainWebsocket != null && _mainWebsocket!.closeCode == null);
+   bool get rttWebsocketActive =>
+       _rttWebsocket != null && _rttWebsocket!.closeCode == null;
+ 
+@@ -399,6 +405,10 @@ class NT4Client {
+     this.onDisconnect,
+   }) {
+     Future.delayed(const Duration(seconds: 1, milliseconds: 500), () {
++      if (kSimulatedRobot) {
++        _startSimulation();
++        return;
++      }
+       _connect();
+ 
+       _connectionTimer = Timer.periodic(const Duration(milliseconds: 500), (_) {
+@@ -602,6 +612,11 @@ class NT4Client {
+     for (NT4Subscription sub in _matchingSubscriptions(topic.name)) {
+       sub.updateValue(data, timestamp);
+     }
++
++    final simChanges = _sim?.onClientWrite(topic.name, data);
++    if (simChanges != null && simChanges.isNotEmpty) {
++      _simPush(simChanges, timestamp);
++    }
+   }
+ 
+   void addSampleFromName(String topic, dynamic data, [int? timestamp]) {
+@@ -716,6 +731,55 @@ class NT4Client {
+     }
+   }
+ 
++  void _simPush(Map<String, Object?> changes, int timestampUS) {
++    for (final entry in changes.entries) {
++      lastAnnouncedValues[entry.key] = entry.value;
++      lastAnnouncedTimestamps[entry.key] = timestampUS;
++      for (NT4Subscription sub in _matchingSubscriptions(entry.key)) {
++        sub.updateValue(entry.value, timestampUS);
++      }
++    }
++  }
++
++  /// Pretends to be connected to a robot: announces the simulated topics and
++  /// keeps their values moving. Used instead of [_connect] in the web build.
++  void _startSimulation() {
++    if (_simulating) return;
++    final sim = SimRobot();
++    _sim = sim;
++    _simulating = true;
++    _serverConnectionActive = true;
++    _attemptConnection = false;
++
++    var nextId = 1;
++    final now = _getClientTimeUS();
++    for (final simTopic in sim.topics) {
++      final topic = NT4Topic(
++        name: simTopic.name,
++        type: NT4Type.parse(simTopic.type),
++        id: nextId++,
++        properties: Map<String, dynamic>.from(simTopic.properties),
++      );
++      announcedTopics[topic.id] = topic;
++      for (final listener in _topicAnnounceListeners) {
++        listener.call(topic);
++      }
++      lastAnnouncedValues[topic.name] = simTopic.value;
++      lastAnnouncedTimestamps[topic.name] = now;
++    }
++
++    onConnect?.call();
++
++    final clock = Stopwatch()..start();
++    var last = 0.0;
++    _simTimer = Timer.periodic(const Duration(milliseconds: 50), (_) {
++      final t = clock.elapsedMilliseconds / 1000.0;
++      _latencyMs = 3 + 1.5 * sin(t);
++      _simPush(sim.step(t, t - last), _getClientTimeUS());
++      last = t;
++    });
++  }
++
+   Future<void> _connect() async {
+     if (_mainWebsocket != null ||
+         !_attemptConnection ||
+diff --git a/web/index.html b/web/index.html
+index 8433012..86af81e 100644
+--- a/web/index.html
++++ b/web/index.html
+@@ -1,6 +1,7 @@
+ <!DOCTYPE html>
+ <html>
+ <head>
++  <base href="$FLUTTER_BASE_HREF">
+   <meta charset="UTF-8">
+   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+   <meta name="description" content="A simple and modern dashboard for FRC.">
+@@ -18,6 +19,46 @@
+   <link rel="manifest" href="manifest.json">
+ </head>
+ <body>
++  <!-- Loading bar shown until Flutter paints its first frame (added for the web training build) -->
++  <style>
++    html, body { background: #0f1115; margin: 0; }
++    #elastic-loading { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center;
++      justify-content: center; gap: 14px; font-family: Roboto, Arial, sans-serif; color: #c9ccd3; z-index: 10;
++      background: #0f1115; transition: opacity .3s; }
++    #elastic-loading .track { width: min(320px, 70vw); height: 6px; border-radius: 3px; background: #2a2e37; overflow: hidden; }
++    #elastic-loading .bar { width: 0%; height: 100%; background: #4f8cff; transition: width .4s ease-out; }
++    #elastic-loading small { color: #8a8f9a; }
++  </style>
++  <div id="elastic-loading" role="progressbar" aria-label="Loading Elastic" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
++    <div>Loading Elastic…</div>
++    <div class="track"><div class="bar" id="elastic-loading-bar"></div></div>
++    <small id="elastic-loading-note">Downloading the dashboard (about 10 MB the first time)</small>
++  </div>
++  <script>
++    (function () {
++      var box = document.getElementById('elastic-loading');
++      var bar = document.getElementById('elastic-loading-bar');
++      var note = document.getElementById('elastic-loading-note');
++      var start = Date.now();
++      // The browser does not report download progress for the app, so ease toward 90%
++      // and jump to 100% when Flutter paints its first frame.
++      var timer = setInterval(function () {
++        var t = (Date.now() - start) / 1000;
++        var pct = Math.round(90 * (1 - Math.exp(-t / 7)));
++        bar.style.width = pct + '%';
++        box.setAttribute('aria-valuenow', pct);
++        if (t > 25) note.textContent = 'Still loading… the first load can take a little while';
++      }, 250);
++      window.addEventListener('flutter-first-frame', function () {
++        clearInterval(timer);
++        bar.style.width = '100%';
++        box.setAttribute('aria-valuenow', 100);
++        box.style.opacity = '0';
++        setTimeout(function () { box.remove(); }, 350);
++        try { window.parent.postMessage({ type: 'elastic-ready' }, '*'); } catch (e) { /* not framed */ }
++      });
++    })();
++  </script>
+   <noscript>
+     <p>You need to use a JavaScript-enabled browser to run Elastic.</p>
+   </noscript>

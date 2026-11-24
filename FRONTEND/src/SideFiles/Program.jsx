@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { initVimMode } from "monaco-vim";
 import Editor from "@monaco-editor/react";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
@@ -7,6 +7,8 @@ import Footer from "../components/Footer.js";
 import { attachLint } from "../codeLint.js";
 import { registerJavaIntelliSense, attachJavaHelpers } from "../lang/javaProvider.js";
 import Tune from "./Tune.jsx";
+// The Elastic dashboard lesson is a separate folder (real Elastic web build); load it on demand.
+const ElasticLesson = lazy(() => import("../mocks/elastic/index.jsx"));
 
 
 const exerciseGroups = [
@@ -85,6 +87,8 @@ function Program() {
   const location = useLocation();
   const navigate = useNavigate()
   const isPid = location.pathname.endsWith("/program/pid-tuning");
+  const isElastic = location.pathname.endsWith("/program/elastic");
+  const isTool = isPid || isElastic;
   const [copiedLink, setCopiedLink] = useState(false);
   const [copiedCode, setCopiedCode] = useState(false);
   const [openGroupId, setOpenGroupId] = useState(() => {
@@ -170,7 +174,7 @@ function Program() {
   }, [currentLang, selectedProblem]);
 
   useEffect(() => {
-    document.title = isPid ? "Perscript · PID Tuning Lab" : "Perscript · " + selectedProblem.title;
+    document.title = isPid ? "Perscript · PID Tuning Lab" : isElastic ? "Perscript · Elastic Dashboard" : "Perscript · " + selectedProblem.title;
   }, [selectProblem]);
 
   useEffect(() => {
@@ -317,7 +321,7 @@ function Program() {
     <div className="site-page practice-page" id="overall-program">
       <main id="main-content" className="practice-shell">
         <aside className="exercise-rail" aria-label="Exercise selection">
-          <fieldset className="rail-language" hidden={isPid}>
+          <fieldset className="rail-language" hidden={isTool}>
             <legend className="max-lg:!text-center">Language</legend>
             <div className="language-switch">
               <span
@@ -386,11 +390,11 @@ function Program() {
                       <div>
                         {group.problems.map((problem) => (
                           <button
-                            className={!isPid && problem.id === selectedProblem.id ? "program-buttons active" : "program-buttons"}
+                            className={!isTool && problem.id === selectedProblem.id ? "program-buttons active" : "program-buttons"}
                             key={problem.id}
                             type="button"
                             data-complete={problem.id < selectedProblem.id}
-                            aria-current={!isPid && problem.id === selectedProblem.id ? "true" : undefined}
+                            aria-current={!isTool && problem.id === selectedProblem.id ? "true" : undefined}
                             aria-label={`Exercise ${problem.id}: ${problem.title}`}
                             onClick={() => selectProblem(problem)}
                           >
@@ -420,12 +424,43 @@ function Program() {
                 </div>
               </div>
             </section>
+
+            <section id="lesson-dashboards" className="exercise-group">
+              <button type="button" className="group-header max-lg:hidden" aria-expanded="true" tabIndex={-1}>
+                <h2>Dashboards</h2>
+              </button>
+              <div className="group-collapse" data-open="true">
+                <div className="group-collapse-inner">
+                  <div>
+                    <Link className={isElastic ? "program-buttons active" : "program-buttons"} to="/program/elastic" aria-label="Elastic Dashboard" aria-current={isElastic ? "page" : undefined}>
+                      <span className="exercise-step-dot" aria-hidden="true" />
+                      Elastic Dashboard
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </section>
           </nav>
         </aside>
 
         {isPid ? (
           <section id="browser-editor" className="editor-stage" aria-label="PID Tuning Lab">
             <Tune embedded />
+          </section>
+        ) : isElastic ? (
+          <section id="browser-editor" className="editor-stage" aria-label="Elastic Dashboard">
+            <header className="exercise-heading">
+              <div>
+                <p>Dashboards</p>
+                <h1>Elastic: build a driver dashboard</h1>
+              </div>
+              <p>The real Elastic dashboard running against a simulated robot. Add widgets, make a graph, and pick an auto routine.</p>
+            </header>
+            <div style={{ overflow: "auto", minHeight: 0, flex: 1, padding: "0 0 1rem" }}>
+              <Suspense fallback={<p className="p-4 text-sm text-slate-400">Loading lesson…</p>}>
+                <ElasticLesson />
+              </Suspense>
+            </div>
           </section>
         ) : (
         <section id="browser-editor" className="editor-stage" aria-labelledby="exercise-title">
