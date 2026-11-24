@@ -9,6 +9,7 @@ import { registerJavaIntelliSense, attachJavaHelpers } from "../lang/javaProvide
 import Tune from "./Tune.jsx";
 // The Elastic dashboard lesson is a separate folder (real Elastic web build); load it on demand.
 const ElasticLesson = lazy(() => import("../mocks/elastic/index.jsx"));
+const LabDesktop = lazy(() => import("../mocks/lab-desktop/index.jsx"));
 
 
 const exerciseGroups = [
@@ -88,7 +89,8 @@ function Program() {
   const navigate = useNavigate()
   const isPid = location.pathname.endsWith("/program/pid-tuning");
   const isElastic = location.pathname.endsWith("/program/elastic");
-  const isTool = isPid || isElastic;
+  const isDesktop = location.pathname.endsWith("/program/desktop");
+  const isTool = isPid || isElastic || isDesktop;
   const [copiedLink, setCopiedLink] = useState(false);
   const [copiedCode, setCopiedCode] = useState(false);
   const [openGroupId, setOpenGroupId] = useState(() => {
@@ -174,7 +176,7 @@ function Program() {
   }, [currentLang, selectedProblem]);
 
   useEffect(() => {
-    document.title = isPid ? "Perscript · PID Tuning Lab" : isElastic ? "Perscript · Elastic Dashboard" : "Perscript · " + selectedProblem.title;
+    document.title = isPid ? "Perscript · PID Tuning Lab" : isElastic ? "Perscript · Elastic Dashboard" : isDesktop ? "Perscript · Robot Lab Desktop" : "Perscript · " + selectedProblem.title;
   }, [selectProblem]);
 
   useEffect(() => {
@@ -440,6 +442,22 @@ function Program() {
                 </div>
               </div>
             </section>
+
+            <section id="lesson-robot-lab" className="exercise-group">
+              <button type="button" className="group-header max-lg:hidden" aria-expanded="true" tabIndex={-1}>
+                <h2>Robot Lab</h2>
+              </button>
+              <div className="group-collapse" data-open="true">
+                <div className="group-collapse-inner">
+                  <div>
+                    <Link className={isDesktop ? "program-buttons active" : "program-buttons"} to="/program/desktop" aria-label="Lab Desktop" aria-current={isDesktop ? "page" : undefined}>
+                      <span className="exercise-step-dot" aria-hidden="true" />
+                      Lab Desktop
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </section>
           </nav>
         </aside>
 
@@ -459,6 +477,21 @@ function Program() {
             <div style={{ overflow: "auto", minHeight: 0, flex: 1, padding: "0 0 1rem" }}>
               <Suspense fallback={<p className="p-4 text-sm text-slate-400">Loading lesson…</p>}>
                 <ElasticLesson />
+              </Suspense>
+            </div>
+          </section>
+        ) : isDesktop ? (
+          <section id="browser-editor" className="editor-stage" aria-label="Lab Desktop">
+            <header className="exercise-heading">
+              <div>
+                <p>Robot Lab</p>
+                <h1>Write it, deploy it, see it</h1>
+              </div>
+              <p>A pretend laptop: edit the robot code in VS Code, run ./gradlew deploy, and watch the dashboard.</p>
+            </header>
+            <div style={{ overflow: "auto", minHeight: 0, flex: 1, padding: "0 0 1rem" }}>
+              <Suspense fallback={<p className="p-4 text-sm text-slate-400">Loading desktop…</p>}>
+                <LabDesktop />
               </Suspense>
             </div>
           </section>

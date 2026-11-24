@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!--
+    If you are serving your web app in a path other than the root, change the
+    href value below to reflect the base path you are serving from.
+
+    The path provided below has to start and end with a slash "/" in order for
+    it to work correctly.
+
+    For more details:
+    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+
+    This is a placeholder for base href that will be replaced by the value of
+    the `--base-href` argument provided to `flutter build`.
+  -->
+  <base href="$FLUTTER_BASE_HREF">
+
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="A new Flutter project.">
+
+  <!--
+    Uncomment the tag below to lay the app out underneath the parts of the
+    screen that the device obstructs, such as a display cutout, the rounded
+    corners of the screen, or a home indicator.
+
+    Without it, the browser keeps the app clear of them, and `SafeArea` and
+    `MediaQuery.paddingOf` report no padding. With it, the app covers the whole
+    screen, and it is up to the app to keep its own content out of the way,
+    which is what `SafeArea` is for.
+  -->
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"> -->
+
+  <!-- iOS meta tags & icons -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="pathplanner">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png"/>
+
+  <title>pathplanner</title>
+  <link rel="manifest" href="manifest.json">
+</head>
+<body>
+  <!-- Loading bar shown until Flutter paints its first frame (added for the web training build) -->
+  <style>
+    html, body { background: #0f1115; margin: 0; }
+    #pp-loading { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center;
+      justify-content: center; gap: 14px; font-family: Roboto, Arial, sans-serif; color: #c9ccd3; z-index: 10;
+      background: #0f1115; transition: opacity .3s; }
+    #pp-loading .track { width: min(320px, 70vw); height: 6px; border-radius: 3px; background: #2a2e37; overflow: hidden; }
+    #pp-loading .bar { width: 0%; height: 100%; background: #4f8cff; transition: width .4s ease-out; }
+    #pp-loading small { color: #8a8f9a; }
+  </style>
+  <div id="pp-loading" role="progressbar" aria-label="Loading PathPlanner" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+    <div>Loading PathPlanner…</div>
+    <div class="track"><div class="bar" id="pp-loading-bar"></div></div>
+    <small id="pp-loading-note">Downloading the path editor (about 10 MB the first time)</small>
+  </div>
+  <script>
+    (function () {
+      var box = document.getElementById('pp-loading');
+      var bar = document.getElementById('pp-loading-bar');
+      var note = document.getElementById('pp-loading-note');
+      var start = Date.now();
+      // The browser does not report download progress for the app, so ease toward 90%
+      // and jump to 100% when Flutter paints its first frame.
+      var timer = setInterval(function () {
+        var t = (Date.now() - start) / 1000;
+        var pct = Math.round(90 * (1 - Math.exp(-t / 7)));
+        bar.style.width = pct + '%';
+        box.setAttribute('aria-valuenow', pct);
+        if (t > 25) note.textContent = 'Still loading… the first load can take a little while';
+      }, 250);
+      window.addEventListener('flutter-first-frame', function () {
+        clearInterval(timer);
+        bar.style.width = '100%';
+        box.setAttribute('aria-valuenow', 100);
+        box.style.opacity = '0';
+        setTimeout(function () { box.remove(); }, 350);
+        try { window.parent.postMessage({ type: 'pathplanner-ready' }, '*'); } catch (e) { /* not framed */ }
+      });
+    })();
+  </script>
+  <!--
+    You can customize the "flutter_bootstrap.js" script.
+    This is useful to provide a custom configuration to the Flutter loader
+    or to give the user feedback during the initialization process.
+
+    For more details:
+    * https://docs.flutter.dev/platform-integration/web/initialization
+  -->
+  <script src="flutter_bootstrap.js" async></script>
+</body>
+</html>
