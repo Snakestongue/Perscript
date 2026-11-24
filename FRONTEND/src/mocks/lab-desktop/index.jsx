@@ -48,13 +48,34 @@ function clampWin(id, win, W, H) {
   return { ...win, w, h, x: Math.min(Math.max(win.x, 0), Math.max(0, W - w)), y: Math.min(Math.max(win.y, 0), Math.max(0, usableH - h)) };
 }
 
+const ELEVATOR = "src/main/java/frc/robot/subsystems/Elevator.java";
+
+// Window layout a lesson starts with (the desktop tiles it once it knows its size).
+function freshWins(id) {
+  const open = (apps) => Object.fromEntries(["code", "elastic", "pathplanner", "ds"].map((a, i) => [a, { open: apps.includes(a), min: false, max: false, x: 8 + i * 24, y: 8 + i * 24, w: 560, h: 380, z: 11 - i }]));
+  return open(id === "l2" ? ["code", "elastic", "pathplanner", "ds"] : ["code"]);
+}
+
+// Project files a lesson starts with. Lesson 2 begins with lesson 1's elevator line already written.
+function startFiles(id) {
+  const f = { ...INITIAL_FILES };
+  if (id === "l2" && f[ELEVATOR]) f[ELEVATOR] = f[ELEVATOR].replace(/ *\/\/ TODO: publish the height.*/, '    SmartDashboard.putNumber("Elevator Height", getHeightMeters());');
+  return f;
+}
+
+// The apps keep their own state (Elastic's layout lives in this origin's storage), so a reset clears it.
+function wipeAppStorage() {
+  try { sessionStorage.removeItem(DEPLOY_KEY); } catch { /* ignore */ }
+  try { Object.keys(localStorage).filter((k) => k.startsWith("flutter.")).forEach((k) => localStorage.removeItem(k)); } catch { /* ignore */ }
+}
+
 function Clock() {
   const [now, setNow] = useState(() => new Date());
   useEffect(() => { const t = setInterval(() => setNow(new Date()), 15000); return () => clearInterval(t); }, []);
   return <span>{now.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })}</span>;
 }
 
-function Guide({ lessons, lessonId, setLessonId, unlocked, steps, state, current, freePlay, toggleFreePlay, placed, picked, onFullscreen }) {
+function Guide({ lessons, lessonId, setLessonId, unlocked, steps, state, current, freePlay, toggleFreePlay, placed, picked, onFullscreen, onResetLesson, onResetLab }) {
   const [hintFor, setHintFor] = useState(null); // the step whose hint is showing
   const showHint = hintFor === current;
   const step = steps[current];
@@ -96,6 +117,8 @@ function Guide({ lessons, lessonId, setLessonId, unlocked, steps, state, current
       )}
       <div className="mt-auto flex flex-col gap-1">
         <button type="button" onClick={toggleFreePlay} className="rounded border border-zinc-600 px-2 py-1 text-xs text-slate-300 hover:bg-zinc-800">{freePlay ? "Back to the lesson" : "Free play"}</button>
+        <button type="button" onClick={onResetLesson} className="rounded border border-zinc-600 px-2 py-1 text-xs text-slate-300 hover:bg-zinc-800">Reset lesson</button>
+        <button type="button" onClick={onResetLab} className="rounded border border-zinc-600 px-2 py-1 text-xs text-slate-300 hover:bg-zinc-800">Reset lab</button>
         <Link to="/program/desktop" className="rounded border border-zinc-600 px-2 py-1 text-center text-xs text-slate-300 hover:bg-zinc-800">Exit Robot Lab</Link>
         <button type="button" onClick={onFullscreen} className="rounded border border-zinc-600 px-2 py-1 text-xs text-slate-300 hover:bg-zinc-800">Full screen</button>
       </div>
@@ -123,12 +146,9 @@ export default function LabDesktop() {
   const [drag, setDrag] = useState(false);
   const [snap, setSnap] = useState(null);
   const [toast, setToast] = useState("");
-  const [wins, setWins] = useState(() => ({
-    code: { open: true, min: false, max: false, x: 8, y: 8, w: 560, h: 380, z: 11 },
-    elastic: { open: false, min: false, max: false, x: 580, y: 8, w: 420, h: 380, z: 10 },
-    pathplanner: { open: false, min: false, max: false, x: 120, y: 40, w: 640, h: 400, z: 9 },
-    ds: { open: false, min: false, max: false, x: 20, y: 20, w: 300, h: 260, z: 8 },
-  }));
+  const [wins, setWins] = useState(() => freshWins("l1"));
+  const [epoch, setEpoch] = useState(0); // bumps to reload the app iframes
+  const snapshots = useRef({}); // per-lesson progress kept while you look at another lesson
   const sizeRef = useRef(size);
   useEffect(() => { sizeRef.current = size; }, [size]);
   const filesRef = useRef(files);
@@ -296,19 +316,45 @@ export default function LabDesktop() {
     window.addEventListener("pointerup", up);
   };
 
-  const switchLesson = (id) => {
+  const hasProgress = () => Object.entries(files).some(([k, v]) => v !== startFiles(lessonId)[k]) || !!deploy || commandRuns.length > 0 || Object.keys(project.autos).length > 0;
+  const bundle = () => ({ files, wins, deploy, openedLessonFile, todoVisited, commandRuns, log, dsState });
+
+  // Put the desktop back to a lesson's starting point (or a saved snapshot of it) and reload the apps.
+  const loadLesson = (id, snap) => {
+    wipeAppStorage();
+    const next = snap ?? { files: startFiles(id), wins: freshWins(id), deploy: null, openedLessonFile: false, todoVisited: false, commandRuns: [], log: [], dsState: { mode: "teleop", enabled: false } };
     setLessonId(id);
-    setOpened(false);
-    if (id === "l2") {
-      // Lesson 2 starts from a finished lesson 1: the elevator height is already published.
-      setFiles((f) => {
-        const el = "src/main/java/frc/robot/subsystems/Elevator.java";
-        if (!f[el] || /SmartDashboard\s*\.\s*putNumber\s*\(\s*"Elevator Height"/.test(f[el])) return f;
-        return { ...f, [el]: f[el].replace(/ *\/\/ TODO: publish the height.*/, '    SmartDashboard.putNumber("Elevator Height", getHeightMeters());') };
-      });
-      setWins((w) => ({ ...w, pathplanner: { ...w.pathplanner, open: true, min: false }, elastic: { ...w.elastic, open: true, min: false }, ds: { ...w.ds, open: true, min: false } }));
-      setTimeout(() => tile(sizeRef.current.w, sizeRef.current.h), 0);
-    }
+    setFiles(next.files);
+    setWins(next.wins);
+    if (next.deploy) { try { sessionStorage.setItem(DEPLOY_KEY, JSON.stringify(next.deploy)); } catch { /* ignore */ } }
+    setDeploy(next.deploy);
+    setOpened(next.openedLessonFile);
+    setTodoVisited(next.todoVisited);
+    setCommandRuns(next.commandRuns);
+    setLog(next.log);
+    setDsState(next.dsState);
+    setProject({ autos: {}, paths: {} });
+    setWidgets([]);
+    setPicked(null);
+    setEpoch((e) => e + 1);
+    if (!snap) setTimeout(() => tile(sizeRef.current.w, sizeRef.current.h), 0);
+  };
+
+  const switchLesson = (id) => {
+    if (id === lessonId) return;
+    if (hasProgress()) snapshots.current[lessonId] = bundle();
+    loadLesson(id, snapshots.current[id]);
+  };
+  const resetLesson = () => {
+    if (!window.confirm("Reset this lesson to its starting point? Your code and the apps go back to the start.")) return;
+    delete snapshots.current[lessonId];
+    loadLesson(lessonId, null);
+  };
+  const resetLab = () => {
+    if (!window.confirm("Reset the whole lab? Both lessons, all code and every app go back to the start.")) return;
+    snapshots.current = {};
+    setFreePlay(false);
+    loadLesson("l1", null);
   };
 
   const topId = useMemo(() => Object.entries(wins).filter(([, w]) => w.open && !w.min).sort((a, b) => b[1].z - a[1].z)[0]?.[0], [wins]);
@@ -330,14 +376,14 @@ export default function LabDesktop() {
       );
     }
     if (app.id === "ds") return <DriverStation state={dsState} setState={sendDs} log={log} deployed={!!deploy} />;
-    return <iframe title={app.title} src={app.src} className="block h-full w-full border-0 bg-[#0f1115]" style={{ pointerEvents: drag ? "none" : "auto", zoom: scale }} />;
+    return <iframe key={epoch} title={app.title} src={app.src} className="block h-full w-full border-0 bg-[#0f1115]" style={{ pointerEvents: drag ? "none" : "auto", zoom: scale }} />;
   };
 
   const snapBox = snap && (snap === "max" ? { left: 0, top: 0, width: size.w, height: size.h - TASKBAR } : snap === "left" ? { left: 0, top: 0, width: size.w / 2, height: size.h - TASKBAR } : { left: size.w / 2, top: 0, width: size.w / 2, height: size.h - TASKBAR });
 
   return (
     <div className="flex h-full min-h-[32rem] overflow-hidden bg-zinc-950" aria-label="Lab desktop">
-      <Guide lessons={LESSONS} lessonId={lessonId} setLessonId={switchLesson} unlocked steps={lesson.steps} state={state} current={current} freePlay={freePlay} toggleFreePlay={toggleFreePlay} placed={placed} picked={picked} onFullscreen={toggleFullscreen} />
+      <Guide lessons={LESSONS} lessonId={lessonId} setLessonId={switchLesson} unlocked steps={lesson.steps} state={state} current={current} freePlay={freePlay} toggleFreePlay={toggleFreePlay} placed={placed} picked={picked} onFullscreen={toggleFullscreen} onResetLesson={resetLesson} onResetLab={resetLab} />
       <div ref={stage} className="relative min-w-0 flex-1 overflow-hidden" style={{ background: "radial-gradient(ellipse at 30% 20%, #26324a 0%, #151a26 55%, #0c0f16 100%)" }}>
         {visibleApps.map((app) => {
           const w = wins[app.id];
