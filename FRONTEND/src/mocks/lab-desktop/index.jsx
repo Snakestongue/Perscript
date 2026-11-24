@@ -53,49 +53,51 @@ function Clock() {
   return <span>{now.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })}</span>;
 }
 
-function Guide({ lessons, lessonId, setLessonId, unlocked, steps, state, current, freePlay, toggleFreePlay, placed, picked }) {
+function Guide({ lessons, lessonId, setLessonId, unlocked, steps, state, current, freePlay, toggleFreePlay, placed, picked, onFullscreen }) {
   const [hintFor, setHintFor] = useState(null); // the step whose hint is showing
   const showHint = hintFor === current;
   const step = steps[current];
   return (
-    <section className="border-b border-zinc-700 bg-zinc-900/60 px-3 py-2 text-sm" aria-label="Lesson guide">
-      <div className="mb-1 flex flex-wrap gap-1" role="tablist" aria-label="Lessons">
-        {lessons.map((l, i) => {
-          const open = i === 0 || unlocked;
-          return (
-            <button key={l.id} type="button" role="tab" aria-selected={l.id === lessonId} disabled={!open} title={open ? l.title : "Finish lesson 1 first"} onClick={() => setLessonId(l.id)} className={`rounded px-2 py-0.5 text-xs ${l.id === lessonId ? "bg-[#7AADFF]/20 text-white" : "text-slate-400 hover:bg-zinc-800"} disabled:opacity-40`}>{open ? "" : "🔒 "}{l.title}</button>
-          );
-        })}
-      </div>
-      <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-        <ol className="flex flex-wrap items-center gap-1 text-xs">
-          {steps.map((s, i) => {
-            const done = s.done(state);
+    <aside className="flex w-72 shrink-0 flex-col gap-3 overflow-y-auto border-r border-zinc-700 bg-zinc-900/70 p-3 text-sm max-md:w-56" aria-label="Lesson guide">
+      <div>
+        <p className="text-[11px] uppercase tracking-wider text-slate-500">Robot Lab</p>
+        <div className="mt-1 flex flex-col gap-1" role="tablist" aria-label="Lessons">
+          {lessons.map((l, i) => {
+            const open = i === 0 || unlocked;
             return (
-              <li key={s.id} className={`flex items-center gap-1 rounded-full border px-2 py-0.5 ${done ? "border-green-700 bg-green-900/30 text-green-300" : i === current ? "border-[#7AADFF] bg-[#7AADFF]/15 text-white" : "border-zinc-700 text-zinc-500"}`} aria-current={i === current ? "step" : undefined}>
-                <span aria-hidden="true">{done ? "✓" : i + 1}</span>{s.title}
-              </li>
+              <button key={l.id} type="button" role="tab" aria-selected={l.id === lessonId} disabled={!open} title={open ? l.title : "Finish lesson 1 first"} onClick={() => setLessonId(l.id)} className={`rounded px-2 py-1 text-left text-xs ${l.id === lessonId ? "bg-[#7AADFF]/20 text-white" : "text-slate-400 hover:bg-zinc-800"} disabled:opacity-40`}>{open ? "" : "🔒 "}{l.title}</button>
             );
           })}
-        </ol>
-        <button type="button" onClick={toggleFreePlay} className="ml-auto rounded border border-zinc-600 px-2 py-0.5 text-xs text-slate-300 hover:bg-zinc-800">{freePlay ? "Back to the lesson" : "Free play"}</button>
+        </div>
       </div>
+      <ol className="flex flex-col gap-1 text-xs">
+        {steps.map((s, i) => {
+          const done = s.done(state);
+          return (
+            <li key={s.id} className={`flex items-center gap-2 rounded border px-2 py-1 ${done ? "border-green-700 bg-green-900/30 text-green-300" : i === current ? "border-[#7AADFF] bg-[#7AADFF]/15 text-white" : "border-zinc-700 text-zinc-500"}`} aria-current={i === current ? "step" : undefined}>
+              <span aria-hidden="true" className="w-3 text-center">{done ? "✓" : i + 1}</span>{s.title}
+            </li>
+          );
+        })}
+      </ol>
       {freePlay ? (
-        <p className="mt-1.5 text-slate-300">Free play: everything is unlocked. Edit any file, open every app, and experiment.</p>
+        <p className="text-slate-300">Free play: everything is unlocked. Edit any file, open every app, and experiment.</p>
       ) : step ? (
-        <div className="mt-1.5">
+        <div>
           <p className="text-slate-100"><span className="font-semibold text-[#7AADFF]">Step {current + 1}:</span> {step.body}</p>
-          <div className="mt-1 flex flex-wrap items-center gap-2">
-            <button type="button" className="text-xs text-slate-400 underline hover:text-slate-200" onClick={() => setHintFor(showHint ? null : current)}>{showHint ? "Hide hint" : "Need a hint?"}</button>
-            {step.id === "dashboard" && <span className="text-xs text-slate-400">Waiting for Elastic to report the tile…</span>}
-          </div>
+          <button type="button" className="mt-1 text-xs text-slate-400 underline hover:text-slate-200" onClick={() => setHintFor(showHint ? null : current)}>{showHint ? "Hide hint" : "Need a hint?"}</button>
+          {step.id === "dashboard" && <p className="mt-1 text-xs text-slate-400">Waiting for Elastic to report the tile…</p>}
           {showHint && <p className="mt-1 whitespace-pre-wrap rounded bg-black/40 px-2 py-1 font-mono text-xs text-slate-200">{step.hint}</p>}
           {picked && <p className="mt-1 text-xs text-slate-400">Elastic reports the Auto Chooser is set to “{picked}”.</p>}
         </div>
       ) : (
-        <p className="mt-1.5 font-semibold text-green-300">{lessonId === "l1" ? `Lesson complete. Elastic reported “${placed?.title || "Elevator Height"}” placed on the ${placed?.tab || "dashboard"} tab as a ${placed?.type || "widget"}. Lesson 2 is now unlocked.` : "Lesson complete. Your auto drove the path and the robot ran runIntake when the auto reached it. Try Free play to keep experimenting."}</p>
+        <p className="font-semibold text-green-300">{lessonId === "l1" ? `Lesson complete. Elastic reported “${placed?.title || "Elevator Height"}” placed on the ${placed?.tab || "dashboard"} tab as a ${placed?.type || "widget"}. Lesson 2 is now unlocked.` : "Lesson complete. Your auto drove the path and the robot ran runIntake when the auto reached it. Try Free play to keep experimenting."}</p>
       )}
-    </section>
+      <div className="mt-auto flex flex-col gap-1">
+        <button type="button" onClick={toggleFreePlay} className="rounded border border-zinc-600 px-2 py-1 text-xs text-slate-300 hover:bg-zinc-800">{freePlay ? "Back to the lesson" : "Free play"}</button>
+        <button type="button" onClick={onFullscreen} className="rounded border border-zinc-600 px-2 py-1 text-xs text-slate-300 hover:bg-zinc-800">Full screen</button>
+      </div>
+    </aside>
   );
 }
 
@@ -327,13 +329,9 @@ export default function LabDesktop() {
   const snapBox = snap && (snap === "max" ? { left: 0, top: 0, width: size.w, height: size.h - TASKBAR } : snap === "left" ? { left: 0, top: 0, width: size.w / 2, height: size.h - TASKBAR } : { left: size.w / 2, top: 0, width: size.w / 2, height: size.h - TASKBAR });
 
   return (
-    <div className="overflow-hidden rounded-xl border border-zinc-700 bg-zinc-950" aria-label="Lab desktop">
-      <div className="flex items-center justify-between border-b border-zinc-700 px-3 py-1.5 text-xs text-slate-400">
-        <span>Robot lab desktop (practice environment)</span>
-        <button type="button" onClick={toggleFullscreen} className="rounded border border-zinc-600 px-2 py-0.5 hover:bg-zinc-800">Full screen</button>
-      </div>
-      <Guide lessons={LESSONS} lessonId={lessonId} setLessonId={switchLesson} unlocked={lesson1Done || freePlay} steps={lesson.steps} state={state} current={current} freePlay={freePlay} toggleFreePlay={toggleFreePlay} placed={placed} picked={picked} />
-      <div ref={stage} className="relative h-[max(36rem,min(52rem,calc(100vh-14rem)))] overflow-hidden" style={{ background: "radial-gradient(ellipse at 30% 20%, #26324a 0%, #151a26 55%, #0c0f16 100%)" }}>
+    <div className="flex h-full min-h-[32rem] overflow-hidden bg-zinc-950" aria-label="Lab desktop">
+      <Guide lessons={LESSONS} lessonId={lessonId} setLessonId={switchLesson} unlocked={lesson1Done || freePlay} steps={lesson.steps} state={state} current={current} freePlay={freePlay} toggleFreePlay={toggleFreePlay} placed={placed} picked={picked} onFullscreen={toggleFullscreen} />
+      <div ref={stage} className="relative min-w-0 flex-1 overflow-hidden" style={{ background: "radial-gradient(ellipse at 30% 20%, #26324a 0%, #151a26 55%, #0c0f16 100%)" }}>
         {visibleApps.map((app) => {
           const w = wins[app.id];
           if (!w.open) return null;

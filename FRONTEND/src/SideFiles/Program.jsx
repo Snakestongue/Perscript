@@ -482,14 +482,7 @@ function Program() {
           </section>
         ) : isDesktop ? (
           <section id="browser-editor" className="editor-stage" aria-label="Lab Desktop">
-            <header className="exercise-heading">
-              <div>
-                <p>Robot Lab</p>
-                <h1>Write it, deploy it, see it</h1>
-              </div>
-              <p>A pretend laptop: edit the robot code in VS Code, run ./gradlew deploy, and watch the dashboard.</p>
-            </header>
-            <div style={{ overflow: "auto", minHeight: 0, flex: 1, padding: "0 0 1rem" }}>
+            <div style={{ position: "fixed", top: 64, left: 0, right: 0, bottom: 0, zIndex: 40, overflow: "hidden", background: "#09090b" }}>
               <Suspense fallback={<p className="p-4 text-sm text-slate-400">Loading desktop…</p>}>
                 <LabDesktop />
               </Suspense>
