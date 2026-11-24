@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base href="/Perscript/elastic/">
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="A simple and modern dashboard for FRC.">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="elastic_dashboard">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png"/>
+
+  <title>Elastic</title>
+  <link rel="manifest" href="manifest.json">
+</head>
+<body>
+  <!-- Loading bar shown until Flutter paints its first frame (added for the web training build) -->
+  <style>
+    html, body { background: #0f1115; margin: 0; }
+    #elastic-loading { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center;
+      justify-content: center; gap: 14px; font-family: Roboto, Arial, sans-serif; color: #c9ccd3; z-index: 10;
+      background: #0f1115; transition: opacity .3s; }
+    #elastic-loading .track { width: min(320px, 70vw); height: 6px; border-radius: 3px; background: #2a2e37; overflow: hidden; }
+    #elastic-loading .bar { width: 0%; height: 100%; background: #4f8cff; transition: width .4s ease-out; }
+    #elastic-loading small { color: #8a8f9a; }
+  </style>
+  <div id="elastic-loading" role="progressbar" aria-label="Loading Elastic" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+    <div>Loading Elastic…</div>
+    <div class="track"><div class="bar" id="elastic-loading-bar"></div></div>
+    <small id="elastic-loading-note">Downloading the dashboard (about 10 MB the first time)</small>
+  </div>
+  <script>
+    (function () {
+      var box = document.getElementById('elastic-loading');
+      var bar = document.getElementById('elastic-loading-bar');
+      var note = document.getElementById('elastic-loading-note');
+      var start = Date.now();
+      // The browser does not report download progress for the app, so ease toward 90%
+      // and jump to 100% when Flutter paints its first frame.
+      var timer = setInterval(function () {
+        var t = (Date.now() - start) / 1000;
+        var pct = Math.round(90 * (1 - Math.exp(-t / 7)));
+        bar.style.width = pct + '%';
+        box.setAttribute('aria-valuenow', pct);
+        if (t > 25) note.textContent = 'Still loading… the first load can take a little while';
+      }, 250);
+      window.addEventListener('flutter-first-frame', function () {
+        clearInterval(timer);
+        bar.style.width = '100%';
+        box.setAttribute('aria-valuenow', 100);
+        box.style.opacity = '0';
+        setTimeout(function () { box.remove(); }, 350);
+        try { window.parent.postMessage({ type: 'elastic-ready' }, '*'); } catch (e) { /* not framed */ }
+      });
+    })();
+  </script>
+  <noscript>
+    <p>You need to use a JavaScript-enabled browser to run Elastic.</p>
+  </noscript>
+  <script>
+    // This prevents default browser actions on key combinations.
+    // See https://stackoverflow.com/a/67039463/6509751.
+    window.addEventListener('keydown', function (event) {
+      if (event.target == document.body) {
+        // Prevents going back to the previous tab.
+        if (event.key == 'Backspace') {
+          event.preventDefault();
+        }
+      }
+    
+      if (event.metaKey || event.ctrlKey) {
+        switch (event.key) {
+          case '=': // Prevent zooming in.
+          case '-': // Prevent zooming out.
+          case 't': // Prevent creating new tab
+          case 'w': // Prevent closing tab
+          case 's': // Prevent saving html page
+          case 'd': // Prevent creating a bookmark
+          case 'tab': // Prevent tab switching
+            event.preventDefault();
+            break;
+        }
+      }
+    });
+  </script>
+  <script src="flutter_bootstrap.js" async></script>
+</body>
+</html>
