@@ -181,7 +181,7 @@ export default function VsCode({ files, setFile, resetProject, onDeploy, onResul
                 onChange={(v) => { if (canEdit) setFile(active, v ?? ""); }}
                 onMount={(editor, monaco) => {
                   registerJavaIntelliSense(monaco);
-                  attachJavaHelpers(editor);
+                  attachJavaHelpers(editor, { monaco, extraTypes: () => new Set(Object.keys(filesRef.current).filter((p) => p.endsWith(".java")).map((p) => p.split("/").pop().replace(".java", ""))) });
                   attachLint(monaco, editor);
                   editor.onDidChangeCursorPosition((e) => setCursor({ line: e.position.lineNumber, col: e.position.column }));
                   editor.onDidAttemptReadOnlyEdit(() => say("This file is read-only in this lesson. Work in the file marked with the green dot."));

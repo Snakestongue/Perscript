@@ -53,6 +53,7 @@ self.onmessage = async ({ data }) => {
     } else if (type === "complete") result = e.complete(src, offset);
     else if (type === "signature") result = e.signatureHelp(src, offset);
     else if (type === "hover") result = e.hover(src, offset);
+    else if (type === "diagnose") result = e.diagnose(src, { extraTypes: new Set(data.extraTypes || []) });
     self.postMessage({ id, result });
   } catch (error) {
     self.postMessage({ id, error: String(error && error.message ? error.message : error) });

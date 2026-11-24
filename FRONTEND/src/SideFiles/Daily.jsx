@@ -312,7 +312,7 @@ function Daily() {
                 editorRef.current = editor;
                 attachLint(monaco, editor);
                 registerJavaIntelliSense(monaco);
-                attachJavaHelpers(editor);
+                attachJavaHelpers(editor, { monaco });
               }}
               options={{
                 fontFamily: "JetBrains Mono, monospace",
