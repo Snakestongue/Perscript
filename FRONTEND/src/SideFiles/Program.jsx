@@ -1,9 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { initVimMode } from "monaco-vim";
 import Editor from "@monaco-editor/react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import problems from "../JSON/problems.json";
 import Footer from "../components/Footer.js";
+import { attachLint } from "../codeLint.js";
+import { registerJavaIntelliSense, attachJavaHelpers } from "../lang/javaProvider.js";
+import Tune from "./Tune.jsx";
 
 
 const exerciseGroups = [
@@ -81,6 +84,7 @@ function Program() {
   const selectedProblemIndex = problems.findIndex((problem) => problem.id === selectedProblem.id)
   const location = useLocation();
   const navigate = useNavigate()
+  const isPid = location.pathname.endsWith("/program/pid-tuning");
   const [copiedLink, setCopiedLink] = useState(false);
   const [copiedCode, setCopiedCode] = useState(false);
   const [openGroupId, setOpenGroupId] = useState(() => {
@@ -166,7 +170,7 @@ function Program() {
   }, [currentLang, selectedProblem]);
 
   useEffect(() => {
-    document.title = "Perscript · " + selectedProblem.title;
+    document.title = isPid ? "Perscript · PID Tuning Lab" : "Perscript · " + selectedProblem.title;
   }, [selectProblem]);
 
   useEffect(() => {
@@ -313,7 +317,7 @@ function Program() {
     <div className="site-page practice-page" id="overall-program">
       <main id="main-content" className="practice-shell">
         <aside className="exercise-rail" aria-label="Exercise selection">
-          <fieldset className="rail-language">
+          <fieldset className="rail-language" hidden={isPid}>
             <legend className="max-lg:!text-center">Language</legend>
             <div className="language-switch">
               <span
@@ -382,11 +386,11 @@ function Program() {
                       <div>
                         {group.problems.map((problem) => (
                           <button
-                            className={problem.id === selectedProblem.id ? "program-buttons active" : "program-buttons"}
+                            className={!isPid && problem.id === selectedProblem.id ? "program-buttons active" : "program-buttons"}
                             key={problem.id}
                             type="button"
                             data-complete={problem.id < selectedProblem.id}
-                            aria-current={problem.id === selectedProblem.id ? "true" : undefined}
+                            aria-current={!isPid && problem.id === selectedProblem.id ? "true" : undefined}
                             aria-label={`Exercise ${problem.id}: ${problem.title}`}
                             onClick={() => selectProblem(problem)}
                           >
@@ -400,9 +404,30 @@ function Program() {
                 </section>
               );
             })}
+
+            <section id="lesson-pid-tuning" className="exercise-group">
+              <button type="button" className="group-header max-lg:hidden" aria-expanded="true" tabIndex={-1}>
+                <h2>PID Tuning</h2>
+              </button>
+              <div className="group-collapse" data-open="true">
+                <div className="group-collapse-inner">
+                  <div>
+                    <Link className={isPid ? "program-buttons active" : "program-buttons"} to="/program/pid-tuning" aria-label="PID Tuning Lab" aria-current={isPid ? "page" : undefined}>
+                      <span className="exercise-step-dot" aria-hidden="true" />
+                      PID Tuning Lab
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </section>
           </nav>
         </aside>
 
+        {isPid ? (
+          <section id="browser-editor" className="editor-stage" aria-label="PID Tuning Lab">
+            <Tune embedded />
+          </section>
+        ) : (
         <section id="browser-editor" className="editor-stage" aria-labelledby="exercise-title">
           <header className="exercise-heading">
             <div>
@@ -420,14 +445,21 @@ function Program() {
               value={userCode}
               onChange={(value) => setUserCode(value || "")}
               beforeMount={defineEditorTheme}
-              onMount={(editor) => {
+              onMount={(editor, monaco) => {
                 editorRef.current = editor;
+                attachLint(monaco, editor);
+                registerJavaIntelliSense(monaco);
+                attachJavaHelpers(editor);
               }}
               options={{
                 fontFamily: "JetBrains Mono, monospace",
                 fontSize: 14,
                 lineHeight: 22,
                 bracketPairColorization: { enabled: true },
+                fixedOverflowWidgets: true,
+                parameterHints: { enabled: true, cycle: true },
+                hover: { enabled: true, delay: 250, sticky: true },
+                suggest: { showStatusBar: true, preview: true },
                 minimap: { enabled: false },
                 padding: { top: 20, bottom: 20 },
                 scrollBeyondLastLine: false,
@@ -501,6 +533,7 @@ function Program() {
             </section>
           </div>
         </section>
+        )}
       </main>
 
       <Footer />

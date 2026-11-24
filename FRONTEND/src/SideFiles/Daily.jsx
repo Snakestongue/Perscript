@@ -4,6 +4,8 @@ import Editor from "@monaco-editor/react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import problems from "../JSON/dc.json";
 import Footer from "../components/Footer.js";
+import { attachLint } from "../codeLint.js";
+import { registerJavaIntelliSense, attachJavaHelpers } from "../lang/javaProvider.js";
 
 
 const exerciseGroups = [
@@ -306,14 +308,21 @@ function Daily() {
               value={userCode}
               onChange={(value) => setUserCode(value || "")}
               beforeMount={defineEditorTheme}
-              onMount={(editor) => {
+              onMount={(editor, monaco) => {
                 editorRef.current = editor;
+                attachLint(monaco, editor);
+                registerJavaIntelliSense(monaco);
+                attachJavaHelpers(editor);
               }}
               options={{
                 fontFamily: "JetBrains Mono, monospace",
                 fontSize: 14,
                 lineHeight: 22,
                 bracketPairColorization: { enabled: true },
+                fixedOverflowWidgets: true,
+                parameterHints: { enabled: true, cycle: true },
+                hover: { enabled: true, delay: 250, sticky: true },
+                suggest: { showStatusBar: true, preview: true },
                 minimap: { enabled: false },
                 padding: { top: 20, bottom: 20 },
                 scrollBeyondLastLine: false,

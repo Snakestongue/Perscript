@@ -12,6 +12,10 @@ node_modules
 **/.env
 FRONTEND/.env
 BACKEND/.env
+BACKEND/.agents
+BACKEND/.claude
+BACKEND/.cursor
+BACKEND/.devin
 dist
 dist-ssr
 *.local
