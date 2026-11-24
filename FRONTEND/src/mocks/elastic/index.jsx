@@ -1,7 +1,3 @@
-// Training lesson wrapper for Elastic (the FRC dashboard), shown in the lesson layout.
-// The dashboard itself is the real Elastic web build (MIT licensed, see ./README.md) running
-// against a simulated robot; this component only frames it and adds a self-check task list.
-// Decoupled from the rest of the app: no imports outside this folder.
 import { useEffect, useState } from "react";
 
 const BUILD_URL = `${import.meta.env.BASE_URL}elastic/index.html`;
@@ -39,18 +35,33 @@ export default function ElasticLesson() {
       </div>
 
       <section className="rounded-xl border border-zinc-700 p-3">
-        <h3 className="mb-1 text-xs uppercase tracking-wide text-slate-400">Your tasks ({count}/{TASKS.length})</h3>
+        <h3 className="!my-1 text-xs uppercase tracking-wide text-slate-400">Your tasks ({count}/{TASKS.length})</h3>
         <ul className="space-y-1.5">
           {TASKS.map((t) => (
             <li key={t.id}>
-              <label className={`flex cursor-pointer items-start gap-2 ${done[t.id] ? "text-green-400" : "text-slate-200"}`}>
-                <input type="checkbox" checked={!!done[t.id]} onChange={(e) => setDone({ ...done, [t.id]: e.target.checked })} style={{ width: 16, height: 16, padding: 0, flex: "none", marginTop: 3 }} />
-                <span>{t.text}</span>
-              </label>
+             <label
+  key={t.id}
+  className={`flex w-full cursor-pointer items-start gap-2 ${
+    done[t.id] ? "text-green-400" : "text-slate-200"
+  }`}
+>
+  <input
+    type="checkbox"
+    checked={!!done[t.id]}
+    onChange={(e) =>
+      setDone({ ...done, [t.id]: e.target.checked })
+    }
+    className="!static !m-0 !mt-1 !block !h-4 !w-4 !shrink-0 !translate-y-0 appearance-auto"
+  />
+
+  <span className="min-w-0 flex-1 text-sm leading-6">
+    {t.text}
+  </span>
+</label>
             </li>
           ))}
         </ul>
-        <p className="mt-2 text-xs text-slate-400">
+        <p className="!mt-2 text-xs text-slate-400">
           In your robot code, <code>SmartDashboard.putNumber("Elevator Height", height)</code> publishes the topic Elastic shows here. The
           dashboard is only the viewer.
         </p>

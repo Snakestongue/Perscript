@@ -18,7 +18,7 @@ const exerciseGroups = [
   { id: "lesson-command-based", label: "Command based", problems: problems.slice(16, 22) },
   { id: "lesson-difficult", label: "Difficult", problems: problems.slice(22, 27) },
   { id: "lesson-V3", label: "V3 Commands", problems: problems.slice(27, 31) },
-  { id: "lesson-spark-max", label: "SparkMax", problems: problems.slice(31,34) },
+  { id: "lesson-spark-max", label: "SparkMax", problems: problems.slice(31, 34) },
 
 ];
 
@@ -95,6 +95,7 @@ function Program() {
     const group = exerciseGroups.find((g) => g.problems.some((p) => p.id === selectedProblem.id));
     return group?.id ?? exerciseGroups[0].id;
   });
+
   const validLangs = languages.map((l) => l.value);
   const [currentLang, setCurrentLang] = useState(() => normalizeLang(lang));
   const v3Group = exerciseGroups.find((g) => g.id == "lesson-V3")
@@ -410,13 +411,37 @@ function Program() {
             })}
 
             <section id="lesson-pid-tuning" className="exercise-group">
-              <button type="button" className="group-header max-lg:hidden" aria-expanded="true" tabIndex={-1}>
+              <button
+                type="button"
+                className="group-header max-lg:hidden"
+                onClick={() =>
+                  setOpenGroupId(openGroupId === "pid" ? null : "pid")
+                }
+                aria-expanded={openGroupId === "pid"}
+                aria-controls="pid-panel"
+              >
                 <h2>PID Tuning</h2>
+                <span
+                  className="group-chevron"
+                  data-open={openGroupId === "pid"}
+                  aria-hidden="true"
+                >
+                  ▾
+                </span>
               </button>
-              <div className="group-collapse" data-open="true">
-                <div className="group-collapse-inner">
+
+              <div
+                className="group-collapse"
+                data-open={openGroupId === "pid"}
+                id="pid-panel"
+              >                <div className="group-collapse-inner">
                   <div>
-                    <Link className={isPid ? "program-buttons active" : "program-buttons"} to="/program/pid-tuning" aria-label="PID Tuning Lab" aria-current={isPid ? "page" : undefined}>
+                    <Link
+                      className={isPid ? "program-buttons active" : "program-buttons"}
+                      to="/program/pid-tuning"
+                      aria-label="PID Tuning Lab"
+                      aria-current={isPid ? "page" : undefined}
+                    >
                       <span className="exercise-step-dot" aria-hidden="true" />
                       PID Tuning Lab
                     </Link>
@@ -426,13 +451,37 @@ function Program() {
             </section>
 
             <section id="lesson-dashboards" className="exercise-group">
-              <button type="button" className="group-header max-lg:hidden" aria-expanded="true" tabIndex={-1}>
+              <button
+                type="button"
+                className="group-header max-lg:hidden"
+                onClick={() =>
+                  setOpenGroupId(openGroupId === "dashboards" ? null : "dashboards")
+                }
+                aria-expanded={openGroupId === "dashboards"}
+                aria-controls="dashboards-panel"
+              >
                 <h2>Dashboards</h2>
+                <span
+                  className="group-chevron"
+                  data-open={openGroupId === "dashboards"}
+                  aria-hidden="true"
+                >
+                  ▾
+                </span>
               </button>
-              <div className="group-collapse" data-open="true">
-                <div className="group-collapse-inner">
+
+              <div
+                className="group-collapse"
+                data-open={openGroupId === "dashboards"}
+                id="dashboards-panel"
+              >                <div className="group-collapse-inner">
                   <div>
-                    <Link className={isElastic ? "program-buttons active" : "program-buttons"} to="/program/elastic" aria-label="Elastic Dashboard" aria-current={isElastic ? "page" : undefined}>
+                    <Link
+                      className={isElastic ? "program-buttons active" : "program-buttons"}
+                      to="/program/elastic"
+                      aria-label="Elastic Dashboard"
+                      aria-current={isElastic ? "page" : undefined}
+                    >
                       <span className="exercise-step-dot" aria-hidden="true" />
                       Elastic Dashboard
                     </Link>
@@ -463,111 +512,111 @@ function Program() {
             </div>
           </section>
         ) : (
-        <section id="browser-editor" className="editor-stage" aria-labelledby="exercise-title">
-          <header className="exercise-heading">
-            <div>
-              <p>Exercise {String(selectedProblem.id).padStart(2, "0")}</p>
-              <h1 id="exercise-title">{selectedProblem.title}</h1>
-            </div>
-            <p>{selectedProblem.description}</p>
-          </header>
-
-          <div className="editor-frame">
-            <Editor
-              height="100%"
-              language={monacoLangMap[currentLang] ?? currentLang}
-              theme="frc-practice"
-              value={userCode}
-              onChange={(value) => setUserCode(value || "")}
-              beforeMount={defineEditorTheme}
-              onMount={(editor, monaco) => {
-                editorRef.current = editor;
-                attachLint(monaco, editor);
-                registerJavaIntelliSense(monaco);
-                attachJavaHelpers(editor);
-              }}
-              options={{
-                fontFamily: "JetBrains Mono, monospace",
-                fontSize: 14,
-                lineHeight: 22,
-                bracketPairColorization: { enabled: true },
-                fixedOverflowWidgets: true,
-                parameterHints: { enabled: true, cycle: true },
-                hover: { enabled: true, delay: 250, sticky: true },
-                suggest: { showStatusBar: true, preview: true },
-                minimap: { enabled: false },
-                padding: { top: 20, bottom: 20 },
-                scrollBeyondLastLine: false,
-              }}
-            />
-            <div id="vim-status" aria-live="polite" />
-          </div>
-
-          <div className="editor-actions" aria-label="Editor actions">
-            <button
-              className="action-buttons quiet-action"
-              type="button"
-              onClick={toggleVim}
-              id="vim-toggle"
-              aria-pressed={vimOn}
-            >
-              Vim {vimOn ? "on" : "off"}
-            </button>
-            <button
-              id="show-answer"
-              className="action-buttons quiet-action"
-              type="button"
-              onClick={() => setUserCode(selectedProblem.solutionCode[currentLang])}
-            >Show answer
-            </button>
-            <button
-              className="action-buttons quiet-action"
-              type="button"
-              id="clear-button"
-              onClick={() => setUserCode(selectedProblem.starterCode[currentLang])}
-            >Reset Code
-            </button>
-
-            <button type="button" className="action-buttons quiet-action" onClick={shareLink}>
-              {copiedLink ? "Link copied!" : "Share link"}
-            </button>
-
-            <button type="button" className="action-buttons quiet-action" onClick={shareCode}>
-              {copiedCode ? "Code copied!" : "Share code"}
-            </button>
-
-            <button className="action-buttons" type="button" onClick={submitToAI} disabled={aiLoading}>
-              {aiLoading ? "Thinking…" : "Ask AI"}
-            </button>
-            <button className="action-buttons primary-action" id="run-submit" type="button" onClick={runChecks}>
-              Run checks
-            </button>
-          </div>
-
-          <div className="feedback-grid">
-            <section id="built-in-checks" className="feedback-panel" aria-labelledby="results-heading">
-              <h2 id="results-heading">Results</h2>
-              <ul className="words-content" aria-live="polite">
-                {checkResults.length > 0 ? checkResults.map((check, index) => (
-                  <li key={`${check.message}-${index}`} className={check.passed ? "check-passed" : "check-failed"}>
-                    <span aria-hidden="true">{check.passed ? "✓" : "×"}</span>
-                    {check.message}
-                  </li>
-                )) : (
-                  <li className="feedback-empty">Run your code to see focused checks here.</li>
-                )}
-              </ul>
-            </section>
-
-            <section id="ai-assist" className="feedback-panel" aria-labelledby="ai-heading">
-              <h2 id="ai-heading">AI Assist</h2>
-              <div className="words-content ai-content" aria-live="polite">
-                {aiLoading ? "Reviewing your code…" : aiContent || "Ask for a hint when the built-in checks are not enough."}
+          <section id="browser-editor" className="editor-stage" aria-labelledby="exercise-title">
+            <header className="exercise-heading">
+              <div>
+                <p>Exercise {String(selectedProblem.id).padStart(2, "0")}</p>
+                <h1 id="exercise-title">{selectedProblem.title}</h1>
               </div>
+              <p>{selectedProblem.description}</p>
+            </header>
 
-            </section>
-          </div>
-        </section>
+            <div className="editor-frame">
+              <Editor
+                height="100%"
+                language={monacoLangMap[currentLang] ?? currentLang}
+                theme="frc-practice"
+                value={userCode}
+                onChange={(value) => setUserCode(value || "")}
+                beforeMount={defineEditorTheme}
+                onMount={(editor, monaco) => {
+                  editorRef.current = editor;
+                  attachLint(monaco, editor);
+                  registerJavaIntelliSense(monaco);
+                  attachJavaHelpers(editor);
+                }}
+                options={{
+                  fontFamily: "JetBrains Mono, monospace",
+                  fontSize: 14,
+                  lineHeight: 22,
+                  bracketPairColorization: { enabled: true },
+                  fixedOverflowWidgets: true,
+                  parameterHints: { enabled: true, cycle: true },
+                  hover: { enabled: true, delay: 250, sticky: true },
+                  suggest: { showStatusBar: true, preview: true },
+                  minimap: { enabled: false },
+                  padding: { top: 20, bottom: 20 },
+                  scrollBeyondLastLine: false,
+                }}
+              />
+              <div id="vim-status" aria-live="polite" />
+            </div>
+
+            <div className="editor-actions" aria-label="Editor actions">
+              <button
+                className="action-buttons quiet-action"
+                type="button"
+                onClick={toggleVim}
+                id="vim-toggle"
+                aria-pressed={vimOn}
+              >
+                Vim {vimOn ? "on" : "off"}
+              </button>
+              <button
+                id="show-answer"
+                className="action-buttons quiet-action"
+                type="button"
+                onClick={() => setUserCode(selectedProblem.solutionCode[currentLang])}
+              >Show answer
+              </button>
+              <button
+                className="action-buttons quiet-action"
+                type="button"
+                id="clear-button"
+                onClick={() => setUserCode(selectedProblem.starterCode[currentLang])}
+              >Reset Code
+              </button>
+
+              <button type="button" className="action-buttons quiet-action" onClick={shareLink}>
+                {copiedLink ? "Link copied!" : "Share link"}
+              </button>
+
+              <button type="button" className="action-buttons quiet-action" onClick={shareCode}>
+                {copiedCode ? "Code copied!" : "Share code"}
+              </button>
+
+              <button className="action-buttons" type="button" onClick={submitToAI} disabled={aiLoading}>
+                {aiLoading ? "Thinking…" : "Ask AI"}
+              </button>
+              <button className="action-buttons primary-action" id="run-submit" type="button" onClick={runChecks}>
+                Run checks
+              </button>
+            </div>
+
+            <div className="feedback-grid">
+              <section id="built-in-checks" className="feedback-panel" aria-labelledby="results-heading">
+                <h2 id="results-heading">Results</h2>
+                <ul className="words-content" aria-live="polite">
+                  {checkResults.length > 0 ? checkResults.map((check, index) => (
+                    <li key={`${check.message}-${index}`} className={check.passed ? "check-passed" : "check-failed"}>
+                      <span aria-hidden="true">{check.passed ? "✓" : "×"}</span>
+                      {check.message}
+                    </li>
+                  )) : (
+                    <li className="feedback-empty">Run your code to see focused checks here.</li>
+                  )}
+                </ul>
+              </section>
+
+              <section id="ai-assist" className="feedback-panel" aria-labelledby="ai-heading">
+                <h2 id="ai-heading">AI Assist</h2>
+                <div className="words-content ai-content" aria-live="polite">
+                  {aiLoading ? "Reviewing your code…" : aiContent || "Ask for a hint when the built-in checks are not enough."}
+                </div>
+
+              </section>
+            </div>
+          </section>
         )}
       </main>
 

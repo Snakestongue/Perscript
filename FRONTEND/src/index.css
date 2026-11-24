@@ -7,6 +7,8 @@ Most of the CSS was not made by me (Snakestongue). It was made by another contri
 be to covnert most of it to Tailwind or small CSS files
 #7AADFF - accent color
 Shift alt F - Reformat
+git fetch origin pull/###/head:pr-###
+git checkout pr-###
 */
 
 :root {
@@ -638,13 +640,16 @@ pre,
 .footer-credit {
   justify-self: end;
 }
-.footer-credit:hover{
+
+.footer-credit:hover {
   text-decoration: underline !important;
 }
-.cool3{
+
+.cool3 {
   color: var(--text);
   margin: 0px 3px;
 }
+
 /* In-place feedback */
 .feedback-dock {
   position: fixed;
@@ -1500,7 +1505,7 @@ pre,
   font-size: 0.72rem;
 }
 
-input,
+input:not([type="checkbox"]),
 textarea {
   width: 100%;
   min-height: 3rem;
@@ -1510,6 +1515,10 @@ textarea {
   color: var(--text);
   font-size: 1rem;
   transition: border-color 140ms ease-out, background-color 140ms ease-out;
+}
+
+input:not([type="checkbox"]) {
+  padding-inline: 0.9rem;
 }
 
 input {
@@ -1857,11 +1866,17 @@ pre code {
 }
 
 .exercise-rail {
-  padding-block: 2.5rem 4rem;
+  padding-block: 2rem;
   padding-inline-end: 2rem;
   position: sticky;
-  top: 0;
-  height: 100vh;
+  top: var(--header-height);
+  align-self: start;
+  height: calc(100dvh - var(--header-height));
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-strong) transparent;
 }
 
 .rail-language {
@@ -2750,9 +2765,11 @@ pre code {
   .exercise-rail {
     position: static;
     height: auto;
+    overflow-y: visible;
     padding-block: 1.5rem;
     padding-inline-end: 0;
   }
+
   .bQ {
     grid-template-columns: 1fr;
   }
