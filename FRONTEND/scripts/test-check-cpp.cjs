@@ -1,0 +1,43 @@
+// Behavioural checks for the C++ semantic checker.  node scripts/test-check-cpp.cjs
+const Parser = require("web-tree-sitter");
+(async () => {
+  const { diagnoseCpp } = await import("../src/lang/cppCheck.js");
+  await Parser.init();
+  const L = await Parser.Language.load(require.resolve("tree-sitter-wasms/out/tree-sitter-cpp.wasm"));
+  const parser = new Parser(); parser.setLanguage(L);
+  const parse = (s) => parser.parse(s);
+  let fail = 0;
+  const run = (label, src, expect, sev = "error") => {
+    const ds = diagnoseCpp(parse, src).filter((d) => d.severity === sev);
+    const ok = expect.length === 0 ? ds.length === 0 : expect.every((re) => ds.some((d) => re.test(d.message)));
+    if (!ok) fail++;
+    console.log(ok ? "PASS" : "FAIL", label.padEnd(28), ds.map((d) => `${d.startLine}:${d.message.slice(0, 60)}`).join(" | ").slice(0, 150));
+  };
+  const L1 = (...lines) => lines.join("\n") + "\n";
+  run("clean program", L1("#include <iostream>", "#include <vector>", "#include <string>", "using namespace std;", "", "struct P { int x; P(int a) : x(a) {} int get() const { return x; } };", "class E {", " public:", "  E(int id) : motor_{id} {}", "  double Height() const { return h_; }", "  void Set(double v) { h_ = v; }", " private:", "  int motor_;", "  double h_ = 0;", "};", "int add(int a, int b = 2) { int r = a + b; if (r > 1) { return r; } else { return 0; } }", "int main() {", "  vector<int> v{1, 2};", "  for (int i = 0; i < 3; i++) { v.push_back(i); }", "  for (auto& e : v) { cout << e << endl; }", "  auto f = [&](int z) { return z + add(1); };", "  string s = \"a\";", "  return f(1);", "}"), []);
+  run("undeclared id", L1("#include <iostream>", "int main() {", "  int a = 1;", "  return a + cnt;", "}"), [/undeclared identifier 'cnt'/]);
+  run("undeclared fn", L1("int main() {", "  foo(1);", "  return 0;", "}"), [/undeclared identifier 'foo'/]);
+  run("unknown type", L1("int main() {", "  Widget w;", "  return 0;", "}"), [/Unknown type name 'Widget'/]);
+  run("foreign include quiet", L1("#include \"frc/Foo.h\"", "int main() {", "  Widget w;", "  return mystery;", "}"), []);
+  run("missing include vector", L1("#include <iostream>", "int main() {", "  std::vector<int> v;", "  return 0;", "}"), [/needs #include <vector>/]);
+  run("missing include cout", L1("int main() {", "  std::cout << 1;", "  return 0;", "}"), [/needs #include <iostream>/]);
+  run("includes ok", L1("#include <vector>", "#include <iostream>", "#include <cmath>", "int main() {", "  std::vector<int> v;", "  std::cout << std::sqrt(4.0);", "  return 0;", "}"), []);
+  run("using std missing include", L1("using namespace std;", "int main() {", "  vector<int> v;", "  return 0;", "}"), [/needs #include <vector>/]);
+  run("redeclaration", L1("int main() {", "  int a = 1;", "  int a = 2;", "  return a;", "}"), [/Redeclaration of 'a'/]);
+  run("redeclare param", L1("int f(int a) {", "  int a = 2;", "  return a;", "}"), [/Redeclaration of parameter 'a'/]);
+  run("shadowing ok", L1("int f(int a) {", "  { int b = 1; a += b; }", "  { int b = 2; a += b; }", "  return a;", "}"), []);
+  run("missing return", L1("int f(int a) {", "  if (a > 0) { return 1; }", "}"), [/Missing return/]);
+  run("returns ok", L1("int f(int a) {", "  if (a > 0) { return 1; } else { return 2; }", "}", "int g() { while (true) { } }", "int h() { throw 1; }", "void v() {}", "int main() {}"), []);
+  run("unreachable", L1("int f() {", "  return 1;", "  int x = 2;", "}"), [/Unreachable/], "warning");
+  run("string to int", L1("int main() {", "  int a = \"hi\";", "  return 0;", "}"), [/Cannot initialize 'int' with a string literal/]);
+  run("number to string", L1("#include <string>", "int main() {", "  std::string s = 5;", "  return 0;", "}"), [/Cannot initialize 'std::string' with a number/]);
+  run("narrowing braces", L1("int main() {", "  int a{1.5};", "  return a;", "}"), [/Narrowing conversion/]);
+  run("float to int warn", L1("int main() {", "  int a = 1.5;", "  return a;", "}"), [/drops the fractional part/], "warning");
+  run("arity", L1("int add(int a, int b) { return a + b; }", "int main() {", "  add(1);", "  add(1, 2, 3);", "  return 0;", "}"), [/Too few arguments to function 'add'/, /Too many arguments to function 'add'/]);
+  run("arity defaults ok", L1("int add(int a, int b = 2) { return a + b; }", "int main() {", "  add(1);", "  add(1, 2);", "  return 0;", "}"), []);
+  run("unused local warn", L1("int main() {", "  int unusedVar = 5;", "  return 0;", "}"), [/never used/], "warning");
+  run("enum + namespace ok", L1("namespace ns { int q = 1; }", "enum class Mode { A, B };", "int main() {", "  Mode m = Mode::A;", "  return ns::q + (m == Mode::B);", "}"), []);
+  run("unknown base quiet", L1("class A : public Base {", " public:", "  void f() { g(); }", "};"), []);
+  console.log(fail ? `${fail} FAILED` : "all passed");
+  process.exit(fail ? 1 : 0);
+})().catch((e) => { console.log("ERR", e.stack); process.exit(1); });

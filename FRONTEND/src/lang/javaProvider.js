@@ -186,15 +186,17 @@ export function attachJavaHelpers(editor, options = {}) {
 // Semantic problems (unknown names and members, wrong call shapes, type mismatches, missing returns,
 // unreachable code, duplicate variables, missing imports) shown as squiggles. Runs in the worker, after a pause.
 // options.extraTypes() may return the class names that live in other files of the same project.
+const CHECKED = new Set(["java", "python", "cpp"]);
 function attachSemanticChecks(editor, options) {
   let timer, seq = 0;
   const run = async () => {
     const model = editor.getModel();
     const monaco = options.monaco;
-    if (!model || model.getLanguageId() !== "java" || !monaco) return;
+    const lang = model && model.getLanguageId();
+    if (!model || !monaco || !CHECKED.has(lang)) return;
     const mine = ++seq;
     let list;
-    try { list = await call("diagnose", { src: model.getValue(), extraTypes: options.extraTypes ? [...options.extraTypes()] : [] }); } catch { return; }
+    try { list = await call("diagnose", { lang, src: model.getValue(), extraTypes: options.extraTypes ? [...options.extraTypes()] : [] }); } catch { return; }
     if (mine !== seq || model.isDisposed()) return;
     monaco.editor.setModelMarkers(model, "perscript-semantic", (list || []).map((d) => ({
       startLineNumber: d.startLine, startColumn: d.startCol, endLineNumber: d.endLine, endColumn: d.endCol,
@@ -204,5 +206,6 @@ function attachSemanticChecks(editor, options) {
   const schedule = () => { clearTimeout(timer); timer = setTimeout(run, 800); };
   editor.onDidChangeModelContent(schedule);
   editor.onDidChangeModel(schedule);
+  editor.onDidChangeModelLanguage(schedule);
   schedule();
 }

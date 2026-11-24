@@ -2,7 +2,11 @@
 import Parser from "web-tree-sitter";
 import runtimeWasm from "../../node_modules/web-tree-sitter/tree-sitter.wasm?url";
 import javaWasm from "../../node_modules/tree-sitter-wasms/out/tree-sitter-java.wasm?url";
+import pythonWasm from "../../node_modules/tree-sitter-wasms/out/tree-sitter-python.wasm?url";
+import cppWasm from "../../node_modules/tree-sitter-wasms/out/tree-sitter-cpp.wasm?url";
 import { createEngine } from "./javaEngine.js";
+import { diagnosePython } from "./pyCheck.js";
+import { diagnoseCpp } from "./cppCheck.js";
 
 const INDEXES = {
   wpilib: () => import("../api/wpilib.json"),
@@ -28,6 +32,21 @@ async function boot() {
   return engine;
 }
 
+// Python and C++ checkers use their own tree-sitter grammar, loaded the first time that language is checked.
+const otherParsers = {};
+async function parserFor(lang, wasm) {
+  if (!otherParsers[lang]) {
+    otherParsers[lang] = (async () => {
+      await Parser.init({ locateFile: () => runtimeWasm });
+      const L = await Parser.Language.load(wasm);
+      const p = new Parser();
+      p.setLanguage(L);
+      return (s) => p.parse(s);
+    })();
+  }
+  return otherParsers[lang];
+}
+
 async function ensureLibs(libs) {
   const e = await boot();
   for (const name of libs) {
@@ -43,6 +62,8 @@ self.onmessage = async ({ data }) => {
   const { id, type, src, offset, libs = ["wpilib", "ctre"] } = data;
   try {
     if (type === "ping") { self.postMessage({ id, result: "pong" }); return; }
+    if (type === "diagnose" && data.lang === "python") { self.postMessage({ id, result: diagnosePython(await parserFor("python", pythonWasm), src) }); return; }
+    if (type === "diagnose" && data.lang === "cpp") { self.postMessage({ id, result: diagnoseCpp(await parserFor("cpp", cppWasm), src) }); return; }
     const e = await ensureLibs(libs);
     let result = null;
     if (type === "warm") {
