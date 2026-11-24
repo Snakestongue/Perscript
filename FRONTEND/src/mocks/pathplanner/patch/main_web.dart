@@ -40,6 +40,30 @@ Future<void> main() async {
     file.writeAsStringSync(await rootBundle.loadString(entry.value));
   }
 
+  // Fake file system hook: the practice laptop can hand PathPlanner the files of its project
+  // (sessionStorage `labFs`, a JSON map of 'autos/Name.auto' / 'paths/Name.path' -> text).
+  // When present it replaces the example autos and paths.
+  try {
+    final stored = web.window.sessionStorage.getItem('labFs');
+    if (stored != null) {
+      final injected = jsonDecode(stored);
+      if (injected is Map) {
+        for (final folder in ['autos', 'paths']) {
+          final dir = fs.directory('${deploy.path}/$folder');
+          if (dir.existsSync()) dir.deleteSync(recursive: true);
+          dir.createSync(recursive: true);
+        }
+        for (final entry in injected.entries) {
+          final file = fs.file('${deploy.path}/${entry.key}');
+          file.parent.createSync(recursive: true);
+          file.writeAsStringSync('${entry.value}');
+        }
+      }
+    }
+  } catch (_) {
+    // keep the seeded project
+  }
+
   SharedPreferences.setMockInitialValues({});
   final prefs = await SharedPreferences.getInstance();
   await prefs.setString(PrefsKeys.currentProjectDir, projectDir);

@@ -65,7 +65,7 @@ function startFiles(id) {
 
 // The apps keep their own state (Elastic's layout lives in this origin's storage), so a reset clears it.
 function wipeAppStorage() {
-  try { sessionStorage.removeItem(DEPLOY_KEY); } catch { /* ignore */ }
+  try { sessionStorage.removeItem(DEPLOY_KEY); sessionStorage.removeItem("labFs"); } catch { /* ignore */ }
   try { Object.keys(localStorage).filter((k) => k.startsWith("flutter.")).forEach((k) => localStorage.removeItem(k)); } catch { /* ignore */ }
 }
 
@@ -317,7 +317,7 @@ export default function LabDesktop() {
   };
 
   const hasProgress = () => Object.entries(files).some(([k, v]) => v !== startFiles(lessonId)[k]) || !!deploy || commandRuns.length > 0 || Object.keys(project.autos).length > 0;
-  const bundle = () => ({ files, wins, deploy, openedLessonFile, todoVisited, commandRuns, log, dsState });
+  const bundle = () => ({ project, files, wins, deploy, openedLessonFile, todoVisited, commandRuns, log, dsState });
 
   // Put the desktop back to a lesson's starting point (or a saved snapshot of it) and reload the apps.
   const loadLesson = (id, snap) => {
@@ -333,7 +333,15 @@ export default function LabDesktop() {
     setCommandRuns(next.commandRuns);
     setLog(next.log);
     setDsState(next.dsState);
-    setProject({ autos: {}, paths: {} });
+    // Fake file system: hand PathPlanner the saved project so it opens with it.
+    const saved = snap?.project;
+    if (saved && (Object.keys(saved.autos).length || Object.keys(saved.paths).length)) {
+      const fs = {};
+      for (const [n, t] of Object.entries(saved.autos)) fs[`autos/${n}.auto`] = t;
+      for (const [n, t] of Object.entries(saved.paths)) fs[`paths/${n}.path`] = t;
+      try { sessionStorage.setItem("labFs", JSON.stringify(fs)); } catch { /* ignore */ }
+    }
+    setProject(saved ?? { autos: {}, paths: {} });
     setWidgets([]);
     setPicked(null);
     setEpoch((e) => e + 1);
