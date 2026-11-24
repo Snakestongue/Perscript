@@ -127,7 +127,9 @@ Planned deployment using:
 
 - V3 Commands Questions
 - SparkMAX Questions
-- Completely new debugging problems
+- Completely new Debugging Section
+- Adding new Telemetry and removing outdated code.
+- Adding a Login System to save your work!
 - Anything else people suggest!
 
 ## Feedback / Suggestions
