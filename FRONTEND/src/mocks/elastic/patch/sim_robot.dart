@@ -43,6 +43,9 @@ class SimRobot {
     ]),
     SimTopic('$_chooser/default', 'string', 'Do Nothing'),
     SimTopic('$_chooser/active', 'string', 'Do Nothing'),
+    // The ComboBox Chooser widget in this Elastic build reads the active choice here
+    // and publishes the dashboard's pick to `selected/tune`.
+    SimTopic('$_chooser/selected/value', 'string', 'Do Nothing'),
   ];
 
   final Map<String, SimTopic> _byName = {};
@@ -59,10 +62,12 @@ class SimRobot {
   /// The dashboard wrote a value (e.g. picked an auto in the chooser).
   /// Returns any topic values that change as a result.
   Map<String, Object?> onClientWrite(String name, Object? value) {
-    if (name == '$_chooser/selected' && value is String) {
+    if ((name == '$_chooser/selected' || name == '$_chooser/selected/tune') &&
+        value is String) {
       _selectedAuto = value;
       _byName['$_chooser/active']!.value = value;
-      return {'$_chooser/active': value};
+      _byName['$_chooser/selected/value']!.value = value;
+      return {'$_chooser/active': value, '$_chooser/selected/value': value};
     }
     return const {};
   }
@@ -101,6 +106,7 @@ class SimRobot {
     if (_selectedAuto == null) {
       // keep the default visible until the dashboard chooses something
       set('$_chooser/active', 'Do Nothing');
+      set('$_chooser/selected/value', 'Do Nothing');
     }
     return out;
   }
