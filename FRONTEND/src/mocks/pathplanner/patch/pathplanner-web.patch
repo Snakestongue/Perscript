@@ -79,6 +79,51 @@ index edec3da..bc99b62 100644
      Directory imagesDir = fs.directory(join(appDir.path, 'custom_fields'));
  
      imagesDir.createSync(recursive: true);
+diff --git a/lib/pages/project/project_item_card.dart b/lib/pages/project/project_item_card.dart
+index 5628d65..7917b90 100644
+--- a/lib/pages/project/project_item_card.dart
++++ b/lib/pages/project/project_item_card.dart
+@@ -1,5 +1,6 @@
+ import 'dart:ui';
+ 
++import 'package:flutter/foundation.dart' show kIsWeb;
+ import 'package:flutter/material.dart';
+ import 'package:pathplanner/util/wpimath/geometry.dart';
+ import 'package:pathplanner/widgets/conditional_widget.dart';
+@@ -66,14 +67,17 @@ class _ProjectItemCardState extends State<ProjectItemCard> {
+                         child: FittedBox(
+                           fit: BoxFit.scaleDown,
+                           alignment: Alignment.centerLeft,
+-                          child: RenamableTitle(
+-                            title: widget.name,
+-                            textStyle: const TextStyle(fontSize: 28),
+-                            onRename: widget.onRenamed,
+-                          ),
++                          child: _locked
++                              ? Text(widget.name,
++                                  style: const TextStyle(fontSize: 28))
++                              : RenamableTitle(
++                                  title: widget.name,
++                                  textStyle: const TextStyle(fontSize: 28),
++                                  onRename: widget.onRenamed,
++                                ),
+                         ),
+                       ),
+-                      if (widget.showOptions)
++                      if (widget.showOptions && !_locked)
+                         FittedBox(
+                           child: PopupMenuButton<String>(
+                             tooltip: '',
+@@ -247,6 +251,9 @@ class _ProjectItemCardState extends State<ProjectItemCard> {
+     );
+   }
+ 
++  // Practice lab: the example paths the lessons rely on cannot be renamed, copied or deleted.
++  bool get _locked => kIsWeb && const {'Pickup', 'Score'}.contains(widget.name);
++
+   void _showDeleteDialog() {
+     showDialog(
+       context: context,
 diff --git a/lib/widgets/custom_appbar.dart b/lib/widgets/custom_appbar.dart
 index e3d3fc0..4deafd2 100644
 --- a/lib/widgets/custom_appbar.dart
