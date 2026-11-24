@@ -16,6 +16,11 @@ dist
 dist-ssr
 *.local
 FRONTEND/src/JSON/
+BACKEND/.agents
+BACKEND/.claude
+BACKEND/.cursor
+BACKEND/.devin
+
 
 FRONTEND/public/google5abe7520d23d8c65.html
 # Editor directories and files
