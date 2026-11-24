@@ -9,7 +9,6 @@ import { registerJavaIntelliSense, attachJavaHelpers } from "../lang/javaProvide
 import Tune from "./Tune.jsx";
 // The Elastic dashboard lesson is a separate folder (real Elastic web build); load it on demand.
 const ElasticLesson = lazy(() => import("../mocks/elastic/index.jsx"));
-const LabDesktop = lazy(() => import("../mocks/lab-desktop/index.jsx"));
 
 
 const exerciseGroups = [
@@ -452,7 +451,7 @@ function Program() {
                   <div>
                     <Link className={isDesktop ? "program-buttons active" : "program-buttons"} to="/program/desktop" aria-label="Lab Desktop" aria-current={isDesktop ? "page" : undefined}>
                       <span className="exercise-step-dot" aria-hidden="true" />
-                      Lab Desktop
+                      Robot Lab
                     </Link>
                   </div>
                 </div>
@@ -482,10 +481,16 @@ function Program() {
           </section>
         ) : isDesktop ? (
           <section id="browser-editor" className="editor-stage" aria-label="Lab Desktop">
-            <div style={{ position: "fixed", top: 64, left: 0, right: 0, bottom: 0, zIndex: 40, overflow: "hidden", background: "#09090b" }}>
-              <Suspense fallback={<p className="p-4 text-sm text-slate-400">Loading desktop…</p>}>
-                <LabDesktop />
-              </Suspense>
+            <header className="exercise-heading">
+              <div>
+                <p>Robot Lab</p>
+                <h1>Write it, deploy it, see it</h1>
+              </div>
+              <p>A pretend laptop: edit robot code in VS Code, deploy it, build an auto in PathPlanner, and watch it in Elastic.</p>
+            </header>
+            <div style={{ padding: "0 0 1rem" }}>
+              <p style={{ maxWidth: "40rem", lineHeight: 1.6 }}>Two guided lessons. Lesson 1 publishes a value to the dashboard. Lesson 2 builds an autonomous routine. The lab opens full screen, and Exit Robot Lab brings you back here.</p>
+              <Link to="/lab" className="program-buttons active" style={{ display: "inline-block", marginTop: "1rem", padding: "0.6rem 1.2rem" }}>Enter Robot Lab</Link>
             </div>
           </section>
         ) : (

@@ -7,6 +7,7 @@
 // Deploying "sends" the code to a simulated robot: what the code publishes to SmartDashboard is
 // handed to the dashboard through sessionStorage + a BroadcastChannel ("lab-robot").
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import VsCode from "./VsCode.jsx";
 import { AUTO_FILE, LESSON_FILE, LESSONS, TOPIC, currentStep, lessonState } from "./lesson.js";
 import { findAutoRefs, findRegisteredCommands, planAuto, describeProject } from "./autoPlan.js";
@@ -91,10 +92,11 @@ function Guide({ lessons, lessonId, setLessonId, unlocked, steps, state, current
           {picked && <p className="mt-1 text-xs text-slate-400">Elastic reports the Auto Chooser is set to “{picked}”.</p>}
         </div>
       ) : (
-        <p className="font-semibold text-green-300">{lessonId === "l1" ? `Lesson complete. Elastic reported “${placed?.title || "Elevator Height"}” placed on the ${placed?.tab || "dashboard"} tab as a ${placed?.type || "widget"}. Lesson 2 is now unlocked.` : "Lesson complete. Your auto drove the path and the robot ran runIntake when the auto reached it. Try Free play to keep experimenting."}</p>
+        <p className="font-semibold text-green-300">{lessonId === "l1" ? `Lesson complete. Elastic reported “${placed?.title || "Elevator Height"}” placed on the ${placed?.tab || "dashboard"} tab as a ${placed?.type || "widget"}. Lesson 2 is next.` : "Lesson complete. Your auto drove the path and the robot ran runIntake when the auto reached it. Try Free play to keep experimenting."}</p>
       )}
       <div className="mt-auto flex flex-col gap-1">
         <button type="button" onClick={toggleFreePlay} className="rounded border border-zinc-600 px-2 py-1 text-xs text-slate-300 hover:bg-zinc-800">{freePlay ? "Back to the lesson" : "Free play"}</button>
+        <Link to="/program/desktop" className="rounded border border-zinc-600 px-2 py-1 text-center text-xs text-slate-300 hover:bg-zinc-800">Exit Robot Lab</Link>
         <button type="button" onClick={onFullscreen} className="rounded border border-zinc-600 px-2 py-1 text-xs text-slate-300 hover:bg-zinc-800">Full screen</button>
       </div>
     </aside>
@@ -139,7 +141,6 @@ export default function LabDesktop() {
   const lessonFile = lessonId === "l1" ? LESSON_FILE : AUTO_FILE;
   const state = useMemo(() => lessonState({ files, deploy, openedLessonFile, todoVisited, widgets, project, commandRuns }), [files, deploy, openedLessonFile, todoVisited, widgets, project, commandRuns]);
   const current = currentStep(state, lesson.steps);
-  const lesson1Done = currentStep(state, LESSONS[0].steps) >= LESSONS[0].steps.length;
   const elasticUnlocked = freePlay || lessonId === "l2" || current >= 3;
   const deployEnabled = freePlay || current >= (lessonId === "l1" ? 2 : 4);
   const say = useCallback((m) => { setToast(m); setTimeout(() => setToast(""), 3200); }, []);
@@ -299,6 +300,12 @@ export default function LabDesktop() {
     setLessonId(id);
     setOpened(false);
     if (id === "l2") {
+      // Lesson 2 starts from a finished lesson 1: the elevator height is already published.
+      setFiles((f) => {
+        const el = "src/main/java/frc/robot/subsystems/Elevator.java";
+        if (!f[el] || /SmartDashboard\s*\.\s*putNumber\s*\(\s*"Elevator Height"/.test(f[el])) return f;
+        return { ...f, [el]: f[el].replace(/ *\/\/ TODO: publish the height.*/, '    SmartDashboard.putNumber("Elevator Height", getHeightMeters());') };
+      });
       setWins((w) => ({ ...w, pathplanner: { ...w.pathplanner, open: true, min: false }, elastic: { ...w.elastic, open: true, min: false }, ds: { ...w.ds, open: true, min: false } }));
       setTimeout(() => tile(sizeRef.current.w, sizeRef.current.h), 0);
     }
@@ -330,7 +337,7 @@ export default function LabDesktop() {
 
   return (
     <div className="flex h-full min-h-[32rem] overflow-hidden bg-zinc-950" aria-label="Lab desktop">
-      <Guide lessons={LESSONS} lessonId={lessonId} setLessonId={switchLesson} unlocked={lesson1Done || freePlay} steps={lesson.steps} state={state} current={current} freePlay={freePlay} toggleFreePlay={toggleFreePlay} placed={placed} picked={picked} onFullscreen={toggleFullscreen} />
+      <Guide lessons={LESSONS} lessonId={lessonId} setLessonId={switchLesson} unlocked steps={lesson.steps} state={state} current={current} freePlay={freePlay} toggleFreePlay={toggleFreePlay} placed={placed} picked={picked} onFullscreen={toggleFullscreen} />
       <div ref={stage} className="relative min-w-0 flex-1 overflow-hidden" style={{ background: "radial-gradient(ellipse at 30% 20%, #26324a 0%, #151a26 55%, #0c0f16 100%)" }}>
         {visibleApps.map((app) => {
           const w = wins[app.id];

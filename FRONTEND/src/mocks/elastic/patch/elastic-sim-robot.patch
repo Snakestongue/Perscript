@@ -1,5 +1,5 @@
 diff --git a/lib/pages/dashboard_page.dart b/lib/pages/dashboard_page.dart
-index c357ae5..6aabcd2 100644
+index c357ae5..b1e76d1 100644
 --- a/lib/pages/dashboard_page.dart
 +++ b/lib/pages/dashboard_page.dart
 @@ -30,6 +30,9 @@ import 'package:elastic_dashboard/services/ip_address_util.dart';
@@ -32,6 +32,47 @@ index c357ae5..6aabcd2 100644
      robotNotificationListener = ElasticLibListener(
        ntConnection: ntConnection,
        onTabSelected: (tabIdentifier) {
+@@ -960,6 +975,11 @@ class _DashboardPageState extends State<DashboardPage>
+         child: const Text('Help'),
+       ),
+     ];
++    if (kLabMode) {
++      // Practice lab: no file, download or help menus; just edit and add widgets.
++      menuChildren.removeAt(2);
++      menuChildren.removeAt(0);
++    }
+ 
+     MenuBar menuBar = MenuBar(
+       style: const MenuStyle(
+@@ -982,16 +1002,18 @@ class _DashboardPageState extends State<DashboardPage>
+             child: const Icon(Icons.menu),
+           ),
+         const VerticalDivider(width: 4),
+-        // Settings
+-        MenuItemButton(
+-          style: menuButtonStyle,
+-          leadingIcon: const Icon(Icons.settings),
+-          onPressed: () {
+-            model.displaySettingsDialog(context);
+-          },
+-          child: const Text('Settings'),
+-        ),
+-        const VerticalDivider(width: 4),
++        // Settings (hidden in the practice lab)
++        if (!kLabMode) ...[
++          MenuItemButton(
++            style: menuButtonStyle,
++            leadingIcon: const Icon(Icons.settings),
++            onPressed: () {
++              model.displaySettingsDialog(context);
++            },
++            child: const Text('Settings'),
++          ),
++          const VerticalDivider(width: 4),
++        ],
+         // Add Widget
+         MenuItemButton(
+           style: menuButtonStyle,
 diff --git a/lib/services/nt4_client.dart b/lib/services/nt4_client.dart
 index f703a92..2c7b4fa 100644
 --- a/lib/services/nt4_client.dart
