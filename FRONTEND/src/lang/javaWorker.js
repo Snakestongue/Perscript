@@ -1,7 +1,7 @@
 // Web Worker: runs tree-sitter + the Java engine off the main thread.
 import Parser from "web-tree-sitter";
-import runtimeWasm from "web-tree-sitter/tree-sitter.wasm?url";
-import javaWasm from "tree-sitter-wasms/out/tree-sitter-java.wasm?url";
+import runtimeWasm from "../../node_modules/web-tree-sitter/tree-sitter.wasm?url";
+import javaWasm from "../../node_modules/tree-sitter-wasms/out/tree-sitter-java.wasm?url";
 import { createEngine } from "./javaEngine.js";
 
 const INDEXES = {

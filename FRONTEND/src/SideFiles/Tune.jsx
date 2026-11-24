@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import MechanismView from "../components/MechanismView.jsx";
 import { LANGUAGES, LIBRARIES, generateCode } from "../pidCodegen.js";
-import { CHALLENGES, CONDITIONS, DURATION, MECHANISMS, evaluate, randomChallenge, simulate } from "../pidSim.js";
+import { CHALLENGES, CONDITIONS, DURATION, MECHANISMS, evaluate, simulate } from "../pidSim.js";
 
 const ZERO = { kP: 0, kI: 0, kD: 0, kS: 0, kG: 0, kV: 0, kA: 0 };
 const SLIDERS = [
@@ -107,7 +107,7 @@ export default function Tune({ embedded = false }) {
 
   const code = useMemo(() => generateCode(lang, lib, challenge.mech, gains, challenge.target), [lang, lib, challenge, gains]);
   const pick = (id) => { setDone(completed); setCustom(null); setChallengeId(id); setGains(ZERO); replay(); };
-  const roll = () => { setDone(completed); setCustom(randomChallenge()); setGains(ZERO); replay(); };
+  // const roll = () => { setDone(completed); setCustom(randomChallenge()); setGains(ZERO); replay(); };
   const fmt = (v, d = 2) => (v === null ? "never" : v.toFixed(d));
 
   const rows = [
@@ -123,23 +123,7 @@ export default function Tune({ embedded = false }) {
         <p className="text-sm text-slate-400">Tune P, I, D and feedforward (kS, kG, kV, kA). Meet every goal to clear the challenge.</p>
       </div>
 
-      <div className="mt-3 flex flex-wrap gap-1.5">
-        {CHALLENGES.map((c) => (
-          <button
-            key={c.id}
-            onClick={() => pick(c.id)}
-            className={`rounded-full border px-2.5 py-0.5 text-xs ${c.id === challengeId && !custom ? "border-[#7AADFF] bg-[#7AADFF]/20" : "border-zinc-700 hover:border-zinc-500"}`}
-          >
-            {completed.includes(c.id) ? "✓ " : ""}{c.title}
-          </button>
-        ))}
-        <button
-          onClick={roll}
-          className={`rounded-full border px-2.5 py-0.5 text-xs ${custom ? "border-[#7AADFF] bg-[#7AADFF]/20" : "border-zinc-700 hover:border-zinc-500"}`}
-        >
-          🎲 Random
-        </button>
-      </div>
+
 
       <div className="@container mt-3">
         <div className="grid gap-3 @xl:grid-cols-[minmax(0,1.5fr)_minmax(14rem,1fr)]">
@@ -197,7 +181,25 @@ export default function Tune({ embedded = false }) {
           </section>
         </div>
       </div>
-
+      <div className="mt-3 flex flex-wrap gap-1.5">
+        {CHALLENGES.map((c) => (
+          <button
+            key={c.id}
+            onClick={() => pick(c.id)}
+            className={`
+              rounded-md border px-3 py-1 text-xs text-[oklch(0.96_0.003_260)] cursor-pointer transition-colors ${
+                  c.id === challengeId && !custom
+                    ? "border-[#7AADFF] bg-[#7AADFF]/20"
+                    : "border-zinc-700 hover:border-[#7AADFF] hover:bg-[#7AADFF]"
+                }
+                
+              `}
+          >
+            {completed.includes(c.id) ? "✓ " : ""}{c.title}
+          </button>
+        ))}
+        
+      </div>
       <section className="mt-3 rounded-xl border border-zinc-800 p-3">
         <div className="mb-3 flex flex-wrap items-center gap-3">
           <h2 className="mr-auto text-lg font-semibold">Equivalent code</h2>
@@ -213,7 +215,7 @@ export default function Tune({ embedded = false }) {
           >{copied ? "Copied!" : "Copy"}</button>
         </div>
         <pre className="overflow-x-auto rounded bg-zinc-950 p-3 text-xs leading-relaxed text-slate-200"><code>{code}</code></pre>
-        <p className="mt-2 text-xs text-slate-500">Starter code for your current gains. Check units and class names against the library version you use.</p>
+        <p className="!mt-2 text-xs text-slate-500">Starter code for your current gains. Check units and class names against the library version you use.</p>
       </section>
     </Shell>
   );
