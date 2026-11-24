@@ -36,6 +36,13 @@ function closest(name, candidates) {
   return best && bestD <= Math.max(1, Math.floor(name.length / 3)) ? best : null;
 }
 
+function closestBuiltin(name) {
+  if (name.length < 4) return null;
+  let best = null, bestD = 2;
+  for (const c of BUILTINS) { if (c[0] !== name[0] || /^[A-Z_]/.test(c)) continue; const d = editDistance(name, c); if (d < bestD) { bestD = d; best = c; } }
+  return best;
+}
+
 export function diagnosePython(parse, src) {
   const tree = parse(src);
   if (!tree || tree.rootNode.hasError()) return [];
@@ -147,7 +154,8 @@ export function diagnosePython(parse, src) {
       if (BUILTINS.has(name) || visibleNames(n).has(name)) return;
       const hint = MODULE_HINTS[name];
       if (hint) { report(n, `name '${name}' is not defined. Add: ${hint}`); return; }
-      const near = closest(name, [...visibleNames(n), ...BUILTINS]);
+      // suggest names from this file first; a built-in only for a near-miss that starts with the same letter
+      const near = closest(name, [...visibleNames(n)]) || closestBuiltin(name);
       report(n, `name '${name}' is not defined${near ? `. Did you mean '${near}'?` : ""}`);
     });
   } else walk(root, (n) => { if (n.type === "identifier" && !isBindingPosition(n)) loads.add(n.text); });
