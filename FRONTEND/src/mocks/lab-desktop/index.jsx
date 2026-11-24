@@ -175,6 +175,15 @@ export default function LabDesktop() {
     setWins((w) => {
       const others = ["elastic", "pathplanner", "ds"].filter((id) => w[id].open && !w[id].min);
       const next = { ...w, code: { ...w.code, max: false, min: false, x: 0, y: 0, w: others.length ? half : W, h: usableH } };
+      if (others.length === 3) {
+        // lesson 2: code on the left, PathPlanner on top right, Elastic and the Driver Station below it
+        const left = Math.round(W * 0.38), rightW = W - left, topH = Math.round(usableH * 0.58), dsW = Math.round(rightW * 0.34);
+        next.code = { ...next.code, w: left };
+        next.pathplanner = { ...w.pathplanner, max: false, x: left, y: 0, w: rightW, h: topH };
+        next.elastic = { ...w.elastic, max: false, x: left, y: topH, w: rightW - dsW, h: usableH - topH };
+        next.ds = { ...w.ds, max: false, x: left + rightW - dsW, y: topH, w: dsW, h: usableH - topH };
+        return next;
+      }
       const rowH = others.length ? Math.floor(usableH / others.length) : usableH;
       others.forEach((id, i) => { next[id] = { ...w[id], max: false, x: half, y: i * rowH, w: W - half, h: i === others.length - 1 ? usableH - i * rowH : rowH }; });
       return next;
@@ -324,7 +333,7 @@ export default function LabDesktop() {
         <button type="button" onClick={toggleFullscreen} className="rounded border border-zinc-600 px-2 py-0.5 hover:bg-zinc-800">Full screen</button>
       </div>
       <Guide lessons={LESSONS} lessonId={lessonId} setLessonId={switchLesson} unlocked={lesson1Done || freePlay} steps={lesson.steps} state={state} current={current} freePlay={freePlay} toggleFreePlay={toggleFreePlay} placed={placed} picked={picked} />
-      <div ref={stage} className="relative h-[36rem] overflow-hidden" style={{ background: "radial-gradient(ellipse at 30% 20%, #26324a 0%, #151a26 55%, #0c0f16 100%)" }}>
+      <div ref={stage} className="relative h-[max(36rem,min(52rem,calc(100vh-14rem)))] overflow-hidden" style={{ background: "radial-gradient(ellipse at 30% 20%, #26324a 0%, #151a26 55%, #0c0f16 100%)" }}>
         {visibleApps.map((app) => {
           const w = wins[app.id];
           if (!w.open) return null;
