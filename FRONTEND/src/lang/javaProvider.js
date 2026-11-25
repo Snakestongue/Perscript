@@ -169,8 +169,9 @@ function insideCall(src, offset) {
 
 // Show the parameter tooltip whenever the cursor is inside a call, including when it is
 // moved there with the arrow keys or the mouse (Monaco only auto-triggers on typing).
-export function attachJavaHelpers(editor) {
+export function attachJavaHelpers(editor, options = {}) {
   let timer;
+  attachSemanticChecks(editor, options);
   editor.onDidChangeCursorPosition((e) => {
     clearTimeout(timer);
     timer = setTimeout(() => {
@@ -180,4 +181,31 @@ export function attachJavaHelpers(editor) {
       if (insideCall(model.getValue(), model.getOffsetAt(editor.getPosition()))) editor.trigger("java-helpers", "editor.action.triggerParameterHints", {});
     }, 150);
   });
+}
+
+// Semantic problems (unknown names and members, wrong call shapes, type mismatches, missing returns,
+// unreachable code, duplicate variables, missing imports) shown as squiggles. Runs in the worker, after a pause.
+// options.extraTypes() may return the class names that live in other files of the same project.
+const CHECKED = new Set(["java", "python", "cpp"]);
+function attachSemanticChecks(editor, options) {
+  let timer, seq = 0;
+  const run = async () => {
+    const model = editor.getModel();
+    const monaco = options.monaco;
+    const lang = model && model.getLanguageId();
+    if (!model || !monaco || !CHECKED.has(lang)) return;
+    const mine = ++seq;
+    let list;
+    try { list = await call("diagnose", { lang, src: model.getValue(), extraTypes: options.extraTypes ? [...options.extraTypes()] : [] }); } catch { return; }
+    if (mine !== seq || model.isDisposed()) return;
+    monaco.editor.setModelMarkers(model, "perscript-semantic", (list || []).map((d) => ({
+      startLineNumber: d.startLine, startColumn: d.startCol, endLineNumber: d.endLine, endColumn: d.endCol,
+      message: d.message, severity: d.severity === "warning" ? monaco.MarkerSeverity.Warning : monaco.MarkerSeverity.Error,
+    })));
+  };
+  const schedule = () => { clearTimeout(timer); timer = setTimeout(run, 800); };
+  editor.onDidChangeModelContent(schedule);
+  editor.onDidChangeModel(schedule);
+  editor.onDidChangeModelLanguage(schedule);
+  schedule();
 }

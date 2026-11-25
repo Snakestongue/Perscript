@@ -14,6 +14,7 @@ const Tut = lazy(() => import("./SideFiles/Tut.tsx"));
 const Program = lazy(() => import("./SideFiles/Program.jsx"));
 const Daily = lazy(() => import("./SideFiles/Daily.jsx"));
 const Tune = lazy(() => import("./SideFiles/Tune.jsx"));
+const LabDesktop = lazy(() => import("./mocks/lab-desktop/index.jsx"));
 
 
 function RoutesPage(){
@@ -64,6 +65,8 @@ function RoutesPage(){
               <Route path="/program" element={<Program />} />
               <Route path="/program/pid-tuning" element={<Program />} />
               <Route path="/program/elastic" element={<Program />} />
+              <Route path="/program/desktop" element={<Program />} />
+              <Route path="/lab" element={<div style={{ position: "fixed", inset: 0, zIndex: 200, background: "#09090b" }}><LabDesktop /></div>} />
               <Route path="/daily" element={<Daily />} />
               <Route path="/tune" element={<Tune />} />
             </Routes>

@@ -1,0 +1,223 @@
+diff --git a/lib/pages/home_page.dart b/lib/pages/home_page.dart
+index edec3da..bc99b62 100644
+--- a/lib/pages/home_page.dart
++++ b/lib/pages/home_page.dart
+@@ -1,3 +1,4 @@
++import 'package:flutter/foundation.dart' show kIsWeb;
+ import 'dart:convert';
+ import 'dart:io';
+ 
+@@ -54,7 +55,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
+   late Directory _pathplannerDir;
+   late Directory _choreoDir;
+   final SecureBookmarks? _bookmarks =
+-      Platform.isMacOS ? SecureBookmarks() : null;
++      (!kIsWeb && Platform.isMacOS) ? SecureBookmarks() : null;
+   final List<FieldImage> _fieldImages = FieldImage.offialFields();
+   FieldImage? _fieldImage;
+   late AnimationController _animController;
+@@ -78,7 +79,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
+ 
+     _loadFieldImages().then((_) async {
+       String? projectDir = widget.prefs.getString(PrefsKeys.currentProjectDir);
+-      if (projectDir != null && Platform.isMacOS && fs is LocalFileSystem) {
++      if (projectDir != null && (!kIsWeb && Platform.isMacOS) && fs is LocalFileSystem) {
+         if (widget.prefs.getString(PrefsKeys.macOSBookmark) != null) {
+           try {
+             await _bookmarks!.resolveBookmark(
+@@ -206,7 +207,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
+ 
+   @override
+   void dispose() {
+-    if (Platform.isMacOS && _projectDir != null) {
++    if (!kIsWeb && Platform.isMacOS && _projectDir != null) {
+       _bookmarks!
+           .stopAccessingSecurityScopedResource(fs.file(_projectDir!.path));
+     }
+@@ -272,6 +273,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
+                 'v${widget.appVersion}',
+                 style: TextStyle(color: colorScheme.onSurface),
+               ),
++              if (!kIsWeb)
+               IconButton(
+                 icon: const Icon(Icons.open_in_new_rounded, size: 20),
+                 tooltip: 'Open Project',
+@@ -313,6 +315,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
+         padding: const EdgeInsets.only(bottom: 12.0, left: 8.0),
+         child: Row(
+           children: [
++            if (!kIsWeb) ...[
+             _buildButton(
+               onPressed: () => launchUrl(Uri.parse('https://pathplanner.dev')),
+               icon: const Icon(Icons.description),
+@@ -335,6 +338,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
+               foregroundColor: colorScheme.onSurface,
+               surfaceTintColor: colorScheme.surfaceTint,
+             ),
++            ],
+           ],
+         ),
+       ),
+@@ -694,7 +698,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
+   Future<void> _initFromProjectDir(String projectDir) async {
+     widget.prefs.setString(PrefsKeys.currentProjectDir, projectDir);
+ 
+-    if (Platform.isMacOS) {
++    if (!kIsWeb && Platform.isMacOS) {
+       // Bookmark project on macos so it can be accessed again later
+       String bookmark = await _bookmarks!.bookmark(fs.file(projectDir));
+       widget.prefs.setString(PrefsKeys.macOSBookmark, bookmark);
+@@ -742,8 +746,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
+   }
+ 
+   Future<void> _loadFieldImages() async {
+-    Directory appDir =
+-        fs.directory((await getApplicationSupportDirectory()).path);
++    // path_provider has no web implementation; use a folder in the in-memory file system.
++    Directory appDir = fs.directory(
++        kIsWeb ? '/appsupport' : (await getApplicationSupportDirectory()).path);
+     Directory imagesDir = fs.directory(join(appDir.path, 'custom_fields'));
+ 
+     imagesDir.createSync(recursive: true);
+diff --git a/lib/pages/project/project_item_card.dart b/lib/pages/project/project_item_card.dart
+index 5628d65..7917b90 100644
+--- a/lib/pages/project/project_item_card.dart
++++ b/lib/pages/project/project_item_card.dart
+@@ -1,5 +1,6 @@
+ import 'dart:ui';
+ 
++import 'package:flutter/foundation.dart' show kIsWeb;
+ import 'package:flutter/material.dart';
+ import 'package:pathplanner/util/wpimath/geometry.dart';
+ import 'package:pathplanner/widgets/conditional_widget.dart';
+@@ -66,14 +67,17 @@ class _ProjectItemCardState extends State<ProjectItemCard> {
+                         child: FittedBox(
+                           fit: BoxFit.scaleDown,
+                           alignment: Alignment.centerLeft,
+-                          child: RenamableTitle(
+-                            title: widget.name,
+-                            textStyle: const TextStyle(fontSize: 28),
+-                            onRename: widget.onRenamed,
+-                          ),
++                          child: _locked
++                              ? Text(widget.name,
++                                  style: const TextStyle(fontSize: 28))
++                              : RenamableTitle(
++                                  title: widget.name,
++                                  textStyle: const TextStyle(fontSize: 28),
++                                  onRename: widget.onRenamed,
++                                ),
+                         ),
+                       ),
+-                      if (widget.showOptions)
++                      if (widget.showOptions && !_locked)
+                         FittedBox(
+                           child: PopupMenuButton<String>(
+                             tooltip: '',
+@@ -247,6 +251,9 @@ class _ProjectItemCardState extends State<ProjectItemCard> {
+     );
+   }
+ 
++  // Practice lab: the example paths the lessons rely on cannot be renamed, copied or deleted.
++  bool get _locked => kIsWeb && const {'Pickup', 'Score'}.contains(widget.name);
++
+   void _showDeleteDialog() {
+     showDialog(
+       context: context,
+diff --git a/lib/widgets/custom_appbar.dart b/lib/widgets/custom_appbar.dart
+index e3d3fc0..4deafd2 100644
+--- a/lib/widgets/custom_appbar.dart
++++ b/lib/widgets/custom_appbar.dart
+@@ -1,3 +1,4 @@
++import 'package:flutter/foundation.dart' show kIsWeb;
+ import 'dart:io';
+ 
+ import 'package:flutter/material.dart';
+@@ -14,9 +15,9 @@ class CustomAppBar extends AppBar {
+     super.automaticallyImplyLeading,
+   }) : super(
+           actions: [
+-            if (!Platform.isMacOS) MinimizeWindowButton(),
+-            if (!Platform.isMacOS) MaximizeWindowButton(),
+-            if (!Platform.isMacOS) CloseWindowButton(),
++            if ((!kIsWeb && !Platform.isMacOS)) MinimizeWindowButton(),
++            if ((!kIsWeb && !Platform.isMacOS)) MaximizeWindowButton(),
++            if ((!kIsWeb && !Platform.isMacOS)) CloseWindowButton(),
+           ],
+           title: SizedBox(
+             height: 48,
+diff --git a/lib/widgets/dialogs/import_field_dialog.dart b/lib/widgets/dialogs/import_field_dialog.dart
+index 6351813..94c352b 100644
+--- a/lib/widgets/dialogs/import_field_dialog.dart
++++ b/lib/widgets/dialogs/import_field_dialog.dart
+@@ -1,3 +1,4 @@
++import 'package:flutter/foundation.dart' show kIsWeb;
+ import 'dart:io';
+ 
+ import 'package:file_selector/file_selector.dart';
+@@ -104,7 +105,7 @@ class _ImportFieldDialogState extends State<ImportFieldDialog> {
+                           )
+                         : Text(
+                             _selectedFile!.path
+-                                .split(Platform.pathSeparator)
++                                .split((kIsWeb ? '/' : Platform.pathSeparator))
+                                 .last,
+                             style: TextStyle(color: colorScheme.primary),
+                           ),
+diff --git a/lib/widgets/field_image.dart b/lib/widgets/field_image.dart
+index 2d8ae52..a76a24a 100644
+--- a/lib/widgets/field_image.dart
++++ b/lib/widgets/field_image.dart
+@@ -1,3 +1,4 @@
++import 'package:flutter/foundation.dart' show kIsWeb;
+ import 'dart:io';
+ import 'dart:ui' as ui;
+ 
+@@ -129,7 +130,7 @@ class FieldImage {
+     }
+ 
+     // Assumes filename will be in FieldName_PixelsPerMeter format
+-    String fileName = imageFile.path.split(Platform.pathSeparator).last;
++    String fileName = imageFile.path.split((kIsWeb ? '/' : Platform.pathSeparator)).last;
+     String ppm = fileName.substring(
+         fileName.lastIndexOf('_') + 1, fileName.lastIndexOf('.'));
+     pixelsPerMeter = num.parse(ppm);
+diff --git a/lib/widgets/keyboard_shortcuts.dart b/lib/widgets/keyboard_shortcuts.dart
+index 8cbe8ed..de8aa18 100644
+--- a/lib/widgets/keyboard_shortcuts.dart
++++ b/lib/widgets/keyboard_shortcuts.dart
+@@ -1,3 +1,4 @@
++import 'package:flutter/foundation.dart' show kIsWeb;
+ import 'dart:io';
+ 
+ import 'package:flutter/material.dart';
+@@ -120,13 +121,13 @@ class _KeyBoardShortcuts extends State<KeyBoardShortcuts> {
+ Set<LogicalKeyboardKey> shortCut(BasicShortCuts basicShortCuts) {
+   switch (basicShortCuts) {
+     case BasicShortCuts.undo:
+-      if (Platform.isMacOS) {
++      if (!kIsWeb && Platform.isMacOS) {
+         return {LogicalKeyboardKey.meta, LogicalKeyboardKey.keyZ};
+       } else {
+         return {LogicalKeyboardKey.control, LogicalKeyboardKey.keyZ};
+       }
+     case BasicShortCuts.redo:
+-      if (Platform.isMacOS) {
++      if (!kIsWeb && Platform.isMacOS) {
+         return {LogicalKeyboardKey.meta, LogicalKeyboardKey.keyY};
+       } else {
+         return {LogicalKeyboardKey.control, LogicalKeyboardKey.keyY};
+diff --git a/pubspec.yaml b/pubspec.yaml
+index 19298ea..e10ca82 100644
+--- a/pubspec.yaml
++++ b/pubspec.yaml
+@@ -84,6 +84,9 @@ flutter:
+   assets:
+     - images/
+     - resources/default_navgrid.json
++    - web_seed/
++    - web_seed/autos/
++    - web_seed/paths/
+ 
+   # An image asset can refer to one or more resolution-specific "variants", see
+   # https://flutter.dev/assets-and-images/#resolution-aware.

@@ -38,6 +38,8 @@ function parseMember(m) {
   return { name: m.n, returnType, params, label: s.replace(/\s+/g, " ").trim() };
 }
 
+import { diagnose as runDiagnose } from "./javaCheck.js";
+
 export function createEngine(parser) {
   const classes = []; // all class records
   const byKey = new Map(); // "Name" or "Outer.Name" -> [records]
@@ -58,6 +60,10 @@ export function createEngine(parser) {
   const findClass = (name, imports) => {
     const list = byKey.get(name);
     if (!list) return null;
+    // An explicit import of a class we do not index (a different package with the same simple name) means
+    // the name is NOT this one.
+    const explicitFor = imports && [...imports].find((i) => i.endsWith(`.${name}`));
+    if (explicitFor) return list.find((c) => `${c.p}.${c.n}` === explicitFor) || null;
     if (list.length === 1 || !imports) return list[0];
     return list.find((c) => imports.has(`${c.p}.${c.n}`) || imports.has(`${c.p}.*`)) || list[0];
   };
@@ -217,8 +223,8 @@ export function createEngine(parser) {
     return cur;
   }
 
-  function buildCtx(src, offset) {
-    const tree = parseSource(src);
+  function buildCtx(src, offset, knownTree) {
+    const tree = knownTree || parseSource(src);
     return { tree, imports: readImports(src), decls: declsAt(src, offset, tree), self: enclosingClassName(src, offset) };
   }
 
@@ -396,5 +402,16 @@ export function createEngine(parser) {
     return null;
   }
 
-  return { loadIndex, complete, signatureHelp, hover, _typeOfExpr: typeOfExpr, _buildCtx: buildCtx, _findClass: findClass };
+  const checkApi = {
+    parse: parseSource,
+    packages: () => new Set(classes.map((c) => c.p)),
+    classesNamed: (n) => byKey.get(n) || [],
+    membersOf,
+    parseMember,
+    typeOfExpr,
+    buildCtx,
+  };
+  const diagnose = (src, opts) => runDiagnose(checkApi, src, opts);
+
+  return { loadIndex, diagnose, complete, signatureHelp, hover, _typeOfExpr: typeOfExpr, _buildCtx: buildCtx, _findClass: findClass };
 }

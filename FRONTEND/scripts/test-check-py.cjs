@@ -1,0 +1,44 @@
+// Behavioural checks for the Python semantic checker.  node scripts/test-check-py.cjs
+const Parser = require("web-tree-sitter");
+(async () => {
+  const { diagnosePython } = await import("../src/lang/pyCheck.js");
+  await Parser.init();
+  const L = await Parser.Language.load(require.resolve("tree-sitter-wasms/out/tree-sitter-python.wasm"));
+  const parser = new Parser(); parser.setLanguage(L);
+  const parse = (s) => parser.parse(s);
+  let fail = 0;
+  const run = (label, src, expect, sev = "error") => {
+    const ds = diagnosePython(parse, src).filter((d) => d.severity === sev);
+    const ok = expect.length === 0 ? ds.length === 0 : expect.every((re) => ds.some((d) => re.test(d.message)));
+    if (!ok) fail++;
+    console.log(ok ? "PASS" : "FAIL", label.padEnd(28), ds.map((d) => `${d.startLine}:${d.message.slice(0, 60)}`).join(" | ").slice(0, 150));
+  };
+  run("clean module", "import math\nfrom typing import List\n\nclass A:\n    def __init__(self, a, b=2):\n        self.a = a\n        self.b = b\n    def area(self) -> float:\n        return math.pi * self.a ** 2\n\ndef top(xs: List[int]) -> int:\n    total = 0\n    for x in xs:\n        total += x\n    return total\n\nprint(top([1, 2]), A(1).area())\n", []);
+  run("undefined name", "def f():\n    return cnt + 1\n", [/name 'cnt' is not defined/]);
+  run("missing import", "def f():\n    return math.sqrt(4)\n", [/name 'math' is not defined. Add: import math/]);
+  run("typing import hint", "def f(x: Optional[int]): pass\n", [/from typing import Optional/]);
+  run("comprehension/lambda/with", "def f(data):\n    ys = [y * 2 for y in data if y]\n    g = lambda q: q + 1\n    with open('f') as fh:\n        t = fh.read()\n    try:\n        pass\n    except Exception as e:\n        print(e)\n    return ys, g, t\n", []);
+  run("global + nested", "count = 0\ndef inc():\n    global count\n    count += 1\ndef outer():\n    v = 1\n    def inner():\n        return v\n    return inner\n", []);
+  run("star import quiet", "from wpilib import *\nprint(Foo)\n", []);
+  run("wrong arg count", "def f(a, b):\n    return a\nf(1)\nf(1, 2, 3)\n", [/missing required argument: 'b'/, /takes 2 positional arguments but 3/]);
+  run("unexpected keyword", "def f(a):\n    pass\nf(a=1, z=2)\n", [/unexpected keyword argument 'z'/]);
+  run("defaults + *args ok", "def f(a, b=1, *rest, **kw):\n    pass\nf(1)\nf(1, 2, 3, 4, k=5)\n", []);
+  run("class ctor arity", "class P:\n    def __init__(self, x):\n        self.x = x\nP()\nP(1, 2)\n", [/missing required argument: 'x'/, /takes 1 positional/]);
+  run("self method arity", "class P:\n    def a(self, v):\n        return v\n    def b(self):\n        return self.a()\n", [/self\.a\(\) missing required argument: 'v'/]);
+  run("missing attribute", "class P:\n    def __init__(self):\n        self.height = 0\n    def f(self):\n        return self.hieght\n", [/'P' has no attribute 'hieght'. Did you mean 'height'/]);
+  run("attribute ok w/ base", "from lib import Unknown\nclass B:\n    def __init__(self):\n        self.q = 1\nclass C(B):\n    def f(self):\n        return self.q\nclass D(Unknown):\n    def f(self):\n        return self.anything\n", []);
+  run("missing return annot", "def f(a) -> int:\n    if a:\n        return 1\n", [/Missing return/]);
+  run("return all paths ok", "def f(a) -> int:\n    if a:\n        return 1\n    else:\n        return 2\ndef g() -> int:\n    while True:\n        pass\ndef h() -> int:\n    raise ValueError()\ndef k(a) -> int:\n    try:\n        return a\n    finally:\n        pass\n", []);
+  run("mixed returns warn", "def f(a):\n    if a:\n        return 1\n", [/others reach the end/], "warning");
+  run("unreachable", "def f():\n    return 1\n    print('x')\n", [/Unreachable/], "warning");
+  run("duplicate param", "def f(a, a):\n    pass\n", [/Duplicate parameter/]);
+  run("duplicate def", "def f():\n    pass\ndef f():\n    pass\n", [/already defined/], "warning");
+  run("literal mismatch", "x: int = 'a'\ny: str = 5\ndef f() -> int:\n    return 'no'\n", [/str value where 'int'/, /int value where 'str'/]);
+  run("float to int annot", "x: int = 1.5\ny: float = 1\n", [/float value where 'int'/]);
+  run("unused import warn", "import os\nprint(1)\n", [/'os' is imported but never used/], "warning");
+  run("no silly builtin hint", "def f():\n    return cnt\n", [/name 'cnt' is not defined$/]);
+  run("builtin typo hint", "prnt(1)\n", [/Did you mean 'print'/]);
+  run("file name hint", "height = 1\nprint(hieght)\n", [/Did you mean 'height'/]);
+  console.log(fail ? `${fail} FAILED` : "all passed");
+  process.exit(fail ? 1 : 0);
+})().catch((e) => { console.log("ERR", e.stack); process.exit(1); });

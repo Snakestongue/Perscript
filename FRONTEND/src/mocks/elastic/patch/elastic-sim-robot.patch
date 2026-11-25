@@ -1,16 +1,93 @@
+diff --git a/lib/pages/dashboard_page.dart b/lib/pages/dashboard_page.dart
+index c357ae5..b1e76d1 100644
+--- a/lib/pages/dashboard_page.dart
++++ b/lib/pages/dashboard_page.dart
+@@ -30,6 +30,9 @@ import 'package:elastic_dashboard/services/ip_address_util.dart';
+ import 'package:elastic_dashboard/services/log.dart';
+ import 'package:elastic_dashboard/services/nt_connection.dart';
+ import 'package:elastic_dashboard/services/settings.dart';
++import 'package:elastic_dashboard/services/sim_lab_link_stub.dart'
++    if (dart.library.js_interop) 'package:elastic_dashboard/services/sim_lab_link_web.dart';
++import 'package:elastic_dashboard/services/sim_robot.dart';
+ import 'package:elastic_dashboard/services/update_checker.dart';
+ import 'package:elastic_dashboard/util/tab_data.dart';
+ import 'package:elastic_dashboard/util/test_utils.dart';
+@@ -145,7 +148,19 @@ abstract class DashboardPageViewModel extends ChangeNotifier {
+     return {'version': 1.0, 'grid_size': gridSize, 'tabs': gridData};
+   }
+ 
++  String _lastLabReport = '';
++
+   void init() {
++    if (kLabMode) {
++      // Tell the practice laptop what is on the dashboard (once a second, only on change).
++      Timer.periodic(const Duration(seconds: 1), (_) {
++        final report = labLayoutReport(toJson());
++        final encoded = jsonEncode(report);
++        if (encoded == _lastLabReport) return;
++        _lastLabReport = encoded;
++        labPost(report);
++      });
++    }
+     robotNotificationListener = ElasticLibListener(
+       ntConnection: ntConnection,
+       onTabSelected: (tabIdentifier) {
+@@ -960,6 +975,11 @@ class _DashboardPageState extends State<DashboardPage>
+         child: const Text('Help'),
+       ),
+     ];
++    if (kLabMode) {
++      // Practice lab: no file, download or help menus; just edit and add widgets.
++      menuChildren.removeAt(2);
++      menuChildren.removeAt(0);
++    }
+ 
+     MenuBar menuBar = MenuBar(
+       style: const MenuStyle(
+@@ -982,16 +1002,18 @@ class _DashboardPageState extends State<DashboardPage>
+             child: const Icon(Icons.menu),
+           ),
+         const VerticalDivider(width: 4),
+-        // Settings
+-        MenuItemButton(
+-          style: menuButtonStyle,
+-          leadingIcon: const Icon(Icons.settings),
+-          onPressed: () {
+-            model.displaySettingsDialog(context);
+-          },
+-          child: const Text('Settings'),
+-        ),
+-        const VerticalDivider(width: 4),
++        // Settings (hidden in the practice lab)
++        if (!kLabMode) ...[
++          MenuItemButton(
++            style: menuButtonStyle,
++            leadingIcon: const Icon(Icons.settings),
++            onPressed: () {
++              model.displaySettingsDialog(context);
++            },
++            child: const Text('Settings'),
++          ),
++          const VerticalDivider(width: 4),
++        ],
+         // Add Widget
+         MenuItemButton(
+           style: menuButtonStyle,
 diff --git a/lib/services/nt4_client.dart b/lib/services/nt4_client.dart
-index f703a92..429f433 100644
+index f703a92..2c7b4fa 100644
 --- a/lib/services/nt4_client.dart
 +++ b/lib/services/nt4_client.dart
-@@ -12,6 +12,7 @@ import 'package:dot_cast/dot_cast.dart';
+@@ -12,6 +12,9 @@ import 'package:dot_cast/dot_cast.dart';
  import 'package:msgpack_dart/msgpack_dart.dart';
  import 'package:web_socket_channel/web_socket_channel.dart';
  
++import 'package:elastic_dashboard/services/sim_lab_link_stub.dart'
++    if (dart.library.js_interop) 'package:elastic_dashboard/services/sim_lab_link_web.dart';
 +import 'package:elastic_dashboard/services/sim_robot.dart';
  import 'package:elastic_dashboard/services/log.dart';
  import 'package:elastic_dashboard/services/nt4_type.dart';
  import 'package:elastic_dashboard/services/struct_schemas/nt_struct.dart';
-@@ -375,8 +376,13 @@ class NT4Client {
+@@ -375,8 +378,15 @@ class NT4Client {
    bool _serverConnectionActive = false;
    bool _rttConnectionActive = false;
  
@@ -18,6 +95,8 @@ index f703a92..429f433 100644
 +  SimRobot? _sim;
 +  Timer? _simTimer;
 +  bool _simulating = false;
++  int _simNextId = 1;
++  SimLabLink? _simLink;
 +
    bool get mainWebsocketActive =>
 -      _mainWebsocket != null && _mainWebsocket!.closeCode == null;
@@ -25,7 +104,7 @@ index f703a92..429f433 100644
    bool get rttWebsocketActive =>
        _rttWebsocket != null && _rttWebsocket!.closeCode == null;
  
-@@ -399,6 +405,10 @@ class NT4Client {
+@@ -399,6 +409,10 @@ class NT4Client {
      this.onDisconnect,
    }) {
      Future.delayed(const Duration(seconds: 1, milliseconds: 500), () {
@@ -36,11 +115,18 @@ index f703a92..429f433 100644
        _connect();
  
        _connectionTimer = Timer.periodic(const Duration(milliseconds: 500), (_) {
-@@ -602,6 +612,11 @@ class NT4Client {
+@@ -602,6 +616,18 @@ class NT4Client {
      for (NT4Subscription sub in _matchingSubscriptions(topic.name)) {
        sub.updateValue(data, timestamp);
      }
 +
++    if (kLabMode &&
++        _sim != null &&
++        (topic.name.endsWith('/selected') ||
++            topic.name.endsWith('/selected/tune'))) {
++      // Tell the practice laptop which autonomous routine the dashboard picked.
++      labPost({'type': 'chooser', 'topic': topic.name, 'selected': data});
++    }
 +    final simChanges = _sim?.onClientWrite(topic.name, data);
 +    if (simChanges != null && simChanges.isNotEmpty) {
 +      _simPush(simChanges, timestamp);
@@ -48,7 +134,7 @@ index f703a92..429f433 100644
    }
  
    void addSampleFromName(String topic, dynamic data, [int? timestamp]) {
-@@ -716,6 +731,55 @@ class NT4Client {
+@@ -716,6 +742,135 @@ class NT4Client {
      }
    }
  
@@ -64,32 +150,106 @@ index f703a92..429f433 100644
 +
 +  /// Pretends to be connected to a robot: announces the simulated topics and
 +  /// keeps their values moving. Used instead of [_connect] in the web build.
++  void _simAnnounce(SimTopic simTopic, int timestampUS) {
++    final topic = NT4Topic(
++      name: simTopic.name,
++      type: NT4Type.parse(simTopic.type),
++      id: _simNextId++,
++      properties: Map<String, dynamic>.from(simTopic.properties),
++    );
++    announcedTopics[topic.id] = topic;
++    for (final listener in _topicAnnounceListeners) {
++      listener.call(topic);
++    }
++    lastAnnouncedValues[topic.name] = simTopic.value;
++    lastAnnouncedTimestamps[topic.name] = timestampUS;
++  }
++
++  /// A deploy from the practice laptop changed what the robot code publishes.
++  void _simOnLabMessage(Map<Object?, Object?> m) {
++    final sim = _sim;
++    if (sim == null) return;
++    final type = m['type'];
++    if (type == 'ds') {
++      sim.onDriverStation('${m['mode']}', m['enabled'] == true);
++      return;
++    }
++    if (type != 'deploy') return;
++    final topics = <SimDeployTopic>[];
++    final rawTopics = m['topics'];
++    if (rawTopics is List) {
++      for (final t in rawTopics) {
++        if (t is Map) topics.add(SimDeployTopic('${t['name']}', '${t['type']}'));
++      }
++    }
++    final timeline = <SimAutoItem>[];
++    final auto = m['autonomous'];
++    String? autoName;
++    if (auto is Map) {
++      autoName = auto['name'] as String?;
++      final raw = auto['timeline'];
++      if (raw is List) {
++        for (final i in raw) {
++          if (i is! Map) continue;
++          if (i['kind'] == 'command') {
++            timeline.add(SimAutoItem.command('${i['name']}'));
++          } else {
++            timeline.add(SimAutoItem.point(
++                (i['x'] as num).toDouble(), (i['y'] as num).toDouble()));
++          }
++        }
++      }
++    }
++    final registered = m['registered'];
++    sim.setProgram(
++      registered: registered is List ? registered.map((e) => '$e') : const [],
++      autoName: autoName,
++      timeline: timeline,
++    );
++    _simApplyDeploy(topics);
++  }
++
++  void _simApplyDeploy(List<SimDeployTopic> deployed) {
++    final sim = _sim;
++    if (sim == null) return;
++    final change = sim.applyDeploy(deployed);
++    for (final removed in change.removed) {
++      final topic = announcedTopics.values.firstWhereOrNull(
++        (e) => e.name == removed.name,
++      );
++      if (topic == null) continue;
++      announcedTopics.remove(topic.id);
++      lastAnnouncedValues.remove(topic.name);
++      for (final listener in _topicUnannounceListeners) {
++        listener.call(topic);
++      }
++    }
++    final now = _getClientTimeUS();
++    for (final added in change.added) {
++      _simAnnounce(added, now);
++    }
++  }
++
++  /// Pretends to be connected to a robot: announces the simulated topics and
++  /// keeps their values moving. Used instead of [_connect] in the web build.
 +  void _startSimulation() {
 +    if (_simulating) return;
-+    final sim = SimRobot();
++    final sim = SimRobot(lab: kLabMode);
 +    _sim = sim;
 +    _simulating = true;
 +    _serverConnectionActive = true;
 +    _attemptConnection = false;
 +
-+    var nextId = 1;
 +    final now = _getClientTimeUS();
 +    for (final simTopic in sim.topics) {
-+      final topic = NT4Topic(
-+        name: simTopic.name,
-+        type: NT4Type.parse(simTopic.type),
-+        id: nextId++,
-+        properties: Map<String, dynamic>.from(simTopic.properties),
-+      );
-+      announcedTopics[topic.id] = topic;
-+      for (final listener in _topicAnnounceListeners) {
-+        listener.call(topic);
-+      }
-+      lastAnnouncedValues[topic.name] = simTopic.value;
-+      lastAnnouncedTimestamps[topic.name] = now;
++      _simAnnounce(simTopic, now);
 +    }
 +
 +    onConnect?.call();
++
++    if (kLabMode) {
++      _simLink = SimLabLink(_simOnLabMessage)..start();
++    }
 +
 +    final clock = Stopwatch()..start();
 +    var last = 0.0;
@@ -97,6 +257,12 @@ index f703a92..429f433 100644
 +      final t = clock.elapsedMilliseconds / 1000.0;
 +      _latencyMs = 3 + 1.5 * sin(t);
 +      _simPush(sim.step(t, t - last), _getClientTimeUS());
++      if (kLabMode) {
++        for (final e in sim.events) {
++          labPost(Map<String, dynamic>.from(e));
++        }
++      }
++      sim.events.clear();
 +      last = t;
 +    });
 +  }
@@ -104,6 +270,90 @@ index f703a92..429f433 100644
    Future<void> _connect() async {
      if (_mainWebsocket != null ||
          !_attemptConnection ||
+diff --git a/pubspec.lock b/pubspec.lock
+index cfb129e..06f70ab 100644
+--- a/pubspec.lock
++++ b/pubspec.lock
+@@ -149,10 +149,10 @@ packages:
+     dependency: transitive
+     description:
+       name: clock
+-      sha256: fddb70d9b5277016c77a80201021d40a2247104d9f4aa7bab7157b7e3f05b84b
++      sha256: e51d50bca3217c9a9fa2b41a30e4a38971133f5f9ec7a3d57bae095007f1d28e
+       url: "https://pub.dev"
+     source: hosted
+-    version: "1.1.2"
++    version: "1.1.3"
+   code_builder:
+     dependency: transitive
+     description:
+@@ -253,10 +253,10 @@ packages:
+     dependency: "direct main"
+     description:
+       name: elegant_notification
+-      sha256: "8e20c4f5378a639428cf3703707b67aec796ac009bdf58be559753fe9e852d26"
++      sha256: "0d2231f4681eb01fdb745362b75aacd53684103e7e7c5c6c2feea16d4557c7ca"
+       url: "https://pub.dev"
+     source: hosted
+-    version: "2.5.1"
++    version: "2.5.5"
+   equatable:
+     dependency: transitive
+     description:
+@@ -598,6 +598,14 @@ packages:
+       url: "https://pub.dev"
+     source: hosted
+     version: "6.0.0"
++  listen:
++    dependency: transitive
++    description:
++      name: listen
++      sha256: "47501a08016a43fcad79252439d723f50f14f88fa7bfd8a177e0a417e5c9e1f2"
++      url: "https://pub.dev"
++    source: hosted
++    version: "1.0.1"
+   logger:
+     dependency: "direct main"
+     description:
+@@ -1009,10 +1017,10 @@ packages:
+     dependency: transitive
+     description:
+       name: stack_trace
+-      sha256: "8b27215b45d22309b5cddda1aa2b19bdfec9df0e765f2de506401c071d38d1b1"
++      sha256: "277654b3034d17ac6f9f1cb5595db011b1d5d41e8806866db28e0abaa101c490"
+       url: "https://pub.dev"
+     source: hosted
+-    version: "1.12.1"
++    version: "1.12.2"
+   stream_channel:
+     dependency: transitive
+     description:
+@@ -1057,10 +1065,10 @@ packages:
+     dependency: transitive
+     description:
+       name: test_api
+-      sha256: "2a122cbe059f8b610d3a5415f42e255b6c17b1f21eee1d960f31080237fb4f11"
++      sha256: "0a10344e901e5b2e63819567951cb6a06673ed6b84f40462188ff5a0c41f371f"
+       url: "https://pub.dev"
+     source: hosted
+-    version: "0.7.12"
++    version: "0.7.14"
+   tidy_imports:
+     dependency: "direct dev"
+     description:
+@@ -1177,10 +1185,10 @@ packages:
+     dependency: "direct main"
+     description:
+       name: vector_math
+-      sha256: f36f9f3be64c6198714492bb455c11056e33e2f85d9a0b676a48301e44fdcf47
++      sha256: fa49e1674cb84acb900141714e6c6e1f9ae099827c24d141430ff6819db4e1bc
+       url: "https://pub.dev"
+     source: hosted
+-    version: "2.4.2"
++    version: "2.4.4"
+   version:
+     dependency: "direct main"
+     description:
 diff --git a/web/index.html b/web/index.html
 index 8433012..86af81e 100644
 --- a/web/index.html

@@ -12,7 +12,9 @@ The dashboard in the lesson is the real Elastic web build. The only changes to E
 - a hook in `lib/services/nt4_client.dart` that starts the simulation, and a
   `<base href="$FLUTTER_BASE_HREF">` line in `web/index.html` so it can be served from a subfolder.
 
-Both edits are in `patch/elastic-sim-robot.patch`; `patch/sim_robot.dart` is the new file.
+The edits are in `patch/elastic-sim-robot.patch`; `patch/sim_robot.dart`, `sim_lab_link_stub.dart` and `sim_lab_link_web.dart` are new files.
+
+**Lab mode.** When the page is opened with `?lab=1` (as in the lab desktop), the simulated robot only publishes the topics every robot has and then adds or removes the topics a deploy from the practice laptop publishes (`sessionStorage["labRobotDeploy"]` plus a `lab-robot` BroadcastChannel). Without `?lab=1` it publishes everything, as in the Elastic lesson.
 
 ## Rebuilding
 
@@ -20,7 +22,7 @@ Both edits are in `patch/elastic-sim-robot.patch`; `patch/sim_robot.dart` is the
 git clone https://github.com/Gold872/elastic-dashboard.git
 cd elastic-dashboard
 git apply <this repo>/FRONTEND/src/mocks/elastic/patch/elastic-sim-robot.patch
-cp <this repo>/FRONTEND/src/mocks/elastic/patch/sim_robot.dart lib/services/
+cp <this repo>/FRONTEND/src/mocks/elastic/patch/sim_*.dart lib/services/
 flutter pub upgrade elegant_notification   # 2.5.1 does not compile on Flutter 3.50; the pubspec range already allows 2.5.5
 flutter build web --release --dart-define=SIM_ROBOT=true \
   --base-href=/Perscript/elastic/ --pwa-strategy=none --no-web-resources-cdn

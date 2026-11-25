@@ -1869,14 +1869,11 @@ pre code {
   padding-block: 2rem;
   padding-inline-end: 2rem;
   position: sticky;
-  top: var(--header-height);
-  align-self: start;
-  height: calc(100dvh - var(--header-height));
-  min-height: 0;
+  top: 0;
+  height: 100vh;
   overflow-y: auto;
   overscroll-behavior: contain;
   scrollbar-width: thin;
-  scrollbar-color: var(--line-strong) transparent;
 }
 
 .rail-language {
@@ -2148,7 +2145,7 @@ pre code {
 }
 
 .action-buttons,
-.bug-buttons {
+.bug-buttons, .hint-button {
   min-height: 2.75rem;
   display: inline-flex;
   align-items: center;
@@ -2164,7 +2161,13 @@ pre code {
   cursor: pointer;
   transition: transform 130ms var(--ease-out), color 140ms ease-out, background-color 140ms ease-out, border-color 140ms ease-out;
 }
-
+.hint-button{
+  min-height: 1rem;
+}
+.sidebar-b{
+  min-height: 2.25rem;
+  margin: 2px 0px;
+}
 .bug-buttons:hover {
   cursor: pointer;
   background-color: var(--accent) !important;
@@ -2172,12 +2175,18 @@ pre code {
   color: var(--canvas-deep);
 }
 
-.action-buttons:hover {
+.action-buttons:hover,.lab-sub-but:hover {
+  cursor: pointer;
   background-color: var(--accent) !important;
   border-color: var(--accent) !important;
   color: var(--canvas-deep);
 }
-
+.action-buttons:disabled:hover {
+  cursor: not-allowed;
+  background-color: transparent !important;
+  border-color: rgba(255, 255, 255, 0.39) !important;
+  color: var(--text-soft) !important;
+}
 #run-submit:hover {
   background: color-mix(in oklch, var(--accent), white) !important;
   /* color:white; */
