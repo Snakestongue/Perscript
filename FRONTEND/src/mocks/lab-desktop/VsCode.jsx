@@ -45,7 +45,10 @@ function Tree({ nodes, depth, open, toggle, active, onOpen, editable, lessonFile
       <button
         type="button"
         onClick={() => (n.children ? toggle(n.path) : onOpen(n.path))}
-        className={`flex w-full items-center gap-1 truncate py-[2px] text-left text-[13px] hover:bg-[#2a2d2e] ${active === n.path ? "bg-[#37373d] text-white" : "text-[#cccccc]"}`}
+        className={`
+          flex w-full items-center gap-1 truncate py-[2px] text-left text-[13px] 
+          cursor-pointer hover:bg-[rgb(20_20_20)] transition-all duration-200
+           ${active === n.path ? "bg-[#37373d] text-white" : "text-[#cccccc]"}`}
         style={{ paddingLeft: 8 + depth * 12 }}
       >
         <span className="w-3 text-[10px] text-[#8b8b8b]">{n.children ? (open.has(n.path) ? "▾" : "▸") : ""}</span>
@@ -62,7 +65,7 @@ function OutputPanel({ lines, busy }) {
   const bottom = useRef(null);
   useEffect(() => { bottom.current?.scrollIntoView({ block: "end" }); }, [lines]);
   return (
-    <div className="flex h-full min-h-0 flex-col bg-[#1e1e1e] font-mono text-[12px]">
+    <div className="flex h-full min-h-0 flex-col !bg-black font-mono text-[12px]">
       <div className="flex shrink-0 items-center gap-3 border-b border-[#2b2b2b] px-3 py-1 text-[11px] uppercase tracking-wide text-[#8b8b8b]">
         <span className="border-b border-[#e5e5e5] pb-[2px] text-[#e5e5e5]">Terminal</span>
         {busy && <span className="normal-case text-[#cca700]">● Running…</span>}
@@ -137,35 +140,41 @@ export default function VsCode({ files, setFile, resetProject, onDeploy, onResul
   const z = { zoom: scale };
 
   return (
-    <div ref={rootRef} className="relative flex h-full min-h-0 flex-col bg-[#1e1e1e] text-[#cccccc]" style={{ fontFamily: "system-ui, 'Segoe UI', sans-serif" }} onKeyDown={onKeyDown} tabIndex={-1}>
+    <div ref={rootRef} className="relative flex h-full min-h-0 flex-col !bg-black text-[#cccccc] text-[14px]" onKeyDown={onKeyDown} tabIndex={-1}>
       <div className="flex min-h-0 flex-1">
-        <aside className="flex w-48 shrink-0 flex-col border-r border-[#2b2b2b] bg-[#252526]" style={z}>
+        <aside className="flex w-48 shrink-0 flex-col border-r border-[#2b2b2b] !bg-black" style={z}>
           <div className="flex items-center justify-between px-3 py-2 text-[11px] uppercase tracking-wide text-[#bbbbbb]">
             <span>Explorer</span>
-            <button type="button" className="rounded px-1 text-[10px] normal-case text-[#8b8b8b] hover:bg-[#37373d] hover:text-white" onClick={resetProject} title="Restore the starting files">Reset</button>
+            <button type="button" className="
+            rounded px-1 text-[10px] normal-case text-[#8b8b8b] hover:bg-[#37373d] hover:text-white cursor-pointer duration-300" 
+            onClick={resetProject} title="Restore the starting files">Reset</button>
           </div>
           <div className="px-3 pb-1 text-[11px] font-semibold uppercase text-[#bbbbbb]">robot</div>
-          <div className="min-h-0 flex-1 overflow-auto pb-2"><Tree nodes={tree} depth={0} open={open} toggle={toggle} active={active} onOpen={openFile} editable={editable} lessonFile={lessonFile} /></div>
+          <div className="min-h-0 flex-1 overflow-auto pb-2">
+            <Tree nodes={tree} depth={0} open={open} toggle={toggle} active={active} onOpen={openFile} 
+            editable={editable} lessonFile={lessonFile} /></div>
         </aside>
 
         <div className="flex min-w-0 flex-1 flex-col">
-          <div className="flex shrink-0 items-stretch bg-[#252526]" style={z}>
+          <div className="flex shrink-0 items-stretch bg-black" style={z}>
             <div className="flex min-w-0 flex-1 overflow-x-auto" role="tablist">
               {tabs.map((p) => (
-                <div key={p} role="tab" aria-selected={p === active} className={`group flex shrink-0 items-center gap-2 border-r border-[#2b2b2b] px-3 py-1.5 text-[12px] ${p === active ? "bg-[#1e1e1e] text-white" : "bg-[#2d2d2d] text-[#9d9d9d]"}`}>
+                <div key={p} role="tab" aria-selected={p === active} 
+                className={`group flex shrink-0 items-center gap-2 
+                border-r border-none !bg-black px-3 py-1.5 text-[12px] ${p === active ? "!bg-black text-white" : "bg-[#2d2d2d] text-[#9d9d9d]"}`}>
                   <button type="button" onClick={() => setActive(p)}>{p.split("/").pop()}{!editable(p) ? " 🔒" : ""}</button>
                   <button type="button" aria-label={`Close ${p.split("/").pop()}`} className="rounded px-1 text-[#8b8b8b] hover:bg-[#444] hover:text-white" onClick={() => closeTab(p)}>×</button>
                 </div>
               ))}
             </div>
-            <div className="relative flex shrink-0 items-center px-2">
-              <button type="button" onClick={() => setMenu((m) => !m)} aria-haspopup="menu" aria-expanded={menu} aria-label="WPILib commands" title="WPILib commands (Shift+F5 deploys)" className={`grid h-7 w-7 place-items-center rounded hover:bg-[#37373d] ${menu ? "bg-[#37373d]" : ""}`}><WpiIcon /></button>
+            <div className="relative flex shrink-0 items-center px-2 ">
+              <button type="button" onClick={() => setMenu((m) => !m)} aria-haspopup="menu" aria-expanded={menu} aria-label="WPILib commands" title="WPILib commands (Shift+F5 deploys)" className={`!cursor-pointer grid h-7 w-7 place-items-center rounded hover:bg-[#37373d] ${menu ? "bg-[#37373d]" : ""}`}><WpiIcon /></button>
               {menu && (
-                <div role="menu" className="absolute right-1 top-full z-20 mt-1 w-64 overflow-hidden rounded border border-[#454545] bg-[#252526] py-1 text-[12px] shadow-xl">
+                <div role="menu" className="absolute right-1 top-full z-20 mt-1 w-64 overflow-hidden rounded border border-[#454545] bg-black py-1 text-[12px] shadow-xl">
                   <div className="px-3 py-1 text-[10px] uppercase tracking-wide text-[#8b8b8b]">WPILib</div>
-                  <button role="menuitem" type="button" disabled={busy} className="flex w-full items-center justify-between px-3 py-1.5 text-left hover:bg-[#04395e] disabled:opacity-50" onClick={() => { setMenu(false); run("build"); }}><span>Build Robot Code</span></button>
-                  <button role="menuitem" type="button" disabled={busy} className={`flex w-full items-center justify-between px-3 py-1.5 text-left hover:bg-[#04395e] disabled:opacity-50 ${deployEnabled ? "" : "text-[#6b6b6b]"}`} onClick={() => { setMenu(false); run("deploy"); }}><span>Deploy Robot Code</span><span className="text-[10px] text-[#8b8b8b]">⇧F5</span></button>
-                  <button role="menuitem" type="button" disabled className="flex w-full items-center justify-between px-3 py-1.5 text-left text-[#6b6b6b]"><span>Simulate Robot Code</span><span className="text-[10px]">not here</span></button>
+                  <button role="menuitem" type="button" disabled={busy} className="flex w-full items-center justify-between px-3 py-1.5 text-left hover:bg-[#04395e] disabled:opacity-50 !cursor-pointer" onClick={() => { setMenu(false); run("build"); }}><span>Build Robot Code</span></button>
+                  <button role="menuitem" type="button" disabled={busy} className={`flex w-full items-center justify-between px-3 py-1.5 text-left hover:bg-[#04395e] disabled:opacity-50 !cursor-pointer ${deployEnabled ? "" : "text-[#6b6b6b]"}`} onClick={() => { setMenu(false); run("deploy"); }}><span>Deploy Robot Code</span><span className="text-[10px] text-[#8b8b8b]">⇧F5</span></button>
+                  <button role="menuitem" type="button" disabled className="flex w-full items-center justify-between px-3 py-1.5 text-left text-[#6b6b6b] !cursor-pointer"><span>Simulate Robot Code</span><span className="text-[10px]">not here</span></button>
                 </div>
               )}
             </div>
@@ -174,12 +183,29 @@ export default function VsCode({ files, setFile, resetProject, onDeploy, onResul
             {active ? (
               <Editor
                 height="100%"
-                theme="vs-dark"
                 path={active}
                 language={langOf(active)}
                 value={files[active]}
                 onChange={(v) => { if (canEdit) setFile(active, v ?? ""); }}
+                
                 onMount={(editor, monaco) => {
+                  monaco.editor.defineTheme("vscode-black", {
+  base: "vs-dark",
+  inherit: true,
+  rules: [],
+  colors: {
+    "editor.background": "#000000",
+    "editorGutter.background": "#000000",
+    "editorLineNumber.foreground": "#858585",
+    "editorLineNumber.activeForeground": "#ffffff",
+    "editorWidget.background": "#000000",
+    "editorSuggestWidget.background": "#000000",
+    "editorHoverWidget.background": "#000000",
+    "editor.lineHighlightBackground": "#111111",
+  },
+});
+
+monaco.editor.setTheme("vscode-black");
                   registerJavaIntelliSense(monaco);
                   attachJavaHelpers(editor, { monaco, extraTypes: () => new Set(Object.keys(filesRef.current).filter((p) => p.endsWith(".java")).map((p) => p.split("/").pop().replace(".java", ""))) });
                   attachLint(monaco, editor);

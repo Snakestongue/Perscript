@@ -26,9 +26,9 @@ const MIN = { code: { w: 420, h: 300 }, elastic: { w: 340, h: 260 }, pathplanner
 const SCALES = [0.8, 0.9, 1, 1.1, 1.25, 1.4];
 
 const APPS = [
-  { id: "code", title: "Visual Studio Code", icon: "🧩", color: "#007acc" },
+  { id: "code", title: "Visual Studio Code", icon: "⚙️", color: "#007acc" },
   { id: "elastic", title: "Elastic", icon: "📊", color: "#2f6fed", src: `${BASE}elastic/index.html?lab=1` },
-  { id: "pathplanner", title: "PathPlanner", icon: "🛣️", color: "#e8a33d", src: `${BASE}pathplanner/index.html` },
+  { id: "pathplanner", title: "PathPlanner", icon: "♾️", color: "#e8a33d", src: `${BASE}pathplanner/index.html` },
   { id: "ds", title: "Driver Station", icon: "🎮", color: "#3fb950" },
 ];
 
@@ -87,14 +87,30 @@ function Guide({ lessons, lessonId, setLessonId, unlocked, steps, state, current
   const showHint = hintFor === current;
   const step = steps[current];
   return (
-    <aside className="flex w-72 shrink-0 flex-col gap-3 overflow-y-auto border-r border-zinc-700 bg-zinc-900/70 p-3 text-sm max-md:w-56" aria-label="Lesson guide">
+    <aside className="flex w-80 shrink-0 flex-col gap-3 overflow-y-auto border-r border-zinc-700  p-3 text-sm max-md:w-56" aria-label="Lesson guide">
       <div>
         <p className="text-[11px] uppercase tracking-wider text-slate-500">Robot Lab</p>
         <div className="mt-1 flex flex-col gap-1" role="tablist" aria-label="Lessons">
           {lessons.map((l, i) => {
             const open = i === 0 || unlocked;
             return (
-              <button key={l.id} type="button" role="tab" aria-selected={l.id === lessonId} disabled={!open} title={open ? l.title : "Finish lesson 1 first"} onClick={() => setLessonId(l.id)} className={`rounded px-2 py-1 text-left text-xs ${l.id === lessonId ? "bg-[#7AADFF]/20 text-white" : "text-slate-400 hover:bg-zinc-800"} disabled:opacity-40`}>{open ? "" : "🔒 "}{l.title}</button>
+              <button
+                key={l.id}
+                type="button"
+                role="tab"
+                aria-selected={l.id === lessonId}
+                disabled={!open}
+                title={open ? l.title : "Finish lesson 1 first"}
+                onClick={() => setLessonId(l.id)}
+                className={`
+                  lab-sub-but
+                  rounded-[0.45rem] border px-2 py-1 text-left text-xs font-bold transition-colors duration-150 disabled:opacity-40 ${l.id === lessonId
+                    ? "border-[#7AADFF] bg-[#7AADFF]/20 text-white"
+                    : "border-white/[0.39] bg-transparent text-slate-300 hover:border-white/60 hover:bg-white/5"
+                  }`}
+              >
+                {open ? "" : "🔒 "}{l.title}
+              </button>
             );
           })}
         </div>
@@ -114,7 +130,13 @@ function Guide({ lessons, lessonId, setLessonId, unlocked, steps, state, current
       ) : step ? (
         <div>
           <p className="text-slate-100"><span className="font-semibold text-[#7AADFF]">Step {current + 1}:</span> {step.body}</p>
-          <button type="button" className="mt-1 text-xs text-slate-400 underline hover:text-slate-200" onClick={() => setHintFor(showHint ? null : current)}>{showHint ? "Hide hint" : "Need a hint?"}</button>
+          <button
+            type="button"
+            className="action-buttons hint-button mt-2 !w-full !h-11 !min-h-11"
+            onClick={() => setHintFor(showHint ? null : current)}
+          >
+            {showHint ? "Hide hint" : "Need a hint?"}
+          </button>
           {step.id === "dashboard" && <p className="mt-1 text-xs text-slate-400">Waiting for Elastic to report the tile…</p>}
           {showHint && <p className="mt-1 whitespace-pre-wrap rounded bg-black/40 px-2 py-1 font-mono text-xs text-slate-200">{step.hint}</p>}
           {picked && <p className="mt-1 text-xs text-slate-400">Elastic reports the Auto Chooser is set to “{picked}”.</p>}
@@ -123,11 +145,11 @@ function Guide({ lessons, lessonId, setLessonId, unlocked, steps, state, current
         <p className="font-semibold text-green-300">{lessonId === "l1" ? `Lesson complete. Elastic reported “${placed?.title || "Elevator Height"}” placed on the ${placed?.tab || "dashboard"} tab as a ${placed?.type || "widget"}. Lesson 2 is next.` : "Lesson complete. Your auto drove the path and the robot ran runIntake when the auto reached it. Try Free play to keep experimenting."}</p>
       )}
       <div className="mt-auto flex flex-col gap-1">
-        <button type="button" onClick={toggleFreePlay} className="rounded border border-zinc-600 px-2 py-1 text-xs text-slate-300 hover:bg-zinc-800">{freePlay ? "Back to the lesson" : "Free play"}</button>
-        <button type="button" onClick={onResetLesson} className="rounded border border-zinc-600 px-2 py-1 text-xs text-slate-300 hover:bg-zinc-800">Reset lesson</button>
-        <button type="button" onClick={onResetLab} className="rounded border border-zinc-600 px-2 py-1 text-xs text-slate-300 hover:bg-zinc-800">Reset lab</button>
-        <Link to="/program/desktop" className="rounded border border-zinc-600 px-2 py-1 text-center text-xs text-slate-300 hover:bg-zinc-800">Exit Robot Lab</Link>
-        <button type="button" onClick={onFullscreen} className="rounded border border-zinc-600 px-2 py-1 text-xs text-slate-300 hover:bg-zinc-800">Full screen</button>
+        <button type="button" onClick={toggleFreePlay} className="action-buttons sidebar-b">{freePlay ? "Back to the lesson" : "Free play"}</button>
+        <button type="button" onClick={onResetLesson} className="action-buttons sidebar-b">Reset lesson</button>
+        <button type="button" onClick={onResetLab} className="action-buttons sidebar-b">Reset lab</button>
+        <Link to="/program/desktop" className="action-buttons sidebar-b">Exit Robot Lab</Link>
+        <button type="button" onClick={onFullscreen} className="action-buttons sidebar-b">Full screen</button>
       </div>
     </aside>
   );
@@ -399,16 +421,16 @@ export default function LabDesktop() {
   const snapBox = snap && (snap === "max" ? { left: 0, top: 0, width: size.w, height: size.h - TASKBAR } : snap === "left" ? { left: 0, top: 0, width: size.w / 2, height: size.h - TASKBAR } : { left: size.w / 2, top: 0, width: size.w / 2, height: size.h - TASKBAR });
 
   return (
-    <div className="flex h-full min-h-[32rem] overflow-hidden bg-zinc-950" aria-label="Lab desktop">
+    <div className="flex h-full min-h-[32rem] overflow-hidden border" aria-label="Lab desktop">
       <Guide lessons={LESSONS} lessonId={lessonId} setLessonId={switchLesson} unlocked steps={lesson.steps} state={state} current={current} freePlay={freePlay} toggleFreePlay={toggleFreePlay} placed={placed} picked={picked} onFullscreen={toggleFullscreen} onResetLesson={resetLesson} onResetLab={resetLab} />
-      <div ref={stage} className="relative min-w-0 flex-1 overflow-hidden" style={{ background: "radial-gradient(ellipse at 30% 20%, #26324a 0%, #151a26 55%, #0c0f16 100%)" }}>
+      <div ref={stage} className="relative min-w-0 flex-1 overflow-hidden" >
         {visibleApps.map((app) => {
           const w = wins[app.id];
           if (!w.open) return null;
           const style = w.max ? { left: 0, top: 0, width: "100%", height: `calc(100% - ${TASKBAR}px)`, zIndex: w.z } : { left: w.x, top: w.y, width: w.w, height: w.h, zIndex: w.z };
           return (
-            <section key={app.id} aria-label={app.title} onPointerDown={() => focus(app.id)} className={`absolute flex flex-col overflow-hidden rounded-lg border bg-[#1e1e1e] shadow-2xl ${topId === app.id ? "border-zinc-500" : "border-zinc-700"}`} style={{ ...style, display: w.min ? "none" : "flex" }}>
-              <header onPointerDown={(e) => startMove(app.id, e)} onDoubleClick={() => patch(app.id, { max: !w.max })} className="flex shrink-0 cursor-default select-none items-center justify-between bg-[#323233] px-2 py-1 text-xs text-slate-200">
+            <section key={app.id} aria-label={app.title} onPointerDown={() => focus(app.id)} className={`absolute flex flex-col overflow-hidden  shadow-2xl ${topId === app.id ? "border-zinc-500" : "border-zinc-700"}`} style={{ ...style, display: w.min ? "none" : "flex" }}>
+              <header onPointerDown={(e) => startMove(app.id, e)} onDoubleClick={() => patch(app.id, { max: !w.max })} className="flex shrink-0 cursor-default select-none items-center justify-between !bg-black border-b border-[rgb(50,50,50)] px-2 py-1 text-xs text-slate-200">
                 <span className="flex items-center gap-1.5"><span aria-hidden="true">{app.icon}</span>{app.title}</span>
                 <span className="flex items-center gap-1" onPointerDown={(e) => e.stopPropagation()}>
                   <button type="button" aria-label={`Minimize ${app.title}`} className="h-5 w-6 rounded hover:bg-zinc-600" onClick={() => patch(app.id, { min: true })}>–</button>
@@ -431,16 +453,39 @@ export default function LabDesktop() {
               const running = w.open;
               const isLocked = locked(app);
               return (
-                <button key={app.id} type="button" disabled={isLocked} title={isLocked ? "Unlocks after you deploy your code" : app.title} aria-label={isLocked ? `${app.title} (locked)` : `${running ? "Show" : "Open"} ${app.title}`}
+                <button
+                  key={app.id}
+                  type="button"
+                  disabled={isLocked}
+                  title={isLocked ? "Unlocks after you deploy your code" : app.title}
+                  aria-label={isLocked ? `${app.title} (locked)` : `${running ? "Show" : "Open"} ${app.title}`}
                   onClick={() => (running && !w.min && topId === app.id ? patch(app.id, { min: true }) : running ? focus(app.id) : launch(app.id))}
-                  className={`relative flex h-8 items-center gap-1.5 rounded px-2.5 text-xs text-slate-100 hover:bg-white/10 disabled:opacity-40 disabled:hover:bg-transparent ${running && !w.min ? "bg-white/10" : ""}`}>
-                  <span aria-hidden="true">{isLocked ? "🔒" : app.icon}</span><span className="max-sm:hidden">{app.title}</span>
-                  {running && <span className="absolute inset-x-2 bottom-0 h-0.5 rounded" style={{ background: app.color }} />}
+                  className={`
+                    action-buttons !min-h-8   
+                    disabled:cursor-not-allowed disabled:opacity-40
+disabled:hover:bg-transparent disabled:hover:text-slate-300`}
+                >
+                  <span aria-hidden="true">{isLocked ? "🔒" : app.icon}</span>
+                  <span className="max-sm:hidden">{app.title}</span>
+                  {running && (
+                    <span
+                      className="absolute inset-x-2 bottom-0 h-0.5 rounded"
+                      style={{ background: app.color }}
+                    />
+                  )}
                 </button>
               );
             })}
             <span className="mx-1 h-5 w-px bg-white/15" aria-hidden="true" />
-            <button type="button" onClick={() => tile(size.w, size.h)} title="Arrange the open windows side by side" className="h-8 rounded px-2 text-xs text-slate-200 hover:bg-white/10">Tile</button>
+            <button
+              type="button"
+              onClick={() => tile(size.w, size.h)}
+              title="Arrange the open windows side by side"
+              className="
+              action-buttons !min-h-8   "
+            >
+              Tile
+            </button>
           </div>
           <div className="flex items-center gap-3 pr-1 text-xs text-slate-200">
             <span className="flex items-center gap-1" title="Scale the app windows">
