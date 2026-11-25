@@ -466,7 +466,7 @@ function Program() {
                         0,
                         (selectedProblemIndex -
                           problems.indexOf(group.problems[0])) /
-                          (group.problems.length - 1)
+                        (group.problems.length - 1)
                       )
                     ),
                   }}
@@ -500,7 +500,7 @@ function Program() {
                           <button
                             className={
                               !isTool &&
-                              problem.id === selectedProblem.id
+                                problem.id === selectedProblem.id
                                 ? "program-buttons active"
                                 : "program-buttons"
                             }
@@ -511,7 +511,7 @@ function Program() {
                             }
                             aria-current={
                               !isTool &&
-                              problem.id === selectedProblem.id
+                                problem.id === selectedProblem.id
                                 ? "true"
                                 : undefined
                             }
@@ -637,7 +637,7 @@ function Program() {
             {/* Robot Lab */}
             <section
               id="lesson-robot-lab"
-              className="exercise-group"
+              className="exercise-group max-[999px]:hidden"
             >
               <button
                 type="button"
@@ -667,8 +667,8 @@ function Program() {
                     <Link
                       className={
                         isDesktop
-                          ? "program-buttons active"
-                          : "program-buttons"
+                          ? "program-buttons active robot-lab-nav-link"
+                          : "program-buttons robot-lab-nav-link"
                       }
                       to="/program/desktop"
                       aria-label="Lab Desktop"
@@ -958,7 +958,7 @@ function Program() {
                   {aiLoading
                     ? "Reviewing your code…"
                     : aiContent ||
-                      "Ask for a hint when the built-in checks are not enough."}
+                    "Ask for a hint when the built-in checks are not enough."}
                 </div>
               </section>
             </div>
