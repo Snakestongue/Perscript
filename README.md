@@ -4,7 +4,7 @@
 
 A web-based programming practice site built with React and Monaco Editor to help students learn and improve FRC (FIRST Robotics Competition) programming skills.
 
-Thanks to [@Zw96042](https://github.com/Zw96042) and [@anupamme](https://github.com/anupamme)!
+Thanks to [@Zw96042](https://github.com/Zw96042), [@anupamme](https://github.com/anupamme) and [@vrobot-2](https://github.com/vrobot-2)!
 
 ## About
 
