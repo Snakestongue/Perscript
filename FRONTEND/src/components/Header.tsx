@@ -113,7 +113,7 @@ function Header() {
               <span className="site-nav-label">Daily Challenge</span>
             </button>
             <Show when="signed-out">
-              <SignInButton forceRedirectUrl={`${window.location.origin}/`}>
+              <SignInButton forceRedirectUrl={`${window.location.origin}/Perscript/`}>
                 <button
                   className="site-nav-link"
                   onPointerEnter={() => showMenu(4)}
@@ -125,7 +125,7 @@ function Header() {
               </SignInButton>
 
               <SignUpButton
-                forceRedirectUrl={`${window.location.origin}/`}
+                forceRedirectUrl={`${window.location.origin}/Perscript/`}
               >
                 <button
                   className="site-nav-link"
