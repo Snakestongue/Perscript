@@ -7,7 +7,10 @@ const adapter = new PrismaPg({
 });
 
 const prisma = new PrismaClient({ adapter });
-
+console.log(
+    "SavedCode unique fields:",
+    Object.keys(prisma.savedCode.fields)
+);
 console.log("TeamNumber delegate:", prisma.teamNumber);
 
 export { prisma };

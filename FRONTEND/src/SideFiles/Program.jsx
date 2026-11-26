@@ -1,4 +1,4 @@
-
+import { useAuth } from "@clerk/react";
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { initVimMode } from "monaco-vim";
 import Editor from "@monaco-editor/react";
@@ -82,6 +82,11 @@ function Program() {
   const { lang, problemLink } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
+  const { isLoaded, isSignedIn, getToken } = useAuth();
+  console.log("CLERK STATUS:", {
+    isLoaded,
+    isSignedIn,
+  });
 
   const validLangs = languages.map((l) => l.value);
 
@@ -100,9 +105,10 @@ function Program() {
     normalizeLang(lang)
   );
 
-  const [userCode, setUserCode] = useState(
-    selectedProblem.starterCode.java
-  );
+  const [userCode, setUserCode] = useState(selectedProblem.starterCode.java);
+  const [loadedCodeKey, setLoadedCodeKey] = useState(null);
+  const codeKey = `${selectedProblem.link}:${currentLang}`;
+  const [completedProblems, setCompletedProblems] = useState([]);
   const [aiContent, setAiContent] = useState("");
   const [aiLoading, setAiLoading] = useState(false);
   const [checkResults, setCheckResults] = useState([]);
@@ -150,6 +156,56 @@ function Program() {
           : "Perscript · " + selectedProblem.title;
   }, [isPid, isElastic, isDesktop, selectedProblem.title]);
 
+
+
+  useEffect(() => {
+    console.log("COMPLETION EFFECT RUNNING");
+
+    if (!isLoaded || !isSignedIn) {
+      console.log("User not signed in yet");
+      setCompletedProblems([]);
+      return;
+    }
+
+    const loadCompletions = async () => {
+      try {
+        console.log("Getting Clerk token...");
+
+        const token = await getToken();
+
+        console.log("TOKEN:", token ? "Received" : "Missing");
+        console.log("API URL:", import.meta.env.VITE_LOCAL + "/completions");
+
+        const response = await fetch(
+          `${import.meta.env.VITE_LOCAL}/completions`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        console.log("RESPONSE STATUS:", response.status);
+
+        const data = await response.json();
+        console.log("RESPONSE DATA:", data);
+
+        if (!response.ok) {
+          throw new Error(data.message || "Failed to load completions");
+        }
+
+        setCompletedProblems(data.completedProblems);
+      } catch (error) {
+        console.error("COMPLETION ERROR:", error);
+      }
+    };
+
+    loadCompletions();
+  }, [isLoaded, isSignedIn, getToken]);
+
+
+
+
   useEffect(() => {
     if (!problemLink) return;
 
@@ -167,11 +223,125 @@ function Program() {
   }, [problemLink, lang]);
 
   useEffect(() => {
-    setUserCode(selectedProblem.starterCode[currentLang]);
-    setCheckResults([]);
-    setAiContent("");
-  }, [currentLang, selectedProblem]);
+    let cancelled = false;
 
+    async function loadCode() {
+      setLoadedCodeKey(null);
+
+      if (!isLoaded) return;
+
+      if (!isSignedIn) {
+        setUserCode(selectedProblem.starterCode[currentLang] || "");
+        setLoadedCodeKey(codeKey);
+        return;
+      }
+
+      try {
+        const token = await getToken();
+
+        const params = new URLSearchParams({
+          slug: selectedProblem.link,
+          language: currentLang,
+        });
+
+        const response = await fetch(
+          `${import.meta.env.VITE_LOCAL}/saved-code?${params}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.message || "Failed to load code");
+        }
+
+        if (!cancelled) {
+          setUserCode(
+            data.code ?? selectedProblem.starterCode[currentLang] ?? ""
+          );
+          setLoadedCodeKey(codeKey);
+        }
+      } catch (error) {
+        console.error("LOADING CODE FAILED:", error);
+
+        if (!cancelled) {
+          setUserCode(selectedProblem.starterCode[currentLang] || "");
+          setLoadedCodeKey(codeKey);
+        }
+      }
+    }
+
+    loadCode();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [
+    codeKey,
+    isLoaded,
+    isSignedIn,
+    getToken,
+    selectedProblem,
+    currentLang,
+  ]);
+
+  useEffect(() => {
+    // Only save after the correct problem's code has loaded.
+    if (
+      !isLoaded ||
+      !isSignedIn ||
+      loadedCodeKey !== codeKey
+    ) {
+      return;
+    }
+
+    const saveTimeout = setTimeout(async () => {
+      try {
+        const token = await getToken();
+
+        const response = await fetch(
+          `${import.meta.env.VITE_LOCAL}/saved-code`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+              slug: selectedProblem.link,
+              title: selectedProblem.title,
+              language: currentLang,
+              code: userCode,
+            }),
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to save code");
+        }
+
+        console.log("CODE AUTOSAVED:", selectedProblem.link);
+      } catch (error) {
+        console.error("AUTOSAVE FAILED:", error);
+      }
+    }, 1000);
+
+    return () => clearTimeout(saveTimeout);
+  }, [
+    userCode,
+    loadedCodeKey,
+    codeKey,
+    isLoaded,
+    isSignedIn,
+    getToken,
+    selectedProblem.link,
+    selectedProblem.title,
+    currentLang,
+  ]);
   useEffect(() => {
     if (isJavaOnly && currentLang !== "java") {
       changeLang("java");
@@ -186,7 +356,6 @@ function Program() {
     );
 
     const firstProblem = group?.problems[0];
-
     if (firstProblem) {
       setSelectedProblem(firstProblem);
     }
@@ -199,6 +368,9 @@ function Program() {
 
     return () => cancelAnimationFrame(frame);
   }, [location.hash, location.key]);
+
+
+
 
   useEffect(() => {
     if (!problemLink) return;
@@ -302,7 +474,7 @@ function Program() {
     return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   }
 
-  function runChecks() {
+  async function runChecks() {
     const code = (userCode || "").toLowerCase();
 
     const results = selectedProblem.checks[currentLang].map((check) => {
@@ -326,8 +498,49 @@ function Program() {
         passed,
       };
     });
-
     setCheckResults(results);
+
+    if (results.length > 0 && results.every((check) => check.passed)) {
+      if (!isLoaded || !isSignedIn) {
+        console.log("Sign in to save your progress!");
+        return;
+      }
+
+      try {
+        const token = await getToken();
+
+        const response = await fetch(
+          `${import.meta.env.VITE_LOCAL}/completions`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+              slug: selectedProblem.link,
+              title: selectedProblem.title,
+            }),
+          }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.message || "Failed to save completion");
+        }
+
+        console.log("COMPLETION SAVED:", data);
+
+        setCompletedProblems((previous) =>
+          previous.includes(selectedProblem.link)
+            ? previous
+            : [...previous, selectedProblem.link]
+        );
+      } catch (error) {
+        console.error("SAVING COMPLETION FAILED:", error);
+      }
+    }
   }
 
   async function submitToAI() {
@@ -506,9 +719,7 @@ function Program() {
                             }
                             key={problem.id}
                             type="button"
-                            data-complete={
-                              problem.id < selectedProblem.id
-                            }
+                            data-complete={completedProblems.includes(problem.link)}
                             aria-current={
                               !isTool &&
                                 problem.id === selectedProblem.id

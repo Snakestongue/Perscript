@@ -28,6 +28,7 @@ export type SavedCodeMinAggregateOutputType = {
   id: string | null
   userId: string | null
   problemId: string | null
+  language: string | null
   code: string | null
   updatedAt: Date | null
 }
@@ -36,6 +37,7 @@ export type SavedCodeMaxAggregateOutputType = {
   id: string | null
   userId: string | null
   problemId: string | null
+  language: string | null
   code: string | null
   updatedAt: Date | null
 }
@@ -44,6 +46,7 @@ export type SavedCodeCountAggregateOutputType = {
   id: number
   userId: number
   problemId: number
+  language: number
   code: number
   updatedAt: number
   _all: number
@@ -54,6 +57,7 @@ export type SavedCodeMinAggregateInputType = {
   id?: true
   userId?: true
   problemId?: true
+  language?: true
   code?: true
   updatedAt?: true
 }
@@ -62,6 +66,7 @@ export type SavedCodeMaxAggregateInputType = {
   id?: true
   userId?: true
   problemId?: true
+  language?: true
   code?: true
   updatedAt?: true
 }
@@ -70,6 +75,7 @@ export type SavedCodeCountAggregateInputType = {
   id?: true
   userId?: true
   problemId?: true
+  language?: true
   code?: true
   updatedAt?: true
   _all?: true
@@ -151,6 +157,7 @@ export type SavedCodeGroupByOutputType = {
   id: string
   userId: string
   problemId: string
+  language: string
   code: string
   updatedAt: Date
   _count: SavedCodeCountAggregateOutputType | null
@@ -180,6 +187,7 @@ export type SavedCodeWhereInput = {
   id?: Prisma.StringFilter<"SavedCode"> | string
   userId?: Prisma.StringFilter<"SavedCode"> | string
   problemId?: Prisma.StringFilter<"SavedCode"> | string
+  language?: Prisma.StringFilter<"SavedCode"> | string
   code?: Prisma.StringFilter<"SavedCode"> | string
   updatedAt?: Prisma.DateTimeFilter<"SavedCode"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -190,6 +198,7 @@ export type SavedCodeOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   problemId?: Prisma.SortOrder
+  language?: Prisma.SortOrder
   code?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
@@ -198,22 +207,24 @@ export type SavedCodeOrderByWithRelationInput = {
 
 export type SavedCodeWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  userId_problemId?: Prisma.SavedCodeUserIdProblemIdCompoundUniqueInput
+  userId_problemId_language?: Prisma.SavedCodeUserIdProblemIdLanguageCompoundUniqueInput
   AND?: Prisma.SavedCodeWhereInput | Prisma.SavedCodeWhereInput[]
   OR?: Prisma.SavedCodeWhereInput[]
   NOT?: Prisma.SavedCodeWhereInput | Prisma.SavedCodeWhereInput[]
   userId?: Prisma.StringFilter<"SavedCode"> | string
   problemId?: Prisma.StringFilter<"SavedCode"> | string
+  language?: Prisma.StringFilter<"SavedCode"> | string
   code?: Prisma.StringFilter<"SavedCode"> | string
   updatedAt?: Prisma.DateTimeFilter<"SavedCode"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   problem?: Prisma.XOR<Prisma.ProblemScalarRelationFilter, Prisma.ProblemWhereInput>
-}, "id" | "userId_problemId">
+}, "id" | "userId_problemId_language">
 
 export type SavedCodeOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   problemId?: Prisma.SortOrder
+  language?: Prisma.SortOrder
   code?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.SavedCodeCountOrderByAggregateInput
@@ -228,12 +239,14 @@ export type SavedCodeScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"SavedCode"> | string
   userId?: Prisma.StringWithAggregatesFilter<"SavedCode"> | string
   problemId?: Prisma.StringWithAggregatesFilter<"SavedCode"> | string
+  language?: Prisma.StringWithAggregatesFilter<"SavedCode"> | string
   code?: Prisma.StringWithAggregatesFilter<"SavedCode"> | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"SavedCode"> | Date | string
 }
 
 export type SavedCodeCreateInput = {
   id?: string
+  language?: string
   code: string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutSavedCodeInput
@@ -244,12 +257,14 @@ export type SavedCodeUncheckedCreateInput = {
   id?: string
   userId: string
   problemId: string
+  language?: string
   code: string
   updatedAt?: Date | string
 }
 
 export type SavedCodeUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  language?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutSavedCodeNestedInput
@@ -260,6 +275,7 @@ export type SavedCodeUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   problemId?: Prisma.StringFieldUpdateOperationsInput | string
+  language?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -268,12 +284,14 @@ export type SavedCodeCreateManyInput = {
   id?: string
   userId: string
   problemId: string
+  language?: string
   code: string
   updatedAt?: Date | string
 }
 
 export type SavedCodeUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  language?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -282,6 +300,7 @@ export type SavedCodeUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   problemId?: Prisma.StringFieldUpdateOperationsInput | string
+  language?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -296,15 +315,17 @@ export type SavedCodeOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type SavedCodeUserIdProblemIdCompoundUniqueInput = {
+export type SavedCodeUserIdProblemIdLanguageCompoundUniqueInput = {
   userId: string
   problemId: string
+  language: string
 }
 
 export type SavedCodeCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   problemId?: Prisma.SortOrder
+  language?: Prisma.SortOrder
   code?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -313,6 +334,7 @@ export type SavedCodeMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   problemId?: Prisma.SortOrder
+  language?: Prisma.SortOrder
   code?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -321,6 +343,7 @@ export type SavedCodeMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   problemId?: Prisma.SortOrder
+  language?: Prisma.SortOrder
   code?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -411,6 +434,7 @@ export type SavedCodeUncheckedUpdateManyWithoutProblemNestedInput = {
 
 export type SavedCodeCreateWithoutUserInput = {
   id?: string
+  language?: string
   code: string
   updatedAt?: Date | string
   problem: Prisma.ProblemCreateNestedOneWithoutSavedCodeInput
@@ -419,6 +443,7 @@ export type SavedCodeCreateWithoutUserInput = {
 export type SavedCodeUncheckedCreateWithoutUserInput = {
   id?: string
   problemId: string
+  language?: string
   code: string
   updatedAt?: Date | string
 }
@@ -456,12 +481,14 @@ export type SavedCodeScalarWhereInput = {
   id?: Prisma.StringFilter<"SavedCode"> | string
   userId?: Prisma.StringFilter<"SavedCode"> | string
   problemId?: Prisma.StringFilter<"SavedCode"> | string
+  language?: Prisma.StringFilter<"SavedCode"> | string
   code?: Prisma.StringFilter<"SavedCode"> | string
   updatedAt?: Prisma.DateTimeFilter<"SavedCode"> | Date | string
 }
 
 export type SavedCodeCreateWithoutProblemInput = {
   id?: string
+  language?: string
   code: string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutSavedCodeInput
@@ -470,6 +497,7 @@ export type SavedCodeCreateWithoutProblemInput = {
 export type SavedCodeUncheckedCreateWithoutProblemInput = {
   id?: string
   userId: string
+  language?: string
   code: string
   updatedAt?: Date | string
 }
@@ -503,12 +531,14 @@ export type SavedCodeUpdateManyWithWhereWithoutProblemInput = {
 export type SavedCodeCreateManyUserInput = {
   id?: string
   problemId: string
+  language?: string
   code: string
   updatedAt?: Date | string
 }
 
 export type SavedCodeUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  language?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   problem?: Prisma.ProblemUpdateOneRequiredWithoutSavedCodeNestedInput
@@ -517,6 +547,7 @@ export type SavedCodeUpdateWithoutUserInput = {
 export type SavedCodeUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   problemId?: Prisma.StringFieldUpdateOperationsInput | string
+  language?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -524,6 +555,7 @@ export type SavedCodeUncheckedUpdateWithoutUserInput = {
 export type SavedCodeUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   problemId?: Prisma.StringFieldUpdateOperationsInput | string
+  language?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -531,12 +563,14 @@ export type SavedCodeUncheckedUpdateManyWithoutUserInput = {
 export type SavedCodeCreateManyProblemInput = {
   id?: string
   userId: string
+  language?: string
   code: string
   updatedAt?: Date | string
 }
 
 export type SavedCodeUpdateWithoutProblemInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  language?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutSavedCodeNestedInput
@@ -545,6 +579,7 @@ export type SavedCodeUpdateWithoutProblemInput = {
 export type SavedCodeUncheckedUpdateWithoutProblemInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  language?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -552,6 +587,7 @@ export type SavedCodeUncheckedUpdateWithoutProblemInput = {
 export type SavedCodeUncheckedUpdateManyWithoutProblemInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  language?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -562,6 +598,7 @@ export type SavedCodeSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   id?: boolean
   userId?: boolean
   problemId?: boolean
+  language?: boolean
   code?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -572,6 +609,7 @@ export type SavedCodeSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   id?: boolean
   userId?: boolean
   problemId?: boolean
+  language?: boolean
   code?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -582,6 +620,7 @@ export type SavedCodeSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   id?: boolean
   userId?: boolean
   problemId?: boolean
+  language?: boolean
   code?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -592,11 +631,12 @@ export type SavedCodeSelectScalar = {
   id?: boolean
   userId?: boolean
   problemId?: boolean
+  language?: boolean
   code?: boolean
   updatedAt?: boolean
 }
 
-export type SavedCodeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "problemId" | "code" | "updatedAt", ExtArgs["result"]["savedCode"]>
+export type SavedCodeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "problemId" | "language" | "code" | "updatedAt", ExtArgs["result"]["savedCode"]>
 export type SavedCodeInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   problem?: boolean | Prisma.ProblemDefaultArgs<ExtArgs>
@@ -620,6 +660,7 @@ export type $SavedCodePayload<ExtArgs extends runtime.Types.Extensions.InternalA
     id: string
     userId: string
     problemId: string
+    language: string
     code: string
     updatedAt: Date
   }, ExtArgs["result"]["savedCode"]>
@@ -1050,6 +1091,7 @@ export interface SavedCodeFieldRefs {
   readonly id: Prisma.FieldRef<"SavedCode", 'String'>
   readonly userId: Prisma.FieldRef<"SavedCode", 'String'>
   readonly problemId: Prisma.FieldRef<"SavedCode", 'String'>
+  readonly language: Prisma.FieldRef<"SavedCode", 'String'>
   readonly code: Prisma.FieldRef<"SavedCode", 'String'>
   readonly updatedAt: Prisma.FieldRef<"SavedCode", 'DateTime'>
 }

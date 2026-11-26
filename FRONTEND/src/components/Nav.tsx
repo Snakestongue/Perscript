@@ -1,3 +1,4 @@
+import { Show, SignInButton, SignUpButton, UserButton } from "@clerk/react";
 import { motion } from "motion/react";
 import { NavLink, useLocation } from "react-router-dom";
 
@@ -17,23 +18,23 @@ function Nav() {
   return (
     <nav className="mobile-nav" aria-label="Mobile navigation">
       <motion.span
-  className="mobile-nav-pill"
-  aria-hidden="true"
-  animate={{
-    left:
-      activeIndex === 3
-        ? `calc(0.5rem + 3 * (((100% - 1.6rem) / 5) + 0.2rem))`
-        : `calc(0.5rem + ${Math.max(activeIndex, 0)} * (((100% - 1.6rem) / 5) + 0.2rem))`,
+        className="mobile-nav-pill"
+        aria-hidden="true"
+        animate={{
+          left:
+            activeIndex === 3
+              ? `calc(0.5rem + 3 * (((100% - 1.6rem) / 5) + 0.2rem))`
+              : `calc(0.5rem + ${Math.max(activeIndex, 0)} * (((100% - 1.6rem) / 5) + 0.2rem))`,
 
-    width:
-      activeIndex === 3
-        ? `calc(2 * ((100% - 1.6rem) / 5))`
-        : `calc((100% - 1.6rem) / 5)`,
+          width:
+            activeIndex === 3
+              ? `calc(2 * ((100% - 1.6rem) / 5))`
+              : `calc((100% - 1.6rem) / 5)`,
 
-    opacity: activeIndex === -1 ? 0 : 1,
-  }}
-  transition={{ duration: 0.14, ease: "easeOut" }}
-/>
+          opacity: activeIndex === -1 ? 0 : 1,
+        }}
+        transition={{ duration: 0.14, ease: "easeOut" }}
+      />
       {links.map((item) => (
         <NavLink
           key={item.to}
@@ -45,8 +46,26 @@ function Nav() {
           }
         >
           <span className="mobile-nav-label">{item.label}</span>
+
         </NavLink>
       ))}
+      <Show when="signed-out">
+        <SignInButton forceRedirectUrl={`${window.location.origin}/`}>
+          <button className="mobile-nav-link">
+            <span className="mobile-nav-label">Log In</span>
+          </button>
+        </SignInButton>
+
+        <SignUpButton forceRedirectUrl={`${window.location.origin}/`}>
+          <button className="mobile-nav-link">
+            <span className="mobile-nav-label">Sign Up</span>
+          </button>
+        </SignUpButton>
+      </Show>
+
+      <Show when="signed-in">
+        <UserButton />
+      </Show>
     </nav>
   );
 }

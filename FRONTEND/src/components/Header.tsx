@@ -1,19 +1,24 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { Show, SignInButton, SignUpButton, UserButton, useAuth } from "@clerk/react";
+import Auth from './Auth.jsx'
 const menuVariants = {
   initial: (direction: number) => ({ x: `${110 * direction}%`, opacity: 0 }),
   active: { x: "0%", opacity: 1 },
   exit: (direction: number) => ({ x: `${-110 * direction}%`, opacity: 0 }),
 };
 function Header() {
+  const { isSignedIn } = useAuth();
   const location = useLocation();
   //0=Practice,1 =Debug, 2 =Reference, -1=none active, 3 ==daily challenge
   const activeIndex =
     location.pathname === "/program" ? 0 :
-    location.pathname === "/debug" ? 1 :
-    location.pathname.startsWith("/tut") ? 2 :
-    location.pathname === "/daily" ? 3 : -1;
+      location.pathname === "/debug" ? 1 :
+        location.pathname.startsWith("/tut") ? 2 :
+          location.pathname === "/daily" ? 3 :
+            location.pathname === "/debug" ? 4 :
+              location.pathname === "/debug" ? 5 : -1;
 
 
   const [menuIndex, setMenuIndex] = useState<number | null>(null)
@@ -21,15 +26,15 @@ function Header() {
   const lastMenuIndex = useRef(activeIndex >= 0 ? activeIndex : 0)
   const pillIndex = menuIndex ?? (activeIndex >= 0 ? activeIndex : lastMenuIndex.current)
   const pillVisible = menuIndex !== null || activeIndex >= 0
-  function showMenu(index: number){
+  function showMenu(index: number) {
     setDirection(index >= lastMenuIndex.current ? 1 : -1)
     lastMenuIndex.current = index;
     setMenuIndex(index);
   }
 
-  useEffect(()=>{
-    function closeMenu(event: KeyboardEvent){
-      if (event.key == "Escape"){
+  useEffect(() => {
+    function closeMenu(event: KeyboardEvent) {
+      if (event.key == "Escape") {
         setMenuIndex(null);
       }
     }
@@ -37,12 +42,12 @@ function Header() {
     return () => window.removeEventListener("keydown", closeMenu)
   }, []);
 
-  useEffect(() =>{
+  useEffect(() => {
     setMenuIndex(null);
   }, [location.key]);
 
-  function navTriggerProps(index: number){
-    return{
+  function navTriggerProps(index: number) {
+    return {
       className: activeIndex === index ? "site-nav-link active" : "site-nav-link",
       "aria-expanded": menuIndex === index,
       "aria-controls": "primary-nav-panel",
@@ -55,6 +60,7 @@ function Header() {
   return (
     <header className="site-header">
       <div className="header-inner">
+        <Auth />
         <Link
           to="/"
           className="justify-self-start inline-flex items-center gap-[0.5rem] min-h-11 font-bold leading-none tracking-[-0.03em] transition-all duration-200 ease-in max-lg:justify-self-center"
@@ -69,7 +75,7 @@ function Header() {
            flex flex-row justify-center items-center
            ">
             {/* <span className="text-[#7AADFF]"></span> */}
-            <img className="w-auto h-7 mr-2"src="IMG/image.png"/> Perscript
+            <img className="w-auto h-7 mr-2" src="IMG/image.png" /> Perscript
           </span>
         </Link>
 
@@ -79,15 +85,16 @@ function Header() {
           onBlur={(event) => {
             if (!event.currentTarget.contains(event.relatedTarget)) setMenuIndex(null);
           }}>
-          <nav className="desktop-nav" aria-label="Primary navigation">
+          <nav className={`desktop-nav ${isSignedIn ? "signed-in" : "signed-out"}`}
+            aria-label="Primary navigation">
             <motion.span
               className="site-nav-pill"
               aria-hidden="true"
               animate={{
-                x: Math.max(pillIndex, 0) * 110.4,
+                x: `${Math.max(pillIndex, 0) * 100}%`,
                 opacity: pillVisible ? 1 : 0,
               }}
-              transition={{duration: 0.14, ease: "easeOut"}}
+              transition={{ duration: 0.14, ease: "easeOut" }}
             />
 
             <button type="button" {...navTriggerProps(0)}>
@@ -105,6 +112,35 @@ function Header() {
             <button type="button" {...navTriggerProps(3)}>
               <span className="site-nav-label">Daily Challenge</span>
             </button>
+            <Show when="signed-out">
+              <SignInButton forceRedirectUrl={`${window.location.origin}/`}>
+                <button
+                  className="site-nav-link"
+                  onPointerEnter={() => showMenu(4)}
+                  onFocus={() => showMenu(4)}
+                  onClick={() => setMenuIndex(null)}
+                >
+                  Log In
+                </button>
+              </SignInButton>
+
+              <SignUpButton
+                forceRedirectUrl={`${window.location.origin}/`}
+              >
+                <button
+                  className="site-nav-link"
+                  onPointerEnter={() => showMenu(5)}
+                  onFocus={() => showMenu(5)}
+                  onClick={() => setMenuIndex(null)}
+                >
+                  Sign Up
+                </button>
+              </SignUpButton>
+            </Show>
+
+            <Show when="signed-in">
+              <UserButton />
+            </Show>
           </nav>
 
           <AnimatePresence>
@@ -157,9 +193,9 @@ function Header() {
                           </Link>
                         </div>
                       </motion.div>
-                    ):null}
+                    ) : null}
 
-                    {menuIndex == 1 ?(
+                    {menuIndex == 1 ? (
                       <motion.div
                         className="nav-mega-content"
                         key={1}
@@ -192,9 +228,9 @@ function Header() {
                           <Link className="nav-mega-cta" to="/debug"> Open debug <span aria-hidden="true">→</span></Link>
                         </div>
                       </motion.div>
-                    ):null}
+                    ) : null}
 
-                    {menuIndex === 2?(
+                    {menuIndex === 2 ? (
                       <motion.div
                         className="nav-mega-content"
                         key={2}
@@ -229,8 +265,8 @@ function Header() {
                           </Link>
                         </div>
                       </motion.div>
-                    ):null}
-                    {menuIndex == 3 ?(
+                    ) : null}
+                    {menuIndex == 3 ? (
                       <motion.div
                         className="nav-mega-content"
                         key={1}
@@ -257,13 +293,14 @@ function Header() {
                           </Link>
                         </div>
                       </motion.div>
-                    ):null}
+                    ) : null}
                   </AnimatePresence>
                 </div>
               </motion.div>
-            ) :null}
+            ) : null}
           </AnimatePresence>
         </div>
+
       </div>
     </header>
   );
