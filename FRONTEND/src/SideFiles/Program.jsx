@@ -174,10 +174,10 @@ function Program() {
         const token = await getToken();
 
         console.log("TOKEN:", token ? "Received" : "Missing");
-        console.log("API URL:", import.meta.env.VITE_LOCAL + "/completions");
+        console.log("API URL:", import.meta.env.VITE_LINK + "/completions");
 
         const response = await fetch(
-          `${import.meta.env.VITE_LOCAL}/completions`,
+          `${import.meta.env.VITE_LINK}/completions`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -245,7 +245,7 @@ function Program() {
         });
 
         const response = await fetch(
-          `${import.meta.env.VITE_LOCAL}/saved-code?${params}`,
+          `${import.meta.env.VITE_LINK}/saved-code?${params}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -304,7 +304,7 @@ function Program() {
         const token = await getToken();
 
         const response = await fetch(
-          `${import.meta.env.VITE_LOCAL}/saved-code`,
+          `${import.meta.env.VITE_LINK}/saved-code`,
           {
             method: "POST",
             headers: {
@@ -510,7 +510,7 @@ function Program() {
         const token = await getToken();
 
         const response = await fetch(
-          `${import.meta.env.VITE_LOCAL}/completions`,
+          `${import.meta.env.VITE_LINK}/completions`,
           {
             method: "POST",
             headers: {
