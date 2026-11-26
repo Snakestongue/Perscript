@@ -1,0 +1,58 @@
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id           String             @id @default(cuid())
+  username     String             @unique
+  email        String             @unique
+  passwordHash String
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
+
+  completions  ProblemCompletion[]
+  savedCode    SavedCode[]
+}
+
+model Problem {
+  id          String              @id @default(cuid())
+  title       String
+  slug        String              @unique
+  completions ProblemCompletion[]
+  savedCode   SavedCode[]
+}
+
+model ProblemCompletion {
+  id          String   @id @default(cuid())
+  userId      String
+  problemId   String
+  completedAt DateTime @default(now())
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  problem     Problem  @relation(fields: [problemId], references: [id], onDelete: Cascade)
+  @@unique([userId, problemId])
+}
+
+model SavedCode {
+  id        String   @id @default(cuid())
+  userId    String
+  problemId String
+  code      String   @db.Text
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  problem   Problem  @relation(fields: [problemId], references: [id], onDelete: Cascade)
+  @@unique([userId, problemId])
+}
+
+model TeamNumber{
+  id         String   @id @default(cuid())
+  teamNumber Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+

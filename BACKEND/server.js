@@ -6,6 +6,8 @@ import { dirname} from "path"
 import router from "./routes.js"
 import dotenv from "dotenv"
 import connectDB from "./database.js"
+import { prisma } from "./prisma.js";
+
 const __filename =fileURLToPath(import.meta.url)
 const __dirname =dirname(__filename)
 let app = express();
@@ -20,6 +22,8 @@ app.get("/", (req, res) => {
 let startServer = async ()=>{
     try {
         await connectDB();
+        await prisma.$connect();
+        console.log("PostgreSQL connected through Prisma!");
         app.listen(9000, () => {
             console.log("Currently Running <>!? ");
         });
