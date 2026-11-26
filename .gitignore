@@ -20,10 +20,13 @@ dist
 dist-ssr
 *.local
 FRONTEND/src/JSON/
+FRONTEND/src/mocks/lab-desktop/project/.gradle
+
 BACKEND/.agents
 BACKEND/.claude
 BACKEND/.cursor
 BACKEND/.devin
+BACKEND/teams.json
 
 
 FRONTEND/public/google5abe7520d23d8c65.html
