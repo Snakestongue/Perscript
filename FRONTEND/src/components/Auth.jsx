@@ -25,7 +25,7 @@ function Auth() {
                 }
 
                 const response = await fetch(
-                    `${import.meta.env.VITE_API_URL || "http://localhost:9000"}/sync-user`,
+                    `${import.meta.env.VITE_LINK || "http://localhost:9000"}/sync-user`,
                     {
                         method: "POST",
                         headers: {

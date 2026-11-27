@@ -50,13 +50,13 @@ function Nav() {
         </NavLink>
       ))}
       <Show when="signed-out">
-        <SignInButton forceRedirectUrl={`${window.location.origin}/Perscript`}>
+        <SignInButton forceRedirectUrl="https://snakestongue.github.io/Perscript/">
           <button className="mobile-nav-link">
             <span className="mobile-nav-label">Log In</span>
           </button>
         </SignInButton>
 
-        <SignUpButton forceRedirectUrl={`${window.location.origin}/Perscript`}>
+        <SignUpButton forceRedirectUrl="https://snakestongue.github.io/Perscript/">
           <button className="mobile-nav-link">
             <span className="mobile-nav-label">Sign Up</span>
           </button>
