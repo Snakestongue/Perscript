@@ -1,5 +1,7 @@
 # FRC Programming Practice
 
+*This is the original frontend before it was redesigned. This branch is highly outdated and should not be used.* 
+
 A web-based programming practice site built with React and Monaco Editor to help students learn and improve FRC (FIRST Robotics Competition) programming skills.
 
 ## About
