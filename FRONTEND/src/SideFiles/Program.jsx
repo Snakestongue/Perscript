@@ -83,17 +83,10 @@ function Program() {
   const location = useLocation();
   const navigate = useNavigate();
   const { isLoaded, isSignedIn, getToken } = useAuth();
-  console.log("CLERK STATUS:", {
-    isLoaded,
-    isSignedIn,
-  });
-
   const validLangs = languages.map((l) => l.value);
-
   function normalizeLang(value) {
     return validLangs.includes(value) ? value : "java";
   }
-
   const [selectedProblem, setSelectedProblem] = useState(() => {
     const fromUrl = problems.find(
       (p) => String(p.link) === problemLink
@@ -159,23 +152,13 @@ function Program() {
 
 
   useEffect(() => {
-    console.log("COMPLETION EFFECT RUNNING");
-
     if (!isLoaded || !isSignedIn) {
-      console.log("User not signed in yet");
       setCompletedProblems([]);
       return;
     }
-
     const loadCompletions = async () => {
       try {
-        console.log("Getting Clerk token...");
-
         const token = await getToken();
-
-        console.log("TOKEN:", token ? "Received" : "Missing");
-        console.log("API URL:", import.meta.env.VITE_LINK + "/completions");
-
         const response = await fetch(
           `${import.meta.env.VITE_LINK}/completions`,
           {
@@ -184,16 +167,10 @@ function Program() {
             },
           }
         );
-
-        console.log("RESPONSE STATUS:", response.status);
-
         const data = await response.json();
-        console.log("RESPONSE DATA:", data);
-
         if (!response.ok) {
           throw new Error(data.message || "Failed to load completions");
         }
-
         setCompletedProblems(data.completedProblems);
       } catch (error) {
         console.error("COMPLETION ERROR:", error);
@@ -323,10 +300,8 @@ function Program() {
         if (!response.ok) {
           throw new Error("Failed to save code");
         }
-
-        console.log("CODE AUTOSAVED:", selectedProblem.link);
       } catch (error) {
-        console.error("AUTOSAVE FAILED:", error);
+        console.error("AUTOSAVE FAILED:");
       }
     }, 1000);
 
@@ -502,7 +477,6 @@ function Program() {
 
     if (results.length > 0 && results.every((check) => check.passed)) {
       if (!isLoaded || !isSignedIn) {
-        console.log("Sign in to save your progress!");
         return;
       }
 
@@ -529,9 +503,6 @@ function Program() {
         if (!response.ok) {
           throw new Error(data.message || "Failed to save completion");
         }
-
-        console.log("COMPLETION SAVED:", data);
-
         setCompletedProblems((previous) =>
           previous.includes(selectedProblem.link)
             ? previous

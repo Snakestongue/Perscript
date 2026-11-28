@@ -39,9 +39,6 @@ function Auth() {
                 if (!response.ok) {
                     throw new Error(data.error || "User sync failed");
                 }
-
-                console.log("Perscript account synced!", data);
-
             } catch (error) {
                 hasSynced.current = false;
                 console.error("Account sync failed:", error);

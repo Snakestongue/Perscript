@@ -91,7 +91,7 @@ function Header() {
               className="site-nav-pill"
               aria-hidden="true"
               animate={{
-                x: `${Math.max(pillIndex, 0) * 100}%`,
+                x: `${Math.max(pillIndex, 0) * 6.9}rem`,
                 opacity: pillVisible ? 1 : 0,
               }}
               transition={{ duration: 0.14, ease: "easeOut" }}
@@ -175,17 +175,13 @@ function Header() {
                               <strong>FRC Basics</strong>
                               <span>Start with constants, objects, methods, and constructors with FRC libraries.</span>
                             </Link>
-                            <Link to="/program#lesson-core-patterns">
-                              <strong>Core patterns</strong>
-                              <span>Practice PID, bindings, and basic robot subsystems.</span>
-                            </Link>
                             <Link to="/program#lesson-command-based">
                               <strong>Command based</strong>
                               <span>Build commands, triggers, and command-based robot flows.</span>
                             </Link>
                             <Link to="/program#lesson-difficult">
                               <strong>Difficult Problems</strong>
-                              <span>Use hardware and complex commaands.</span>
+                              <span>Long questions using hardware and commands.</span>
                             </Link>
                           </div>
                           <Link className="nav-mega-cta" to="/program">
@@ -247,17 +243,17 @@ function Header() {
                             <strong>Keep the code you need within reach</strong>
                           </div>
                           <div className="nav-mega-items">
-                            <Link to="/tut">
-                              <strong>Foundations</strong>
-                              <span>Language basics, classes, and common FRC terminology.</span>
+                            <Link to="/tut/oop">
+                              <strong>Object Oriented Programming</strong>
+                              <span>Learn what classes, methods and objects are.</span>
                             </Link>
-                            <Link to="/tut/hardware">
-                              <strong>Hardware</strong>
-                              <span>Motor controllers, sensors, and physical inputs.</span>
+                            <Link to="/tut/motors">
+                              <strong>Motor Controllers</strong>
+                              <span>Explore SparkMAX or TalonFX and how to use them.</span>
                             </Link>
                             <Link to="/tut/robot-structure">
                               <strong>Robot structure</strong>
-                              <span>RobotContainer, commands, constants, and dashboards.</span>
+                              <span>RobotContainer, commands, constants & triggers.</span>
                             </Link>
                           </div>
                           <Link className="nav-mega-cta" to="/tut">

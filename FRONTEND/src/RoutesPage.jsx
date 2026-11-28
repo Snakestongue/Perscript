@@ -17,23 +17,23 @@ const Tune = lazy(() => import("./SideFiles/Tune.jsx"));
 const LabDesktop = lazy(() => import("./mocks/lab-desktop/index.jsx"));
 
 
-function RoutesPage(){
+function RoutesPage() {
   const [team, setTeam] = useState(() => !localStorage.getItem("teamNumber"));
-  const handleSubmit =async(num)=>{
+  const handleSubmit = async (num) => {
     setTeam(false);
     try {
       const resp = await fetch("https://frc-programming-practice.onrender.com/alert",
         {
-          method:"POST",
-          headers:{"Content-Type": "application/json"},
-          body:  JSON.stringify({numReq: num }),
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ numReq: num }),
         }
       )
       const data = await resp.json();
-      if(resp.ok){
+      if (resp.ok) {
         localStorage.setItem("teamNumber", num);
         console.log("Number logged")
-      }else{
+      } else {
         alert(data.message);
         console.log(data.message)
       }
@@ -58,9 +58,12 @@ function RoutesPage(){
               <Route path="/debug/:language/:difficulty/:problemId" element={<Bug />} />
               <Route path="/PP" element={<PP />} />
               <Route path="/Sug" element={<Sug />} />
+
               <Route path="/tut" element={<Tut />} />
-              <Route path="/tut/hardware" element={<Tut section="hardware" />} />
+              <Route path="/tut/oop" element={<Tut section="oop" />} />
+              <Route path="/tut/motors" element={<Tut section="motors" />} />
               <Route path="/tut/robot-structure" element={<Tut section="structure" />} />
+
               <Route path="/program/:lang/:problemLink" element={<Program />} />
               <Route path="/program" element={<Program />} />
               <Route path="/program/pid-tuning" element={<Program />} />
